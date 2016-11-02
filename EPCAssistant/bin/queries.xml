@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+	<query schema="sa" name="getCaseByCaseNumber" description="Получает свойства задания по его id_number">
+		<parameters>
+			<parameter name="caseId"/>
+		</parameters>
+	<body>
+<![CDATA[
+SELECT        
+       cas.objid,
+       cas.title, -- Название задания
+       cas.id_number, -- Номер задания
+       cas.case_type_lvl1,
+       cas.case_type_lvl2,
+       cas.case_type_lvl3, 
+       q.title AS queue_title,
+       q.description AS queue_desc, 
+       q.ref_id AS queue_ref_id,
+       pn.part_number part_number,
+       pn.family part_num_family,
+       tparent.terr_id parent_terr_id,
+       tparent.name parent_terr_name, 
+       ter.terr_id terr_id,
+       ter.name terr_name,    
+       ter_init.terr_id terr_init_id,
+       ter_init.name terr_init_name,        
+       calltype.title call_type, 
+       casests.title case_status,
+       preftime.title preftime,
+       prefmeth.title prefmethod,
+       reporter.first_name reporter_fname,
+       reporter.last_name reporter_lname,
+       reporter.middle_name reporter_mname,
+       owner.login_name owner_login,  
+       originator.login_name originator_login,               
+       cas.creation_time,
+       cas.hangup_time,
+       cas.phone_num,
+       cas.modify_stmp,
+       cas.case_currq2queue,
+       cas.case_wip2wipbin,
+       cas.case_owner2user,
+       cas.case_state2condition,
+       cas.case_originator2user,
+       cas.calltype2gbst_elm,
+       cas.respprty2gbst_elm,
+       cas.respsvrty2gbst_elm,
+       cas.case_reporter2contact,
+       cas.casests2gbst_elm,
+       cas.case2address,
+       cas.case2fin_accnt,
+       cas.x_start_time,
+       cas.x_end_time,
+       cas.x_case2territory,
+       cas.x_case2site_part,
+       cas.x_case2part_num,
+       cas.x_case2e_addr,
+       cas.x_case2hgbst_preftime,
+       cas.x_case2hgbst_prefmeth,
+       cas.x_case2territory_init
+FROM 
+       table_case cas 
+LEFT JOIN table_queue q ON (cas.case_currq2queue = q.objid)
+LEFT JOIN table_territory ter ON (ter.objid = cas.x_case2territory)
+LEFT JOIN table_territory ter_init ON (ter_init.objid = cas.x_case2territory_init)
+LEFT JOIN table_part_num pn ON (cas.x_case2part_num = pn.objid)
+LEFT JOIN table_gbst_elm calltype ON (cas.calltype2gbst_elm = calltype.objid)
+LEFT JOIN table_gbst_elm casests ON (cas.casests2gbst_elm = casests.objid)
+LEFT JOIN table_hgbst_elm preftime ON (cas.x_case2hgbst_preftime = preftime.objid)
+LEFT JOIN table_hgbst_elm prefmeth ON (cas.x_case2hgbst_prefmeth = prefmeth.objid)
+LEFT JOIN table_contact reporter ON (cas.case_reporter2contact = reporter.objid)
+LEFT JOIN table_user owner ON (cas.case_owner2user = owner.objid)
+LEFT JOIN table_user originator ON (cas.case_originator2user = originator.objid)
+INNER JOIN table_ter_rol_itm rol ON (rol.rol_child2territory = ter.objid)
+INNER JOIN table_territory tparent ON (rol.rol_parent2territory = tparent.objid AND tparent.TYPE='Main')
+WHERE id_number IN ('{caseId}')
+]]>
+	</body>
+	</query>
+	<query schema="sa" name="getFaByFaId" description="Получает из CRM номер лицевого счёта по его номеру">
+		<parameters>
+			<parameter name="faId" />
+		</parameters>
+		<body>
+<![CDATA[
+select * from table_fin_accnt fa where objid = {faId}
+]]>		
+		</body>
+	</query>
+	<query schema="oms" name="getPricePlanByName" description="Получает из OMS все прайспланы с их свойствами по заданному имени прайсплана (параметр p1)">
+		<parameters>
+			<parameter name="p1" value="Пред. во врем. польз. SHDSL-модема"/>
+		</parameters>
+		<body>
+<![CDATA[
+SELECT * FROM (
+  SELECT 
+        t.name_text, 
+        t.ent_type entity_type,
+        t.cid, 
+        t.pcversion_id,
+        pp.price_plan_type,          
+        dp.property_name dyn_bill_prop,   
+        dp.VALUE dyn_bill_prop_value        
+  FROM 
+  (
+    SELECT 
+           tn.name_text, ci.*, ROW_NUMBER( ) OVER (partition BY ci.cid ORDER BY ci.pcversion_id DESC) RN 
+    FROM 
+           oms.tbcatalog_item ci
+    LEFT JOIN oms.tbname tn ON (ci.cid = tn.cid AND ci.pcversion_id = tn.pcversion_id)       
+    WHERE 
+         ci.ENT_TYPE = 'PCPRICE_PLAN' AND
+         tn.LANGUAGE = 'RU' 
+         and tn.name_text in ('{p1}')
+  ) t
+  RIGHT JOIN oms.tbdynamic_bill_prop dp ON (dp.element_id = t.cid AND dp.pcversion_id = t.pcversion_id)
+  LEFT JOIN oms.tbprice_plan pp ON (t.cid = pp.cid AND t.pcversion_id = pp.pcversion_id)
+  WHERE t.rn = 1
+)
+PIVOT (MAX(dyn_bill_prop_value) FOR dyn_bill_prop IN (
+    'Type of document' AS TYPE_OF_DOCUMNET,
+    'category_rule' AS CATEGORY_RULE,
+    'service_provider_name' AS SERVICE_PROVIDER_NAME,
+    'Domain Name for private office' AS DOMAIN_NAME_FPR_OFFICE,
+    'Ownership Type for Price plan' AS OWNERSHIP_TYPE_FOR_PP,
+    'Affiliate' AS AFFILIATE,
+    'Billing system type' AS BILLING_SYS_TYPE,
+    'Is local' AS IS_LOCAL,
+    'Restricted options' AS RESTRICTED_OPTIONS,
+    'Technology' AS TECHNOLOGY,
+    'Territory UBB' AS TERRITORY_UBB,
+    'Parameter category' AS PARAMETER_CATEGORY,
+    'Discount Amount' AS DICOUNT_AMOUNT,
+    'price_value' AS PRICE_VALUE,
+    'is_promo' AS IS_PROMO,
+    'Equipment type' AS EQUIPMENT_TYPE,
+    'SubTechnology' AS SUBTECHNOLOGY,
+    'period_for_installment_plan' AS PERIOD_FOR_INSTALMNT_PLAN,
+    'promo_duration' AS PROMO_DURATION,
+    'promo_duration_type' AS PROMO_DURATION_TYPE,
+    'Category for compatibility rules' AS CATEGORY_FOR_COMPAT_RULES,
+    'Default Tariff' AS DEFAULT_TARIFF,
+    'Priceplan Relation' AS PRICEPLAN_RELATION,
+    'Services' AS SERVICES,
+    'FXS port quantity' AS FXS_PORT_QTY,
+    'New equipment' AS NEW_EQPT,
+    'Period for installment plan' AS PERIOD_FOR_INSTALMNT_PLAN2,
+    'Is pricing' AS IS_PRICING,
+    'IS_CFS' AS IS_CFS,
+    'List of services' AS LIST_OF_SERVICES,
+    'Speed' AS SPEED,
+    'tech_type' AS TECH_TYPE,
+    'promo_cut_date' AS PROMO_CUT_DATE,
+    'Charge Type' AS CHARGE_TYPE,
+    'Id in Billing' AS ID_IN_BILLING,
+    'Order Action Type' AS ORDER_ACTION_TYPE,
+    'Territory PSTN' AS TERRITORY_PSTN,
+    'Promo purchase after rental' AS PROMO_PURCHASE_AFTER_RENTAL,
+    'Business role' AS BUSINESS_ROLE,
+    'Category for discounts' AS CATEGORY_FOR_DISCOUNTS,
+    'Equipment category' AS EQUIP_CATEGORY,
+    'Wifi availability' AS WIFI_AVAILABILITY,
+    'Promo Id' AS PROMO_ID,
+    'id_of_services_provider' AS ID_OF_SVC_PROVIDER,
+    'New equipment for price' AS NEW_EQPT_FOR_PRICE,
+    'Service Provider' AS SVC_PROVIDER,
+    'Date of given equipment' AS DATE_OF_GIVEN_EQPT,
+    'FSX port' AS FSX_PORT,
+    'Category for discount' AS CATEGORY_FOR_DISCOUNT,
+    'Discount Type' AS DICOUNT_TYPE,
+    'including_date_of_connection' AS INCLUDING_DATE_OF_CONN,
+    'Payment scheme' AS PAYMENT_SCHEME,
+    'period_for_delay_plan' AS PERIOD_FOR_DELAY_PLAN,
+    'basic_tariff' AS BASIC_TARIFF
+))
+]]>
+		</body>
+	</query>
+</queries>

@@ -1,0 +1,60 @@
+ INFO 2016-11-03 01:27:22,357 [main] (AppPropertyManager.java:105) - Loading application properties
+ INFO 2016-11-03 01:27:22,367 [main] (EPCImporter.java:276) - Started EPCAssistant (v.1.0)
+ INFO 2016-11-03 01:27:22,407 [main] (EPCImporter.java:170) - Oracle JDBC Driver Registered - OK.
+ INFO 2016-11-03 01:27:22,407 [main] (EPCImporter.java:179) - Loading available queries from 'queries.xml'
+ INFO 2016-11-03 01:27:26,698 [main] (EPCImporter.java:251) - Connected to database: crmdev
+ INFO 2016-11-03 01:27:26,761 [main] (EPCImporter.java:139) - Saving results to Excel...
+ INFO 2016-11-03 01:27:27,492 [main] (EPCImporter.java:143) - Finished saving results in Excel for query: getCaseByCaseNumber
+ INFO 2016-11-03 01:27:27,502 [main] (EPCImporter.java:139) - Saving results to Excel...
+ INFO 2016-11-03 01:27:27,592 [main] (EPCImporter.java:143) - Finished saving results in Excel for query: getFaByFaId
+ INFO 2016-11-03 01:27:27,612 [main] (EPCImporter.java:139) - Saving results to Excel...
+ INFO 2016-11-03 01:27:27,732 [main] (EPCImporter.java:143) - Finished saving results in Excel for query: getPricePlanByName
+ INFO 2016-11-03 01:27:27,752 [main] (EPCImporter.java:264) - DONE!
+ INFO 2016-11-03 01:49:25,011 [main] (AppPropertyManager.java:105) - Loading application properties
+ INFO 2016-11-03 01:49:25,011 [main] (EPCImporter.java:208) - Started EPCAssistant (v.1.0)
+ INFO 2016-11-03 01:49:25,061 [main] (JDBCManager.java:20) - Oracle JDBC Driver Registered - OK.
+ INFO 2016-11-03 01:49:25,061 [main] (QueryManager.java:88) - Loading available queries from 'queries.xml'
+ INFO 2016-11-03 01:49:34,208 [main] (EPCImporter.java:183) - Connected to database: crmdev
+ INFO 2016-11-03 01:49:34,282 [main] (EPCImporter.java:140) - Saving results to Excel...
+ INFO 2016-11-03 01:49:35,008 [main] (EPCImporter.java:144) - Finished saving results in Excel for query: getCaseByCaseNumber
+ INFO 2016-11-03 01:49:35,029 [main] (EPCImporter.java:140) - Saving results to Excel...
+ INFO 2016-11-03 01:49:35,109 [main] (EPCImporter.java:144) - Finished saving results in Excel for query: getFaByFaId
+ INFO 2016-11-03 01:49:35,229 [main] (EPCImporter.java:140) - Saving results to Excel...
+ INFO 2016-11-03 01:49:35,280 [main] (EPCImporter.java:144) - Finished saving results in Excel for query: getPricePlanByName
+ INFO 2016-11-03 01:49:35,300 [main] (EPCImporter.java:196) - DONE!
+ INFO 2016-11-03 01:54:41,959 [main] (AppPropertyManager.java:105) - Loading application properties
+ INFO 2016-11-03 01:54:41,969 [main] (EPCImporter.java:78) - Started EPCAssistant (v.1.0)
+ INFO 2016-11-03 01:54:42,019 [main] (JDBCManager.java:36) - Oracle JDBC Driver Registered - OK.
+ INFO 2016-11-03 01:54:42,019 [main] (QueryManager.java:88) - Loading available queries from 'queries.xml'
+ INFO 2016-11-03 01:54:46,560 [main] (EPCImporter.java:53) - Connected to database: crmdev
+ INFO 2016-11-03 01:54:46,660 [main] (JDBCManager.java:124) - Saving results to Excel...
+ INFO 2016-11-03 01:54:47,378 [main] (JDBCManager.java:128) - Finished saving results in Excel for query: getCaseByCaseNumber
+ INFO 2016-11-03 01:54:47,388 [main] (JDBCManager.java:124) - Saving results to Excel...
+ INFO 2016-11-03 01:54:47,468 [main] (JDBCManager.java:128) - Finished saving results in Excel for query: getFaByFaId
+ INFO 2016-11-03 01:54:47,488 [main] (JDBCManager.java:124) - Saving results to Excel...
+ INFO 2016-11-03 01:54:47,538 [main] (JDBCManager.java:128) - Finished saving results in Excel for query: getPricePlanByName
+ INFO 2016-11-03 01:54:47,548 [main] (EPCImporter.java:66) - DONE!
+ INFO 2016-11-03 02:06:24,217 [main] (AppPropertyManager.java:105) - Loading application properties
+ INFO 2016-11-03 02:06:24,257 [main] (EPCImporter.java:78) - Started EPCAssistant (v.1.0)
+ INFO 2016-11-03 02:06:24,307 [main] (JDBCManager.java:36) - Oracle JDBC Driver Registered - OK.
+ INFO 2016-11-03 02:06:24,307 [main] (QueryManager.java:88) - Loading available queries from 'queries.xml'
+ INFO 2016-11-03 02:06:29,333 [main] (EPCImporter.java:53) - Connected to database: crmdev
+ INFO 2016-11-03 02:06:29,404 [main] (JDBCManager.java:124) - Saving results to Excel...
+ INFO 2016-11-03 02:06:30,131 [main] (JDBCManager.java:128) - Finished saving results in Excel for query: getCaseByCaseNumber
+ INFO 2016-11-03 02:06:30,141 [main] (JDBCManager.java:124) - Saving results to Excel...
+ INFO 2016-11-03 02:06:30,221 [main] (JDBCManager.java:128) - Finished saving results in Excel for query: getFaByFaId
+ INFO 2016-11-03 02:06:30,251 [main] (JDBCManager.java:124) - Saving results to Excel...
+ INFO 2016-11-03 02:06:30,301 [main] (JDBCManager.java:128) - Finished saving results in Excel for query: getPricePlanByName
+ INFO 2016-11-03 02:06:30,311 [main] (EPCImporter.java:66) - DONE!
+ INFO 2016-11-03 02:25:58,447 [main] (AppPropertyManager.java:104) - Loading application properties
+ INFO 2016-11-03 02:25:58,457 [main] (EPCImporter.java:80) - Started EPCAssistant (v.1.0)
+ INFO 2016-11-03 02:25:58,527 [main] (JDBCManager.java:35) - Oracle JDBC Driver Registered - OK.
+ INFO 2016-11-03 02:25:58,527 [main] (QueryManager.java:88) - Loading available queries from 'queries.xml'
+ INFO 2016-11-03 02:26:02,330 [main] (EPCImporter.java:55) - Connected to database: crmdev
+ INFO 2016-11-03 02:26:02,752 [main] (JDBCManager.java:121) - Saving results to Excel...
+ INFO 2016-11-03 02:26:03,474 [main] (JDBCManager.java:125) - Finished saving results in Excel for query: getCaseByCaseNumber
+ INFO 2016-11-03 02:26:03,685 [main] (JDBCManager.java:121) - Saving results to Excel...
+ INFO 2016-11-03 02:26:03,765 [main] (JDBCManager.java:125) - Finished saving results in Excel for query: getFaByFaId
+ INFO 2016-11-03 02:26:03,955 [main] (JDBCManager.java:121) - Saving results to Excel...
+ INFO 2016-11-03 02:26:04,026 [main] (JDBCManager.java:125) - Finished saving results in Excel for query: getPricePlanByName
+ INFO 2016-11-03 02:26:04,046 [main] (EPCImporter.java:70) - DONE!
