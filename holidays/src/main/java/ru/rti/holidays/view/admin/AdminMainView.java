@@ -9,7 +9,7 @@ import org.vaadin.teemusa.sidemenu.SideMenu;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.exception.StandardViewExceptionHandler;
-import ru.rti.holidays.layout.admin.AdminTeamManegementLayout;
+import ru.rti.holidays.layout.admin.AdminTeamManagementLayout;
 import ru.rti.holidays.layout.admin.AdminUserManagementLayout;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.service.ProjectRoleService;
@@ -93,26 +93,26 @@ public class AdminMainView extends AbstractBaseView {
         sideMenu.addMenuItem("Управление командами", VaadinIcons.USERS, () -> {
 
 
-            AdminTeamManegementLayout adminTeamManegementLayout = new AdminTeamManegementLayout();
+            AdminTeamManagementLayout adminTeamManagementLayout = new AdminTeamManagementLayout();
             MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
-            adminTeamManegementLayout.setMargin(marginInfoLayout);
-            adminTeamManegementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminTeamManagementLayout.setMargin(marginInfoLayout);
+            adminTeamManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
 
-            adminTeamManegementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+            adminTeamManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
                 teamServiceImpl.addTeam((Team)objectForSave);
                 Notification.show("Команда успешно сохранена в базу!");
 
             });
 
-            adminTeamManegementLayout.setRefreshGridDataListener(layout -> {
+            adminTeamManagementLayout.setRefreshGridDataListener(layout -> {
                 List<Team> allTeams = teamServiceImpl.getAllTeams();
-                ((AdminTeamManegementLayout)layout).setTeams(allTeams);
+                ((AdminTeamManagementLayout)layout).setTeams(allTeams);
             });
 
-            adminTeamManegementLayout.constructLayout();
-            adminTeamManegementLayout.postConstructLayout();
+            adminTeamManagementLayout.constructLayout();
+            adminTeamManagementLayout.postConstructLayout();
 
-            sideMenu.setContent(adminTeamManegementLayout);
+            sideMenu.setContent(adminTeamManagementLayout);
         });
 
         sideMenu.addMenuItem("Встроенное меню", () -> {
