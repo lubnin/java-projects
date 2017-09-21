@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.repository.EmployeeRepository;
+import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
 import ru.rti.holidays.repository.HolidayPeriodRepository;
 
 import javax.transaction.Transactional;
@@ -20,7 +22,6 @@ import java.util.Set;
 @UIScope
 @SpringComponent
 public class EmployeeServiceImpl implements EmployeeService {
-
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -66,5 +67,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getByLoginName(String loginName) {
         return employeeRepository.findByLoginName(loginName);
+    }
+
+    @Override
+    public boolean deleteEmployees(Set<Employee> employees) {
+        employeeRepository.delete(employees);
+        return true;
     }
 }

@@ -3,6 +3,7 @@ package ru.rti.holidays.layout.base;
 import ru.rti.holidays.exception.ExceptionHandler;
 import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
+import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutRefreshGridDataListener;
 
@@ -27,4 +28,7 @@ public interface BaseLayout {
     // Save Button Logic
     SaveButtonClickListener getSaveButtonClickListener();
     void setSaveButtonClickListener(SaveButtonClickListener saveButtonClickListener);
+
+    RemoveSelectedItemsClickListener getRemoveSelectedItemsClickListener();
+    void setRemoveSelectedItemsClickListener(RemoveSelectedItemsClickListener removeSelectedItemsClickListener);
 }
