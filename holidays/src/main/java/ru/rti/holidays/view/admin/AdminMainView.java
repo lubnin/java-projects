@@ -14,6 +14,8 @@ import ru.rti.holidays.layout.admin.AdminUserManagementLayout;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.service.ProjectRoleService;
 import ru.rti.holidays.service.TeamService;
+import ru.rti.holidays.service.config.ConfigurationService;
+import ru.rti.holidays.service.localization.LocalizationService;
 import ru.rti.holidays.view.base.AbstractBaseView;
 import ru.rti.holidays.view.employee.EmployeeHolidaysView;
 import com.vaadin.ui.Notification.Type;
@@ -34,6 +36,12 @@ public class AdminMainView extends AbstractBaseView {
     @Autowired
     TeamService teamServiceImpl;
 
+    //@Autowired
+    //ConfigurationService configurationServiceImpl;
+    @Autowired
+    LocalizationService localizationServiceImpl;
+
+
     @Override
     protected Label getPageTitleLabel() {
         return null;
@@ -49,71 +57,12 @@ public class AdminMainView extends AbstractBaseView {
         MarginInfo marginInfo = new MarginInfo(false, false, false, false);
         sideMenu.setMargin(marginInfo);
 
-
-        sideMenu.setUserName("admin");
-        sideMenu.setUserMenuVisible(true);
-        sideMenu.clearUserMenu();
-        sideMenu.addUserMenuItem("Настройки", VaadinIcons.WRENCH, () -> {
-            Notification.show("Отображение настроек", Type.TRAY_NOTIFICATION);
-        });
-        sideMenu.addUserMenuItem("Выход", VaadinIcons.EXIT, () -> {
-            Notification.show("Выход из приложения", Type.TRAY_NOTIFICATION);
-        });
-
+        addUserMenu(sideMenu);
         sideMenu.addNavigation("Представление по умолчанию", "");
         sideMenu.addNavigation("Отпуска сотрудников", VaadinIcons.CALENDAR_CLOCK, EmployeeHolidaysView.VIEW_NAME);
 
-        sideMenu.addMenuItem("Управление пользователями", VaadinIcons.USER, () -> {
-            AdminUserManagementLayout adminUserManagementLayout = new AdminUserManagementLayout();
-            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
-            //sideMenu.setMargin(marginInfo);
-            adminUserManagementLayout.setMargin(marginInfoLayout);
-
-            adminUserManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
-            adminUserManagementLayout.setProjectRoles(projectRoleServiceImpl.getAllProjectRoles());
-
-            adminUserManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
-                employeeServiceImpl.addEmployee((Employee)objectForSave);
-                Notification.show("Сотрудник успешно сохранён в базу!");
-
-            });
-
-
-            adminUserManagementLayout.setRefreshGridDataListener(layout -> {
-                List<Employee> allEmployees = employeeServiceImpl.getAllEmployees();
-                ((AdminUserManagementLayout)layout).setEmployees(allEmployees);
-            });
-
-            adminUserManagementLayout.constructLayout();
-            adminUserManagementLayout.postConstructLayout();
-
-            sideMenu.setContent(adminUserManagementLayout);
-        });
-
-        sideMenu.addMenuItem("Управление командами", VaadinIcons.USERS, () -> {
-
-
-            AdminTeamManegementLayout adminTeamManegementLayout = new AdminTeamManegementLayout();
-            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
-            adminTeamManegementLayout.setMargin(marginInfoLayout);
-            adminTeamManegementLayout.setExceptionHandler(new StandardViewExceptionHandler());
-
-            adminTeamManegementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
-                teamServiceImpl.addTeam((Team)objectForSave);
-                Notification.show("Команда успешно сохранена в базу!");
-
-            });
-
-            adminTeamManegementLayout.setRefreshGridDataListener(layout -> {
-                List<Team> allTeams = teamServiceImpl.getAllTeams();
-                ((AdminTeamManegementLayout)layout).setTeams(allTeams);
-            });
-
-            adminTeamManegementLayout.constructLayout();
-            adminTeamManegementLayout.postConstructLayout();
-
-            sideMenu.setContent(adminTeamManegementLayout);
-        });
+        addUserManagementMenuItem(sideMenu);
+        addTeamManagementMenuItem(sideMenu);
 
         sideMenu.addMenuItem("Встроенное меню", () -> {
             VerticalLayout content = new VerticalLayout();
@@ -167,6 +116,74 @@ public class AdminMainView extends AbstractBaseView {
         hybridMenu.addMenuItem(lblMenuItem);
         hybridMenu.switchTheme(EMenuDesign.DARK);
         addComponent(hybridMenu);*/
+    }
+
+    private void addUserMenu(SideMenu sideMenu) {
+        sideMenu.setUserName("admin");
+        sideMenu.setUserMenuVisible(true);
+        sideMenu.clearUserMenu();
+        sideMenu.addUserMenuItem(localizationServiceImpl.getMessageAdminUserMenuSettings(), VaadinIcons.WRENCH, () -> {
+            Notification.show("Отображение настроек", Type.TRAY_NOTIFICATION);
+        });
+        sideMenu.addUserMenuItem(localizationServiceImpl.getMessageAdminUserMenuExit(), VaadinIcons.EXIT, () -> {
+            Notification.show("Выход из приложения", Type.TRAY_NOTIFICATION);
+        });
+    }
+
+    private void addTeamManagementMenuItem(SideMenu sideMenu) {
+        sideMenu.addMenuItem("Управление командами", VaadinIcons.USERS, () -> {
+
+
+            AdminTeamManegementLayout adminTeamManegementLayout = new AdminTeamManegementLayout();
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
+            adminTeamManegementLayout.setMargin(marginInfoLayout);
+            adminTeamManegementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+
+            adminTeamManegementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+                teamServiceImpl.addTeam((Team)objectForSave);
+                Notification.show("Команда успешно сохранена в базу!");
+
+            });
+
+            adminTeamManegementLayout.setRefreshGridDataListener(layout -> {
+                List<Team> allTeams = teamServiceImpl.getAllTeams();
+                ((AdminTeamManegementLayout)layout).setTeams(allTeams);
+            });
+
+            adminTeamManegementLayout.constructLayout();
+            adminTeamManegementLayout.postConstructLayout();
+
+            sideMenu.setContent(adminTeamManegementLayout);
+        });
+    }
+
+    private void addUserManagementMenuItem(SideMenu sideMenu) {
+        sideMenu.addMenuItem("Управление пользователями", VaadinIcons.USER, () -> {
+            AdminUserManagementLayout adminUserManagementLayout = new AdminUserManagementLayout();
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
+            //sideMenu.setMargin(marginInfo);
+            adminUserManagementLayout.setMargin(marginInfoLayout);
+
+            adminUserManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminUserManagementLayout.setProjectRoles(projectRoleServiceImpl.getAllProjectRoles());
+
+            adminUserManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+                employeeServiceImpl.addEmployee((Employee)objectForSave);
+                Notification.show("Сотрудник успешно сохранён в базу!");
+
+            });
+
+
+            adminUserManagementLayout.setRefreshGridDataListener(layout -> {
+                List<Employee> allEmployees = employeeServiceImpl.getAllEmployees();
+                ((AdminUserManagementLayout)layout).setEmployees(allEmployees);
+            });
+
+            adminUserManagementLayout.constructLayout();
+            adminUserManagementLayout.postConstructLayout();
+
+            sideMenu.setContent(adminUserManagementLayout);
+        });
     }
 
     @Override
