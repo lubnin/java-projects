@@ -1,0 +1,6 @@
+PostgreSQL password: QWERTY$4
+User: postgres
+
+Administrator user name (Email address): Maksim.Abramkin@RT.RU
+
+Admin Password: B09108b198613	

@@ -1,7 +1,5 @@
 package ru.rti.holidays.layout.admin;
 
-import com.vaadin.data.ValueProvider;
-import com.vaadin.server.Setter;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
@@ -11,15 +9,14 @@ import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
-import ru.rti.holidays.layout.generic.AddNewEntityLayout;
 import ru.rti.holidays.layout.team.AddNewTeamLayout;
 
 import java.util.List;
 import java.util.Set;
 
 @SpringComponent
-public class AdminTeamManegementLayout extends BaseVerticalLayout {
-    private static final Logger log = LoggerFactory.getLogger(AdminTeamManegementLayout.class);
+public class AdminTeamManagementLayout extends BaseVerticalLayout {
+    private static final Logger log = LoggerFactory.getLogger(AdminTeamManagementLayout.class);
     private Grid<Team> grdTeams = new Grid<>();
     private List<Team> teams;
 

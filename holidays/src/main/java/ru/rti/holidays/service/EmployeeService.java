@@ -2,6 +2,7 @@ package ru.rti.holidays.service;
 
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 
 import java.util.List;
 import java.util.Set;
@@ -15,4 +16,5 @@ public interface EmployeeService {
     List<HolidayPeriod> getHolidayPeriodsForEmployee(Employee employee);
     HolidayPeriod addHolidayPeriod(HolidayPeriod holidayPeriod);
     boolean deleteHolidayPeriods(Set<HolidayPeriod> holidayPeriods);
+    boolean deleteEmployees(Set<Employee> employees);
 }

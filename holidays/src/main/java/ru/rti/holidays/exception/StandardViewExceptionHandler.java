@@ -11,8 +11,8 @@ public class StandardViewExceptionHandler implements ExceptionHandler {
     @Override
     public void handle(Exception e, String errorMessage) {
         Notification notification = new Notification(
-                "Exception Caption",
-                "Exception Description",
+                "Ошибка",
+                errorMessage,
                 Notification.Type.ERROR_MESSAGE);
 
         notification.show(UI.getCurrent().getPage());

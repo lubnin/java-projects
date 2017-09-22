@@ -7,6 +7,7 @@ import ru.rti.holidays.exception.ExceptionHandler;
 import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.layout.EmployeeListLayout;
 import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
+import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 
 public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
@@ -14,6 +15,7 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     protected ExceptionHandler exceptionHandler;
     protected RefreshGridDataListener refreshGridDataListener;
     protected SaveButtonClickListener saveButtonClickListener;
+    protected RemoveSelectedItemsClickListener removeSelectedItemsClickListener;
     protected BaseLayout parentLayout;
 
     @Override
@@ -71,5 +73,16 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     @Override
     public BaseLayout getParentLayout() {
         return this.parentLayout;
+    }
+
+
+    @Override
+    public RemoveSelectedItemsClickListener getRemoveSelectedItemsClickListener() {
+        return removeSelectedItemsClickListener;
+    }
+
+    @Override
+    public void setRemoveSelectedItemsClickListener(RemoveSelectedItemsClickListener removeSelectedItemsClickListener) {
+        this.removeSelectedItemsClickListener = removeSelectedItemsClickListener;
     }
 }

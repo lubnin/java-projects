@@ -184,6 +184,7 @@ public class Employee implements DBEntity {
         return projectRole == null ? "" : projectRole.getRoleName();
     }
 
+    public String getTeamNameAsString() { return team == null ? "" : team.getTeamName(); }
     public void setProjectRole(ProjectRole projectRole) {
         this.projectRole = projectRole;
     }
