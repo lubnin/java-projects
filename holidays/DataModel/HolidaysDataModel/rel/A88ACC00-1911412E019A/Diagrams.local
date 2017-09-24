@@ -1,0 +1,4 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="main_view" objectID="54E65BE9-9E23-70E1-5597-E2F483C53C7A" name="Holidays_Relational_Model" visible="true"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

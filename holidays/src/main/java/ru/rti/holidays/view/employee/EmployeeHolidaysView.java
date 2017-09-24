@@ -5,7 +5,6 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.utility.CommonUtils;
@@ -46,7 +45,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         employeeHolidaysLayout.addMainButtonClickListener(layoutInstance -> {
 
             newHolidayPeriod.setEmployee(employee);
-            HolidayPeriod addedToDBHolidayPeriod = employeeServiceImpl.addHolidayPeriod(newHolidayPeriod);
+            HolidayPeriod addedToDBHolidayPeriod = employeeServiceImpl.saveHolidayPeriod(newHolidayPeriod);
 
             // re-create the instance
             newHolidayPeriod = new HolidayPeriod();
@@ -74,10 +73,6 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
         addComponent(employeeHolidaysLayout);
     }
-
-
-
-
 
     @Override
     protected boolean prepareViewData() {

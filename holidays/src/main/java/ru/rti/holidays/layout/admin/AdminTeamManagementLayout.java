@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.team.AddNewTeamLayout;
@@ -56,8 +57,28 @@ public class AdminTeamManagementLayout extends BaseVerticalLayout {
             AddNewTeamLayout addTeamLayout = new AddNewTeamLayout();
             addTeamLayout.setWidth("100%");
             addTeamLayout.setParentLayout(this);
+            addTeamLayout.setExceptionHandler(getExceptionHandler());
             addTeamLayout.setSaveButtonClickListener(saveButtonClickListener);
+            addTeamLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                if (removeSelectedItemsClickListener != null) {
+                    removeSelectedItemsClickListener.onRemoveSelectedItems(this, grdTeams.getSelectedItems());
+                    refreshDataGrid();
+                }
+            });
             addTeamLayout.constructLayout();
+
+            selectionModel.addMultiSelectionListener(event -> {
+                Set<Team> selectedItems = event.getAllSelectedItems();
+                addTeamLayout.setButtonRemoveSelectedEnabled(selectedItems != null && selectedItems.size() > 0);
+                if (selectedItems.size() == 1) {
+                    Team selectedTeam = event.getFirstSelectedItem().get();
+                    addTeamLayout.setNewBeanValue(selectedTeam);
+                    addTeamLayout.updateControlsFromBeanState();
+                } else {
+                    addTeamLayout.clearAllControls();
+                }
+            });
+
             addComponent(addTeamLayout);
         } catch (Exception e) {
             handleException(e, e.getMessage());

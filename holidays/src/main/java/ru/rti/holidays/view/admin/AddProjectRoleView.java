@@ -40,12 +40,12 @@ public class AddProjectRoleView extends VerticalLayout implements View {
         projectRoleBinder.forField(txtProjectRoleDescription)
                 .asRequired("Необходимо ввести описание роли")
                 .withStatusLabel(lblSaveStatus)
-                .bind(ProjectRole::getRoleDescripion, ProjectRole::setRoleDescripion);
+                .bind(ProjectRole::getRoleDescription, ProjectRole::setRoleDescription);
 
         Button btnSaveProjectRole = new Button("Сохранить", event -> {
             try {
                 projectRoleBinder.writeBean(newProjectRole);
-                projectRoleServiceImpl.addProjectRole(newProjectRole);
+                projectRoleServiceImpl.saveProjectRole(newProjectRole);
                 Notification.show("Проектная роль успешно сохранена в базу!");
                 getUI().getNavigator().navigateTo(AddProjectRoleView.VIEW_NAME);
             } catch (ValidationException e) {

@@ -1,0 +1,181 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="42424070-C01D-322C-8EFC-CF3C74E7647F" name="employee">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:53:42 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<ordsAlias>table_1</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="emp_id" id="D0E5B241-2AD3-085A-3E65-07FE98FF674D">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:54:32 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_name" directorySegmentName="seg_0" id="0D379452-AC6A-CD51-396D-A61FED5C6A89">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:58:15 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="first_name" directorySegmentName="seg_0" id="CD21DE80-7200-B75C-DBAB-7696464409B6">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:58:31 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="middle_name" directorySegmentName="seg_0" id="298ED1BC-D49D-190E-5E54-F04448B4C1EA">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:58:56 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="login_name" directorySegmentName="seg_0" id="58C1C3E3-9E3B-A1F1-40A3-FE18B743AA78">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:58:56 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="password" id="D8C5F784-3915-5EF6-B540-85098B779404">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:55:21 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="email" directorySegmentName="seg_0" id="97C372DD-BDA7-FF6F-C68F-AF38A210B79F">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:59:16 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="project_role_id" directorySegmentName="seg_0" id="6E19E072-9129-5C79-8D6F-78E935AF83B2">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:59:39 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="21A8D8D9-5C47-037F-CDEC-AEA904DAFD96" referredColumn="B4BCBA55-8462-B2E0-B5F7-528A97A1D264"/>
+</associations>
+</Column>
+<Column name="team_id" directorySegmentName="seg_0" id="8996BD6D-0CB2-552E-070C-812509ADA55E">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:59:50 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created" directorySegmentName="seg_0" id="F3672750-06CF-63C4-328C-2AE6673E8F28">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:00:20 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="updated" directorySegmentName="seg_0" id="09811C7F-9424-7286-D45C-71B8EE99F7B9">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:00:33 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="team_team_id" id="29F401AA-CBB5-E5C6-25FB-6BDB4E76CC4C">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:13:28 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="ED80CDFF-0752-03D8-78D0-44F88CD673A0" referredColumn="7D91AD39-BEBF-2A45-C21A-2D7F154151C0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="901DAEAC-E472-62EB-4A13-63AF9A4F3538" name="employee_PK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:57:26 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D0E5B241-2AD3-085A-3E65-07FE98FF674D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DD6828E0-BF48-4B26-4640-730353798F4F" name="employee_team_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:13:28 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="29F401AA-CBB5-E5C6-25FB-6BDB4E76CC4C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D267D3A5-B035-F0FD-985D-28EDE84507DC" name="employee_project_role_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:18:53 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6E19E072-9129-5C79-8D6F-78E935AF83B2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

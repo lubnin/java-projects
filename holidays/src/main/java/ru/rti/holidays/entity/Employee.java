@@ -66,6 +66,12 @@ public class Employee implements DBEntity {
     private String loginName;
 
     /**
+     * Password of the Employee. This is used for logging in to the Application
+     */
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    /**
      * The list of holiday periods which this Employee submitted for negotiation for the working year
      */
     @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -119,7 +125,6 @@ public class Employee implements DBEntity {
         this.middleName = middleName;
         this.loginName = loginName;
     }
-
     @PrePersist
     public void onCreate() {
         created = new Date();
@@ -221,6 +226,14 @@ public class Employee implements DBEntity {
         this.teamLeadTeam = teamLeadTeam;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return String.format("Employee[id=%d, firstName='%s', lastName='%s', middleName='%s', loginName='%s', email='%s']",
@@ -236,4 +249,6 @@ public class Employee implements DBEntity {
     public DBEntity construct() {
         return new Employee();
     }
+
+
 }

@@ -8,6 +8,7 @@ import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @UIScope
@@ -22,7 +23,13 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     }
 
     @Override
-    public HolidayPeriodNegotiationStatus addHolidayPeriodNegotiationStatus(HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus) {
+    public HolidayPeriodNegotiationStatus saveHolidayPeriodNegotiationStatus(HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus) {
         return holidayPeriodNegotiationStatusRepository.saveAndFlush(holidayPeriodNegotiationStatus);
+    }
+
+    @Override
+    public boolean deleteHolidayPeriodNegotiationStatuses(Set<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses) {
+        holidayPeriodNegotiationStatusRepository.delete(holidayPeriodNegotiationStatuses);
+        return true;
     }
 }

@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="85FA3C35-5999-C1DE-9016-636EA78B64E3" mainViewID="C5988EAD-35A5-CCF2-0314-9186E18D525E">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 19:51:42 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

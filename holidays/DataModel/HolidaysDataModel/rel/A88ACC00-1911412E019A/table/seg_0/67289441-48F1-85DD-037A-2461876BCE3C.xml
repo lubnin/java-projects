@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="67289441-48F1-85DD-037A-2461876BCE3C" name="project_role">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:17:04 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<ordsAlias>table_3</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="project_role_id" id="B4BCBA55-8462-B2E0-B5F7-528A97A1D264">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:17:31 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="role_name" id="24016ABB-90C6-6913-8152-3EE837A43B0D">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:17:44 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="role_description" id="9874ED41-5900-FD98-77EF-9B25CB43898C">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:18:03 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="special_type" id="658EFFD0-4D0B-7D96-06A5-A17F45A61399">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-24 00:56:52 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created" id="60E3F224-7114-265C-EDC4-2A1D99A484F7">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:18:27 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="updated" id="EEFCEDB5-B7F7-30AD-5250-8B9DD017C065">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:18:36 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7F0DBA1D-72F5-85E1-B469-3EC6112219D3" name="project_role_PK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:17:31 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B4BCBA55-8462-B2E0-B5F7-528A97A1D264"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

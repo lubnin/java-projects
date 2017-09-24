@@ -29,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private HolidayPeriodRepository holidayPeriodRepository;
 
     @Override
-    public Employee addEmployee(Employee employee) {
+    public Employee saveEmployee(Employee employee) {
         return employeeRepository.saveAndFlush(employee);
     }
 
@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public HolidayPeriod addHolidayPeriod(HolidayPeriod holidayPeriod) {
+    public HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod) {
         return holidayPeriodRepository.saveAndFlush(holidayPeriod);
     }
 

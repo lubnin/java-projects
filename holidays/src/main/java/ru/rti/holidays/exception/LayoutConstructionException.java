@@ -7,6 +7,7 @@ package ru.rti.holidays.exception;
  * in 'BaseVerticalLayout' class
  * @see ru.rti.holidays.layout.base.BaseLayout
  * @see ru.rti.holidays.layout.base.BaseVerticalLayout
+ * @deprecated
  */
 public class LayoutConstructionException extends Exception {
 

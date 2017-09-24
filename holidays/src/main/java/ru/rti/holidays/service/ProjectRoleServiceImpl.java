@@ -8,6 +8,7 @@ import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.repository.ProjectRoleRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @UIScope
@@ -18,7 +19,7 @@ public class ProjectRoleServiceImpl implements ProjectRoleService {
     private ProjectRoleRepository projectRoleRepository;
 
     @Override
-    public ProjectRole addProjectRole(ProjectRole projectRole) {
+    public ProjectRole saveProjectRole(ProjectRole projectRole) {
         return projectRoleRepository.saveAndFlush(projectRole);
     }
 
@@ -30,5 +31,11 @@ public class ProjectRoleServiceImpl implements ProjectRoleService {
     @Override
     public List<ProjectRole> getAllProjectRoles() {
         return projectRoleRepository.findAll();
+    }
+
+    @Override
+    public boolean deleteProjectRoles(Set<ProjectRole> projectRoles) {
+        projectRoleRepository.delete(projectRoles);
+        return true;
     }
 }

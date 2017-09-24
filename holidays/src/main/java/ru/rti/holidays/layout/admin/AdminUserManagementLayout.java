@@ -33,7 +33,6 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
     public void constructLayout() {
         try {
             addComponent(new PageTitle("Управление пользователями"));
-
             addComponent(new BoldLabel("Все пользователи"));
 
             MultiSelectionModel<Employee> selectionModel =
@@ -45,6 +44,7 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             addEmployeeLayout.setParentLayout(this);
             addEmployeeLayout.setProjectRoles(projectRoles);
             addEmployeeLayout.setTeams(teams);
+            addEmployeeLayout.setExceptionHandler(getExceptionHandler());
             addEmployeeLayout.setSaveButtonClickListener(saveButtonClickListener);
             addEmployeeLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
                 if (removeSelectedItemsClickListener != null) {
@@ -57,6 +57,13 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             selectionModel.addMultiSelectionListener(event -> {
                 Set<Employee> selectedItems = event.getAllSelectedItems();
                 addEmployeeLayout.setButtonRemoveSelectedEnabled(selectedItems != null && selectedItems.size() > 0);
+                if (selectedItems.size() == 1) {
+                    Employee selectedEmployee = event.getFirstSelectedItem().get();
+                    addEmployeeLayout.setNewBeanValue(selectedEmployee);
+                    addEmployeeLayout.updateControlsFromBeanState();
+                } else {
+                    addEmployeeLayout.clearAllControls();
+                }
             });
 
             grdEmployees.addColumn(Employee::getLastName).setCaption("Фамилия");

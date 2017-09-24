@@ -77,7 +77,7 @@ public class AddEmployeeView extends VerticalLayout implements View {
         Button btnSaveEmployee = new Button("Сохранить", event -> {
             try {
                 employeeBinder.writeBean(newEmployee);
-                employeeServiceImpl.addEmployee(newEmployee);
+                employeeServiceImpl.saveEmployee(newEmployee);
                 //employeeBinder.
                 //employeeBinder.readBean(newEmployee);
                 Notification.show("Сотрудник успешно сохранён в базу!");

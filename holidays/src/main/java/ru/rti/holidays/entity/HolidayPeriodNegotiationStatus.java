@@ -31,8 +31,11 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
     @Column(name = "updated")
     private Date updated;
 
-    @Column(name = "statusName")
+    @Column(name = "statusName", nullable = false)
     private String statusName;
+
+    @Column(name = "statusDescription")
+    private String statusDescription;
 
     @PrePersist
     public void onCreate() {
@@ -57,11 +60,20 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
         this.statusName = statusName;
     }
 
+    public String getStatusDescription() {
+        return statusDescription;
+    }
+
+    public void setStatusDescription(String statusDescription) {
+        this.statusDescription = statusDescription;
+    }
+
     @Override
     public String toString() {
-        return String.format("HolidayPeriodNegotiationStatus[id=%d, statusName='%s', created='%s', updated='%s']",
+        return String.format("HolidayPeriodNegotiationStatus[id=%d, statusName='%s', statusDescription='%s', created='%s', updated='%s']",
                 id,
                 statusName,
+                statusDescription,
                 created,
                 updated);
     }

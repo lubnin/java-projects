@@ -8,6 +8,7 @@ import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.repository.TeamRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @UIScope
@@ -17,7 +18,7 @@ public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
 
     @Override
-    public Team addTeam(Team team) {
+    public Team saveTeam(Team team) {
         return teamRepository.saveAndFlush(team);
     }
 
@@ -34,5 +35,11 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
+    }
+
+    @Override
+    public boolean deleteTeams(Set<Team> teams) {
+        teamRepository.delete(teams);
+        return true;
     }
 }

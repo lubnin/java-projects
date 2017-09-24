@@ -8,16 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.teemusa.sidemenu.SideMenu;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
+import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
-import ru.rti.holidays.exception.StandardViewExceptionHandler;
+import ru.rti.holidays.exception.handler.StandardViewExceptionHandler;
 import ru.rti.holidays.layout.admin.AdminHolidayPeriodNegotiationStatusLayout;
+import ru.rti.holidays.layout.admin.AdminProjectRoleManagementLayout;
 import ru.rti.holidays.layout.admin.AdminTeamManagementLayout;
 import ru.rti.holidays.layout.admin.AdminUserManagementLayout;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.service.HolidayPeriodService;
 import ru.rti.holidays.service.ProjectRoleService;
 import ru.rti.holidays.service.TeamService;
-import ru.rti.holidays.service.config.ConfigurationService;
 import ru.rti.holidays.service.localization.LocalizationService;
 import ru.rti.holidays.view.base.AbstractBaseView;
 import ru.rti.holidays.view.employee.EmployeeHolidaysView;
@@ -71,6 +72,7 @@ public class AdminMainView extends AbstractBaseView {
         addHolidayPeriodNegotiationStatusManagementMenuItem(sideMenu);
         addUserManagementMenuItem(sideMenu);
         addTeamManagementMenuItem(sideMenu);
+        addProjectRoleManagementMenuItem(sideMenu);
 
         sideMenu.addMenuItem("Встроенное меню", () -> {
             VerticalLayout content = new VerticalLayout();
@@ -126,6 +128,54 @@ public class AdminMainView extends AbstractBaseView {
         addComponent(hybridMenu);*/
     }
 
+
+    private void addProjectRoleManagementMenuItem(SideMenu sideMenu) {
+        sideMenu.addMenuItem("Управление проектными ролями", VaadinIcons.USER_STAR, () -> {
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
+
+
+/*
+            AddNewEntityLayout<ProjectRole> projectRoleAddNewEntityLayout = new AddNewEntityLayout<>(ProjectRole.class);
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
+            projectRoleAddNewEntityLayout.setMargin(marginInfoLayout);
+            projectRoleAddNewEntityLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            projectRoleAddNewEntityLayout.constructLayout();
+            projectRoleAddNewEntityLayout.postConstructLayout();
+*/
+
+            AdminProjectRoleManagementLayout adminProjectRoleManagementLayout = new AdminProjectRoleManagementLayout();
+            adminProjectRoleManagementLayout.setMargin(marginInfoLayout);
+            adminProjectRoleManagementLayout.setPageTitle("Управление проектными ролями");
+            adminProjectRoleManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+
+            adminProjectRoleManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+                projectRoleServiceImpl.saveProjectRole((ProjectRole)objectForSave);
+                Notification.show("Проектная роль успешно сохранена!");
+            });
+
+            adminProjectRoleManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                projectRoleServiceImpl.deleteProjectRoles((Set<ProjectRole>)entities);
+                Notification.show("Выбранные проектные роли успешно удалены!");
+            });
+
+            adminProjectRoleManagementLayout.setRefreshGridDataListener(layout -> {
+                List<ProjectRole> allProjectRoles = projectRoleServiceImpl.getAllProjectRoles();
+                ((AdminProjectRoleManagementLayout)layout).setProjectRoles(allProjectRoles);
+
+            });
+
+            adminProjectRoleManagementLayout.constructLayout();
+            adminProjectRoleManagementLayout.postConstructLayout();
+
+            ///Binder<ProjectRole> binder = projectRoleAddNewEntityLayout.getEntityBinder();
+
+            //List<AddNewEntityLayout.NewEntityTextControlBinding> textCtrlBindings = projectRoleAddNewEntityLayout.getTextControlBindings();
+            //textCtrlBindings.add(new AddNewEntityLayout.NewEntityTextControlBinding("Название роли", ProjectRole::getRoleName, ProjectRole::setRoleName));
+
+            sideMenu.setContent(adminProjectRoleManagementLayout);
+        });
+    }
+
     private void addUserMenu(SideMenu sideMenu) {
         sideMenu.setUserName("admin");
         sideMenu.setUserMenuVisible(true);
@@ -137,12 +187,25 @@ public class AdminMainView extends AbstractBaseView {
             Notification.show("Выход из приложения", Type.TRAY_NOTIFICATION);
         });
     }
-                holidayPeriodServiceImpl.addHolidayPeriodNegotiationStatus((HolidayPeriodNegotiationStatus)objectForSave);
 
-                Notification.show("Статус согласования отпуска успешно сохранён в базу!");
+    private void addHolidayPeriodNegotiationStatusManagementMenuItem(SideMenu sideMenu) {
+        sideMenu.addMenuItem("Управление статусами согласования отпусков", VaadinIcons.CHECK, () -> {
+            AdminHolidayPeriodNegotiationStatusLayout adminHolidayPeriodNegotiationStatusLayout = new AdminHolidayPeriodNegotiationStatusLayout();
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
 
+            adminHolidayPeriodNegotiationStatusLayout.setMargin(marginInfoLayout);
+            adminHolidayPeriodNegotiationStatusLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminHolidayPeriodNegotiationStatusLayout.setHolidayPeriodNegotiationStatuses(holidayPeriodServiceImpl.getAllHolidayPeriodNegotiationStatuses());
+
+            adminHolidayPeriodNegotiationStatusLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+                holidayPeriodServiceImpl.saveHolidayPeriodNegotiationStatus((HolidayPeriodNegotiationStatus)objectForSave);
+                Notification.show("Статус согласования отпуска успешно сохранён!");
             });
 
+            adminHolidayPeriodNegotiationStatusLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                holidayPeriodServiceImpl.deleteHolidayPeriodNegotiationStatuses((Set<HolidayPeriodNegotiationStatus>)entities);
+                Notification.show("Выбранные статусы согласования отпуска успешно удалены!");
+            });
 
             adminHolidayPeriodNegotiationStatusLayout.setRefreshGridDataListener(layout -> {
                 List<HolidayPeriodNegotiationStatus> allHolidayPeriodNegotiationStatuses = holidayPeriodServiceImpl.getAllHolidayPeriodNegotiationStatuses();
@@ -175,8 +238,8 @@ public class AdminMainView extends AbstractBaseView {
             });
 
             adminUserManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
-                employeeServiceImpl.addEmployee((Employee)objectForSave);
-                Notification.show("Сотрудник успешно сохранён в базу!");
+                employeeServiceImpl.saveEmployee((Employee)objectForSave);
+                Notification.show("Сотрудник успешно сохранён!");
             });
 
 
@@ -202,10 +265,16 @@ public class AdminMainView extends AbstractBaseView {
             adminTeamManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
 
             adminTeamManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
-                teamServiceImpl.addTeam((Team)objectForSave);
-                Notification.show("Команда успешно сохранена в базу!");
+                teamServiceImpl.saveTeam((Team)objectForSave);
+                Notification.show("Команда успешно сохранена!");
 
             });
+
+            adminTeamManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                teamServiceImpl.deleteTeams((Set<Team>)entities);
+                Notification.show("Выбранные команды успешно удалены!");
+            });
+
 
             adminTeamManagementLayout.setRefreshGridDataListener(layout -> {
                 List<Team> allTeams = teamServiceImpl.getAllTeams();

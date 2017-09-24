@@ -5,6 +5,9 @@
 create role holidays LOGIN PASSWORD 'holidays';
 create database holidays owner holidays;
 
+
+select * from employee;
+
 --drop role holidays;
 
 

@@ -5,6 +5,7 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
@@ -13,12 +14,24 @@ import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import java.util.List;
 
 public class AddNewTeamLayout extends BaseVerticalLayout {
-    Binder<Team> teamBinder = new Binder<Team>();
-    Team newTeam = new Team();
+    private Binder<Team> teamBinder = new Binder<Team>();
+    private Team newTeam = new Team();
+    private Button btnRemoveSelectedTeams = new Button("Удалить выбранные команды");
+
+    public void setButtonRemoveSelectedEnabled(boolean isEnabled) { btnRemoveSelectedTeams.setEnabled(isEnabled);}
+
+    @Override
+    public void setNewBeanValue(DBEntity newBeanValue) {
+        if (newBeanValue instanceof Team) {
+            newTeam = (Team)newBeanValue;
+        }
+    }
 
     @Override
     public void constructLayout() {
         TextField txtTeamName = new TextField("Название команды:");
+        txtTeamName.setWidth("100%");
+
         teamBinder.forField(txtTeamName)
                 .asRequired("Необходимо ввести название команды")
                 .bind(Team::getTeamName, Team::setTeamName);
@@ -30,8 +43,7 @@ public class AddNewTeamLayout extends BaseVerticalLayout {
                     saveButtonClickListener.onSaveData(this, newTeam);
                 }
 
-                newTeam = new Team();
-                teamBinder.readBean(newTeam);
+                clearAllControls();
 
                 if (getParentLayout() != null) {
                     getParentLayout().refreshDataGrid();
@@ -41,19 +53,42 @@ public class AddNewTeamLayout extends BaseVerticalLayout {
             }
         });
 
+
+        btnRemoveSelectedTeams.addStyleName(ValoTheme.BUTTON_DANGER);
+        btnRemoveSelectedTeams.setIcon(VaadinIcons.DEL);
+        btnRemoveSelectedTeams.setEnabled(false);
+        btnRemoveSelectedTeams.addClickListener(event -> {
+            if (removeSelectedItemsClickListener != null) {
+                removeSelectedItemsClickListener.onRemoveSelectedItems(null, null);
+            }
+        });
+        btnRemoveSelectedTeams.setWidth("100%");
+
         btnSaveTeam.addStyleName(ValoTheme.BUTTON_FRIENDLY);
         btnSaveTeam.setIcon(VaadinIcons.CHECK);
 
-        this.addStyleName("debug_border");
+        //this.addStyleName("debug_border");
         setMargin(false);
 
-        GridLayout addTeamGridLayout = new GridLayout(2, 1);
-        addTeamGridLayout.addStyleName("debug_border");
+        GridLayout addTeamGridLayout = new GridLayout(2, 2);
+        //addTeamGridLayout.addStyleName("debug_border");
         addTeamGridLayout.setSpacing(true);
         addTeamGridLayout.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-        addTeamGridLayout.addComponent(txtTeamName, 0,0);
-        addTeamGridLayout.addComponent(btnSaveTeam, 1,0);
+        addTeamGridLayout.addComponent(txtTeamName, 0,0, 1, 0);
+        addTeamGridLayout.addComponent(btnSaveTeam, 0,1);
+        addTeamGridLayout.addComponent(btnRemoveSelectedTeams, 1, 1);
 
         addComponents(addTeamGridLayout);
+    }
+
+    @Override
+    public void updateControlsFromBeanState() {
+        teamBinder.readBean(newTeam);
+    }
+
+    @Override
+    public void clearAllControls() {
+        setNewBeanValue(new Team());
+        updateControlsFromBeanState();
     }
 }

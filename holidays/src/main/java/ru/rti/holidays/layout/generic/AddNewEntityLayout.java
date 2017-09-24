@@ -5,6 +5,7 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValueProvider;
 import com.vaadin.server.Setter;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
@@ -20,7 +21,7 @@ public class AddNewEntityLayout<T extends DBEntity> extends BaseVerticalLayout {
 
     private List<NewEntityTextControlBinding> textControlBindings;
 
-    public class NewEntityTextControlBinding<T extends String, V extends ValueProvider, S extends Setter> {
+    public class NewEntityTextControlBinding {
         private T caption;
         private ValueProvider vp;
         private Setter st;
@@ -137,6 +138,8 @@ public class AddNewEntityLayout<T extends DBEntity> extends BaseVerticalLayout {
             }
         });*/
 
+        addComponent(new Label("Generic layout"));
+        addComponent(btnSaveEntity);
 
     }
 

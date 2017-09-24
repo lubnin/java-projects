@@ -1,4 +1,4 @@
-package ru.rti.holidays.exception;
+package ru.rti.holidays.exception.handler;
 
 /**
  * Default exception handler for disabling exception handling at all and do nothing.

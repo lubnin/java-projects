@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="098A0721-1348-399F-2495-18DF15100F98" name="holiday_period_neg_status">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:23:48 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<ordsAlias>table_5</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="hol_period_neg_status_id" id="4FDE6DAC-A5DA-A113-F90C-8DCA0410CACF">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:24:16 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="status_name" id="191E2E51-DBE2-1194-FAA4-550E06A75172">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:24:45 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="status_description" id="97F0CB56-66BC-73BC-0A52-D854B4A791DB">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 21:16:56 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created" id="6F30DA5C-AEF7-1DD8-9196-FDDBB481EBAB">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:24:57 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="updated" id="F4BCEB6D-FB9A-DF04-C902-D1AB19634CB7">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:25:06 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DA79C6BE-AD48-4FE9-0C25-162F37E56547" name="holiday_period_neg_status_PK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-23 20:24:18 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4FDE6DAC-A5DA-A113-F90C-8DCA0410CACF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

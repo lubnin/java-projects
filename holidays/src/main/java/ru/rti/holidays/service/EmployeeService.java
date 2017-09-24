@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface EmployeeService {
-    Employee addEmployee(Employee employee);
+    Employee saveEmployee(Employee employee);
     void delete(Long id);
     List<Employee> getByLastName(String lastName);
     Employee getByLoginName(String loginName);
     List<Employee> getAllEmployees();
     List<HolidayPeriod> getHolidayPeriodsForEmployee(Employee employee);
-    HolidayPeriod addHolidayPeriod(HolidayPeriod holidayPeriod);
+    HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod);
     boolean deleteHolidayPeriods(Set<HolidayPeriod> holidayPeriods);
     boolean deleteEmployees(Set<Employee> employees);
 }

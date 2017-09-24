@@ -1,4 +1,4 @@
-package ru.rti.holidays.exception;
+package ru.rti.holidays.exception.handler;
 
 /**
  * Common interface for implementation Exception handling logic in Vaadin Views

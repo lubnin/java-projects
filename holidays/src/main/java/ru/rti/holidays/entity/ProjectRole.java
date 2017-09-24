@@ -2,8 +2,11 @@ package ru.rti.holidays.entity;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import org.hibernate.annotations.GenericGenerator;
+import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,31 @@ import java.util.List;
 @Entity
 @Table(name = "project_role")
 public class ProjectRole implements DBEntity {
+
+    public enum ProjectRoleSpecialType {
+        PROJECT_ROLE_SPECIAL_TYPE_REGULAR(0L, "Обычная роль"),
+        PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD(1L, "Тимлид команды"),
+        PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER(2L, "Руководитель проекта"),
+        PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER(3L, "Линейный руководитель");
+
+        private final Long typeId;
+        private final String description;
+
+        ProjectRoleSpecialType(Long typeId, String description) {
+            this.typeId = typeId;
+            this.description = description;
+        }
+
+        public static List<ProjectRoleSpecialType> getRolesWithTeamManagementAbility() {
+            return Arrays.asList(
+                    PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD,
+                    PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER,
+                    PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER);
+        }
+        public Long getTypeId() { return this.typeId; }
+        public String getDescription() { return this.description; }
+    }
+
     /**
      * The primary key for the table holding ProjectRole instances
      */
@@ -45,7 +73,7 @@ public class ProjectRole implements DBEntity {
      * in a human-readable format
      */
     @Column(name = "roleDescription", nullable = false)
-    private String roleDescripion;
+    private String roleDescription;
 
     /**
      * The list of Employee entities which have this project role as a primary role
@@ -65,13 +93,19 @@ public class ProjectRole implements DBEntity {
     @Column(name = "updated")
     private Date updated;
 
-    public ProjectRole() {
+    @Column(name = "specialType", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private ProjectRoleSpecialType projectRoleSpecialType;
 
+    public ProjectRole() {
+        this(GlobalConstants.EMPTY_STRING, GlobalConstants.EMPTY_STRING);
     }
 
     public ProjectRole(String roleName, String roleDescription) {
+        this.projectRoleSpecialType = ProjectRoleSpecialType.PROJECT_ROLE_SPECIAL_TYPE_REGULAR;
         this.roleName = roleName;
-        this.roleDescripion = roleDescription;
+        this.roleDescription = roleDescription;
     }
 
     @PrePersist
@@ -103,22 +137,32 @@ public class ProjectRole implements DBEntity {
         this.roleName = roleName;
     }
 
-    public String getRoleDescripion() {
-        return roleDescripion;
+    public String getRoleDescription() {
+        return roleDescription;
     }
 
-    public void setRoleDescripion(String roleDescripion) {
-        this.roleDescripion = roleDescripion;
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
     }
 
+    public ProjectRoleSpecialType getProjectRoleSpecialType() {
+        return projectRoleSpecialType;
+    }
 
+    public void setProjectRoleSpecialType(ProjectRoleSpecialType projectRoleSpecialType) {
+        this.projectRoleSpecialType = projectRoleSpecialType;
+    }
+
+    public String getProjectRoleSpecialTypeAsString() {
+        return getProjectRoleSpecialType().getDescription();
+    }
 
     @Override
     public String toString() {
         return String.format("ProjectRole[id=%d, roleName='%s', roleDescription='%s', created='%s', updated='%s']",
                 id,
                 roleName,
-                roleDescripion,
+                roleDescription,
                 created,
                 updated);
     }

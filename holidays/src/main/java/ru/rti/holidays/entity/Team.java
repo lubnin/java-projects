@@ -7,6 +7,10 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Entity which describes the Scrum Team containing multiple Employee entities.
+ * The team has a TeamLead (Employee instance) and a ProjectManager (Emploee instance).
+ */
 @SpringComponent
 @Entity
 @Table(name = "team")
