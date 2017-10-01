@@ -13,6 +13,7 @@ import java.util.Set;
 @Service
 @UIScope
 @SpringComponent
+@SuppressWarnings("unused")
 public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     @Autowired
     private HolidayPeriodNegotiationStatusRepository holidayPeriodNegotiationStatusRepository;
@@ -28,7 +29,7 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     }
 
     @Override
-    public boolean deleteHolidayPeriodNegotiationStatuses(Set<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses) {
+    public boolean deleteHolidayPeriodNegotiationStatuses(Iterable<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses) {
         holidayPeriodNegotiationStatusRepository.delete(holidayPeriodNegotiationStatuses);
         return true;
     }

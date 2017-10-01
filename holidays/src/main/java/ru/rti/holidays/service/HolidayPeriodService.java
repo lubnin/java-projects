@@ -6,8 +6,9 @@ import ru.rti.holidays.entity.ProjectRole;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public interface HolidayPeriodService {
     List<HolidayPeriodNegotiationStatus> getAllHolidayPeriodNegotiationStatuses();
     HolidayPeriodNegotiationStatus saveHolidayPeriodNegotiationStatus(HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus);
-    boolean deleteHolidayPeriodNegotiationStatuses(Set<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses);
+    boolean deleteHolidayPeriodNegotiationStatuses(Iterable<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses);
 }

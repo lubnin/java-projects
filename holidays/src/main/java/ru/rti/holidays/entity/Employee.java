@@ -1,12 +1,13 @@
 package ru.rti.holidays.entity;
 
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
 import org.hibernate.annotations.GenericGenerator;
+import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Entity which describes the Employee, working in the company.
@@ -14,13 +15,13 @@ import java.util.List;
 @SpringComponent
 @Entity
 @Table(name = "employee")
+@SuppressWarnings("unused")
 public class Employee implements DBEntity {
     /**
      * The primary key for the table holding Employee instances
      */
 
-    //TODO: fix 9 to 1 before going to production mode
-
+    //TODO: fix 9 to 1 sequence start value before going to production mode
     @GenericGenerator(
             name = "employeeSequenceGenerator",
             strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
@@ -50,13 +51,13 @@ public class Employee implements DBEntity {
     /**
      * The middle name of this Employee
      */
-    @Column(name = "middleName", nullable = true)
+    @Column(name = "middleName")
     private String middleName;
 
     /**
      * E-Mail in GD.RT.RU or other domain of Active Directory which is used for mailing purposes
      */
-    @Column(name = "email", nullable = true)
+    @Column(name = "email")
     private String email;
 
     /**
@@ -80,17 +81,33 @@ public class Employee implements DBEntity {
     /**
      * The reference to the ProjectRole newEntity. Describes the project role of the Employee in the company.
      */
-    @ManyToOne()
+    //cascade = { CascadeType.REMOVE, CascadeType.MERGE }
+    @ManyToOne(cascade = {
+        CascadeType.MERGE
+    })
     @JoinColumn(name = "project_role_id")
     private ProjectRole projectRole;
 
     /**
      * The reference to a Team for all employees. All employees belong to some Team
      */
-    @ManyToOne()
+    @ManyToOne(cascade = {
+        CascadeType.MERGE
+    })
     @JoinColumn(name = "team_id")
     private Team team;
 
+    /**
+     * The reference to a Set of teams, managed by this Employee.
+     */
+    @ManyToMany(cascade = {
+        CascadeType.MERGE
+    }, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "managed_teams",
+            joinColumns = @JoinColumn(name = "manager_id", referencedColumnName = "emp_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "team_id"))
+    private Set<Team> managedTeams;
     /**
      * The reference to a Team if this Employee newEntity is a ProjectManager employee newEntity
      */
@@ -186,10 +203,59 @@ public class Employee implements DBEntity {
     }
 
     public String getProjectRoleAsString() {
-        return projectRole == null ? "" : projectRole.getRoleName();
+        return projectRole == null ? GlobalConstants.EMPTY_STRING : projectRole.getRoleName();
     }
 
-    public String getTeamNameAsString() { return team == null ? "" : team.getTeamName(); }
+    public String getTeamNameAsString() { return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName(); }
+
+    public String getAllTeamsAsString() {
+        return getAllTeamsAsString("; ");
+    }
+
+    public String getAllTeamsAsString(String separator) {
+        if (separator == null) {
+            throw new IllegalArgumentException("Separator cannot be null. Please, provide the valid string value.");
+        }
+        StringBuilder sbAllTeams = new StringBuilder();
+        if (projectRole != null) {
+            switch (projectRole.getProjectRoleSpecialType()) {
+                case PROJECT_ROLE_SPECIAL_TYPE_REGULAR:
+                    return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName();
+                case PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD:
+                case PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER:
+                case PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER:
+                    if (managedTeams != null) {
+                        int i = 0;
+                        for (Team currentManagedTeam: managedTeams) {
+                            i++;
+                            sbAllTeams.append(currentManagedTeam.getTeamName());
+                            if (i < managedTeams.size()) {
+                                sbAllTeams.append(separator);
+                            }
+                        }
+                    }
+                    break;
+            }
+        } else {
+            return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName();
+        }
+        return sbAllTeams.toString();
+    }
+
+    public boolean isManager() {
+        if (projectRole != null) {
+            switch (projectRole.getProjectRoleSpecialType()) {
+                case PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER:
+                case PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER:
+                case PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        return false;
+    }
+
     public void setProjectRole(ProjectRole projectRole) {
         this.projectRole = projectRole;
     }
@@ -250,5 +316,21 @@ public class Employee implements DBEntity {
         return new Employee();
     }
 
+    public Set<Team> getManagedTeams() {
+        return managedTeams;
+    }
 
+    public void setManagedTeams(Set<Team> managedTeams) {
+        this.managedTeams = managedTeams;
+    }
+
+    @Override
+    public Date getCreatedDate() {
+        return created;
+    }
+
+    @Override
+    public Date getUpdatedDate() {
+        return updated;
+    }
 }

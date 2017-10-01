@@ -7,6 +7,7 @@ import ru.rti.holidays.entity.ProjectRole;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unused")
 public interface ProjectRoleRepository extends JpaRepository<ProjectRole, Long> {
     List<ProjectRole> findById(Long id);
 }

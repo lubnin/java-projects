@@ -5,6 +5,7 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import ru.rti.holidays.utility.GlobalConstants;
 
 
 /**
@@ -21,6 +22,9 @@ public class LoginFormLayout extends VerticalLayout {
     // The caption for 'Password' field
     private String passwordFieldCaption;
 
+    private TextField txtLoginName;
+    private PasswordField txtPassword;
+
     private FormLayout formPanel = new FormLayout();
     private HorizontalLayout buttonsPanel = new HorizontalLayout();
 
@@ -29,6 +33,14 @@ public class LoginFormLayout extends VerticalLayout {
 
     private Button btnLogin;
     private Button btnRegister;
+
+    public String getLoginNameValue() {
+        return txtLoginName != null ? txtLoginName.getValue() : GlobalConstants.EMPTY_STRING;
+    }
+
+    public String getPasswordValue() {
+        return txtPassword != null ? txtPassword.getValue() : GlobalConstants.EMPTY_STRING;
+    }
 
     /**
      * Parametrized constructor
@@ -93,13 +105,13 @@ public class LoginFormLayout extends VerticalLayout {
         formPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         formPanel.setSpacing(true);
 
-        TextField txtName = new TextField(getNameFieldCaption());
-        txtName.setIcon(VaadinIcons.USER);
-        txtName.setRequiredIndicatorVisible(true);
+        txtLoginName = new TextField(getNameFieldCaption());
+        txtLoginName.setIcon(VaadinIcons.USER);
+        txtLoginName.setRequiredIndicatorVisible(true);
 
-        formPanel.addComponent(txtName);
+        formPanel.addComponent(txtLoginName);
 
-        PasswordField txtPassword = new PasswordField(getPasswordFieldCaption());
+        txtPassword = new PasswordField(getPasswordFieldCaption());
         txtPassword.setIcon(VaadinIcons.PASSWORD);
         txtPassword.setRequiredIndicatorVisible(true);
         formPanel.addComponent(txtPassword);

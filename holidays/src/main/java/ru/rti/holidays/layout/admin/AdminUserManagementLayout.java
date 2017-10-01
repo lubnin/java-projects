@@ -22,9 +22,9 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
     private Grid<Employee> grdEmployees = new Grid<>();
     private List<Employee> employees;
     private List<ProjectRole> projectRoles;
-    private List<Team> teams;
+    private Set<Team> teams;
 
-    public void setTeams(List<Team> teams) { this.teams = teams; }
+    public void setTeams(Set<Team> teams) { this.teams = teams; }
     public void setProjectRoles(List<ProjectRole> projectRoles) {
         this.projectRoles = projectRoles;
     }
@@ -38,6 +38,15 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             MultiSelectionModel<Employee> selectionModel =
                     (MultiSelectionModel<Employee>)grdEmployees.setSelectionMode(Grid.SelectionMode.MULTI);
 
+            grdEmployees.addColumn(Employee::getLastName).setCaption("Фамилия");
+            grdEmployees.addColumn(Employee::getFirstName).setCaption("Имя");
+            grdEmployees.addColumn(Employee::getMiddleName).setCaption("Отчество");
+            grdEmployees.addColumn(Employee::getEmail).setCaption("E-Mail");
+            grdEmployees.addColumn(Employee::getProjectRoleAsString).setCaption("Проектная роль");
+            grdEmployees.addColumn(Employee::getLoginName).setCaption("Логин");
+            grdEmployees.addColumn(Employee::getAllTeamsAsString).setCaption("Команда");
+            grdEmployees.setHeightByRows(5);
+            grdEmployees.setWidth("100%");
 
             AddNewEmployeeLayout addEmployeeLayout = new AddNewEmployeeLayout();
             addEmployeeLayout.setWidth("100%");
@@ -48,11 +57,12 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             addEmployeeLayout.setSaveButtonClickListener(saveButtonClickListener);
             addEmployeeLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
                 if (removeSelectedItemsClickListener != null) {
+                    log.info("AdminUserManagementLayout::setRemoveSelectedItemsClickListener() called. removeSelectedItemsClickListener != null - OK");
                     removeSelectedItemsClickListener.onRemoveSelectedItems(this, grdEmployees.getSelectedItems());
+                    log.info("Calling refreshDataGrid()");
                     refreshDataGrid();
                 }
             });
-            addEmployeeLayout.constructLayout();
 
             selectionModel.addMultiSelectionListener(event -> {
                 Set<Employee> selectedItems = event.getAllSelectedItems();
@@ -61,19 +71,13 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
                     Employee selectedEmployee = event.getFirstSelectedItem().get();
                     addEmployeeLayout.setNewBeanValue(selectedEmployee);
                     addEmployeeLayout.updateControlsFromBeanState();
+                    //addEmployeeLayout.updateControlsVisibility();
                 } else {
                     addEmployeeLayout.clearAllControls();
                 }
             });
 
-            grdEmployees.addColumn(Employee::getLastName).setCaption("Фамилия");
-            grdEmployees.addColumn(Employee::getFirstName).setCaption("Имя");
-            grdEmployees.addColumn(Employee::getMiddleName).setCaption("Отчество");
-            grdEmployees.addColumn(Employee::getEmail).setCaption("E-Mail");
-            grdEmployees.addColumn(Employee::getProjectRoleAsString).setCaption("Проектная роль");
-            grdEmployees.addColumn(Employee::getTeamNameAsString).setCaption("Команда");
-            grdEmployees.setHeightByRows(5);
-            grdEmployees.setWidth("100%");
+            addEmployeeLayout.constructLayout();
 
             addComponent(grdEmployees);
 
@@ -97,6 +101,8 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
     public void refreshDataGrid() {
         super.refreshDataGrid();
 
+        log.info("AdminUserManagementLayout::refreshDataGrid() called.");
+        log.info("Employees size: " + employees.size() + " items in array.");
         //TODO: customize your logic here
         grdEmployees.setItems(employees);
     }

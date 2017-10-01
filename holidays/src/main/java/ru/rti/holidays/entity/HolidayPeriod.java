@@ -17,11 +17,12 @@ import java.util.Date;
 @SpringComponent
 @Entity
 @Table(name = "holiday_period")
+@SuppressWarnings("unused")
 public class HolidayPeriod implements DBEntity {
     /**
      * The primary key for the table holding HolidayPeriod instances
      */
-    //TODO: fix 4 to 1 before going to production
+    //TODO: fix 4 to 1 sequence start value before going to production
     @GenericGenerator(
             name = "holidayPeriodSequenceGenerator",
             strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
@@ -58,6 +59,10 @@ public class HolidayPeriod implements DBEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id")
     private Employee employee;
+
+    @ManyToOne(cascade = { CascadeType.MERGE })
+    @JoinColumn(name = "hp_negotiation_status_id")
+    private HolidayPeriodNegotiationStatus negotiationStatus;
 
     /**
      * The date when the record was created in DB the very first time
@@ -138,6 +143,14 @@ public class HolidayPeriod implements DBEntity {
         this.employee = employee;
     }
 
+    public HolidayPeriodNegotiationStatus getNegotiationStatus() {
+        return negotiationStatus;
+    }
+
+    public void setNegotiationStatus(HolidayPeriodNegotiationStatus negotiationStatus) {
+        this.negotiationStatus = negotiationStatus;
+    }
+
     @Override
     public String toString() {
         return String.format("HolidayPeriod[id=%d, dateStart='%s', numDays='%s', employee='%s', created='%s', updated='%s']",
@@ -151,5 +164,15 @@ public class HolidayPeriod implements DBEntity {
     @Override
     public DBEntity construct() {
         return new HolidayPeriod();
+    }
+
+    @Override
+    public Date getCreatedDate() {
+        return created;
+    }
+
+    @Override
+    public Date getUpdatedDate() {
+        return updated;
     }
 }

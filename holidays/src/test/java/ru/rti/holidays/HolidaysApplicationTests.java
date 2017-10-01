@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.rti.holidays.entity.Employee;
+import ru.rti.holidays.service.EmployeeService;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class HolidaysApplicationTests {
 /*	@Autowired
 	private JdbcTemplate jdbcTemplate;*/
+	//@Autowired
+	//EmployeeService employeeServiceImpl;
 
 	@Test
 	public void contextLoads() {
@@ -31,5 +35,4 @@ public class HolidaysApplicationTests {
 
 		System.out.println(resultSet);*/
 	}
-
 }

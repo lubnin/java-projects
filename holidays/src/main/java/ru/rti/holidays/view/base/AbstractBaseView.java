@@ -8,8 +8,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 abstract public class AbstractBaseView extends VerticalLayout implements View {
+    protected Map<String, String> parameterMap;
+    protected String parameters;
 
     /**
      * This method must be overridden in child subclasses of AbstractBaseView.
@@ -46,8 +49,7 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
         //addComponent(addSpecialStyling(getPageTitleLabel()));
 
 
-        prepareViewData();
-        addCustomComponents();
+
     }
 
     private Label addSpecialStyling(Label lblTitle) {
@@ -63,6 +65,10 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+        parameterMap = event.getParameterMap();
+        parameters = event.getParameters();
         // the view is constructed in the init() method()
+        prepareViewData();
+        addCustomComponents();
     }
 }

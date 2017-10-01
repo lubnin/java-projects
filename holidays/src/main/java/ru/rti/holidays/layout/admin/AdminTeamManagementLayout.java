@@ -19,7 +19,7 @@ import java.util.Set;
 public class AdminTeamManagementLayout extends BaseVerticalLayout {
     private static final Logger log = LoggerFactory.getLogger(AdminTeamManagementLayout.class);
     private Grid<Team> grdTeams = new Grid<>();
-    private List<Team> teams;
+    private Set<Team> teams;
 
     @Override
     public void constructLayout() {
@@ -102,11 +102,11 @@ public class AdminTeamManagementLayout extends BaseVerticalLayout {
         grdTeams.setItems(teams);
     }
 
-    public List<Team> getTeams() {
+    public Set<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(List<Team> teams) {
+    public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
 }

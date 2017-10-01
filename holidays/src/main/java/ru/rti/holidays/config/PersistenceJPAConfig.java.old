@@ -1,0 +1,87 @@
+/*
+package ru.rti.holidays.config;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
+
+import javax.sql.DataSource;
+
+*/
+/**
+ * Designed for test purposed, no use for now.
+ * Can be safely deleted from workspace.
+ * @deprecated
+ *//*
+
+@Configuration
+@EnableTransactionManagement
+@PropertySource({ "classpath:application.properties" })
+@ComponentScan({ "ru.rti.holidays.service" })
+public class PersistenceJPAConfig implements TransactionManagementConfigurer {
+    private static final Logger log = LoggerFactory.getLogger(PersistenceJPAConfig.class);
+
+    @Autowired
+    private Environment env;
+
+    @Override
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return transactionManager();
+    }
+
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        log.info("Calling entityManagerFactoryBean()");
+        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan(new String[] { "ru.rti.holidays.service" });
+        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        log.info("Entity Manager Factory Bean initialized: " + em);
+        //em.setJpaProperties(additionalProperties());
+        return em;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        log.info("Reading the data source configuration in dataSource() method:");
+        log.info("Property 'spring.datasource.driver-class-name' = " + env.getProperty("spring.datasource.driver-class-name"));
+        log.info("Property 'spring.datasource.url' = " + env.getProperty("spring.datasource.url"));
+        log.info("Property 'spring.datasource.username' = " + env.getProperty("spring.datasource.username"));
+        log.info("Property 'spring.datasource.password' = " + env.getProperty("spring.datasource.password"));
+
+        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+
+        log.info("Data source configured: " + dataSource);
+
+        return dataSource;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        log.info("Configuring the transaction manager...");
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        log.info("Transaction Manager successfully configured: " + transactionManager);
+        return transactionManager;
+    }
+}
+*/

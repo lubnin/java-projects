@@ -11,5 +11,5 @@ public interface ProjectRoleService {
     ProjectRole saveProjectRole(ProjectRole projectRole);
     void delete(Long id);
     List<ProjectRole> getAllProjectRoles();
-    boolean deleteProjectRoles(Set<ProjectRole> projectRoles);
+    boolean deleteProjectRoles(Iterable<ProjectRole> projectRoles);
 }

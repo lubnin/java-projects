@@ -6,6 +6,7 @@ import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @SpringComponent
 @Entity
 @Table(name = "project_role")
+//@SuppressWarnings("unused")
 public class ProjectRole implements DBEntity {
 
     public enum ProjectRoleSpecialType {
@@ -78,8 +80,17 @@ public class ProjectRole implements DBEntity {
     /**
      * The list of Employee entities which have this project role as a primary role
      */
-    @OneToMany(mappedBy = "projectRole", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Employee> employees;
+    //TODO: EAGER is BAD, I know... But couldn't do without EAGER load the correct deletion of separate ProjectRole,
+    //TODO: not affecting the Employees with the deleted ProjectRole.
+    //TODO: Need to add transaction support and LAZY loading at later time!
+    @OneToMany(mappedBy = "projectRole", fetch = FetchType.EAGER, cascade = {
+        //CascadeType.REFRESH,
+        //CascadeType.DETACH,
+        //CascadeType.PERSIST,
+        CascadeType.MERGE
+        //CascadeType.REMOVE
+    })
+    private List<Employee> employees = new ArrayList<>();
 
     /**
      * The date when the record was created in DB the very first time
@@ -125,9 +136,17 @@ public class ProjectRole implements DBEntity {
     public List<Employee> getEmployees() {
         return employees;
     }
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
     }
+
+    public void removeEmployee(Employee employee) {
+        this.employees.remove(employee);
+    }
+    //public void setEmployees(List<Employee> employees) {
+//        this.employees = employees;
+//    }
 
     public String getRoleName() {
         return roleName;
@@ -170,5 +189,15 @@ public class ProjectRole implements DBEntity {
     @Override
     public DBEntity construct() {
         return new ProjectRole();
+    }
+
+    @Override
+    public Date getCreatedDate() {
+        return created;
+    }
+
+    @Override
+    public Date getUpdatedDate() {
+        return updated;
     }
 }

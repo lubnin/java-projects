@@ -7,6 +7,7 @@ import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unused")
 public interface HolidayPeriodNegotiationStatusRepository extends JpaRepository<HolidayPeriodNegotiationStatus, Long> {
     List<HolidayPeriodNegotiationStatus> findById(Long id);
 }

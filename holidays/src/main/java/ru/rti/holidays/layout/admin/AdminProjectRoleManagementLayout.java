@@ -31,10 +31,10 @@ public class AdminProjectRoleManagementLayout extends BaseVerticalLayout {
             MultiSelectionModel<ProjectRole> selectionModel =
                     (MultiSelectionModel<ProjectRole>)grdProjectRoles.setSelectionMode(Grid.SelectionMode.MULTI);
 
-            selectionModel.addMultiSelectionListener(event -> {
-                Set<ProjectRole> selectedItems = event.getAllSelectedItems();
+            //selectionModel.addMultiSelectionListener(event -> {
+            //    Set<ProjectRole> selectedItems = event.getAllSelectedItems();
                 //btnRemoveHolidayPeriods.setEnabled(selectedItems != null && selectedItems.size() > 0);
-            });
+            //});
 
             grdProjectRoles.addColumn(ProjectRole::getRoleName).setCaption("Название проектной роли");
             grdProjectRoles.setColumnResizeMode(ColumnResizeMode.ANIMATED);

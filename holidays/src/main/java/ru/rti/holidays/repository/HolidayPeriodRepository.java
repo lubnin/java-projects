@@ -8,6 +8,7 @@ import ru.rti.holidays.entity.HolidayPeriod;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unused")
 public interface HolidayPeriodRepository extends JpaRepository<HolidayPeriod, Long> {
     List<HolidayPeriod> findByEmployeeId(Long employeeId);
 }

@@ -14,7 +14,8 @@ import java.util.List;
 
 @SpringComponent
 public class EmployeeListLayout extends VerticalLayout {
-    private static final Logger log = LoggerFactory.getLogger(EmployeeListLayout.class);
+
+    /*private static final Logger log = LoggerFactory.getLogger(EmployeeListLayout.class);
 
     @Autowired
     private final EmployeeRepository repository;
@@ -51,11 +52,11 @@ public class EmployeeListLayout extends VerticalLayout {
     private void setEmployees(List<Employee> employees) {
         removeAllComponents();
         grid.setItems(employees);
-        addComponent(grid);
+        addComponent(grid);*/
 /*
         employees.forEach(todo -> {
             addComponent(new TodoLayout(todo));
         });
 */
-    }
+    //}
 }

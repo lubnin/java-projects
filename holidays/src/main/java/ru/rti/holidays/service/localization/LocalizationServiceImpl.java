@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Configuration
 @PropertySource(value = "classpath:messages.properties", encoding = "UTF-8")
+@SuppressWarnings("unused")
 public class LocalizationServiceImpl implements LocalizationService {
     @Autowired
     Environment env;

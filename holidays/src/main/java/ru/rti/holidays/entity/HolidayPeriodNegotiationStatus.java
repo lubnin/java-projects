@@ -4,13 +4,17 @@ import com.vaadin.spring.annotation.SpringComponent;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @SpringComponent
 @Entity
 @Table(name = "holiday_period_neg_status")
+@SuppressWarnings("unused")
 public class HolidayPeriodNegotiationStatus implements DBEntity {
-    //TODO: fix 9 to 1 before going to production mode
+    //TODO: fix 9 to 1 sequence start value before going to production mode
     @GenericGenerator(
             name = "holidayPeriodNegStatusSequenceGenerator",
             strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
@@ -36,6 +40,9 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
 
     @Column(name = "statusDescription")
     private String statusDescription;
+
+    @OneToMany(mappedBy = "negotiationStatus", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+    private Set<HolidayPeriod> holidayPeriods;
 
     @PrePersist
     public void onCreate() {
@@ -68,6 +75,14 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
         this.statusDescription = statusDescription;
     }
 
+    public Set<HolidayPeriod> getHolidayPeriods() {
+        return holidayPeriods;
+    }
+
+    public void setHolidayPeriods(Set<HolidayPeriod> holidayPeriods) {
+        this.holidayPeriods = holidayPeriods;
+    }
+
     @Override
     public String toString() {
         return String.format("HolidayPeriodNegotiationStatus[id=%d, statusName='%s', statusDescription='%s', created='%s', updated='%s']",
@@ -81,5 +96,15 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
     @Override
     public DBEntity construct() {
         return new HolidayPeriodNegotiationStatus();
+    }
+
+    @Override
+    public Date getCreatedDate() {
+        return created;
+    }
+
+    @Override
+    public Date getUpdatedDate() {
+        return updated;
     }
 }

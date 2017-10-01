@@ -4,6 +4,8 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.teemusa.sidemenu.SideMenu;
 import ru.rti.holidays.entity.Employee;
@@ -30,6 +32,7 @@ import java.util.Set;
 
 @SpringView(name = AdminMainView.VIEW_NAME)
 public class AdminMainView extends AbstractBaseView {
+    private static final Logger log = LoggerFactory.getLogger(AdminMainView.class);
     public static final String VIEW_NAME = "AdminMain";
 
     @Autowired
@@ -154,6 +157,12 @@ public class AdminMainView extends AbstractBaseView {
             });
 
             adminProjectRoleManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                Set<ProjectRole> projectRoles = (Set<ProjectRole>)entities;
+                //projectRoles.forEach(projectRole -> {
+
+                    //employeeServiceImpl.resetProjectRoleForEmployees(projectRole);
+                //});
+
                 projectRoleServiceImpl.deleteProjectRoles((Set<ProjectRole>)entities);
                 Notification.show("Выбранные проектные роли успешно удалены!");
             });
@@ -231,10 +240,18 @@ public class AdminMainView extends AbstractBaseView {
             adminUserManagementLayout.setTeams(teamServiceImpl.getAllTeams());
 
             adminUserManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
-               employeeServiceImpl.deleteEmployees((Set<Employee>)entities);
+                log.info("AdminMainView::setRemoveSelectedItemsClickListener() called.");
+                //TODO: remove later
+                if (entities != null) {
+                    entities.forEach(o -> {
+                        log.info("Entity to delete: " + o);
+                    });
+                }
+                log.info("Calling employeeServiceImpl.deleteEmployees(...);");
+                employeeServiceImpl.deleteEmployees((Set<Employee>)entities);
                //List<Employee> allEmployees = employeeServiceImpl.getAllEmployees();
                //((AdminUserManagementLayout)layout).setEmployees(allEmployees);
-               Notification.show("Выбранные сотрудники успешно удалены!");
+                Notification.show("Выбранные сотрудники успешно удалены!");
             });
 
             adminUserManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
@@ -277,7 +294,7 @@ public class AdminMainView extends AbstractBaseView {
 
 
             adminTeamManagementLayout.setRefreshGridDataListener(layout -> {
-                List<Team> allTeams = teamServiceImpl.getAllTeams();
+                Set<Team> allTeams = teamServiceImpl.getAllTeams();
                 ((AdminTeamManagementLayout)layout).setTeams(allTeams);
             });
 

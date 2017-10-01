@@ -2,25 +2,24 @@ package ru.rti.holidays.service;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.spring.annotation.ViewScope;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
+import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.repository.EmployeeRepository;
-import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
 import ru.rti.holidays.repository.HolidayPeriodRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
 @Service
 @UIScope
 @SpringComponent
+@SuppressWarnings("unused")
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -34,6 +33,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> saveEmployees(Iterable<Employee> employees) {
+        List<Employee> result = employeeRepository.save(employees);
+        employeeRepository.flush();
+        return result;
+    }
+
+    @Override
     public void delete(Long id) {
         employeeRepository.delete(id);
     }
@@ -44,9 +50,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    //TODO: remove comment later
     //@Query(value = "SELECT * FROM Employee e LEFT JOIN FETCH Employee.projectRole")
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
+    }
+
+    //@Override
+    //public void resetProjectRoleForEmployees(ProjectRole projectRole) {
+        //employeeRepository.resetProjectRoleForEmployees(projectRole);
+        //employeeRepository.flush();
+    //}
+
+    @Override
+    public void flush() {
+        employeeRepository.flush();
     }
 
     public List<HolidayPeriod> getHolidayPeriodsForEmployee(Employee employee) {
@@ -59,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean deleteHolidayPeriods(Set<HolidayPeriod> holidayPeriods) {
+    public boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods) {
         holidayPeriodRepository.delete(holidayPeriods);
         return true;
     }
@@ -70,8 +88,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public boolean deleteEmployees(Set<Employee> employees) {
+    public Employee getByLoginNameAndPassword(String loginName, String password) {
+        return employeeRepository.findByLoginName(loginName);
+    }
+
+    @Override
+    public boolean deleteEmployees(Iterable<Employee> employees) {
         employeeRepository.delete(employees);
         return true;
+    }
+
+    @Override
+    public Set<Employee> getByTeamId(Long teamId) {
+        return employeeRepository.findByTeamId(teamId);
     }
 }

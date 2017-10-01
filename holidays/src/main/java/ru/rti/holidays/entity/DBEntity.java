@@ -2,10 +2,12 @@ package ru.rti.holidays.entity;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import java.util.Date;
 
 /**
  * Common interface-marker to be implemented by all Entity-classes of the Application
  */
+@SuppressWarnings("unused")
 public interface DBEntity {
     /**
      * This method should return the Primary Key field value for the particular {@link DBEntity} instance
@@ -26,6 +28,10 @@ public interface DBEntity {
      */
     @PreUpdate
     void onUpdate();
+
+
+    Date getCreatedDate();
+    Date getUpdatedDate();
 
     /**
      * Constructs the instance of particular class implementing the {@link DBEntity} interface

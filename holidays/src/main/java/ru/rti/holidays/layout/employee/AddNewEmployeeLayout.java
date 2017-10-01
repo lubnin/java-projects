@@ -5,24 +5,29 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
-
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class AddNewEmployeeLayout extends BaseVerticalLayout {
+    private static final Logger log = LoggerFactory.getLogger(AddNewEmployeeLayout.class);
     private Binder<Employee> employeeBinder = new Binder<Employee>();
     private Employee newEmployee = new Employee();
     private List<ProjectRole> projectRoles;
-    private List<Team> teams;
+    private Set<Team> teams;
     private Button btnRemoveSelectedEmployees = new Button("Удалить выбранных сотрудников");
     private PasswordField txtPasswordCheck = new PasswordField("Повтор пароля:");
+    private ComboBox<ProjectRole> cboProjectRole;
+    private ComboBox<Team> cboTeam;
+    private CheckBoxGroup<Team> chkGroupTeams;
 
-    public void setTeams(List<Team> teams) {  this.teams = teams; }
+    public void setTeams(Set<Team> teams) {  this.teams = teams; }
     public void setProjectRoles(List<ProjectRole> projectRoles) {
         this.projectRoles = projectRoles;
     }
@@ -71,13 +76,25 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         //        .asRequired("Необходимо ввести пароль повторно")
         //        .bind(Employee::getPassword, Employee::setPassword);
 
-        ComboBox<ProjectRole> cboProjectRole = new ComboBox<>("Проектная роль:");
-        ComboBox<Team> cboTeam = new ComboBox<>("Команда:");
-        CheckBoxGroup<Team> chkGroupTeams = new CheckBoxGroup<>("Команды в управлении:");
+        cboProjectRole = new ComboBox<>("Проектная роль:");
+        cboTeam = new ComboBox<>("Команда:");
+        chkGroupTeams = new CheckBoxGroup<>("Команды в управлении:");
+
 
         chkGroupTeams.setItems(teams);
-        chkGroupTeams.setItemCaptionGenerator(team -> team.getTeamName());
+        chkGroupTeams.setItemCaptionGenerator(Team::getTeamName);
         chkGroupTeams.setVisible(false);
+        //TODO: experimental code block
+        //chkGroupTeams.addSelectionListener(multiSelectionEvent -> {
+
+            //Set<Employee> managers = new HashSet<>();
+            //managers.add(newEmployee);
+            //Set<Team> selectedTeams = multiSelectionEvent.getAllSelectedItems();
+            //selectedTeams.forEach(team -> {
+                //team.setManagers(managers);
+            //});
+        //});
+        employeeBinder.forField(chkGroupTeams).bind(Employee::getManagedTeams, Employee::setManagedTeams);
 
         cboProjectRole.setEmptySelectionAllowed(true);
         cboProjectRole.setEmptySelectionCaption("Роль не выбрана");
@@ -91,11 +108,9 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
                chkGroupTeams.setVisible(selectedProjectRole != null);
                if (selectedProjectRole != null) {
                    if (ProjectRole.ProjectRoleSpecialType.getRolesWithTeamManagementAbility().contains(selectedProjectRole.getProjectRoleSpecialType())) {
-                       cboTeam.setVisible(false);
-                       chkGroupTeams.setVisible(true);
+                       triggerControlsVisibility(true);
                    } else {
-                       cboTeam.setVisible(true);
-                       chkGroupTeams.setVisible(false);
+                       triggerControlsVisibility(false);
                    }
                }
            }
@@ -139,6 +154,7 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         btnRemoveSelectedEmployees.setEnabled(false);
         btnRemoveSelectedEmployees.addClickListener(event -> {
             if (removeSelectedItemsClickListener != null) {
+                log.info("Calling onRemoveSelectedItems from AddNewEmployeeLayout class.");
                 removeSelectedItemsClickListener.onRemoveSelectedItems(null, null);
             }
         });
@@ -150,47 +166,29 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         setMargin(false);
 
         txtEmail.setWidth("100%");
-        //txtLastName.setWidth("100%");
-        //txtFirstName.setWidth("100%");
-        //txtLastName.setWidth("100%");
-        //txtMiddleName.setWidth("100%");
         btnSaveEmployee.setWidth("100%");
         btnRemoveSelectedEmployees.setWidth("100%");
+        cboProjectRole.setWidth("100%");
+        cboTeam.setWidth("100%");
 
         GridLayout addEmployeeGridLayout = new GridLayout(5, 5);
 
         addEmployeeGridLayout.setSizeFull();
         //addEmployeeGridLayout.addStyleName("debug_border");
-
-        //addEmployeeGridLayout.addStyleName("debug_border");
         addEmployeeGridLayout.setSpacing(true);
         addEmployeeGridLayout.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-
-        //addEmployeeGridLayout.setColumnExpandRatio(0,1);
-        //addEmployeeGridLayout.setColumnExpandRatio(1,1);
-        //addEmployeeGridLayout.setColumnExpandRatio(2,1);
-        //addEmployeeGridLayout.setColumnExpandRatio(3,1);
         addEmployeeGridLayout.setColumnExpandRatio(4,0.2f);
-
         addEmployeeGridLayout.addComponent(txtLastName, 0,0);
         addEmployeeGridLayout.addComponent(txtFirstName, 1,0);
         addEmployeeGridLayout.addComponent(txtMiddleName, 2,0);
         addEmployeeGridLayout.addComponent(txtLoginName, 3,0);
         addEmployeeGridLayout.addComponent(txtEmail, 4,0);
-
-        cboProjectRole.setWidth("100%");
-        cboTeam.setWidth("100%");
-
         addEmployeeGridLayout.addComponent(txtPassword, 0,1, 1,1);
         addEmployeeGridLayout.addComponent(txtPasswordCheck, 2,1, 3,1);
-
         addEmployeeGridLayout.addComponent(cboProjectRole, 0,2, 4,2);
         addEmployeeGridLayout.addComponent(cboTeam, 0,3,4,3);
-        //addEmployeeGridLayout.addComponent(chkGroupTeams, 0,4,4,4);
-
         addEmployeeGridLayout.setRowExpandRatio(1,1);
         addEmployeeGridLayout.setRowExpandRatio(2,1);
-
         addEmployeeGridLayout.addComponent(btnSaveEmployee, 0,4);
         addEmployeeGridLayout.addComponent(btnRemoveSelectedEmployees, 1,4,2,4);
 
@@ -200,7 +198,16 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
     @Override
     public void updateControlsFromBeanState() {
+        updateControlsVisibility();
         employeeBinder.readBean(newEmployee);
+        Set<Team> teams = chkGroupTeams.getSelectedItems();
+
+        //chkGroupTeams.deselectAll();
+
+        if (teams != null && teams.size() > 0) {
+            teams.forEach(team -> log.info(String.format("Selected team: '%s'", team)));
+            //chkGroupTeams.select(teams.toArray(new Team[teams.size()]));
+        }
     }
 
     @Override
@@ -208,5 +215,35 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         setNewBeanValue(new Employee());
         updateControlsFromBeanState();
         txtPasswordCheck.setValue("");
+    }
+
+    public void updateControlsVisibility() {
+        if (newEmployee == null) {
+            return;
+        }
+
+        if (chkGroupTeams == null || cboTeam == null) {
+            log.error("Error: at least one of controls 'chkGroupTeams', 'cboTeam' is null!");
+            return;
+        }
+
+        if (newEmployee.getProjectRole() != null &&
+                ProjectRole.ProjectRoleSpecialType
+                        .getRolesWithTeamManagementAbility()
+                        .contains(newEmployee .getProjectRole().getProjectRoleSpecialType())) {
+            triggerControlsVisibility(true);
+        } else {
+            triggerControlsVisibility(false);
+        }
+    }
+
+    private void triggerControlsVisibility(boolean isManagerRole) {
+        if (chkGroupTeams == null || cboTeam == null) {
+            log.error("Error: at least one of controls 'chkGroupTeams', 'cboTeam' is null!");
+            return;
+        }
+
+        chkGroupTeams.setVisible(isManagerRole);
+        cboTeam.setVisible(!isManagerRole);
     }
 }
