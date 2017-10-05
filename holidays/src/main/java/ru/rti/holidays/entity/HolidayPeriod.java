@@ -147,6 +147,13 @@ public class HolidayPeriod implements DBEntity {
         return negotiationStatus;
     }
 
+    public String getNegotiationStatusAsString() {
+        if (negotiationStatus == null) {
+            return GlobalConstants.EMPTY_STRING;
+        }
+        return negotiationStatus.getStatusName();
+    }
+
     public void setNegotiationStatus(HolidayPeriodNegotiationStatus negotiationStatus) {
         this.negotiationStatus = negotiationStatus;
     }

@@ -11,6 +11,11 @@ import ru.rti.holidays.greeter.ViewGreeter;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @deprecated
+ * //TODO: remove this later.
+ *
+ */
 @SpringView(name = ViewScopedView.VIEW_NAME)
 public class ViewScopedView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "view";

@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Set;
 
 @SpringComponent
+/**
+ * The Administration Area Layout class for managing Holiday Period Negotiation Statuses
+ */
 public class AdminHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayout {
     private static final Logger log = LoggerFactory.getLogger(AdminHolidayPeriodNegotiationStatusLayout.class);
     private Grid<HolidayPeriodNegotiationStatus> grdHolidayPeriodNegotiationStatuses = new Grid<>();
@@ -35,6 +38,7 @@ public class AdminHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayou
 
             grdHolidayPeriodNegotiationStatuses.addColumn(HolidayPeriodNegotiationStatus::getStatusName).setCaption("Название статуса");
             grdHolidayPeriodNegotiationStatuses.addColumn(HolidayPeriodNegotiationStatus::getStatusDescription).setCaption("Описание статуса");
+            grdHolidayPeriodNegotiationStatuses.addColumn(HolidayPeriodNegotiationStatus::getNegotiationStatusTypeAsString).setCaption("Тип статуса");
             grdHolidayPeriodNegotiationStatuses.setHeightByRows(5);
             grdHolidayPeriodNegotiationStatuses.setWidth("100%");
 

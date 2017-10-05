@@ -11,6 +11,11 @@ import ru.rti.holidays.greeter.Greeter;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @deprecated
+ * //TODO: remove this later.
+ *
+ */
 // pay attention to the order of annotations
 @UIScope
 @SpringView(name = UIScopedView.VIEW_NAME)

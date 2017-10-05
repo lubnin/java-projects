@@ -83,23 +83,23 @@ public class LoginFormLayout extends VerticalLayout {
     private void addButtons() {
         btnLogin = new Button("Войти");
         btnLogin.setIcon(VaadinIcons.SIGN_IN);
-        btnLogin.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        btnLogin.addStyleName(ValoTheme.BUTTON_FRIENDLY);
         //btnLogin.addClickListener(btnLoginClickListener);
         buttonsPanel.addComponent(btnLogin);
 
-        btnRegister = new Button("Зарегистрироваться");
-        btnRegister.setIcon(VaadinIcons.USER_STAR);
-        btnRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        //btnRegister = new Button("Зарегистрироваться");
+        //btnRegister.setIcon(VaadinIcons.USER_STAR);
+        //btnRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
         //btnRegister.addClickListener(btnRegisterClickListener);
-        buttonsPanel.addComponent(btnRegister);
+        //buttonsPanel.addComponent(btnRegister);
 
         buttonsPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         buttonsPanel.setSpacing(true);
 
-        Link linkForgotPassword = new Link("Забыли пароль?", new ExternalResource("http://ya.ru"));
-        linkForgotPassword.setIcon(VaadinIcons.KEY);
+        //Link linkForgotPassword = new Link("Забыли пароль?", new ExternalResource("http://ya.ru"));
+        //linkForgotPassword.setIcon(VaadinIcons.KEY);
         addComponent(buttonsPanel);
-        addComponent(linkForgotPassword);
+        //addComponent(linkForgotPassword);
     }
     private void addForm() {
         formPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);

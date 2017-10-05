@@ -19,7 +19,7 @@ import java.util.Set;
 public class AdminTeamManagementLayout extends BaseVerticalLayout {
     private static final Logger log = LoggerFactory.getLogger(AdminTeamManagementLayout.class);
     private Grid<Team> grdTeams = new Grid<>();
-    private Set<Team> teams;
+    private List<Team> teams;
 
     @Override
     public void constructLayout() {
@@ -30,10 +30,10 @@ public class AdminTeamManagementLayout extends BaseVerticalLayout {
             MultiSelectionModel<Team> selectionModel =
                     (MultiSelectionModel<Team>)grdTeams.setSelectionMode(Grid.SelectionMode.MULTI);
 
-            selectionModel.addMultiSelectionListener(event -> {
-                Set<Team> selectedItems = event.getAllSelectedItems();
+            //selectionModel.addMultiSelectionListener(event -> {
+            //    Set<Team> selectedItems = event.getAllSelectedItems();
                 //btnRemoveHolidayPeriods.setEnabled(selectedItems != null && selectedItems.size() > 0);
-            });
+            //});
 
             grdTeams.addColumn(Team::getTeamName).setCaption("Команда");
             grdTeams.setHeightByRows(5);
@@ -102,11 +102,11 @@ public class AdminTeamManagementLayout extends BaseVerticalLayout {
         grdTeams.setItems(teams);
     }
 
-    public Set<Team> getTeams() {
+    public List<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Set<Team> teams) {
+    public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
 }

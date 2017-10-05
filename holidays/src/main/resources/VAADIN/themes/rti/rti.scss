@@ -1,12 +1,14 @@
-$v-app-loading-text: "Dark Valo";
+$v-app-loading-text: "Loading RTI Holidays, please wait...";
 $v-background-color: #444d50;
 $v-focus-color: #07a9ca;
 $v-focus-style: 0 0 3px 2px $v-focus-color;
 $v-bevel-depth: 40%;
 $v-gradient: v-linear 12%;
-//$v-border-radius: 10px;
+/*$v-border-radius: 10px;*/
 $v-border-radius: 3px;
-$v-font-family: Roboto, sans-serif;
+$v-font-size: 14px;
+/*$v-font-family: Roboto, sans-serif;*/
+$v-font-family: "Verdana", sans-serif;
 $v-font-weight: 400;
 $v-font-weight--header: 400;
 $v-bevel: inset 0 1px 2px v-tint, inset 0 0 1px (v-tint 0.1);
@@ -24,7 +26,7 @@ $v-component-group-spacing: 6px;
 /*@import "../material/material.scss";*/
 
 @import "../valo/valo.scss";
-@import "../../addons/hybrid-menu/hybrid-menu.scss";
+/*@import "../../addons/hybrid-menu/hybrid-menu.scss";*/
 
 /*@import "addons.scss";*/
 /*@import "rti.scss";*/
@@ -45,6 +47,18 @@ $v-component-group-spacing: 6px;
 
   .debug_border {
     border: 1px dotted green;
+  }
+
+  .neg_status_negotiating {
+    color: orange;
+  }
+
+  .neg_status_ok {
+    color: green;
+  }
+
+  .neg_status_rejected {
+    color: red;
   }
   /* An actual theme rule */
   /*

@@ -15,6 +15,11 @@ import ru.rti.holidays.service.EmployeeService;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * @deprecated
+ * //TODO: remove this later.
+ *
+ */
 @SpringView(name = NewEmployeesListView.VIEW_NAME)
 public class NewEmployeesListView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "NewEmployeesList";

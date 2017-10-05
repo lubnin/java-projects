@@ -11,5 +11,5 @@ import java.util.Set;
  */
 @FunctionalInterface
 public interface EmployeeHolidaysLayoutDeleteButtonClickListener {
-    void performDelete(EmployeeHolidaysLayout layoutInstance, Set<HolidayPeriod> selectedPeriods);
+    void onDeleteSelectedPeriods(EmployeeHolidaysLayout layoutInstance, Set<HolidayPeriod> selectedPeriods);
 }

@@ -4,16 +4,42 @@ import com.vaadin.spring.annotation.SpringComponent;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @SpringComponent
 @Entity
 @Table(name = "holiday_period_neg_status")
 @SuppressWarnings("unused")
 public class HolidayPeriodNegotiationStatus implements DBEntity {
+
+    public enum HolidayPeriodNegotiationStatusType {
+        NEGOTIATION_STATUS_TYPE_NEGOTIATING(0L, "На согласовании"),
+        NEGOTIATION_STATUS_TYPE_OK(1L, "Согласован"),
+        NEGOTIATION_STATUS_TYPE_REJECTED(2L, "Отклонён");
+
+        private final Long typeId;
+        private final String description;
+
+        HolidayPeriodNegotiationStatusType(Long typeId, String description) {
+            this.typeId = typeId;
+            this.description = description;
+        }
+
+        public static List<HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType> getAllNegotiationStatusTypes() {
+            return Arrays.asList(
+                    NEGOTIATION_STATUS_TYPE_NEGOTIATING,
+                    NEGOTIATION_STATUS_TYPE_OK,
+                    NEGOTIATION_STATUS_TYPE_REJECTED);
+        }
+        public Long getTypeId() { return this.typeId; }
+        public String getDescription() { return this.description; }
+    }
+
+    public HolidayPeriodNegotiationStatus() {
+        negotiationStatusType = HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING;
+    }
+
     //TODO: fix 9 to 1 sequence start value before going to production mode
     @GenericGenerator(
             name = "holidayPeriodNegStatusSequenceGenerator",
@@ -43,6 +69,11 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
 
     @OneToMany(mappedBy = "negotiationStatus", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
     private Set<HolidayPeriod> holidayPeriods;
+
+    @Column(name = "negotiationStatusType", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType negotiationStatusType;
 
     @PrePersist
     public void onCreate() {
@@ -81,6 +112,18 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
 
     public void setHolidayPeriods(Set<HolidayPeriod> holidayPeriods) {
         this.holidayPeriods = holidayPeriods;
+    }
+
+    public String getNegotiationStatusTypeAsString() {
+        return getNegotiationStatusType().getDescription();
+    }
+
+    public HolidayPeriodNegotiationStatusType getNegotiationStatusType() {
+        return negotiationStatusType;
+    }
+
+    public void setNegotiationStatusType(HolidayPeriodNegotiationStatusType negotiationStatusType) {
+        this.negotiationStatusType = negotiationStatusType;
     }
 
     @Override

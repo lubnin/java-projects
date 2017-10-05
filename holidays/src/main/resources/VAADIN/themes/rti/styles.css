@@ -1607,796 +1607,8 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
-.hybridMenu {
-	z-index: 1;
-}
-
-.hybridMenu .menuButton:focus {
-	outline: none;
-}
-
-.hybridMenu .contentBox {
-	padding: 15px !important;
-}
-
-.hybridMenu .leftMenu {
-	padding: 0 !important;
-	z-index: 100;
-	position: relative;
-	-webkit-transition: width 0.75s ease-in-out;
-	-moz-transition: width 0.75s ease-in-out;
-	-ms-transition: width 0.75s ease-in-out;
-	-o-transition: width 0.75s ease-in-out;
-	transition: width 0.75s ease-in-out;
-}
-
-.hybridMenu .leftMenu .v-slot {
-	height: auto !important;
-}
-
-.hybridMenu .leftMenu .menuButton {
-	background: transparent;
-	display: block;
-	cursor: pointer;
-	-webkit-transition: background 0.3s, border-left 0.3s, height 0.5s;
-	-moz-transition: background 0.3s, border-left 0.3s, height 0.5s;
-	-ms-transition: background 0.3s, border-left 0.3s, height 0.5s;
-	-o-transition: background 0.3s, border-left 0.3s, height 0.5s;
-	transition: background 0.3s, border-left 0.3s, height 0.5s;
-	border-left: 0 solid transparent;
-	overflow: hidden;
-}
-
-.hybridMenu .leftMenu .menuButton.active {
-	border-left-width: 3px;
-}
-
-.hybridMenu .leftMenu .menuButton:hover, .hybridMenu .leftMenu .menuButton.active:hover {
-	border-left-width: 5px;
-}
-
-.hybridMenu .leftMenu .menuButton-wrap {
-	display: block;
-	transition: border 0.3s;
-	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	transform: translateY(-50%);
-}
-
-.hybridMenu .leftMenu .menuButton-wrap .v-icon {
-	margin-left: 10px;
-	width: 25px;
-	text-align: center;
-}
-
-.hybridMenu .leftMenu .menuButton-wrap .menuButton-caption {
-	font-size: 17px;
-}
-
-.hybridMenu .leftMenu .menuButton.subMenuButton .menuButton-caption .v-icon {
-	position: absolute;
-	right: 5px;
-	margin: 0;
-	height: 30px;
-	width: 30px;
-	-webkit-transition: transform 0.3s ease-in-out;
-	-moz-transition: transform 0.3s ease-in-out;
-	-ms-transition: transform 0.3s ease-in-out;
-	-o-transition: transform 0.3s ease-in-out;
-	transition: transform 0.3s ease-in-out;
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
-	-o-transform: rotate(0deg);
-	transform: rotate(0deg);
-}
-
-.hybridMenu .leftMenu .menuButton.subMenuButton.active .menuButton-caption .v-icon {
-	-webkit-transform: rotate(-180deg);
-	-moz-transform: rotate(-180deg);
-	-ms-transform: rotate(-180deg);
-	-o-transform: rotate(-180deg);
-	transform: rotate(-180deg);
-}
-
-.hybridMenu .centralContent .v-expand {
-	-webkit-transition: padding-left 0.75s ease-in-out;
-	-moz-transition: padding-left 0.75s ease-in-out;
-	-ms-transition: padding-left 0.75s ease-in-out;
-	-o-transition: padding-left 0.75s ease-in-out;
-	transition: padding-left 0.75s ease-in-out;
-	z-index: 10;
-}
-
-.hybridMenu .centralContent .v-expand .v-expand {
-	transition: unset;
-}
-
-.hybridMenu .v-slot-leftMenu {
-	-webkit-transition: margin-left 0.75s ease-in-out;
-	-moz-transition: margin-left 0.75s ease-in-out;
-	-ms-transition: margin-left 0.75s ease-in-out;
-	-o-transition: margin-left 0.75s ease-in-out;
-	transition: margin-left 0.75s ease-in-out;
-}
-
-.hybridMenu .leftMenu .menuSubMenuContent {
-	border-left: 1px solid transparent;
-	margin-left: 24px;
-	width: calc(100% - 24px) !important;
-}
-
-.hybridMenu .leftMenu .v-slot-menuSubMenuContent {
-	position: relative;
-	overflow: hidden;
-	display: block;
-	max-height: 0;
-	-webkit-transition: max-height 0.5s ease-in-out;
-	-moz-transition: max-height 0.5s ease-in-out;
-	-ms-transition: max-height 0.5s ease-in-out;
-	-o-transition: max-height 0.5s ease-in-out;
-	transition: max-height 0.5s ease-in-out;
-}
-
-.hybridMenu .leftMenu .v-slot-menuSubMenuContent.v-slot-open {
-	max-height: 1000px;
-}
-
-.hybridMenu .leftMenu.minimal .menuButton {
-	overflow: unset !important;
-}
-
-.hybridMenu .leftMenu.minimal .menuButton .v-icon {
-	width: 100% !important;
-	margin: 0 !important;
-}
-
-.hybridMenu .leftMenu.minimal .menuButton-caption {
-	position: absolute;
-	padding: 12px;
-	margin: -12px 0 0 -100%;
-	height: 26px;
-	pointer-events: none;
-	opacity: 0;
-	transition: opacity 0.5s, margin-left 0.5s;
-	white-space: nowrap;
-}
-
-.hybridMenu .leftMenu.minimal .menuButton-caption .v-icon {
-	display: none;
-}
-
-.hybridMenu .leftMenu.minimal .menuButton:hover .menuButton-caption {
-	opacity: 1;
-	margin-left: 0;
-	pointer-events: auto;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenu .v-slot-menuSubMenuContent {
-	max-height: 1000px !important;
-	overflow: unset !important;
-	position: absolute !important;
-	opacity: 0;
-	margin: 0;
-	pointer-events: none;
-	width: auto !important;
-	transition: visibility 0s 0.5s, opacity 0.5s, margin-left 0.5s;
-	visibility: hidden;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenuContent {
-	border-left: 0 !important;
-	margin-left: 0 !important;
-	width: auto !important;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenu:hover > .v-slot-subMenuButton .menuButton-caption {
-	opacity: 1;
-	margin-left: 0;
-	pointer-events: auto;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenu .v-slot-subMenuButton:hover ~ .v-slot-menuSubMenuContent, .hybridMenu .leftMenu.minimal .menuSubMenu > .v-slot-menuSubMenuContent:hover {
-	margin-left: 61px;
-	pointer-events: auto;
-	opacity: 1;
-	visibility: visible;
-	transition-delay: 0s;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenuContent .v-slot, .hybridMenu .leftMenu.minimal .menuSubMenuContent .menuButton {
-	width: auto !important;
-	display: block !important;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenuContent .v-icon {
-	margin-left: 10px !important;
-	width: 25px !important;
-	position: absolute !important;
-	z-index: 102;
-}
-
-.hybridMenu .leftMenu.minimal .menuSubMenuContent .menuButton-caption {
-	position: relative !important;
-	pointer-events: auto !important;
-	opacity: 1 !important;
-	margin: 0 !important;
-	padding: 0 10px 0 35px !important;
-	z-index: 101;
-	background: transparent !important;
-}
-
-.hybridMenu .v-slot-topMenu {
-	position: relative;
-	z-index: 101;
-}
-
-.hybridMenu .topMenu {
-	z-index: 1000;
-}
-
-.hybridMenu .topMenu .v-slot.v-align-middle {
-	width: auto !important;
-	display: inline-block;
-}
-
-.hybridMenu .topMenu .v-slot.v-align-right.v-align-middle {
-	float: right;
-}
-
-.hybridMenu .topMenu .v-slot.v-slot-labelTitle .v-caption-labelTitle {
-	padding-left: 10px;
-	padding-right: 10px;
-	width: 230px;
-	text-align: center;
-	font-size: 18px;
-	margin-bottom: -2px;
-}
-
-.hybridMenu .topMenu .v-slot.v-slot-labelTitle .v-caption-labelTitle .v-icon {
-	max-height: 23px;
-}
-
-.hybridMenu .topMenu .menuLabel.labelTitle {
-	display: none;
-}
-
-.hybridMenu .topMenu .menuSubMenu {
-	position: relative;
-	height: 100%;
-	display: inline-block;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent {
-	position: absolute;
-	top: 100%;
-	right: 0;
-	border-top: 1px solid transparent;
-	padding: 0;
-	opacity: 0;
-	z-index: -1;
-	margin-top: -100%;
-	-webkit-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	-moz-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	-ms-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	-o-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	pointer-events: none;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.open {
-	pointer-events: auto;
-	margin-top: 0;
-	opacity: 1;
-	z-index: 100;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent .v-slot {
-	height: auto;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuLabel {
-	display: block;
-	opacity: 0.75;
-	padding: 5px 10px 5px 15px;
-	font-size: 12px;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuButton {
-	display: block;
-	padding: 4px 10px 3px 15px;
-	font-size: 14px;
-	cursor: pointer;
-	background: transparent;
-	-webkit-transition: background 0.3s ease-in-out;
-	-moz-transition: background 0.3s ease-in-out;
-	-ms-transition: background 0.3s ease-in-out;
-	-o-transition: background 0.3s ease-in-out;
-	transition: background 0.3s ease-in-out;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuHr {
-	height: 1px;
-	margin: 6px 0;
-	overflow: hidden;
-	width: 100%;
-	display: block;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notificationTitle, .hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton {
-	padding: 5px 10px 5px 15px;
-	font-size: 14px;
-	display: block;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notificationEmptyMessage {
-	display: block;
-	opacity: 0.75;
-	text-align: center;
-	padding: 5px;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton {
-	padding: 5px 10px;
-	text-align: center;
-	cursor: pointer;
-	-webkit-transition: background 0.3s ease-in-out;
-	-moz-transition: background 0.3s ease-in-out;
-	-ms-transition: background 0.3s ease-in-out;
-	-o-transition: background 0.3s ease-in-out;
-	transition: background 0.3s ease-in-out;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage {
-	border-bottom: 1px solid transparent;
-	background: transparent;
-	-webkit-transition: background 0.3s ease-in-out;
-	-moz-transition: background 0.3s ease-in-out;
-	-ms-transition: background 0.3s ease-in-out;
-	-o-transition: background 0.3s ease-in-out;
-	transition: background 0.3s ease-in-out;
-	padding-bottom: 14px;
-	position: relative;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .v-slot:last-child .notiMessage {
-	border-bottom-width: 0;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .v-slot:first-child {
-	width: 100% !important;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .v-slot:last-child {
-	height: 0 !important;
-	width: 0 !important;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .v-has-caption {
-	width: calc(100% - 75px);
-	margin-left: 75px;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .v-has-caption .v-icon {
-	position: absolute;
-	left: 0;
-	padding: 10px;
-	width: 55px;
-	text-align: center;
-	vertical-align: middle;
-	max-height: 55px;
-	display: block;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .v-has-caption .v-captiontext {
-	margin: 0;
-	font-size: 16px;
-	font-weight: 500;
-	padding: 2px 15px 0 0;
-	width: calc(100% - 15px);
-	display: block;
-	position: relative;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .v-caption {
-	padding-bottom: 2px !important;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .notiMessageContent {
-	width: 100%;
-	font-size: 14px;
-	opacity: 0.75;
-	padding: 0 5px 0 0;
-	display: block;
-	position: relative;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .notiMessageButton {
-	position: absolute;
-	cursor: pointer;
-	right: 2px;
-	margin-top: 3px;
-	opacity: 0.25;
-	-webkit-transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-	-moz-transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-	-ms-transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-	-o-transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-	transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .notiMessageButton:hover {
-	opacity: 1;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent .messageBox {
-	overflow-y: auto;
-	overflow-x: hidden;
-	max-height: 200px;
-}
-
-.hybridMenu .topMenu .menuSubMenu .menuSubMenuContent .messageBox .v-slot-created {
-	position: absolute;
-	bottom: 1px;
-	left: 75px;
-	font-size: 9px;
-}
-
-.hybridMenu .topMenu .menuButton {
-	height: 100%;
-	cursor: pointer;
-	padding: 0 12px;
-	background: transparent;
-	-webkit-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-	-moz-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-	-ms-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-	-o-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-	transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.hybridMenu .topMenu .menuButton-wrap {
-	display: block;
-	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	transform: translateY(-50%);
-}
-
-.hybridMenu .topMenu .menuButton.iconRight .v-icon {
-	float: right;
-}
-
-.hybridMenu .topMenu .menuButton.iconRight .menuButton-caption {
-	margin-right: 7px;
-	margin-left: 0;
-}
-
-.hybridMenu .topMenu .menuButton.profilView .v-icon {
-	max-height: 23px;
-	border-radius: 50%;
-	margin-left: 5px;
-}
-
-.hybridMenu .topMenu .menuButton.captionOutside .menuButton-wrap {
-	top: 0;
-	height: 100%;
-	transform: unset;
-}
-
-.hybridMenu .topMenu .menuButton.captionOutside .v-icon {
-	display: block;
-	transition: border 0.3s;
-	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	transform: translateY(-50%);
-}
-
-.hybridMenu .topMenu .menuButton.captionOutside .menuButton-caption .toolTop {
-	position: absolute;
-	z-index: 100;
-	font-size: 10px;
-	line-height: 12px;
-	padding: 2px 5px;
-	border-radius: 6px;
-	top: 8px;
-}
-
-.hybridMenu .topMenu .menuButton.captionOutside .menuButton-caption .caption {
-	position: absolute;
-	top: 100%;
-	right: -12px;
-	border-top: 1px solid transparent;
-	padding: 5px 15px 7px;
-	opacity: 0;
-	z-index: -1;
-	margin-top: -100%;
-	-webkit-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	-moz-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	-ms-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	-o-transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	transition: margin-top 0.3s ease-in-out, opacity 0.3s ease-in-out, z-index 0.3s ease-in-out;
-	pointer-events: none;
-}
-
-.hybridMenu .topMenu .menuButton.captionOutside:hover .menuButton-caption .caption {
-	margin-top: 0;
-	opacity: 1;
-	z-index: 100;
-}
-
-.hybridMenu.design_white {
-	color: #424242;
-	background: #f5f5f5;
-}
-
-.hybridMenu.design_white .v-slot-topMenu {
-	box-shadow: 0px 6px 7px -3px rgba(189, 189, 189, 0.3);
-	background: #e0e0e0;
-}
-
-.hybridMenu.design_white .v-slot-leftMenu {
-	background: #eeeeee;
-}
-
-.hybridMenu.design_white .leftMenu {
-	box-shadow: 1px -1px 7px 0px rgba(189, 189, 189, 0.3);
-}
-
-.hybridMenu.design_white .leftMenu .menuButton.active {
-	border-left-color: #0091ea;
-	background: rgba(189, 189, 189, 0.5);
-}
-
-.hybridMenu.design_white .leftMenu .menuButton:hover {
-	border-left-color: #ff6d00;
-	background: rgba(224, 224, 224, 0.5);
-}
-
-.hybridMenu.design_white .leftMenu .menuButton.active:hover {
-	border-left-color: #0091ea;
-}
-
-.hybridMenu.design_white .leftMenu .menuSubMenuContent {
-	border-left-color: rgba(189, 189, 189, 0.5);
-}
-
-.hybridMenu.design_dark .leftMenu.minimal .menuButton-caption {
-	background: #eeeeee;
-}
-
-.hybridMenu.design_dark .leftMenu.minimal .v-slot-menuSubMenuContent {
-	background: rgba(238, 238, 238, 0.5);
-}
-
-.hybridMenu.design_white .contentBox {
-	background: #f5f5f5;
-}
-
-.hybridMenu.design_white .topMenu .menuButton.captionOutside .menuButton-caption .caption, .hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent {
-	border-top-color: #ff6d00;
-	background: #eeeeee;
-}
-
-.hybridMenu.design_white .topMenu .menuButton.active {
-	background: #eeeeee;
-}
-
-.hybridMenu.design_white .topMenu .menuButton:hover {
-	color: #f5f5f5;
-	background: #ff6d00;
-}
-
-.hybridMenu.design_white .topMenu .menuButton:hover .menuButton-caption .caption, .hybridMenu.design_white .topMenu .menuButton .menuButton-caption .caption {
-	color: #424242 !important;
-}
-
-.hybridMenu.design_white .topMenu .menuButton.captionOutside .menuButton-caption .toolTop {
-	color: white;
-	background: #2196f3;
-}
-
-.hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuHr, .hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuButton:hover {
-	background: rgba(189, 189, 189, 0.5);
-}
-
-.hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notificationTitle, .hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton {
-	background: #e0e0e0;
-}
-
-.hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton:hover, .hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage:hover {
-	background: rgba(224, 224, 224, 0.5);
-}
-
-.hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .notiMessageButton:hover {
-	color: #b71c1c;
-}
-
-.hybridMenu.design_white .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage {
-	border-bottom-color: #bdbdbd;
-}
-
-.hybridMenu.design_dark {
-	color: #f5f5f5;
-	background: #757575;
-}
-
-.hybridMenu.design_dark .v-slot-topMenu {
-	box-shadow: 0px 6px 7px -3px rgba(117, 117, 117, 0.3);
-	background: #424242;
-}
-
-.hybridMenu.design_dark .v-slot-leftMenu {
-	background: #616161;
-}
-
-.hybridMenu.design_dark .leftMenu {
-	box-shadow: 1px -1px 7px 0px rgba(117, 117, 117, 0.3);
-}
-
-.hybridMenu.design_dark .leftMenu .menuButton.active {
-	border-left-color: #0091ea;
-	background: rgba(117, 117, 117, 0.5);
-}
-
-.hybridMenu.design_dark .leftMenu .menuButton:hover {
-	border-left-color: #ff6d00;
-	background: rgba(66, 66, 66, 0.5);
-}
-
-.hybridMenu.design_dark .leftMenu .menuButton.active:hover {
-	border-left-color: #0091ea;
-}
-
-.hybridMenu.design_dark .leftMenu .menuSubMenuContent {
-	border-left-color: #757575;
-}
-
-.hybridMenu.design_dark .leftMenu.minimal .menuButton-caption {
-	background: #616161;
-}
-
-.hybridMenu.design_dark .leftMenu.minimal .v-slot-menuSubMenuContent {
-	background: rgba(97, 97, 97, 0.5);
-}
-
-.hybridMenu.design_dark .contentBox {
-	background: rgba(117, 117, 117, 0.5);
-}
-
-.hybridMenu.design_dark .topMenu .menuButton.captionOutside .menuButton-caption .caption, .hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent {
-	border-top-color: #ff6d00;
-	background: #616161;
-}
-
-.hybridMenu.design_dark .topMenu .menuButton.active {
-	background: #616161;
-}
-
-.hybridMenu.design_dark .topMenu .menuButton:hover {
-	background: #ff6d00;
-}
-
-.hybridMenu.design_dark .topMenu .menuButton.captionOutside .menuButton-caption .toolTop {
-	background: #2196f3;
-}
-
-.hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuHr, .hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuButton:hover {
-	background: #757575;
-}
-
-.hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notificationTitle, .hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton {
-	background: #424242;
-}
-
-.hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton:hover, .hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage:hover {
-	background: rgba(66, 66, 66, 0.5);
-}
-
-.hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .notiMessageButton:hover {
-	color: #b71c1c;
-}
-
-.hybridMenu.design_dark .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage {
-	border-bottom-color: #757575;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform {
-	color: #f5f5f5;
-	background: #535353;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .v-slot-topMenu {
-	box-shadow: 0px 6px 7px -3px rgba(0, 0, 0, 0.3);
-	background: #212121;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .v-slot-leftMenu {
-	background: #353535;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu {
-	box-shadow: 1px -1px 7px 0px rgba(0, 0, 0, 0.3);
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu .menuButton.active {
-	border-left-color: #0091ea;
-	background: rgba(83, 83, 83, 0.5);
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu .menuButton:hover {
-	border-left-color: #ff6d00;
-	background: rgba(33, 33, 33, 0.5);
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu .menuButton.active:hover {
-	border-left-color: #0091ea;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu .menuSubMenuContent {
-	border-left-color: #535353;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu.minimal .menuButton-caption {
-	background: #353535;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .leftMenu.minimal .v-slot-menuSubMenuContent {
-	background: rgba(53, 53, 53, 0.5);
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .contentBox {
-	background: rgba(83, 83, 83, 0.5);
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuButton.captionOutside .menuButton-caption .caption, .hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent {
-	border-top-color: #ff6d00;
-	background: #353535;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuButton.active {
-	background: #353535;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuButton:hover {
-	background: #ff6d00;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuButton.captionOutside .menuButton-caption .toolTop {
-	background: #2196f3;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuHr, .hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent .menuSubMenuButton:hover {
-	background: #535353;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notificationTitle, .hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton {
-	background: #212121;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .goToNotisButton:hover, .hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage:hover {
-	background: rgba(33, 33, 33, 0.5);
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage .notiMessageButton:hover {
-	color: #b71c1c;
-}
-
-.hybridMenu.design_dark_vaadin_material_conform .topMenu .menuSubMenu .menuSubMenuContent.notificationBox .notiMessage {
-	border-bottom-color: #535353;
-}
-
 .v-app, .v-app-loading {
-	font: 400 16px/1.55 Roboto, sans-serif;
+	font: 400 14px/1.55 "Verdana", sans-serif;
 	color: #cacecf;
 	background-color: #444d50;
 	cursor: default;
@@ -2431,7 +1643,7 @@ div.v-layout.v-horizontal.v-widget {
 	text-align: center;
 	left: 0;
 	right: 0;
-	content: "Dark Valo";
+	content: "Loading RTI Holidays, please wait...";
 }
 
 .v-loading-indicator {
@@ -2496,7 +1708,7 @@ img.v-icon {
 }
 
 .v-caption {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -2582,7 +1794,7 @@ select:focus {
 	border-radius: 2px;
 	max-width: 35em;
 	overflow: hidden !important;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-tooltip div[style*="width"] {
@@ -2708,7 +1920,7 @@ select:focus {
 	padding: 13px 16px;
 	background-color: #444;
 	background-color: rgba(68, 68, 68, 0.9);
-	line-height: 22px;
+	line-height: 20px;
 	text-align: center;
 }
 
@@ -3172,7 +2384,7 @@ select:focus {
 	padding: 0 13px;
 	
 	
-	font-size: 12px;
+	font-size: 11px;
 	
 	border-radius: 3px;
 }
@@ -3190,7 +2402,7 @@ select:focus {
 	padding: 0 15px;
 	
 	
-	font-size: 14px;
+	font-size: 12px;
 	
 	border-radius: 3px;
 }
@@ -3208,7 +2420,7 @@ select:focus {
 	padding: 0 21px;
 	
 	
-	font-size: 20px;
+	font-size: 17px;
 	
 	border-radius: 3px;
 }
@@ -3226,7 +2438,7 @@ select:focus {
 	padding: 0 28px;
 	
 	
-	font-size: 26px;
+	font-size: 23px;
 	
 	border-radius: 3px;
 }
@@ -3346,7 +2558,7 @@ select:focus {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 13px;
+	font-size: 11px;
 	text-align: center;
 }
 
@@ -3429,7 +2641,7 @@ select:focus {
 	position: relative;
 	line-height: 17px;
 	white-space: nowrap;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-checkbox-small.v-has-width label {
@@ -3474,7 +2686,7 @@ select:focus {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 11px;
+	font-size: 10px;
 	text-align: center;
 }
 
@@ -3557,7 +2769,7 @@ select:focus {
 	position: relative;
 	line-height: 24px;
 	white-space: nowrap;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-checkbox-large.v-has-width label {
@@ -3602,7 +2814,7 @@ select:focus {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 15px;
+	font-size: 13px;
 	text-align: center;
 }
 
@@ -3943,7 +3155,7 @@ select:focus {
 	border-radius: 0 0 3px 3px;
 	height: 24px;
 	bottom: -24px;
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 24px;
 	padding: 0 6px;
 	cursor: default;
@@ -4132,7 +3344,7 @@ select:focus {
 .v-filterselect-tiny {
 	height: 30px;
 	
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .v-filterselect-tiny [class*="input"] {
@@ -4371,13 +3583,13 @@ select:focus {
 }
 
 .v-filterselect-small {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-filterselect-large {
 	height: 48px;
 	
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-filterselect-large [class*="input"] {
@@ -4498,7 +3710,7 @@ select:focus {
 .v-filterselect-huge {
 	height: 64px;
 	
-	font-size: 26px;
+	font-size: 23px;
 }
 
 .v-filterselect-huge [class*="input"] {
@@ -5037,7 +4249,7 @@ select:focus {
 	white-space: nowrap;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .v-grid-cell.frozen {
@@ -5142,7 +4354,7 @@ select:focus {
 	content: "\f0c9";
 	display: block;
 	font-family: ThemeIcons, sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-grid-sidebar.v-contextmenu.closed {
@@ -5155,7 +4367,7 @@ select:focus {
 
 .v-grid-sidebar.v-contextmenu.open .v-grid-sidebar-button:after {
 	content: "\f0c9";
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 1;
 }
 
@@ -5234,7 +4446,7 @@ select:focus {
 .v-grid-header th {
 	position: relative;
 	background-color: #444d50;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-bottom: 1px solid #303739;
@@ -5247,7 +4459,7 @@ select:focus {
 }
 
 .v-grid-header .sort-asc, .v-grid-header .sort-desc {
-	padding-right: 36.5px;
+	padding-right: 33.5px;
 }
 
 .v-grid-header .sort-asc:after, .v-grid-header .sort-desc:after {
@@ -5255,7 +4467,7 @@ select:focus {
 	content: "\f0de" " " attr(sort-order);
 	position: absolute;
 	right: 19.5px;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 .v-grid-header .sort-desc:after {
@@ -5294,7 +4506,7 @@ select:focus {
 
 .v-grid-footer td {
 	background-color: #444d50;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-top: 1px solid #303739;
@@ -5604,7 +4816,7 @@ select:focus {
 }
 
 .v-grid-editor-footer {
-	font-size: 14px;
+	font-size: 12px;
 	padding: 0 7px;
 	background: #444d50;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -5927,7 +5139,7 @@ select:focus {
 	-webkit-transition: box-shadow 180ms, border 180ms;
 	-moz-transition: box-shadow 180ms, border 180ms;
 	transition: box-shadow 180ms, border 180ms;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .v-textfield-compact, .v-textfield-small {
@@ -5956,7 +5168,7 @@ select:focus {
 }
 
 .v-textfield-small {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-textfield-large {
@@ -5982,7 +5194,7 @@ select:focus {
 	-webkit-transition: box-shadow 180ms, border 180ms;
 	-moz-transition: box-shadow 180ms, border 180ms;
 	transition: box-shadow 180ms, border 180ms;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-textfield-huge {
@@ -6008,7 +5220,7 @@ select:focus {
 	-webkit-transition: box-shadow 180ms, border 180ms;
 	-moz-transition: box-shadow 180ms, border 180ms;
 	transition: box-shadow 180ms, border 180ms;
-	font-size: 26px;
+	font-size: 23px;
 }
 
 .v-slot-inline-icon {
@@ -6020,7 +5232,7 @@ select:focus {
 }
 
 .v-caption-inline-icon .v-captiontext {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -6038,7 +5250,7 @@ select:focus {
 	width: 40px;
 	line-height: 38px;
 	text-align: center;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .v-caption-inline-icon img.v-icon {
@@ -6059,7 +5271,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-tiny .v-captiontext {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -6077,7 +5289,7 @@ select:focus {
 	width: 30px;
 	line-height: 28px;
 	text-align: center;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .v-caption-inline-icon.v-caption-tiny img.v-icon {
@@ -6098,7 +5310,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-compact .v-captiontext {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -6116,7 +5328,7 @@ select:focus {
 	width: 34px;
 	line-height: 32px;
 	text-align: center;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .v-caption-inline-icon.v-caption-compact img.v-icon {
@@ -6137,7 +5349,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-small .v-captiontext {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -6155,7 +5367,7 @@ select:focus {
 	width: 34px;
 	line-height: 32px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-caption-inline-icon.v-caption-small img.v-icon {
@@ -6176,7 +5388,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-large .v-captiontext {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -6194,7 +5406,7 @@ select:focus {
 	width: 48px;
 	line-height: 46px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-caption-inline-icon.v-caption-large img.v-icon {
@@ -6215,7 +5427,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-huge .v-captiontext {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -6233,7 +5445,7 @@ select:focus {
 	width: 64px;
 	line-height: 62px;
 	text-align: center;
-	font-size: 26px;
+	font-size: 23px;
 }
 
 .v-caption-inline-icon.v-caption-huge img.v-icon {
@@ -6370,7 +5582,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .v-textarea-small {
@@ -6400,7 +5612,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-textarea-large {
@@ -6430,7 +5642,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-textarea-huge {
@@ -6460,7 +5672,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 26px;
+	font-size: 23px;
 }
 
 .v-textarea-align-right {
@@ -6629,7 +5841,7 @@ select:focus {
 }
 
 .v-datefield-full {
-	width: 240px;
+	width: 210px;
 }
 
 .v-datefield-day {
@@ -6637,11 +5849,11 @@ select:focus {
 }
 
 .v-datefield-month {
-	width: 120px;
+	width: 105px;
 }
 
 .v-datefield-year {
-	width: 104px;
+	width: 91px;
 }
 
 .v-datefield-popup {
@@ -6685,7 +5897,7 @@ select:focus {
 }
 
 .v-datefield-popup .v-datefield-calendarpanel {
-	font-size: 16px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -6700,7 +5912,7 @@ select:focus {
 	border: 1px solid transparent;
 	line-height: 28px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 13px;
 	background: #444d50;
 	border-radius: 2px;
 	-webkit-transition: color 200ms;
@@ -6753,7 +5965,7 @@ select:focus {
 
 .v-datefield-popup .v-datefield-calendarpanel-weekdays strong {
 	font: inherit;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .v-datefield-popup .v-datefield-calendarpanel-header {
@@ -6782,8 +5994,8 @@ select:focus {
 
 .v-datefield-popup td[class*="year"] button:before, .v-datefield-popup td[class*="month"] button:before {
 	color: #878d8f;
-	font-size: 21px;
-	line-height: 24px;
+	font-size: 18px;
+	line-height: 21px;
 	-webkit-transition: color 200ms;
 	-moz-transition: color 200ms;
 	transition: color 200ms;
@@ -6835,7 +6047,7 @@ select:focus {
 .v-datefield-popup .v-datefield-calendarpanel-weeknumber, .v-datefield-popup .v-datefield-calendarpanel-weekdays.v-datefield-calendarpanel-weeknumbers td:first-child {
 	width: 32px;
 	color: rgba(155, 160, 162, 0.85);
-	font-size: 14px;
+	font-size: 13px;
 	display: inline-block;
 	text-align: left;
 }
@@ -6860,7 +6072,7 @@ select:focus {
 
 .v-datefield-popup td.v-datefield-calendarpanel-time {
 	width: 100%;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .v-datefield-popup td.v-datefield-calendarpanel-time .v-label {
@@ -6870,7 +6082,7 @@ select:focus {
 }
 
 .v-datefield-calendarpanel {
-	font-size: 16px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -6885,7 +6097,7 @@ select:focus {
 	border: 1px solid transparent;
 	line-height: 28px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 13px;
 	background: #444d50;
 	border-radius: 2px;
 	-webkit-transition: color 200ms;
@@ -6938,7 +6150,7 @@ select:focus {
 
 .v-datefield-calendarpanel-weekdays strong {
 	font: inherit;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .v-datefield-calendarpanel-header {
@@ -6967,8 +6179,8 @@ td[class*="year"] button, td[class*="month"] button {
 
 td[class*="year"] button:before, td[class*="month"] button:before {
 	color: #878d8f;
-	font-size: 21px;
-	line-height: 24px;
+	font-size: 18px;
+	line-height: 21px;
 	-webkit-transition: color 200ms;
 	-moz-transition: color 200ms;
 	transition: color 200ms;
@@ -7020,7 +6232,7 @@ td.v-datefield-calendarpanel-month {
 .v-datefield-calendarpanel-weeknumber, .v-datefield-calendarpanel-weekdays.v-datefield-calendarpanel-weeknumbers td:first-child {
 	width: 32px;
 	color: rgba(155, 160, 162, 0.85);
-	font-size: 14px;
+	font-size: 13px;
 	display: inline-block;
 	text-align: left;
 }
@@ -7045,7 +6257,7 @@ td.v-datefield-calendarpanel-month {
 
 td.v-datefield-calendarpanel-time {
 	width: 100%;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 td.v-datefield-calendarpanel-time .v-label {
@@ -7092,7 +6304,7 @@ td.v-datefield-calendarpanel-time .v-label {
 .v-datefield-tiny {
 	height: 30px;
 	border-radius: 3px;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .v-datefield-tiny [class*="textfield"] {
@@ -7305,13 +6517,13 @@ td.v-datefield-calendarpanel-time .v-label {
 }
 
 .v-datefield-small {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-datefield-large {
 	height: 48px;
 	border-radius: 3px;
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-datefield-large [class*="textfield"] {
@@ -7419,7 +6631,7 @@ td.v-datefield-calendarpanel-time .v-label {
 .v-datefield-huge {
 	height: 64px;
 	border-radius: 3px;
-	font-size: 26px;
+	font-size: 23px;
 }
 
 .v-datefield-huge [class*="textfield"] {
@@ -7525,7 +6737,7 @@ td.v-datefield-calendarpanel-time .v-label {
 }
 
 .v-inline-datefield-calendarpanel {
-	font-size: 16px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -7540,7 +6752,7 @@ td.v-datefield-calendarpanel-time .v-label {
 	border: 1px solid transparent;
 	line-height: 28px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 13px;
 	background: #444d50;
 	border-radius: 2px;
 	-webkit-transition: color 200ms;
@@ -7593,7 +6805,7 @@ td.v-datefield-calendarpanel-time .v-label {
 
 .v-inline-datefield-calendarpanel-weekdays strong {
 	font: inherit;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 .v-inline-datefield-calendarpanel-header {
@@ -7622,8 +6834,8 @@ td[class*="year"] button, td[class*="month"] button {
 
 td[class*="year"] button:before, td[class*="month"] button:before {
 	color: #878d8f;
-	font-size: 21px;
-	line-height: 24px;
+	font-size: 18px;
+	line-height: 21px;
 	-webkit-transition: color 200ms;
 	-moz-transition: color 200ms;
 	transition: color 200ms;
@@ -7675,7 +6887,7 @@ td.v-inline-datefield-calendarpanel-month {
 .v-inline-datefield-calendarpanel-weeknumber, .v-inline-datefield-calendarpanel-weekdays.v-inline-datefield-calendarpanel-weeknumbers td:first-child {
 	width: 32px;
 	color: rgba(155, 160, 162, 0.85);
-	font-size: 14px;
+	font-size: 13px;
 	display: inline-block;
 	text-align: left;
 }
@@ -7700,7 +6912,7 @@ td.v-inline-datefield-calendarpanel-month {
 
 td.v-inline-datefield-calendarpanel-time {
 	width: 100%;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 td.v-inline-datefield-calendarpanel-time .v-label {
@@ -8084,7 +7296,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	padding: 0;
 	text-align: left;
 	line-height: 32px;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-menubar-small:after {
@@ -8218,7 +7430,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 13px;
+	font-size: 11px;
 	text-align: center;
 }
 
@@ -8312,7 +7524,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-select-optiongroup .v-radiobutton, .v-select-optiongroup .v-checkbox {
 	display: block;
-	margin: 10px 16px 0 0;
+	margin: 10px 14px 0 0;
 }
 
 .v-select-optiongroup .v-radiobutton:first-child, .v-select-optiongroup .v-checkbox:first-child {
@@ -8328,7 +7540,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-select-optiongroup-small {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-select-optiongroup-small .v-checkbox {
@@ -8379,7 +7591,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 11px;
+	font-size: 10px;
 	text-align: center;
 }
 
@@ -8506,7 +7718,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 11px;
+	font-size: 10px;
 	text-align: center;
 }
 
@@ -8600,7 +7812,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-select-optiongroup-small .v-radiobutton, .v-select-optiongroup-small .v-checkbox {
 	display: block;
-	margin: 9px 16px 0 0;
+	margin: 9px 14px 0 0;
 }
 
 .v-select-optiongroup-small .v-radiobutton:first-child, .v-select-optiongroup-small .v-checkbox:first-child {
@@ -8616,7 +7828,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-select-optiongroup-large {
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-select-optiongroup-large .v-checkbox {
@@ -8667,7 +7879,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 15px;
+	font-size: 13px;
 	text-align: center;
 }
 
@@ -8794,7 +8006,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 15px;
+	font-size: 13px;
 	text-align: center;
 }
 
@@ -8888,7 +8100,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-select-optiongroup-large .v-radiobutton, .v-select-optiongroup-large .v-checkbox {
 	display: block;
-	margin: 12px 16px 0 0;
+	margin: 12px 14px 0 0;
 }
 
 .v-select-optiongroup-large .v-radiobutton:first-child, .v-select-optiongroup-large .v-checkbox:first-child {
@@ -8968,11 +8180,11 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-link-small {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-link-large {
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-window {
@@ -9103,7 +8315,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	line-height: 37px;
 	text-align: center;
 	cursor: pointer;
-	font-size: 21px;
+	font-size: 18px;
 	color: #949da0;
 	-webkit-transition: color 140ms;
 	-moz-transition: color 140ms;
@@ -9442,7 +8654,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	height: 2px;
 	width: 100%;
 	background: #07a9ca;
-	font-size: 32px;
+	font-size: 28px;
 	line-height: 2px;
 	color: #07a9ca;
 	text-indent: -4px;
@@ -9567,7 +8779,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	white-space: nowrap;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .v-tree8-cell.frozen {
@@ -9672,7 +8884,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0c9";
 	display: block;
 	font-family: ThemeIcons, sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-tree8-sidebar.v-contextmenu.closed {
@@ -9685,7 +8897,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-tree8-sidebar.v-contextmenu.open .v-tree8-sidebar-button:after {
 	content: "\f0c9";
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 1;
 }
 
@@ -9764,7 +8976,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 .v-tree8-header th {
 	position: relative;
 	background-color: #444d50;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-bottom: 1px solid #303739;
@@ -9777,7 +8989,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-tree8-header .sort-asc, .v-tree8-header .sort-desc {
-	padding-right: 36.5px;
+	padding-right: 33.5px;
 }
 
 .v-tree8-header .sort-asc:after, .v-tree8-header .sort-desc:after {
@@ -9785,7 +8997,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0de" " " attr(sort-order);
 	position: absolute;
 	right: 19.5px;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 .v-tree8-header .sort-desc:after {
@@ -9824,7 +9036,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-tree8-footer td {
 	background-color: #444d50;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-top: 1px solid #303739;
@@ -10134,7 +9346,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-tree8-editor-footer {
-	font-size: 14px;
+	font-size: 12px;
 	padding: 0 7px;
 	background: #444d50;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -10630,7 +9842,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	white-space: nowrap;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .v-treegrid-cell.frozen {
@@ -10735,7 +9947,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0c9";
 	display: block;
 	font-family: ThemeIcons, sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-treegrid-sidebar.v-contextmenu.closed {
@@ -10748,7 +9960,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-treegrid-sidebar.v-contextmenu.open .v-treegrid-sidebar-button:after {
 	content: "\f0c9";
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 1;
 }
 
@@ -10827,7 +10039,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 .v-treegrid-header th {
 	position: relative;
 	background-color: #444d50;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-bottom: 1px solid #303739;
@@ -10840,7 +10052,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-treegrid-header .sort-asc, .v-treegrid-header .sort-desc {
-	padding-right: 36.5px;
+	padding-right: 33.5px;
 }
 
 .v-treegrid-header .sort-asc:after, .v-treegrid-header .sort-desc:after {
@@ -10848,7 +10060,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0de" " " attr(sort-order);
 	position: absolute;
 	right: 19.5px;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 .v-treegrid-header .sort-desc:after {
@@ -10887,7 +10099,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-treegrid-footer td {
 	background-color: #444d50;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-top: 1px solid #303739;
@@ -11197,7 +10409,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-treegrid-editor-footer {
-	font-size: 14px;
+	font-size: 12px;
 	padding: 0 7px;
 	background: #444d50;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -11557,7 +10769,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	background-image: -webkit-linear-gradient(top, #4c5659 2%, #373e41 98%);
 	background-image: linear-gradient(to bottom,#4c5659 2%, #373e41 98%);
 	white-space: nowrap;
-	font-size: 14px;
+	font-size: 12px;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -11582,7 +10794,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-table-footer-container {
-	padding: 12px 13px 13px;
+	padding: 13px 13px 14px;
 	float: right;
 }
 
@@ -11591,7 +10803,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-table-caption-container, .v-table-header-drag {
-	padding: 13px 13px 12px;
+	padding: 14px 13px 13px;
 	border-left: 1px solid #303739;
 }
 
@@ -11987,16 +11199,16 @@ tbody.v-drag-element tr {
 }
 
 .v-table-compact .v-table-header-wrap, .v-table-compact .v-table-footer-wrap, .v-table-compact .v-table-header-drag, .v-table-small .v-table-header-wrap, .v-table-small .v-table-footer-wrap, .v-table-small .v-table-header-drag {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-table-compact .v-table-footer-container, .v-table-small .v-table-footer-container {
-	padding: 9px 8px 10px;
+	padding: 10px 8px 11px;
 }
 
 .v-table-compact .v-table-caption-container, .v-table-compact .v-table-header-drag, .v-table-small .v-table-caption-container, .v-table-small .v-table-header-drag {
-	padding-top: 10px;
-	padding-bottom: 9px;
+	padding-top: 11px;
+	padding-bottom: 10px;
 	padding-left: 7px;
 	padding-right: 7px;
 }
@@ -12043,7 +11255,7 @@ tbody.v-drag-element tr {
 .v-table-compact.v-treetable .v-table-cell-wrapper, .v-table-small.v-treetable .v-table-cell-wrapper {
 	padding-left: 0;
 	padding-right: 0;
-	min-height: 16px;
+	min-height: 14px;
 }
 
 .v-table-compact.v-treetable .v-table-cell-content, .v-table-small.v-treetable .v-table-cell-content {
@@ -12065,11 +11277,11 @@ tbody.v-drag-element tr {
 }
 
 .v-table-small {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-table-small.v-treetable .v-table-cell-wrapper {
-	min-height: 14px;
+	min-height: 12px;
 }
 
 .v-treetable [class*="caption-container"], .v-treetable [class*="footer-container"], .v-treetable [class*="cell-wrapper"] {
@@ -12079,11 +11291,11 @@ tbody.v-drag-element tr {
 }
 
 .v-treetable [class*="caption-container"], .v-treetable [class*="footer-container"] {
-	min-height: 15px;
+	min-height: 13px;
 }
 
 .v-treetable [class*="cell-wrapper"] {
-	min-height: 16px;
+	min-height: 14px;
 }
 
 .v-treetable [class*="caption-container"] {
@@ -12597,7 +11809,7 @@ tbody.v-drag-element tr {
 	border-radius: 2px;
 	max-width: 35em;
 	overflow: hidden !important;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-slider-vertical {
@@ -12695,7 +11907,7 @@ tbody.v-drag-element tr {
 	cursor: pointer;
 	text-align: center;
 	line-height: 40px;
-	font-size: 15px;
+	font-size: 13px;
 	font-weight: 400;
 	color: #afb5b7;
 	width: auto !important;
@@ -12745,7 +11957,7 @@ tbody.v-drag-element tr {
 }
 
 .v-tabsheet-tabitemcell .v-caption-closable {
-	padding-right: 22px;
+	padding-right: 19px;
 }
 
 .v-tabsheet-tabitemcell.icons-on-top .v-caption-closable {
@@ -12756,10 +11968,10 @@ tbody.v-drag-element tr {
 	position: absolute;
 	right: 0;
 	top: 50%;
-	margin: -8px 0 0;
-	font-size: 18px;
-	line-height: 18px;
-	width: 18px;
+	margin: -7px 0 0;
+	font-size: 15px;
+	line-height: 15px;
+	width: 15px;
 	text-align: center;
 	border-radius: 2px;
 	color: #8b9699;
@@ -12934,7 +12146,7 @@ tbody.v-drag-element tr {
 }
 
 .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption-closable {
-	padding-right: 31px;
+	padding-right: 28px;
 }
 
 .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-tabsheet-caption-close {
@@ -13044,22 +12256,22 @@ tbody.v-drag-element tr {
 
 .v-colorpicker-popup [class$="sliders"] .v-has-caption {
 	white-space: nowrap;
-	padding-left: 48px;
+	padding-left: 42px;
 }
 
 .v-colorpicker-popup [class$="sliders"] .v-caption {
 	display: inline-block;
-	margin-left: -48px;
-	width: 48px;
+	margin-left: -42px;
+	width: 42px;
 }
 
 .v-colorpicker-popup [class$="sliders"] .v-slot-hue-slider + .v-slot .v-has-caption {
-	padding-left: 80px;
+	padding-left: 70px;
 }
 
 .v-colorpicker-popup [class$="sliders"] .v-slot-hue-slider + .v-slot .v-caption {
-	margin-left: -80px;
-	width: 80px;
+	margin-left: -70px;
+	width: 70px;
 }
 
 .v-colorpicker-popup .v-slider-red .v-slider-base:after {
@@ -13169,7 +12381,7 @@ tbody.v-drag-element tr {
 	background-image: linear-gradient(to bottom,#464f52 2%, #40484b 98%);
 	color: #cacecf;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 13px;
 	-webkit-box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
@@ -13330,7 +12542,7 @@ tbody.v-drag-element tr {
 	background-image: linear-gradient(to bottom,#464f52 2%, #40484b 98%);
 	color: #cacecf;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 13px;
 	-webkit-box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
@@ -13423,7 +12635,7 @@ tbody.v-drag-element tr {
 }
 
 .v-select-twincol-caption-left, .v-select-twincol-caption-right {
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -13598,7 +12810,7 @@ tbody.v-drag-element tr {
 }
 
 .v-calendar-bottom-spacer, .v-calendar-spacer, .v-calendar-bottom-spacer-empty {
-	height: 19px;
+	height: 17px;
 	margin-bottom: 3px;
 }
 
@@ -13614,7 +12826,7 @@ tbody.v-drag-element tr {
 
 .v-calendar-day-number {
 	line-height: 27px;
-	font-size: 16px;
+	font-size: 14px;
 	text-align: right;
 	margin: 0 5px;
 	white-space: nowrap;
@@ -13657,7 +12869,7 @@ tbody.v-drag-element tr {
 }
 
 .v-calendar-weekly-longevents .v-calendar-event-all-day {
-	height: 22px;
+	height: 19px;
 	line-height: 1.6;
 	margin-bottom: 3px;
 }
@@ -13767,14 +12979,14 @@ tbody.v-drag-element tr {
 	margin-bottom: 3px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	height: 19px;
-	line-height: 19px;
+	height: 17px;
+	line-height: 17px;
 }
 
 .v-calendar-event-month .v-calendar-event-time {
 	float: right;
 	font-size: 0.9em;
-	line-height: 19px;
+	line-height: 17px;
 	opacity: 0.5;
 	filter: alpha(opacity=50) ;
 }
@@ -13787,8 +12999,8 @@ tbody.v-drag-element tr {
 .v-calendar-event-all-day {
 	padding: 0 5px;
 	box-sizing: border-box;
-	height: 19px;
-	line-height: 19px;
+	height: 17px;
+	line-height: 17px;
 	border-radius: 0;
 	margin-left: -1px;
 	white-space: nowrap;
@@ -13997,7 +13209,7 @@ h3, .v-label-h3 {
 h4, .v-label-h4 {
 	line-height: 1.1;
 	font-weight: 600;
-	font-size: 14px;
+	font-size: 12px;
 	color: #ced1d2;
 	text-transform: uppercase;
 	letter-spacing: 0;
@@ -14006,11 +13218,11 @@ h4, .v-label-h4 {
 }
 
 .v-csslayout  > h1:first-child, .v-csslayout  > h2:first-child, .v-csslayout  > h3:first-child, .v-csslayout  > h4 > .v-label-h1:first-child, .v-csslayout  > .v-label-h2:first-child, .v-csslayout  > .v-label-h3:first-child, .v-csslayout  > .v-label-h4:first-child {
-	margin-top: 16px;
+	margin-top: 14px;
 }
 
 .v-verticallayout > .v-slot:first-child h1, .v-verticallayout > .v-slot:first-child .v-label-h1, .v-verticallayout > .v-slot:first-child h2, .v-verticallayout > .v-slot:first-child .v-label-h2, .v-verticallayout > .v-slot:first-child h3, .v-verticallayout > .v-slot:first-child .v-label-h3, .v-verticallayout > .v-slot:first-child h4, .v-verticallayout > .v-slot:first-child .v-label-h4, .v-verticallayout > div > .v-slot:first-child h1, .v-verticallayout > div > .v-slot:first-child .v-label-h1, .v-verticallayout > div > .v-slot:first-child h2, .v-verticallayout > div > .v-slot:first-child .v-label-h2, .v-verticallayout > div > .v-slot:first-child h3, .v-verticallayout > div > .v-slot:first-child .v-label-h3, .v-verticallayout > div > .v-slot:first-child h4, .v-verticallayout > div > .v-slot:first-child .v-label-h4 {
-	margin-top: 16px;
+	margin-top: 14px;
 }
 
 .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h1, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h1, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h2, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h2, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h3, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h3, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h4, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h4, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h1, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h1, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h2, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h2, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h3, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h3, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h4, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h4 {
@@ -14026,19 +13238,19 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 }
 
 .v-label-large {
-	font-size: 20px;
+	font-size: 17px;
 }
 
 .v-label-small {
-	font-size: 14px;
-}
-
-.v-label-tiny {
 	font-size: 12px;
 }
 
+.v-label-tiny {
+	font-size: 11px;
+}
+
 .v-label-huge {
-	font-size: 26px;
+	font-size: 23px;
 }
 
 .v-label-bold {
@@ -14078,7 +13290,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	border-radius: 3px;
 	padding: 8px 20px 8px 40px;
 	font-weight: 500;
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .v-label-success:before, .v-label-failure:before {
@@ -14457,7 +13669,7 @@ button {
 }
 
 .v-richtextarea .gwt-RichTextToolbar-bottom {
-	font-size: 13px;
+	font-size: 11px;
 	padding: 0 10px 10px 0;
 }
 
@@ -14567,7 +13779,7 @@ button {
 
 .v-Notification .v-Notification-caption {
 	color: #07a9ca;
-	font-size: 19px;
+	font-size: 17px;
 	line-height: 1;
 }
 
@@ -14596,11 +13808,11 @@ button {
 }
 
 .v-Notification-caption ~ .v-Notification-description, .v-Notification-caption ~ .v-Notification-details {
-	margin-left: 24px;
+	margin-left: 21px;
 }
 
 .v-icon + .v-Notification-caption {
-	margin-left: 16px;
+	margin-left: 14px;
 }
 
 .v-Notification-system {
@@ -14615,7 +13827,7 @@ button {
 	background-color: #444;
 	background-color: rgba(68, 68, 68, 0.9);
 	font-weight: 500;
-	line-height: 22px;
+	line-height: 20px;
 }
 
 .v-Notification-system .v-Notification-description, .v-Notification-system .v-Notification-details {
@@ -14759,7 +13971,7 @@ button {
 	background-color: #444;
 	background-color: rgba(68, 68, 68, 0.9);
 	font-weight: 500;
-	line-height: 22px;
+	line-height: 20px;
 }
 
 .v-Notification.dark .v-Notification-caption {
@@ -14823,11 +14035,11 @@ button {
 }
 
 .v-Notification.small .v-Notification-caption {
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .v-Notification.small .v-Notification-description {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .v-Notification.critical-error {
@@ -14944,7 +14156,7 @@ button {
 	background-image: -webkit-linear-gradient(right, #060707 0%, #141718 10px);
 	background-image: linear-gradient(to left,#060707 0%, #141718 10px);
 	color: #848e92;
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 32px;
 	border-right: 1px solid #0e1011;
 	white-space: nowrap;
@@ -14990,7 +14202,7 @@ button {
 	color: white;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
 	padding: 13px 20px;
-	font-size: 14px;
+	font-size: 13px;
 	border-bottom: 1px solid #057991;
 	-webkit-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
 	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
@@ -15011,7 +14223,7 @@ button {
 	-webkit-box-shadow: inset 0 1px 2px #2bcced, inset 0 0 1px #1db5d3;
 	box-shadow: inset 0 1px 2px #2bcced, inset 0 0 1px #1db5d3;
 	text-shadow: inherit;
-	font-size: 16px;
+	font-size: 14px;
 	border-color: inherit;
 }
 
@@ -15201,9 +14413,9 @@ button {
 	transition: background-color 300ms;
 	line-height: 1;
 	padding: 4px 7px;
-	min-width: 11px;
+	min-width: 9px;
 	text-align: center;
-	top: 5px;
+	top: 5.5px;
 	border-radius: 3px;
 }
 
@@ -15214,7 +14426,7 @@ button {
 }
 
 .valo-menu-part.large-icons .valo-menu-title {
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .valo-menu-part.large-icons .valo-menu-title .v-label-undef-w {
@@ -15224,7 +14436,7 @@ button {
 .valo-menu-part.large-icons .v-menubar-user-menu {
 	margin-left: 0;
 	margin-right: 0;
-	font-size: 11px;
+	font-size: 10px;
 }
 
 .valo-menu-part.large-icons .v-menubar-user-menu img.v-icon {
@@ -15240,7 +14452,7 @@ button {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	background: #060707;
-	font-size: 13px;
+	font-size: 11px;
 	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
 }
 
@@ -15254,7 +14466,7 @@ button {
 
 .valo-menu-part.large-icons .valo-menu-item {
 	display: block;
-	font-size: 26px;
+	font-size: 22px;
 	line-height: 1;
 	padding: 13px;
 	text-align: center;
@@ -15270,7 +14482,7 @@ button {
 	width: auto;
 	margin: 0.3em 0 0;
 	padding: 0;
-	font-size: 11px;
+	font-size: 10px;
 	line-height: 1.3;
 }
 
@@ -15331,7 +14543,7 @@ button {
 }
 
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .valo-menu-title {
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .valo-menu-title .v-label-undef-w {
@@ -15341,7 +14553,7 @@ button {
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .v-menubar-user-menu {
 	margin-left: 0;
 	margin-right: 0;
-	font-size: 11px;
+	font-size: 10px;
 }
 
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .v-menubar-user-menu img.v-icon {
@@ -15357,7 +14569,7 @@ button {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	background: #060707;
-	font-size: 13px;
+	font-size: 11px;
 	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
 }
 
@@ -15371,7 +14583,7 @@ button {
 
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .valo-menu-item {
 	display: block;
-	font-size: 26px;
+	font-size: 22px;
 	line-height: 1;
 	padding: 13px;
 	text-align: center;
@@ -15387,7 +14599,7 @@ button {
 	width: auto;
 	margin: 0.3em 0 0;
 	padding: 0;
-	font-size: 11px;
+	font-size: 10px;
 	line-height: 1.3;
 }
 
@@ -15490,7 +14702,7 @@ button {
 	background-image: -webkit-linear-gradient(right, #060707 0%, #141718 10px);
 	background-image: linear-gradient(to left,#060707 0%, #141718 10px);
 	color: #848e92;
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 32px;
 	border-right: 1px solid #0e1011;
 	white-space: nowrap;
@@ -15532,4 +14744,16 @@ button {
 
 .debug_border {
 	border: 1px dotted green;
+}
+
+.neg_status_negotiating {
+	color: orange;
+}
+
+.neg_status_ok {
+	color: green;
+}
+
+.neg_status_rejected {
+	color: red;
 }

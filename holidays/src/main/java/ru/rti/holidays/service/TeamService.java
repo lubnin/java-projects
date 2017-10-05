@@ -10,6 +10,6 @@ public interface TeamService {
     Team saveTeam(Team team);
     void delete(Long id);
     List<Team> getByTeamName(String teamName);
-    Set<Team> getAllTeams();
+    List<Team> getAllTeamsSortedByTeamNameAsc();
     boolean deleteTeams(Iterable<Team> teams);
 }

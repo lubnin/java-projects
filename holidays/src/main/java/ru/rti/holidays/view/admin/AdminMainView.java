@@ -22,6 +22,7 @@ import ru.rti.holidays.service.HolidayPeriodService;
 import ru.rti.holidays.service.ProjectRoleService;
 import ru.rti.holidays.service.TeamService;
 import ru.rti.holidays.service.localization.LocalizationService;
+import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.view.base.AbstractBaseView;
 import ru.rti.holidays.view.employee.EmployeeHolidaysView;
 import com.vaadin.ui.Notification.Type;
@@ -69,66 +70,21 @@ public class AdminMainView extends AbstractBaseView {
         sideMenu.setMargin(marginInfo);
 
         addUserMenu(sideMenu);
-        sideMenu.addNavigation("Представление по умолчанию", "");
-        sideMenu.addNavigation("Отпуска сотрудников", VaadinIcons.CALENDAR_CLOCK, EmployeeHolidaysView.VIEW_NAME);
+        //sideMenu.addNavigation("Представление по умолчанию", "");
+        //sideMenu.addNavigation("Отпуска сотрудников", VaadinIcons.CALENDAR_CLOCK, EmployeeHolidaysView.VIEW_NAME);
 
         addHolidayPeriodNegotiationStatusManagementMenuItem(sideMenu);
         addUserManagementMenuItem(sideMenu);
         addTeamManagementMenuItem(sideMenu);
         addProjectRoleManagementMenuItem(sideMenu);
 
-        sideMenu.addMenuItem("Встроенное меню", () -> {
+/*        sideMenu.addMenuItem("Встроенное меню", () -> {
             VerticalLayout content = new VerticalLayout();
             content.addComponent(new Label("Тестовый текст"));
             sideMenu.setContent(content);
-        });
+        });*/
 
         addComponent(sideMenu);
-
-        /*HybridMenu hybridMenu = HybridMenuBuilder.get()
-                .setContent(new VerticalLayout())
-                .setMenuComponent(EMenuComponents.LEFT_WITH_TOP)
-                .build();
-
-        hybridMenu.setCaption("Администрирование");
-        hybridMenu.setSizeFull();
-
-        MenuButton btnHomePage = LeftMenuButtonBuilder.get()
-                .setCaption("Главная страница")
-                .setIcon(VaadinIcons.HOME)
-                .navigateTo(EmployeeHolidaysView.VIEW_NAME)
-                .build();
-
-        MenuButton btnUserManagement = LeftMenuButtonBuilder.get()
-                .setCaption("Пользователи")
-                .setIcon(VaadinIcons.USERS)
-                .navigateTo(EmployeeHolidaysView.VIEW_NAME)
-                .build();
-
-        MenuSubMenu subMenuReferences = LeftMenuSubMenuBuilder.get()
-                .setCaption("Справочники")
-                .setIcon(VaadinIcons.BOOK)
-                .setConfig(hybridMenu.getConfig())
-                .build(hybridMenu);
-
-
-        MenuItem lblMenuItem = new LabelMenuItem();
-
-        TopMenuButtonBuilder.get()
-                .setCaption("Главная")
-                .setIcon(VaadinIcons.HOME)
-                .setAlignment(Alignment.MIDDLE_RIGHT)
-                .setNavigateToName(EmployeeHolidaysView.VIEW_NAME)
-                .build(hybridMenu);
-
-        UI.getCurrent().getNavigator().setErrorView(new ErrorDefaultView());
-
-        hybridMenu.addLeftMenuButton(btnHomePage);
-        subMenuReferences.addLeftMenuButton(btnUserManagement);
-        hybridMenu.addLeftMenuSubMenu(subMenuReferences);
-        hybridMenu.addMenuItem(lblMenuItem);
-        hybridMenu.switchTheme(EMenuDesign.DARK);
-        addComponent(hybridMenu);*/
     }
 
 
@@ -158,11 +114,6 @@ public class AdminMainView extends AbstractBaseView {
 
             adminProjectRoleManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
                 Set<ProjectRole> projectRoles = (Set<ProjectRole>)entities;
-                //projectRoles.forEach(projectRole -> {
-
-                    //employeeServiceImpl.resetProjectRoleForEmployees(projectRole);
-                //});
-
                 projectRoleServiceImpl.deleteProjectRoles((Set<ProjectRole>)entities);
                 Notification.show("Выбранные проектные роли успешно удалены!");
             });
@@ -175,11 +126,6 @@ public class AdminMainView extends AbstractBaseView {
 
             adminProjectRoleManagementLayout.constructLayout();
             adminProjectRoleManagementLayout.postConstructLayout();
-
-            ///Binder<ProjectRole> binder = projectRoleAddNewEntityLayout.getEntityBinder();
-
-            //List<AddNewEntityLayout.NewEntityTextControlBinding> textCtrlBindings = projectRoleAddNewEntityLayout.getTextControlBindings();
-            //textCtrlBindings.add(new AddNewEntityLayout.NewEntityTextControlBinding("Название роли", ProjectRole::getRoleName, ProjectRole::setRoleName));
 
             sideMenu.setContent(adminProjectRoleManagementLayout);
         });
@@ -197,6 +143,10 @@ public class AdminMainView extends AbstractBaseView {
         });
     }
 
+    /**
+     * Method for constructing the view for Holiday Period Negotiation Statuses Management
+     * @param sideMenu
+     */
     private void addHolidayPeriodNegotiationStatusManagementMenuItem(SideMenu sideMenu) {
         sideMenu.addMenuItem("Управление статусами согласования отпусков", VaadinIcons.CHECK, () -> {
             AdminHolidayPeriodNegotiationStatusLayout adminHolidayPeriodNegotiationStatusLayout = new AdminHolidayPeriodNegotiationStatusLayout();
@@ -228,6 +178,10 @@ public class AdminMainView extends AbstractBaseView {
         });
     }
 
+    /**
+     * Method for constructing the view for Users Management
+     * @param sideMenu
+     */
     private void addUserManagementMenuItem(SideMenu sideMenu) {
         sideMenu.addMenuItem("Управление пользователями", VaadinIcons.USER, () -> {
             AdminUserManagementLayout adminUserManagementLayout = new AdminUserManagementLayout();
@@ -237,20 +191,10 @@ public class AdminMainView extends AbstractBaseView {
 
             adminUserManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
             adminUserManagementLayout.setProjectRoles(projectRoleServiceImpl.getAllProjectRoles());
-            adminUserManagementLayout.setTeams(teamServiceImpl.getAllTeams());
+            adminUserManagementLayout.setTeams(teamServiceImpl.getAllTeamsSortedByTeamNameAsc());
 
             adminUserManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
-                log.info("AdminMainView::setRemoveSelectedItemsClickListener() called.");
-                //TODO: remove later
-                if (entities != null) {
-                    entities.forEach(o -> {
-                        log.info("Entity to delete: " + o);
-                    });
-                }
-                log.info("Calling employeeServiceImpl.deleteEmployees(...);");
                 employeeServiceImpl.deleteEmployees((Set<Employee>)entities);
-               //List<Employee> allEmployees = employeeServiceImpl.getAllEmployees();
-               //((AdminUserManagementLayout)layout).setEmployees(allEmployees);
                 Notification.show("Выбранные сотрудники успешно удалены!");
             });
 
@@ -258,7 +202,6 @@ public class AdminMainView extends AbstractBaseView {
                 employeeServiceImpl.saveEmployee((Employee)objectForSave);
                 Notification.show("Сотрудник успешно сохранён!");
             });
-
 
             adminUserManagementLayout.setRefreshGridDataListener(layout -> {
                 List<Employee> allEmployees = employeeServiceImpl.getAllEmployees();
@@ -272,6 +215,10 @@ public class AdminMainView extends AbstractBaseView {
         });
     }
 
+    /**
+     * Method for constructing the view for Teams Management
+     * @param sideMenu
+     */
     private void addTeamManagementMenuItem(SideMenu sideMenu) {
         sideMenu.addMenuItem("Управление командами", VaadinIcons.USERS, () -> {
 
@@ -284,7 +231,6 @@ public class AdminMainView extends AbstractBaseView {
             adminTeamManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
                 teamServiceImpl.saveTeam((Team)objectForSave);
                 Notification.show("Команда успешно сохранена!");
-
             });
 
             adminTeamManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
@@ -292,9 +238,8 @@ public class AdminMainView extends AbstractBaseView {
                 Notification.show("Выбранные команды успешно удалены!");
             });
 
-
             adminTeamManagementLayout.setRefreshGridDataListener(layout -> {
-                Set<Team> allTeams = teamServiceImpl.getAllTeams();
+                List<Team> allTeams = teamServiceImpl.getAllTeamsSortedByTeamNameAsc();
                 ((AdminTeamManagementLayout)layout).setTeams(allTeams);
             });
 
@@ -307,6 +252,21 @@ public class AdminMainView extends AbstractBaseView {
 
     @Override
     protected boolean prepareViewData() {
+        return false;
+    }
+
+    /**
+     * Override the logic of checking user session and additionally check that the user accessing this view is Global Admin
+     * @return
+     */
+    @Override
+    protected boolean checkUserSession() {
+        boolean isValidUserSession = super.checkUserSession();
+        if (isValidUserSession) {
+            if (GlobalConstants.ADMIN_USER_LOGIN_NAME.equals(getCurrentUser().getEmployeeLoginName())) {
+                return true;
+            }
+        }
         return false;
     }
 }

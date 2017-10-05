@@ -206,13 +206,25 @@ public class Employee implements DBEntity {
         return projectRole == null ? GlobalConstants.EMPTY_STRING : projectRole.getRoleName();
     }
 
-    public String getTeamNameAsString() { return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName(); }
+    public String getProjectRoleSpecialTypeAsString() {
+        if (projectRole == null) {
+            return GlobalConstants.EMPTY_STRING;
+        }
+        ProjectRole.ProjectRoleSpecialType specType = projectRole.getProjectRoleSpecialType();
+        if (specType == null) {
+            return GlobalConstants.EMPTY_STRING;
+        }
 
-    public String getAllTeamsAsString() {
-        return getAllTeamsAsString("; ");
+        return specType.getDescription();
     }
 
-    public String getAllTeamsAsString(String separator) {
+    public String getTeamNameAsString() { return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName(); }
+
+    public String getAllManagedTeamsAsString() {
+        return getAllManagedTeamsAsString(", ");
+    }
+
+    public String getAllManagedTeamsAsString(String separator) {
         if (separator == null) {
             throw new IllegalArgumentException("Separator cannot be null. Please, provide the valid string value.");
         }
@@ -220,7 +232,7 @@ public class Employee implements DBEntity {
         if (projectRole != null) {
             switch (projectRole.getProjectRoleSpecialType()) {
                 case PROJECT_ROLE_SPECIAL_TYPE_REGULAR:
-                    return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName();
+                    return GlobalConstants.EMPTY_STRING;
                 case PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD:
                 case PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER:
                 case PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER:

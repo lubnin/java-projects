@@ -1,32 +1,40 @@
 package ru.rti.holidays.view.employee;
 
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
+import ru.rti.holidays.beans.session.User;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
 import ru.rti.holidays.service.EmployeeService;
+import ru.rti.holidays.service.HolidayPeriodService;
 import ru.rti.holidays.view.base.AbstractBaseView;
 
 import java.util.*;
 
 @SpringView(name = EmployeeHolidaysView.VIEW_NAME)
+@UIScope
 public class EmployeeHolidaysView extends AbstractBaseView {
     public static final String VIEW_NAME = "EmployeeHolidays";
 
     @Autowired
-    EmployeeService employeeServiceImpl;
+    private EmployeeService employeeServiceImpl;
+
+    @Autowired
+    private HolidayPeriodService holidayPeriodServiceImpl;
 
     private Employee employee;
     private List<HolidayPeriod> employeeHolidayPeriods;
     private HolidayPeriod newHolidayPeriod;
-
+    private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Map<Team, Set<EmployeeHolidayPeriod>> teamMembersHolidayPeriods = new HashMap<Team, Set<EmployeeHolidayPeriod>>();
-    //@Autowired
 
 
     @Override
@@ -44,10 +52,17 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         );
 
         employeeHolidaysLayout.setEmployeeHolidayPeriods(employeeHolidayPeriods);
+        employeeHolidaysLayout.setAllNegotiationStatuses(allNegotiationStatuses);
         employeeHolidaysLayout.setNewHolidayPeriod(newHolidayPeriod);
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
-        employeeHolidaysLayout.addMainButtonClickListener(layoutInstance -> {
+        employeeHolidaysLayout.setCurrentUser(currentUser);
+        employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
+            holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+            //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
+            Page.getCurrent().reload();
+        });
 
+        employeeHolidaysLayout.addMainButtonClickListener(layoutInstance -> {
             newHolidayPeriod.setEmployee(employee);
             HolidayPeriod addedToDBHolidayPeriod = employeeServiceImpl.saveHolidayPeriod(newHolidayPeriod);
 
@@ -80,21 +95,26 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
     @Override
     protected boolean prepareViewData() {
+        /*
         String loginName = parameterMap.get("loginName");
         String password = parameterMap.get("password");
 
         if (loginName == null || password == null) {
             throw new IllegalArgumentException("Login name and password cannot be null!");
-        }
+        }*/
 
-        employee = employeeServiceImpl.getByLoginNameAndPassword(loginName, password);
-        if (employee == null) {
-            throw new IllegalArgumentException("Employee not found in the database by login and password provided!");
-        }
+
+
+        //employee = currentUser.getLoggedInEmployee();
+        employee = employeeServiceImpl.getByLoginNameAndPassword(
+                getCurrentUser().getEmployeeLoginName(),
+                getCurrentUser().getEmployeePassword());
+        //if (employee == null) {
+        //    throw new IllegalArgumentException("Employee not found in the database by login and password provided!");
+        //}
 
         employeeHolidayPeriods = employeeServiceImpl.getHolidayPeriodsForEmployee(employee);
-
-
+        allNegotiationStatuses = holidayPeriodServiceImpl.getAllHolidayPeriodNegotiationStatuses();
 
         if (employee.isManager()) {
             Set<Team> managedTeams = employee.getManagedTeams();
@@ -112,8 +132,10 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                                     empHolidayPeriod.setDateStart(holidayPeriod.getDateStart());
                                     empHolidayPeriod.setNumDays(holidayPeriod.getNumDays());
                                     empHolidayPeriod.setEmployeeRoleName(emp.getProjectRoleAsString());
-                                    //TODO: upgrade here, remove hardcode
-                                    empHolidayPeriod.setHolidayPeriodNegotiationStatus("TEST");
+                                    empHolidayPeriod.setHolidayPeriodNegotiationStatus(holidayPeriod.getNegotiationStatusAsString());
+                                    empHolidayPeriod.setNegotiationStatus(holidayPeriod.getNegotiationStatus());
+                                    empHolidayPeriod.setTeamId(team.getId());
+                                    empHolidayPeriod.setHolidayPeriod(holidayPeriod);
                                     empHolidayPeriods.add(empHolidayPeriod);
                                 });
                             }
@@ -133,8 +155,10 @@ public class EmployeeHolidaysView extends AbstractBaseView {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         super.enter(event);
+        /*
         if (parameters == null && parameterMap == null) {
             throw new IllegalArgumentException("EmployeeHolidaysView must be called with initialized parameter map. Something went wrong if you see this message.");
         }
+        */
     }
 }

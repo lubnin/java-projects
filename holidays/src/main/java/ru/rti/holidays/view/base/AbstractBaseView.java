@@ -2,17 +2,85 @@ package ru.rti.holidays.view.base;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.rti.holidays.beans.session.User;
+import ru.rti.holidays.exception.NotAuthorizedAccessException;
+import ru.rti.holidays.exception.handler.DoNothingExceptionHandler;
+import ru.rti.holidays.exception.handler.ExceptionHandler;
+import ru.rti.holidays.exception.handler.StandardViewExceptionHandler;
+import ru.rti.holidays.layout.base.BaseVerticalLayout;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
 
+/**
+ * This is the base abstract class for every view of the Application
+ */
 abstract public class AbstractBaseView extends VerticalLayout implements View {
     protected Map<String, String> parameterMap;
     protected String parameters;
+    private static final Logger log = LoggerFactory.getLogger(AbstractBaseView.class);
+    protected ExceptionHandler exceptionHandler;
+
+    @Autowired
+    protected User currentUser;
+
+    public AbstractBaseView() {
+        exceptionHandler = new StandardViewExceptionHandler();
+    }
+    /**
+     * Gets the logger instance for this view
+     * @return
+     */
+    public Logger getLogger() {
+        return log;
+    }
+
+    /**
+     * Sets the ExceptionHandler for this view. It will handle all the exceptions which are thrown in the view instance.
+     * You can write your own implementation of ExceptionHandler interface or use one of the predefined Exception handlers:
+     * @see StandardViewExceptionHandler
+     * @see DoNothingExceptionHandler
+     *
+     * @param exceptionHandler
+     */
+    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
+    }
+
+    /**
+     * Gets the ExceptionHandler for this view. This Exception handles all the exceptions which are thrown in the view
+     * instance.
+     * @return
+     */
+    public ExceptionHandler getExceptionHandler() {
+        return this.exceptionHandler;
+    }
+
+    /**
+     * Handles the exception, which occured during layout construction
+     * @param e
+     * @param errorMessage
+     */
+    public void handleException(Exception e, String errorMessage) {
+        if (exceptionHandler != null) {
+            exceptionHandler.handle(e, errorMessage);
+        }
+    }
+
+
+    /**
+     * Gets the currently logged in user
+     * @return
+     */
+    public User getCurrentUser() {
+        return currentUser;
+    }
 
     /**
      * This method must be overridden in child subclasses of AbstractBaseView.
@@ -45,11 +113,7 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
         setSpacing(true);
         //setMargin(true);
         //setSpacing(true);
-
         //addComponent(addSpecialStyling(getPageTitleLabel()));
-
-
-
     }
 
     private Label addSpecialStyling(Label lblTitle) {
@@ -63,12 +127,33 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
         return pageTitle;
     }
 
+    /**
+     * Checks for a valid user session. If someone tries to access the view and didn't perform login to
+     * the system, the method returns false;
+     * @return false if the user accessing this view is not authorized in the Application.
+     */
+    protected boolean checkUserSession() {
+        if (currentUser == null || currentUser.getEmployeeLoginName() == null || currentUser.getEmployeePassword() == null) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        parameterMap = event.getParameterMap();
-        parameters = event.getParameters();
-        // the view is constructed in the init() method()
-        prepareViewData();
-        addCustomComponents();
+        try {
+            parameterMap = event.getParameterMap();
+            parameters = event.getParameters();
+
+            if (!checkUserSession()) {
+                throw new NotAuthorizedAccessException("Вы не авторизованы для просмотра данной страницы.");
+            }
+
+            // the view is constructed in the init() method()
+            prepareViewData();
+            addCustomComponents();
+        } catch (Exception e) {
+            handleException(e, e.getMessage());
+        }
     }
 }

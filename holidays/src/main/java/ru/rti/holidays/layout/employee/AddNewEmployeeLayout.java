@@ -12,6 +12,8 @@ import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
+
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -20,14 +22,19 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
     private Binder<Employee> employeeBinder = new Binder<Employee>();
     private Employee newEmployee = new Employee();
     private List<ProjectRole> projectRoles;
-    private Set<Team> teams;
+    private List<Team> allTeams;
     private Button btnRemoveSelectedEmployees = new Button("Удалить выбранных сотрудников");
     private PasswordField txtPasswordCheck = new PasswordField("Повтор пароля:");
     private ComboBox<ProjectRole> cboProjectRole;
     private ComboBox<Team> cboTeam;
-    private CheckBoxGroup<Team> chkGroupTeams;
+    private Label lblTeamsCheckboxes = new Label("Команды в управлении:");
+    private Team[] teamsArray = null;
+    /**
+     * CheckBoxGroup in Vaadin is unfortunately buggy, so I finally replaced it with simple array of CheckBox type.
+     */
+    private CheckBox[] teamCheckboxes;
 
-    public void setTeams(Set<Team> teams) {  this.teams = teams; }
+    public void setAllTeams(List<Team> allTeams) {  this.allTeams = allTeams; }
     public void setProjectRoles(List<ProjectRole> projectRoles) {
         this.projectRoles = projectRoles;
     }
@@ -35,8 +42,9 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
     @Override
     public void setNewBeanValue(DBEntity newBeanValue) {
-        if (newBeanValue instanceof Employee)
-            this.newEmployee = (Employee)newBeanValue;
+        if (newBeanValue instanceof Employee) {
+            this.newEmployee = (Employee) newBeanValue;
+        }
     }
 
     @Override
@@ -78,23 +86,16 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
         cboProjectRole = new ComboBox<>("Проектная роль:");
         cboTeam = new ComboBox<>("Команда:");
-        chkGroupTeams = new CheckBoxGroup<>("Команды в управлении:");
 
+        if (allTeams != null && allTeams.size() > 0) {
+            teamCheckboxes = new CheckBox[allTeams.size()];
+            teamsArray = allTeams.toArray(new Team[allTeams.size()]);
 
-        chkGroupTeams.setItems(teams);
-        chkGroupTeams.setItemCaptionGenerator(Team::getTeamName);
-        chkGroupTeams.setVisible(false);
-        //TODO: experimental code block
-        //chkGroupTeams.addSelectionListener(multiSelectionEvent -> {
-
-            //Set<Employee> managers = new HashSet<>();
-            //managers.add(newEmployee);
-            //Set<Team> selectedTeams = multiSelectionEvent.getAllSelectedItems();
-            //selectedTeams.forEach(team -> {
-                //team.setManagers(managers);
-            //});
-        //});
-        employeeBinder.forField(chkGroupTeams).bind(Employee::getManagedTeams, Employee::setManagedTeams);
+            for (int i = 0; i < teamCheckboxes.length; i++) {
+                teamCheckboxes[i] = new CheckBox();
+                teamCheckboxes[i].setCaption(teamsArray[i].getTeamName());
+            }
+        }
 
         cboProjectRole.setEmptySelectionAllowed(true);
         cboProjectRole.setEmptySelectionCaption("Роль не выбрана");
@@ -105,13 +106,14 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
            if (valueChangeEvent.isUserOriginated()) {
                ProjectRole selectedProjectRole = valueChangeEvent.getValue();
                cboTeam.setEnabled(selectedProjectRole != null);
-               chkGroupTeams.setVisible(selectedProjectRole != null);
                if (selectedProjectRole != null) {
                    if (ProjectRole.ProjectRoleSpecialType.getRolesWithTeamManagementAbility().contains(selectedProjectRole.getProjectRoleSpecialType())) {
                        triggerControlsVisibility(true);
                    } else {
                        triggerControlsVisibility(false);
                    }
+               } else {
+                   triggerControlsVisibility(false);
                }
            }
 
@@ -123,7 +125,7 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         cboTeam.setEmptySelectionAllowed(true);
         cboTeam.setEmptySelectionCaption("Команда не выбрана");
         cboTeam.setTextInputAllowed(false);
-        cboTeam.setItems(teams);
+        cboTeam.setItems(allTeams);
         cboTeam.setItemCaptionGenerator(Team::getTeamName);
         cboTeam.setEnabled(cboProjectRole.getValue() != null);
 
@@ -132,6 +134,20 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         Button btnSaveEmployee = new Button("Сохранить", event -> {
             try {
                 employeeBinder.writeBean(newEmployee);
+
+                if (newEmployee.isManager()) {
+                    Set<Team> managedTeams = newEmployee.getManagedTeams();
+                    if (managedTeams != null) {
+                        log.info("Managed teams size: " + managedTeams.size());
+                        managedTeams.clear();
+                        for (int i = 0; i < teamCheckboxes.length; i++) {
+                            if (teamCheckboxes[i].getValue() != null && teamCheckboxes[i].getValue()) {
+                                managedTeams.add(teamsArray[i]);
+                            }
+                        }
+                    }
+                }
+
                 if (saveButtonClickListener != null) {
                     saveButtonClickListener.onSaveData(this, newEmployee);
                 }
@@ -171,7 +187,8 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         cboProjectRole.setWidth("100%");
         cboTeam.setWidth("100%");
 
-        GridLayout addEmployeeGridLayout = new GridLayout(5, 5);
+        int teamsRowsIncrement = allTeams != null && allTeams.size() > 0 ? allTeams.size() + 1 : 0;
+        GridLayout addEmployeeGridLayout = new GridLayout(5, 5 + teamsRowsIncrement);
 
         addEmployeeGridLayout.setSizeFull();
         //addEmployeeGridLayout.addStyleName("debug_border");
@@ -189,25 +206,26 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         addEmployeeGridLayout.addComponent(cboTeam, 0,3,4,3);
         addEmployeeGridLayout.setRowExpandRatio(1,1);
         addEmployeeGridLayout.setRowExpandRatio(2,1);
-        addEmployeeGridLayout.addComponent(btnSaveEmployee, 0,4);
-        addEmployeeGridLayout.addComponent(btnRemoveSelectedEmployees, 1,4,2,4);
+
+        if (allTeams != null && allTeams.size() > 0) {
+            lblTeamsCheckboxes.addStyleName(ValoTheme.LABEL_SMALL);
+            addEmployeeGridLayout.addComponent(lblTeamsCheckboxes, 0, 4);
+            for (int i = 0; i < teamCheckboxes.length; i++) {
+                addEmployeeGridLayout.addComponent(teamCheckboxes[i], 0, 4 + i + 1);
+            }
+        }
+
+        addEmployeeGridLayout.addComponent(btnSaveEmployee, 0,4 + teamsRowsIncrement);
+        addEmployeeGridLayout.addComponent(btnRemoveSelectedEmployees, 1,4 + teamsRowsIncrement,2,4 + teamsRowsIncrement);
 
         addComponents(addEmployeeGridLayout);
-        addComponent(chkGroupTeams);
     }
 
     @Override
     public void updateControlsFromBeanState() {
-        updateControlsVisibility();
         employeeBinder.readBean(newEmployee);
-        Set<Team> teams = chkGroupTeams.getSelectedItems();
-
-        //chkGroupTeams.deselectAll();
-
-        if (teams != null && teams.size() > 0) {
-            teams.forEach(team -> log.info(String.format("Selected team: '%s'", team)));
-            //chkGroupTeams.select(teams.toArray(new Team[teams.size()]));
-        }
+        updateControlsVisibility();
+        updateControlsEnabledState();
     }
 
     @Override
@@ -217,13 +235,21 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         txtPasswordCheck.setValue("");
     }
 
+    public void updateControlsEnabledState() {
+        if (cboProjectRole.getSelectedItem() != null) {
+            cboTeam.setEnabled(true);
+        } else {
+            cboTeam.setEnabled(false);
+        }
+    }
+
     public void updateControlsVisibility() {
         if (newEmployee == null) {
             return;
         }
 
-        if (chkGroupTeams == null || cboTeam == null) {
-            log.error("Error: at least one of controls 'chkGroupTeams', 'cboTeam' is null!");
+        if (teamCheckboxes == null && cboTeam == null) {
+            log.error("Error: at least one of controls 'teamCheckboxes', 'cboTeam' must not be null!");
             return;
         }
 
@@ -238,12 +264,33 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
     }
 
     private void triggerControlsVisibility(boolean isManagerRole) {
-        if (chkGroupTeams == null || cboTeam == null) {
-            log.error("Error: at least one of controls 'chkGroupTeams', 'cboTeam' is null!");
+        if (teamCheckboxes == null && cboTeam == null) {
+            log.error("Error: at least one of controls 'teamCheckboxes', 'cboTeam' must not be null!");
             return;
         }
 
-        chkGroupTeams.setVisible(isManagerRole);
-        cboTeam.setVisible(!isManagerRole);
+        lblTeamsCheckboxes.setVisible(isManagerRole);
+        if (allTeams != null && allTeams.size() > 0) {
+            for (int i = 0; i < teamCheckboxes.length; i++) {
+                teamCheckboxes[i].setVisible(isManagerRole);
+            }
+        }
+
+        if (isManagerRole) {
+            Set<Team> managedTeams = newEmployee.getManagedTeams();
+            for (int i = 0; i < teamCheckboxes.length; i++) {
+                Team currentTeam = teamsArray[i];
+                boolean isTeamSelected = false;
+                for (Team managedTeam : managedTeams) {
+                    if (managedTeam.getId().equals(currentTeam.getId())) {
+                        isTeamSelected = true;
+                        break;
+                    }
+                }
+                teamCheckboxes[i].setValue(isTeamSelected);
+            }
+        }
+        //cboTeam.setVisible(!isManagerRole);
+        cboTeam.setVisible(true);
     }
 }

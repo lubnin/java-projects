@@ -89,7 +89,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getByLoginNameAndPassword(String loginName, String password) {
-        return employeeRepository.findByLoginName(loginName);
+        return employeeRepository.findByLoginNameAndPassword(loginName, password);
     }
 
     @Override

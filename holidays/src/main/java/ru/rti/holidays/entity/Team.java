@@ -146,10 +146,6 @@ public class Team implements DBEntity {
 
         return id == team.getId() &&
                 teamName == team.getTeamName() &&
-                employees == team.getEmployees() &&
-                teamLead == team.getTeamLead() &&
-                projectManager == team.getProjectManager() &&
-                managers == team.getManagers() &&
                 created == team.getCreatedDate() &&
                 updated == team.getUpdatedDate();
 
@@ -161,10 +157,6 @@ public class Team implements DBEntity {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((teamName == null) ? 0 : teamName.hashCode());
-        result = prime * result + ((employees == null) ? 0 : employees.hashCode());
-        result = prime * result + ((teamLead == null) ? 0 : teamLead.hashCode());
-        result = prime * result + ((projectManager == null) ? 0 : projectManager.hashCode());
-        result = prime * result + ((managers == null) ? 0 : managers.hashCode());
         result = prime * result + ((created == null) ? 0 : created.hashCode());
         result = prime * result + ((updated == null) ? 0 : updated.hashCode());
         return result;

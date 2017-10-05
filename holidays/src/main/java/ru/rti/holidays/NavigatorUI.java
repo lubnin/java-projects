@@ -4,6 +4,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
@@ -11,6 +12,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.rti.holidays.beans.session.User;
+import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.view.LoginPageView;
 import ru.rti.holidays.view.error.AccessDeniedView;
 import ru.rti.holidays.view.error.ErrorDefaultView;
@@ -18,19 +21,18 @@ import ru.rti.holidays.view.error.ErrorDefaultView;
 import java.util.Locale;
 
 @SpringUI
-//@Theme(ValoTheme.THEME_NAME)
-@Theme("rti")
+@SpringViewDisplay
+@Theme(GlobalConstants.THEME_NAME)
 public class NavigatorUI extends UI {
     @Autowired
     private SpringViewProvider viewProvider;
 
+    @Autowired
+    private User currentUser;
+
     @Override
     protected void init(VaadinRequest request) {
         UI.getCurrent().setLocale(new Locale("ru"));
-
-        //loginForm.setSizeFull();
-        //loginForm.setMargin(true);
-        //loginForm.setSpacing(true);
 
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
@@ -59,14 +61,16 @@ public class NavigatorUI extends UI {
         Navigator navigator = new Navigator(this, viewContainer);
         navigator.addProvider(viewProvider);
         navigator.setErrorView(new ErrorDefaultView());
-        //navigator.setErrorView(new ErrorDefaultView());
 
-        //navigator.navigateTo(DefaultView.VIEW_NAME);
-        navigator.navigateTo(LoginPageView.VIEW_NAME);
-
+        if (currentUser != null && currentUser.getEmployeeLoginName() != null && currentUser.getCurrentView() != null) {
+            navigator.navigateTo(currentUser.getCurrentView());
+        } else {
+            navigator.navigateTo(LoginPageView.VIEW_NAME);
+        }
         UI.getCurrent().setNavigator(navigator);
     }
 
+    /*
     private Button createNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
         button.addStyleName(ValoTheme.BUTTON_SMALL);
@@ -75,7 +79,6 @@ public class NavigatorUI extends UI {
         return button;
     }
 
-    /*
     /////// THIS IS OLD CODE - used with combination with view.old.* classes
     private Navigator navigator;
 

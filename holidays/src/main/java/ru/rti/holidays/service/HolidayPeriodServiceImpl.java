@@ -4,8 +4,11 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
+import ru.rti.holidays.repository.HolidayPeriodRepository;
 
 import java.util.List;
 import java.util.Set;
@@ -17,6 +20,9 @@ import java.util.Set;
 public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     @Autowired
     private HolidayPeriodNegotiationStatusRepository holidayPeriodNegotiationStatusRepository;
+
+    @Autowired
+    private HolidayPeriodRepository holidayPeriodRepository;
 
     @Override
     public List<HolidayPeriodNegotiationStatus> getAllHolidayPeriodNegotiationStatuses() {
@@ -32,5 +38,19 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     public boolean deleteHolidayPeriodNegotiationStatuses(Iterable<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses) {
         holidayPeriodNegotiationStatusRepository.delete(holidayPeriodNegotiationStatuses);
         return true;
+    }
+
+    @Override
+    public boolean setNegotiationStatusForHolidayPeriods(Iterable<EmployeeHolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus) {
+        if (holidayPeriods == null || negotiationStatus == null) {
+            return false;
+        }
+
+        for (EmployeeHolidayPeriod ehp : holidayPeriods) {
+            HolidayPeriod hp = ehp.getHolidayPeriod();
+            hp.setNegotiationStatus(negotiationStatus);
+            holidayPeriodRepository.saveAndFlush(hp);
+        }
+        return false;
     }
 }

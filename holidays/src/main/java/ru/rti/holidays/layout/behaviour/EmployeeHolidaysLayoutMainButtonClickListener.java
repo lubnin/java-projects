@@ -8,5 +8,5 @@ import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
  */
 @FunctionalInterface
 public interface EmployeeHolidaysLayoutMainButtonClickListener {
-    boolean performClick(EmployeeHolidaysLayout layoutInstance);
+    boolean onAddSelectedPeriods(EmployeeHolidaysLayout layoutInstance);
 }

@@ -3,14 +3,13 @@ package ru.rti.holidays.layout.admin;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
+import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
-import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
-import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 import ru.rti.holidays.layout.employee.AddNewEmployeeLayout;
 
 import java.util.List;
@@ -22,9 +21,9 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
     private Grid<Employee> grdEmployees = new Grid<>();
     private List<Employee> employees;
     private List<ProjectRole> projectRoles;
-    private Set<Team> teams;
+    private List<Team> teams;
 
-    public void setTeams(Set<Team> teams) { this.teams = teams; }
+    public void setTeams(List<Team> teams) { this.teams = teams; }
     public void setProjectRoles(List<ProjectRole> projectRoles) {
         this.projectRoles = projectRoles;
     }
@@ -38,13 +37,15 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             MultiSelectionModel<Employee> selectionModel =
                     (MultiSelectionModel<Employee>)grdEmployees.setSelectionMode(Grid.SelectionMode.MULTI);
 
+
             grdEmployees.addColumn(Employee::getLastName).setCaption("Фамилия");
             grdEmployees.addColumn(Employee::getFirstName).setCaption("Имя");
             grdEmployees.addColumn(Employee::getMiddleName).setCaption("Отчество");
             grdEmployees.addColumn(Employee::getEmail).setCaption("E-Mail");
             grdEmployees.addColumn(Employee::getProjectRoleAsString).setCaption("Проектная роль");
             grdEmployees.addColumn(Employee::getLoginName).setCaption("Логин");
-            grdEmployees.addColumn(Employee::getAllTeamsAsString).setCaption("Команда");
+            grdEmployees.addColumn(Employee::getTeamNameAsString).setCaption("Команда");
+            grdEmployees.addColumn(Employee::getAllManagedTeamsAsString).setCaption("Команды под управлением");
             grdEmployees.setHeightByRows(5);
             grdEmployees.setWidth("100%");
 
@@ -52,7 +53,7 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             addEmployeeLayout.setWidth("100%");
             addEmployeeLayout.setParentLayout(this);
             addEmployeeLayout.setProjectRoles(projectRoles);
-            addEmployeeLayout.setTeams(teams);
+            addEmployeeLayout.setAllTeams(teams);
             addEmployeeLayout.setExceptionHandler(getExceptionHandler());
             addEmployeeLayout.setSaveButtonClickListener(saveButtonClickListener);
             addEmployeeLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {

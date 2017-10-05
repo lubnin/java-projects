@@ -1,5 +1,7 @@
 package ru.rti.holidays.aggregators;
 
+import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import java.time.LocalDate;
@@ -7,10 +9,13 @@ import java.time.format.DateTimeFormatter;
 
 public class EmployeeHolidayPeriod {
     private String employeeFullName;
+    private Long teamId;
     private LocalDate dateStart;
     private Long numDays;
     private String holidayPeriodNegotiationStatus;
     private String employeeRoleName;
+    private HolidayPeriodNegotiationStatus negotiationStatus;
+    private HolidayPeriod holidayPeriod;
 
     public String getEmployeeFullName() {
         return employeeFullName;
@@ -92,5 +97,29 @@ public class EmployeeHolidayPeriod {
 
     public void setEmployeeRoleName(String employeeRoleName) {
         this.employeeRoleName = employeeRoleName;
+    }
+
+    public HolidayPeriodNegotiationStatus getNegotiationStatus() {
+        return negotiationStatus;
+    }
+
+    public void setNegotiationStatus(HolidayPeriodNegotiationStatus negotiationStatus) {
+        this.negotiationStatus = negotiationStatus;
+    }
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
+    public HolidayPeriod getHolidayPeriod() {
+        return holidayPeriod;
+    }
+
+    public void setHolidayPeriod(HolidayPeriod holidayPeriod) {
+        this.holidayPeriod = holidayPeriod;
     }
 }
