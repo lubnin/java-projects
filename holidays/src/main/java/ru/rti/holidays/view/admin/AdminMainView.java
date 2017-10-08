@@ -23,6 +23,7 @@ import ru.rti.holidays.service.ProjectRoleService;
 import ru.rti.holidays.service.TeamService;
 import ru.rti.holidays.service.localization.LocalizationService;
 import ru.rti.holidays.utility.GlobalConstants;
+import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.view.base.AbstractBaseView;
 import ru.rti.holidays.view.employee.EmployeeHolidaysView;
 import com.vaadin.ui.Notification.Type;
@@ -132,14 +133,15 @@ public class AdminMainView extends AbstractBaseView {
     }
 
     private void addUserMenu(SideMenu sideMenu) {
-        sideMenu.setUserName("admin");
+        sideMenu.setUserName(GlobalConstants.ADMIN_USER_LOGIN_NAME);
         sideMenu.setUserMenuVisible(true);
         sideMenu.clearUserMenu();
-        sideMenu.addUserMenuItem(localizationServiceImpl.getMessageAdminUserMenuSettings(), VaadinIcons.WRENCH, () -> {
-            Notification.show("Отображение настроек", Type.TRAY_NOTIFICATION);
-        });
+        //sideMenu.addUserMenuItem(localizationServiceImpl.getMessageAdminUserMenuSettings(), VaadinIcons.WRENCH, () -> {
+        //    Notification.show("Отображение настроек", Type.TRAY_NOTIFICATION);
+        //});
         sideMenu.addUserMenuItem(localizationServiceImpl.getMessageAdminUserMenuExit(), VaadinIcons.EXIT, () -> {
-            Notification.show("Выход из приложения", Type.TRAY_NOTIFICATION);
+            //Notification.show("Выход из приложения", Type.TRAY_NOTIFICATION);
+            SessionUtils.logout(currentUser);
         });
     }
 

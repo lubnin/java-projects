@@ -4,6 +4,9 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * Custom Vaadin Component for displaying Label in Bold style
+ */
 public class BoldLabel extends Label {
 
     public BoldLabel() {
@@ -18,7 +21,7 @@ public class BoldLabel extends Label {
         setValue(text);
         setContentMode(contentMode);
 
-        //TODO: customization goes here
+        //TODO: customization of the component goes here
         addStyleName(ValoTheme.LABEL_BOLD);
     }
 }

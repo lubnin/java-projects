@@ -22,6 +22,7 @@ import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutNegotiateSelectedP
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
+import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.utility.TeamUtils;
 import ru.rti.holidays.validator.HolidayPeriodDateValidator;
 import ru.rti.holidays.validator.HolidayPeriodDayNumValidator;
@@ -203,20 +204,13 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
             MenuBar.Command cmdSystemExit = new MenuBar.Command() {
                 public void menuSelected(MenuBar.MenuItem selectedItem) {
-                    if (currentUser != null) {
-                        currentUser.setCurrentView(null);
-                        currentUser.setEmployeeLoginName(null);
-                        currentUser.setEmployeePassword(null);
-                        Page.getCurrent().reload();
-                    }
+                    SessionUtils.logout(currentUser);
                 }
             };
 
             MenuBar menuBar = new MenuBar();
             MenuBar.MenuItem menuItemSystem = menuBar.addItem("Система", null, null);
             MenuBar.MenuItem menuItemSystemExit = menuItemSystem.addItem("Выход", null, cmdSystemExit);
-
-
 
             addComponent(menuBar);
             addComponent(lblEmployeeName);

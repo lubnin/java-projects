@@ -2,23 +2,16 @@ package ru.rti.holidays.beans.session;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
-import ru.rti.holidays.entity.Employee;
 
 @SpringComponent
 @VaadinSessionScope
+/**
+ * Session-scope class for currently logged-in User
+ */
 public class User {
-    //private Employee loggedInEmployee;
     private String employeeLoginName;
     private String employeePassword;
     private String currentView;
-
-/*    public Employee getLoggedInEmployee() {
-        return loggedInEmployee;
-    }
-
-    public void setLoggedInEmployee(Employee loggedInEmployee) {
-        this.loggedInEmployee = loggedInEmployee;
-    }*/
 
     public String getCurrentView() {
         return currentView;

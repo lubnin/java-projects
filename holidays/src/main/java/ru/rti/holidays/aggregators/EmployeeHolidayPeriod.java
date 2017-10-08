@@ -7,6 +7,9 @@ import ru.rti.holidays.utility.GlobalConstants;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class aggregator for displaying Employee's holiday periods in grids.
+ */
 public class EmployeeHolidayPeriod {
     private String employeeFullName;
     private Long teamId;

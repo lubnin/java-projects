@@ -12,6 +12,9 @@ import ru.rti.holidays.service.ProjectRoleService;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @deprecated
+ */
 @SpringView(name = AddProjectRoleView.VIEW_NAME)
 public class AddProjectRoleView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "AddProjectRole";

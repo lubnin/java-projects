@@ -30,7 +30,19 @@ public interface DBEntity {
     void onUpdate();
 
 
+    /**
+     * This method should be implemented by getting the Entity class property representing the 'created date' value of
+     * this Entity. The property value is stored in the DataSource when saving the Entity the very first time.
+     * @return Date value representing when the Entity object was first time created
+     */
     Date getCreatedDate();
+
+    /**
+     * This method should be implemented by getting the Entity class property representing the 'updated date' value of
+     * this Entity. The property value is stored in the DataSource when updating the Entity. When the Entity
+     * is saved in the DataSource the first time this value is 'null'.
+     * @return Date value representing the last time when the Entity object was updated.
+     */
     Date getUpdatedDate();
 
     /**

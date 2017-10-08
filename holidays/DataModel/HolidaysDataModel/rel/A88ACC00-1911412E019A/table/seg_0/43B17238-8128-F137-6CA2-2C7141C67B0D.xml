@@ -1,0 +1,60 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="43B17238-8128-F137-6CA2-2C7141C67B0D" name="managed_teams">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-25 20:20:06 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<ordsAlias>table_6</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="manager_id" id="40121AF0-3182-F8D8-196C-4947A5CF0929">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-25 20:20:58 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="488EFFA9-D3AC-611F-1F51-55E1B695814C" referredColumn="D0E5B241-2AD3-085A-3E65-07FE98FF674D"/>
+</associations>
+</Column>
+<Column name="team_id" id="359E9094-4E8D-5F22-1703-503C93D7EC22">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-25 20:21:11 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6ED44B0C-0F19-5F54-D181-BCFF6C5B6E55" referredColumn="7D91AD39-BEBF-2A45-C21A-2D7F154151C0"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="85A07DA9-45A4-AF65-3B4C-7468DE5A0E58" name="managed_teams_employee_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-25 20:21:18 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="40121AF0-3182-F8D8-196C-4947A5CF0929"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AD1F599B-C0C0-7C74-D6A0-A7FA3D064FBC" name="managed_teams_team_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-09-25 20:22:58 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="359E9094-4E8D-5F22-1703-503C93D7EC22"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

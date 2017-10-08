@@ -5,7 +5,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
- * Simple class extending Vaadin Label.
+ * Custom Vaadin Component, simple class extending Vaadin Label.
  * Represents the View Page title
  */
 public class PageTitle extends Label {
