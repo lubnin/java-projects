@@ -2,36 +2,134 @@ package ru.rti.holidays.view.base;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.rti.holidays.beans.session.User;
+import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.exception.NotAuthorizedAccessException;
 import ru.rti.holidays.exception.handler.DoNothingExceptionHandler;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
-import ru.rti.holidays.exception.handler.StandardViewExceptionHandler;
-import ru.rti.holidays.layout.base.BaseVerticalLayout;
+import ru.rti.holidays.exception.handler.RedirectToURLExceptionHandler;
+import ru.rti.holidays.exception.handler.ViewErrorMessageExceptionHandler;
+import ru.rti.holidays.utility.CommonUtils;
+import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * This is the base abstract class for every view of the Application
  */
 abstract public class AbstractBaseView extends VerticalLayout implements View {
+    /**
+     * The map of parameters for this view. The key of the map is the name of parameter, the value for key is the value of parameter.
+     * For example, if the user is accessing the view with the URL 'http://siteurl.ru/#!ViewName/param1=value1&param2=value2
+     * the parameterMap is filled with:
+     *  +----------------------+
+     *  | key      | value     |
+     *  +__________+___________+
+     *  | param1   | value1    |
+     *  +----------+-----------+
+     *  | param2   | value2    |
+     *  +----------+-----------+
+     */
     protected Map<String, String> parameterMap;
+    /**
+     * The plain String value for parameters.
+     * For example, if the user is accessing the view with the URL 'http://siteurl.ru/#!ViewName/param1=value1&param2=value2
+     * the parameters will be the part of the string:
+     * 'param1=value1&param2=value2'
+     */
     protected String parameters;
+
+    /**
+     * The logger to write logging information to the console while running the Application
+     */
     private static final Logger log = LoggerFactory.getLogger(AbstractBaseView.class);
+
+    /**
+     * The Exception Handler for this view. If not null, handles all the exceptions occuring in the methods of the view
+     */
     protected ExceptionHandler exceptionHandler;
 
-    @Autowired
-    protected User currentUser;
+/*    protected class ViewError {
+        private String errorMessage;
+        private String errorDescription;
+
+        public ViewError(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
+        public ViewError(String errorMessage, String errorDescription) {
+            this(errorMessage);
+            this.errorDescription = errorDescription;
+        }
+
+        public String getErrorMessage() {
+            return CommonUtils.getValueOrEmptyString(errorMessage);
+        }
+
+        public void setErrorMessage(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
+
+        public String getErrorDescription() {
+            return CommonUtils.getValueOrEmptyString(errorDescription);
+        }
+
+        public void setErrorDescription(String errorDescription) {
+            this.errorDescription = errorDescription;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || obj.getClass() != this.getClass()) {
+                return false;
+            }
+
+            ViewError viewError = (ViewError)obj;
+
+            return errorDescription == viewError.getErrorDescription() &&
+                    errorMessage == viewError.getErrorMessage();
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31; int result = 1;
+            result = prime * result + ((errorDescription == null) ? 0 : errorDescription.hashCode());
+            result = prime * result + ((errorMessage == null) ? 0 : errorMessage.hashCode());
+            return result;
+        }
+    }*/
+
+/*    protected List<ViewError> viewErrors = new ArrayList<ViewError>();
+
+    protected void addViewError(String errorMessage, String errorDescription) {
+        viewErrors.add(new ViewError(errorMessage, errorDescription));
+    }
+
+    protected void addViewError(ViewError viewError) {
+        viewErrors.add(viewError);
+    }*/
+
+/*    protected void clearViewErrors() {
+        viewErrors.clear();
+    }*/
+
+    //@Autowired
+    //protected User currentUser;
 
     public AbstractBaseView() {
-        exceptionHandler = new StandardViewExceptionHandler();
+        exceptionHandler = new ViewErrorMessageExceptionHandler();
     }
     /**
      * Gets the logger instance for this view
@@ -44,7 +142,7 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
     /**
      * Sets the ExceptionHandler for this view. It will handle all the exceptions which are thrown in the view instance.
      * You can write your own implementation of ExceptionHandler interface or use one of the predefined Exception handlers:
-     * @see StandardViewExceptionHandler
+     * @see ViewErrorMessageExceptionHandler
      * @see DoNothingExceptionHandler
      *
      * @param exceptionHandler
@@ -78,9 +176,9 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
      * Gets the currently logged in user
      * @return
      */
-    public User getCurrentUser() {
-        return currentUser;
-    }
+    //public User getCurrentUser() {
+    //    return currentUser;
+    //}
 
     /**
      * This method must be overridden in child subclasses of AbstractBaseView.
@@ -111,8 +209,6 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
     void init() {
         setMargin(true);
         setSpacing(true);
-        //setMargin(true);
-        //setSpacing(true);
         //addComponent(addSpecialStyling(getPageTitleLabel()));
     }
 
@@ -128,14 +224,11 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
     }
 
     /**
-     * Checks for a valid user session. If someone tries to access the view and didn't perform login to
+     * Checks for a valid user authorization. If someone tries to access the view and didn't perform login to
      * the system, the method returns false;
      * @return false if the user accessing this view is not authorized in the Application.
      */
-    protected boolean checkUserSession() {
-        if (currentUser == null || currentUser.getEmployeeLoginName() == null || currentUser.getEmployeePassword() == null) {
-            return false;
-        }
+    protected boolean isUserAuthorized() {
         return true;
     }
 
@@ -145,13 +238,14 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
             parameterMap = event.getParameterMap();
             parameters = event.getParameters();
 
-            if (!checkUserSession()) {
+            if (!isUserAuthorized()) {
                 throw new NotAuthorizedAccessException("Вы не авторизованы для просмотра данной страницы.");
             }
 
-            // the view is constructed in the init() method()
             prepareViewData();
             addCustomComponents();
+        } catch (NotAuthorizedAccessException e) {
+            Page.getCurrent().setLocation(GlobalConstants.URL_PATH_MAIN_PAGE);
         } catch (Exception e) {
             handleException(e, e.getMessage());
         }

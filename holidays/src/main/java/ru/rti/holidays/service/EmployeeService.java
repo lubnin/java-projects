@@ -23,5 +23,6 @@ public interface EmployeeService {
     HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod);
     boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods);
     boolean deleteEmployees(Iterable<Employee> employees);
+    Set<Employee> getAllManagersForEmployee(Employee employee);
     void flush();
 }

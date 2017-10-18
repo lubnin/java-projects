@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class EmployeeHolidayPeriod {
     private String employeeFullName;
+    private String employeeEmail;
     private Long teamId;
     private LocalDate dateStart;
     private Long numDays;
@@ -42,6 +43,10 @@ public class EmployeeHolidayPeriod {
 
     public void setNumDays(Long numDays) {
         this.numDays = numDays;
+    }
+
+    public String getNumDaysAsString() {
+        return String.valueOf(getNumDays());
     }
 
     public String getDateStartAsString() {
@@ -79,7 +84,8 @@ public class EmployeeHolidayPeriod {
                 dateStart == employeeHolidayPeriod.getDateStart() &&
                 numDays == employeeHolidayPeriod.getNumDays() &&
                 holidayPeriodNegotiationStatus == employeeHolidayPeriod.getHolidayPeriodNegotiationStatus() &&
-                employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName();
+                employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName() &&
+                employeeEmail == employeeHolidayPeriod.getEmployeeEmail();
     }
 
     @Override
@@ -91,6 +97,7 @@ public class EmployeeHolidayPeriod {
         result = prime * result + ((numDays == null) ? 0 : numDays.hashCode());
         result = prime * result + ((holidayPeriodNegotiationStatus == null) ? 0 : holidayPeriodNegotiationStatus.hashCode());
         result = prime * result + ((employeeRoleName == null) ? 0 : employeeRoleName.hashCode());
+        result = prime * result + ((employeeEmail == null) ? 0 : employeeEmail.hashCode());
         return result;
     }
 
@@ -124,5 +131,13 @@ public class EmployeeHolidayPeriod {
 
     public void setHolidayPeriod(HolidayPeriod holidayPeriod) {
         this.holidayPeriod = holidayPeriod;
+    }
+
+    public String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
     }
 }

@@ -102,4 +102,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Set<Employee> getByTeamId(Long teamId) {
         return employeeRepository.findByTeamId(teamId);
     }
+
+    @Override
+    public Set<Employee> getAllManagersForEmployee(Employee employee) {
+        Set<Employee> allManagers = employeeRepository.findAllManagersForEmployee(employee.getId());
+        return allManagers;
+    }
 }

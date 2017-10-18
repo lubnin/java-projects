@@ -8,7 +8,16 @@ import ru.rti.holidays.exception.handler.ExceptionHandler;
  * Standard exception handler for Views in UI.
  * It shows the Red alert window containing the Error message
  */
-public class StandardViewExceptionHandler implements ExceptionHandler {
+public class ViewErrorMessageExceptionHandler extends AbstractExceptionHandler {
+
+    public ViewErrorMessageExceptionHandler() {
+        super();
+    }
+
+    public ViewErrorMessageExceptionHandler(ExceptionHandler nextHandler) {
+        super(nextHandler);
+    }
+
     @Override
     public void handle(Exception e, String errorMessage) {
         //TODO: remove hardcode later
@@ -18,5 +27,6 @@ public class StandardViewExceptionHandler implements ExceptionHandler {
                 Notification.Type.ERROR_MESSAGE);
 
         notification.show(UI.getCurrent().getPage());
+        super.handle(e, errorMessage);
     }
 }

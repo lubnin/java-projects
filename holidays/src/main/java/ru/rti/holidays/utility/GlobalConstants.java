@@ -12,6 +12,12 @@ public class GlobalConstants {
     public static final String DATE_FORMAT = "dd.MM.yyyy";
 
     /**
+     *  URL paths for pages
+     */
+    public static final String URL_PATH_MAIN_PAGE = "/main";
+    public static final String URL_PATH_LOGOUT = "/logout";
+    public static final String URL_PATH_LOGIN = "/login";
+    /**
      * Administrator of the system
      */
     public static final String ADMIN_USER_LOGIN_NAME = "admin";

@@ -12,7 +12,8 @@ import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
-import ru.rti.holidays.exception.handler.StandardViewExceptionHandler;
+import ru.rti.holidays.exception.handler.RedirectToURLExceptionHandler;
+import ru.rti.holidays.exception.handler.ViewErrorMessageExceptionHandler;
 import ru.rti.holidays.layout.admin.AdminHolidayPeriodNegotiationStatusLayout;
 import ru.rti.holidays.layout.admin.AdminProjectRoleManagementLayout;
 import ru.rti.holidays.layout.admin.AdminTeamManagementLayout;
@@ -25,8 +26,6 @@ import ru.rti.holidays.service.localization.LocalizationService;
 import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.view.base.AbstractBaseView;
-import ru.rti.holidays.view.employee.EmployeeHolidaysView;
-import com.vaadin.ui.Notification.Type;
 
 import java.util.List;
 import java.util.Set;
@@ -54,6 +53,9 @@ public class AdminMainView extends AbstractBaseView {
     @Autowired
     LocalizationService localizationServiceImpl;
 
+
+    public AdminMainView() {
+    }
 
     @Override
     protected Label getPageTitleLabel() {
@@ -98,7 +100,7 @@ public class AdminMainView extends AbstractBaseView {
             AddNewEntityLayout<ProjectRole> projectRoleAddNewEntityLayout = new AddNewEntityLayout<>(ProjectRole.class);
             MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
             projectRoleAddNewEntityLayout.setMargin(marginInfoLayout);
-            projectRoleAddNewEntityLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            projectRoleAddNewEntityLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
             projectRoleAddNewEntityLayout.constructLayout();
             projectRoleAddNewEntityLayout.postConstructLayout();
 */
@@ -106,7 +108,7 @@ public class AdminMainView extends AbstractBaseView {
             AdminProjectRoleManagementLayout adminProjectRoleManagementLayout = new AdminProjectRoleManagementLayout();
             adminProjectRoleManagementLayout.setMargin(marginInfoLayout);
             adminProjectRoleManagementLayout.setPageTitle("Управление проектными ролями");
-            adminProjectRoleManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminProjectRoleManagementLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
 
             adminProjectRoleManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
                 projectRoleServiceImpl.saveProjectRole((ProjectRole)objectForSave);
@@ -140,8 +142,7 @@ public class AdminMainView extends AbstractBaseView {
         //    Notification.show("Отображение настроек", Type.TRAY_NOTIFICATION);
         //});
         sideMenu.addUserMenuItem(localizationServiceImpl.getMessageAdminUserMenuExit(), VaadinIcons.EXIT, () -> {
-            //Notification.show("Выход из приложения", Type.TRAY_NOTIFICATION);
-            SessionUtils.logout(currentUser);
+            SessionUtils.logout();
         });
     }
 
@@ -155,7 +156,7 @@ public class AdminMainView extends AbstractBaseView {
             MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
 
             adminHolidayPeriodNegotiationStatusLayout.setMargin(marginInfoLayout);
-            adminHolidayPeriodNegotiationStatusLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminHolidayPeriodNegotiationStatusLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
             adminHolidayPeriodNegotiationStatusLayout.setHolidayPeriodNegotiationStatuses(holidayPeriodServiceImpl.getAllHolidayPeriodNegotiationStatuses());
 
             adminHolidayPeriodNegotiationStatusLayout.setSaveButtonClickListener((layout, objectForSave) -> {
@@ -191,7 +192,7 @@ public class AdminMainView extends AbstractBaseView {
 
             adminUserManagementLayout.setMargin(marginInfoLayout);
 
-            adminUserManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminUserManagementLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
             adminUserManagementLayout.setProjectRoles(projectRoleServiceImpl.getAllProjectRoles());
             adminUserManagementLayout.setTeams(teamServiceImpl.getAllTeamsSortedByTeamNameAsc());
 
@@ -228,7 +229,7 @@ public class AdminMainView extends AbstractBaseView {
             AdminTeamManagementLayout adminTeamManagementLayout = new AdminTeamManagementLayout();
             MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
             adminTeamManagementLayout.setMargin(marginInfoLayout);
-            adminTeamManagementLayout.setExceptionHandler(new StandardViewExceptionHandler());
+            adminTeamManagementLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
 
             adminTeamManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
                 teamServiceImpl.saveTeam((Team)objectForSave);
@@ -253,6 +254,12 @@ public class AdminMainView extends AbstractBaseView {
     }
 
     @Override
+    protected boolean isUserAuthorized() {
+        Employee emp = SessionUtils.getCurrentUser();
+        return emp.isAdmin();
+    }
+
+    @Override
     protected boolean prepareViewData() {
         return false;
     }
@@ -261,7 +268,7 @@ public class AdminMainView extends AbstractBaseView {
      * Override the logic of checking user session and additionally check that the user accessing this view is Global Admin
      * @return
      */
-    @Override
+/*    @Override
     protected boolean checkUserSession() {
         boolean isValidUserSession = super.checkUserSession();
         if (isValidUserSession) {
@@ -270,5 +277,5 @@ public class AdminMainView extends AbstractBaseView {
             }
         }
         return false;
-    }
+    }*/
 }

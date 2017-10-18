@@ -1,16 +1,13 @@
 package ru.rti.holidays.servlet;
 
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.*;
 
-import org.springframework.stereotype.Component;
-import ru.rti.holidays.NavigatorUI;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+
 /*
 @Component("vaadinServlet")
 @WebServlet(value = "/*", asyncSupported = true)
-@VaadinServletConfiguration(productionMode = false, ui = NavigatorUI.class)
+@VaadinServletConfiguration(productionMode = false, ui = MainUI.class)
 */
 public class CustomVaadinServlet extends VaadinServlet implements SessionInitListener, SessionDestroyListener{
     @Override

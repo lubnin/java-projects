@@ -34,4 +34,19 @@ public class HolidayPeriodNegotiationStatusUtils {
 
         return null;
     }
+
+    public static HolidayPeriodNegotiationStatus getRejectedStatusFromList(Iterable<HolidayPeriodNegotiationStatus> allStatuses) {
+        if (allStatuses == null) {
+            return null;
+        }
+
+        for (HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus : allStatuses) {
+            if (holidayPeriodNegotiationStatus.getNegotiationStatusType() ==
+                    HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_REJECTED) {
+                return holidayPeriodNegotiationStatus;
+            }
+        }
+
+        return null;
+    }
 }

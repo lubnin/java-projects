@@ -13,12 +13,13 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
-import ru.rti.holidays.beans.session.User;
+import ru.rti.holidays.component.security.User;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutDeleteButtonClickListener;
 import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutMainButtonClickListener;
 import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener;
+import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener;
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
@@ -40,7 +41,9 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private Grid<HolidayPeriod> grdHolidayPeriods = new Grid<>();
     private Map<Team, Set<EmployeeHolidayPeriod>> managedTeamMembersHolidays = null;
     private Map<Long, Button> negotiateSelectedPeriodsButtonsMap = new HashMap<>();
+    private Map<Long, Button> rejectSelectedPeriodsButtonsMap = new HashMap<>();
     private Map<Long, Set<EmployeeHolidayPeriod>> periodsForNegotiationMap = new HashMap<>();
+    private Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap = new HashMap<>();
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Button btnRemoveHolidayPeriods = new Button("Удалить выбранные", VaadinIcons.DEL);
     private List<HolidayPeriod> employeeHolidayPeriods;
@@ -50,9 +53,10 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     //private RefreshGridDataListener refreshGridDataListener;
     private EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener;
     private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
+    private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
     private HolidayPeriod newHolidayPeriod;
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
-    private User currentUser;
+    //private User currentUser;
 
     public EmployeeHolidaysLayout(Employee employee) {
         if (employee == null) {
@@ -87,6 +91,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 btnNegotiateSelPeriods.setEnabled(false);
                 btnNegotiateSelPeriods.setId("btnNegotiateSelPeriods_" + team.getId());
 
+                Button btnRejectSelPeriods = new Button("Отклонить выбранные");
+                btnRejectSelPeriods.addStyleName(ValoTheme.BUTTON_DANGER);
+                btnRejectSelPeriods.setIcon(VaadinIcons.STOP);
+                btnRejectSelPeriods.setEnabled(false);
+                btnRejectSelPeriods.setId("btnRejectSelPeriods_" + team.getId());
+
                 btnNegotiateSelPeriods.addClickListener(clickEvent -> {
                     String buttonId = clickEvent.getButton().getId();
 
@@ -103,9 +113,24 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     }
                 });
 
+                btnRejectSelPeriods.addClickListener(clickEvent -> {
+                    String buttonId = clickEvent.getButton().getId();
+
+                    try {
+                        String teamId = buttonId.substring("btnRejectSelPeriods_".length());
+                        Long nTeamId = Long.parseLong(teamId);
+                        Set<EmployeeHolidayPeriod> setEmplHolPeriods = periodsForRejectionMap.get(nTeamId);
+                        if (rejectSelectedPeriodsClickListener != null) {
+                            rejectSelectedPeriodsClickListener.onRejectSelectedPeriods(
+                                    HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allNegotiationStatuses),
+                                    setEmplHolPeriods);
+                        }
+                    } catch (NumberFormatException nfe) {
+                    }
+                });
+
                 negotiateSelectedPeriodsButtonsMap.put(team.getId(), btnNegotiateSelPeriods);
-                //Button btnNegotiateSelectedPeriods = new Button("Согласовать выбранные");
-                //btnNegotiateSelectedPeriods.setId("btnNegotiatePeriods_" + team.getId());
+                rejectSelectedPeriodsButtonsMap.put(team.getId(), btnRejectSelPeriods);
 
                 Set<EmployeeHolidayPeriod> teamMembersHolidayPeriods = null;
                 if(managedTeamMembersHolidays != null && managedTeamMembersHolidays.size() > 0) {
@@ -131,21 +156,52 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     for (Button btnNegotiateSelectedPeriods : negotiateSelectedPeriodsButtonsMap.values()) {
                         btnNegotiateSelectedPeriods.setEnabled(false);
                     }
+                    for (Button btnRejectSelectedPeriods : rejectSelectedPeriodsButtonsMap.values()) {
+                        btnRejectSelectedPeriods.setEnabled(false);
+                    }
 
                     Set<EmployeeHolidayPeriod> selectedItems = event.getAllSelectedItems();
+
+
                     if (selectedItems != null && selectedItems.size() > 0) {
                         Long selTeamId = -1L;
+
+                        boolean hasSelectedPeriodsForRejection = false;
+                        boolean hasSelectedPeriodsForNegotiation = false;
+
                         for (EmployeeHolidayPeriod empHolPeriod : selectedItems) {
-                            Long teamId = empHolPeriod.getTeamId();
-                            selTeamId = teamId;
-                            Button btnNegotiateSelectedPeriods = negotiateSelectedPeriodsButtonsMap.get(teamId);
-                            btnNegotiateSelectedPeriods.setEnabled(true);
-                            periodsForNegotiationMap.remove(selTeamId);
-                            break;
+                            if (empHolPeriod.getNegotiationStatus() != null && empHolPeriod.getNegotiationStatus().getNegotiationStatusType() != null) {
+                                HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType selPeriodNegStatusType = empHolPeriod.getNegotiationStatus().getNegotiationStatusType();
+                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK) {
+                                    hasSelectedPeriodsForRejection = true;
+                                }
+                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_REJECTED ||
+                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING) {
+                                    hasSelectedPeriodsForNegotiation = true;
+                                }
+                            }
+
+                            if (selTeamId < 0) {
+                                selTeamId = empHolPeriod.getTeamId();
+                            }
                         }
 
-                        if (selTeamId > 0) {
-                            periodsForNegotiationMap.put(selTeamId, selectedItems);
+                        if (hasSelectedPeriodsForNegotiation && hasSelectedPeriodsForRejection) {
+                            // Don't enable any buttons at all, because we cannot negotiate and reject holidays periods simultaneously
+                        }
+                        else {
+                            if (hasSelectedPeriodsForNegotiation) {
+                                Button btnNegotiateSelectedPeriods = negotiateSelectedPeriodsButtonsMap.get(selTeamId);
+                                btnNegotiateSelectedPeriods.setEnabled(true);
+                                periodsForNegotiationMap.remove(selTeamId);
+                                periodsForNegotiationMap.put(selTeamId, selectedItems);
+                            }
+                            if (hasSelectedPeriodsForRejection) {
+                                Button btnRejectSelectedPeriods = rejectSelectedPeriodsButtonsMap.get(selTeamId);
+                                btnRejectSelectedPeriods.setEnabled(true);
+                                periodsForRejectionMap.remove(selTeamId);
+                                periodsForRejectionMap.put(selTeamId, selectedItems);
+                            }
                         }
                     }
                 });
@@ -153,6 +209,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 teamMembersHolidaysLayout.addComponent(lblCurrentTeamName);
                 teamMembersHolidaysLayout.addComponent(grdTeamMembersHolidayPeriods);
                 teamMembersHolidaysLayout.addComponent(negotiateSelectedPeriodsButtonsMap.get(team.getId()));
+                teamMembersHolidaysLayout.addComponent(rejectSelectedPeriodsButtonsMap.get(team.getId()));
             });
         }
 
@@ -204,7 +261,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
             MenuBar.Command cmdSystemExit = new MenuBar.Command() {
                 public void menuSelected(MenuBar.MenuItem selectedItem) {
-                    SessionUtils.logout(currentUser);
+                    SessionUtils.logout();
                 }
             };
 
@@ -343,13 +400,37 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.negotiateSelectedPeriodsClickListener = negotiateSelectedPeriodsClickListener;
     }
 
-    public User getCurrentUser() {
+    public Map<Long, Button> getRejectSelectedPeriodsButtonsMap() {
+        return rejectSelectedPeriodsButtonsMap;
+    }
+
+    public void setRejectSelectedPeriodsButtonsMap(Map<Long, Button> rejectSelectedPeriodsButtonsMap) {
+        this.rejectSelectedPeriodsButtonsMap = rejectSelectedPeriodsButtonsMap;
+    }
+
+    public EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener getRejectSelectedPeriodsClickListener() {
+        return rejectSelectedPeriodsClickListener;
+    }
+
+    public void setRejectSelectedPeriodsClickListener(EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener) {
+        this.rejectSelectedPeriodsClickListener = rejectSelectedPeriodsClickListener;
+    }
+
+    public Map<Long, Set<EmployeeHolidayPeriod>> getPeriodsForRejectionMap() {
+        return periodsForRejectionMap;
+    }
+
+    public void setPeriodsForRejectionMap(Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap) {
+        this.periodsForRejectionMap = periodsForRejectionMap;
+    }
+
+/*    public User getCurrentUser() {
         return currentUser;
     }
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
-    }
+    }*/
 
     class EmployeeHolidayPeriodValueChangeListener implements HasValue.ValueChangeListener<LocalDate> {
         @Override
@@ -363,7 +444,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 //Notification.show("Value changed!");
                 //Notification.show( String.format("Value changed! Old value: %s, New value: %s", oldValueStr, newValueStr));
             } else {
-                Notification.show("Application originated");
+                //Notification.show("Application originated");
             }
         }
     }

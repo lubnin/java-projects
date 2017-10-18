@@ -1,10 +1,9 @@
 package ru.rti.holidays.layout.base;
 
-import com.vaadin.data.Binder;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.exception.handler.DoNothingExceptionHandler;
-import ru.rti.holidays.exception.handler.StandardViewExceptionHandler;
+import ru.rti.holidays.exception.handler.ViewErrorMessageExceptionHandler;
 import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
 import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
@@ -16,7 +15,7 @@ public interface BaseLayout {
     /**
      * Sets the ExceptionHandler for this layout. It will handle all the exceptions which are thrown in the layout instance.
      * You can write your own implementation of ExceptionHandler interface or use one of the predefined Exception handlers:
-     * @see StandardViewExceptionHandler
+     * @see ViewErrorMessageExceptionHandler
      * @see DoNothingExceptionHandler
      *
      * @param exceptionHandler

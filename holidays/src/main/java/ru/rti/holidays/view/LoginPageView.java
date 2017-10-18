@@ -7,13 +7,16 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.rti.holidays.beans.session.User;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.layout.LoginFormLayout;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.view.admin.AdminMainView;
-import ru.rti.holidays.view.admin.AdminPageView;
 import ru.rti.holidays.view.base.AbstractBaseView;
 import ru.rti.holidays.view.employee.EmployeeHolidaysView;
 
@@ -30,6 +33,9 @@ public class LoginPageView extends AbstractBaseView {
     @Autowired
     EmployeeService employeeServiceImpl;
 
+    @Autowired
+    DaoAuthenticationProvider daoAuthenticationProvider;
+
     @Override
     protected Label getPageTitleLabel() {
         return new Label("Форма входа");
@@ -44,8 +50,23 @@ public class LoginPageView extends AbstractBaseView {
             String password = loginFormLayout.getPasswordValue();
 
             //TODO: add password encrypt/decrypt logic here, not plain password!
-            Employee loggedInEmployee = employeeServiceImpl.getByLoginNameAndPassword(loginName, password);
-            if (loggedInEmployee == null) {
+            //Employee loggedInEmployee = employeeServiceImpl.getByLoginNameAndPassword(loginName, password);
+
+            try {
+                Authentication auth = new UsernamePasswordAuthenticationToken(loginName, password);
+                Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
+                SecurityContextHolder.getContext().setAuthentication(authenticated);
+                Page.getCurrent().setLocation("/main");
+            } catch (BadCredentialsException bce) {
+                handleException(bce, "Введённые имя пользователя и пароль неверны. Попробуйте еще раз.");
+            }
+
+
+            //redirect to main application
+
+
+
+            /*if (loggedInEmployee == null) {
                 Notification ntfy = new Notification(
                         "Ошибка",
                         "Имя пользователя или пароль неверны. Попробуйте еще раз",
@@ -64,7 +85,7 @@ public class LoginPageView extends AbstractBaseView {
                     getCurrentUser().setCurrentView(EmployeeHolidaysView.VIEW_NAME);
                     getUI().getNavigator().navigateTo(EmployeeHolidaysView.VIEW_NAME);
                 }
-            }
+            }*/
         });
 
         //loginFormLayout.addRegisterButtonClickListener(event -> {
@@ -72,22 +93,13 @@ public class LoginPageView extends AbstractBaseView {
             //Notification.show("На текущий момент функция недоступна...");
   //      });
 
+
         addComponent(loginFormLayout);
     }
 
     @Override
     protected boolean prepareViewData() {
         return false;
-    }
-
-    /**
-     * Override standard behaviour and don't check the User's session here, as it is the very first login page view,
-     * where we initialize the user's session data right after the successful login into the System.
-     * @return
-     */
-    @Override
-    protected boolean checkUserSession() {
-        return true;
     }
 
     @Override

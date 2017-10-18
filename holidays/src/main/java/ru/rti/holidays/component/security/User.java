@@ -1,7 +1,11 @@
-package ru.rti.holidays.beans.session;
+package ru.rti.holidays.component.security;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 @SpringComponent
 @VaadinSessionScope

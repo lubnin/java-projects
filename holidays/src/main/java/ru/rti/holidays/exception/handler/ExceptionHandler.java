@@ -5,4 +5,5 @@ package ru.rti.holidays.exception.handler;
  */
 public interface ExceptionHandler {
     void handle(Exception e, String errorMessage);
+    void setNextHandler(ExceptionHandler nextHandler);
 }

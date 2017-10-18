@@ -7,14 +7,15 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
-import ru.rti.holidays.beans.session.User;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
+import ru.rti.holidays.service.EmailService;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.service.HolidayPeriodService;
+import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.view.base.AbstractBaseView;
 
 import java.util.*;
@@ -29,6 +30,9 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
     @Autowired
     private HolidayPeriodService holidayPeriodServiceImpl;
+
+    @Autowired
+    private EmailService emailServiceImpl;
 
     private Employee employee;
     private List<HolidayPeriod> employeeHolidayPeriods;
@@ -55,9 +59,17 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         employeeHolidaysLayout.setAllNegotiationStatuses(allNegotiationStatuses);
         employeeHolidaysLayout.setNewHolidayPeriod(newHolidayPeriod);
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
-        employeeHolidaysLayout.setCurrentUser(currentUser);
+        //employeeHolidaysLayout.setCurrentUser(currentUser);
         employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
             holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+            emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+            //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
+            Page.getCurrent().reload();
+        });
+
+        employeeHolidaysLayout.setRejectSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
+            holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+            emailServiceImpl.sendMailHolidayPeriodsRejected(setEmployeeHolPeriods, employee);
             //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
             Page.getCurrent().reload();
         });
@@ -65,6 +77,9 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         employeeHolidaysLayout.addMainButtonClickListener(layoutInstance -> {
             newHolidayPeriod.setEmployee(employee);
             HolidayPeriod addedToDBHolidayPeriod = employeeServiceImpl.saveHolidayPeriod(newHolidayPeriod);
+
+            Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
+            emailServiceImpl.sendMailHolidayPeriodSubmitted(newHolidayPeriod, employee, managers);
 
             // re-create the instance
             newHolidayPeriod = new HolidayPeriod();
@@ -106,9 +121,12 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
 
         //employee = currentUser.getLoggedInEmployee();
-        employee = employeeServiceImpl.getByLoginNameAndPassword(
-                getCurrentUser().getEmployeeLoginName(),
-                getCurrentUser().getEmployeePassword());
+        employee = SessionUtils.getCurrentUser();
+        //employee = employeeServiceImpl.getByLoginNameAndPassword(
+        //        getCurrentUser().getEmployeeLoginName(),
+        //        getCurrentUser().getEmployeePassword());
+
+
         //if (employee == null) {
         //    throw new IllegalArgumentException("Employee not found in the database by login and password provided!");
         //}
@@ -128,6 +146,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                             if (holidayPeriodsForEmployee != null && holidayPeriodsForEmployee.size() > 0) {
                                 holidayPeriodsForEmployee.forEach(holidayPeriod -> {
                                     EmployeeHolidayPeriod empHolidayPeriod = new EmployeeHolidayPeriod();
+                                    empHolidayPeriod.setEmployeeEmail(emp.getEmail());
                                     empHolidayPeriod.setEmployeeFullName(emp.getFullName());
                                     empHolidayPeriod.setDateStart(holidayPeriod.getDateStart());
                                     empHolidayPeriod.setNumDays(holidayPeriod.getNumDays());
