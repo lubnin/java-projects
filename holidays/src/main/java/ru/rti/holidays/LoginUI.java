@@ -53,11 +53,11 @@ public class LoginUI extends UI {
 
         viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
 
-        //TODO: remove for production mode
+        //TODO: remove for production mode!!!
         String encodedAdminPwd = passwordEncoder.encode("B09108b198613");
         log.info("Encoded admin password: " + encodedAdminPwd);
 
-        //TODO: remove for production mode
+        //TODO: remove for production mode!!!
         String encodedTestPwd = passwordEncoder.encode("Qwerty123");
         log.info("Encoded test password: " + encodedTestPwd);
 

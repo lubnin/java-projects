@@ -6,8 +6,8 @@ import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
 import java.util.Set;
 
 /**
- * @deprecated
- * TODO: remove later
+ *
+ *
  */
 @FunctionalInterface
 public interface EmployeeHolidaysLayoutDeleteButtonClickListener {

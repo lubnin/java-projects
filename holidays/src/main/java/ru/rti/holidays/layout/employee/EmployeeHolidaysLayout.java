@@ -16,10 +16,7 @@ import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.component.security.User;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
-import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutDeleteButtonClickListener;
-import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutMainButtonClickListener;
-import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener;
-import ru.rti.holidays.layout.behaviour.EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener;
+import ru.rti.holidays.layout.behaviour.*;
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
@@ -46,6 +43,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap = new HashMap<>();
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Button btnRemoveHolidayPeriods = new Button("Удалить выбранные", VaadinIcons.DEL);
+    private Button btnSendForNegotiation = new Button("Отправить на согласование", VaadinIcons.USERS);
     private List<HolidayPeriod> employeeHolidayPeriods;
     private DateField datePeriod = new DateField();
     private TextField txtNumDays = new TextField();
@@ -54,6 +52,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener;
     private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
+    private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
     private HolidayPeriod newHolidayPeriod;
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
     //private User currentUser;
@@ -251,7 +250,35 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
             selectionModel.addMultiSelectionListener(event -> {
                 Set<HolidayPeriod> selectedItems = event.getAllSelectedItems();
-                btnRemoveHolidayPeriods.setEnabled(selectedItems != null && selectedItems.size() > 0);
+
+                boolean isBtnRemoveSelectedHolidayPeriodsEnabled = false;
+                boolean isBtnSendForNegotiationEnabled = false;
+
+                isBtnRemoveSelectedHolidayPeriodsEnabled = selectedItems != null && selectedItems.size() > 0;
+                isBtnSendForNegotiationEnabled = selectedItems != null && selectedItems.size() > 0;
+
+                flags_check:
+                for (HolidayPeriod hp : selectedItems) {
+                    HolidayPeriodNegotiationStatus hpNegStatus = hp.getNegotiationStatus();
+                    if (hpNegStatus != null) {
+                        HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType hpNegStatusType = hpNegStatus.getNegotiationStatusType();
+                        if (hpNegStatusType != null) {
+                            switch (hpNegStatusType) {
+                                case NEGOTIATION_STATUS_TYPE_OK:
+                                    isBtnRemoveSelectedHolidayPeriodsEnabled = false;
+                                    isBtnSendForNegotiationEnabled = false;
+                                    break flags_check;
+                                case NEGOTIATION_STATUS_TYPE_NEGOTIATING:
+                                case NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED:
+                                    isBtnRemoveSelectedHolidayPeriodsEnabled = false;
+                                    isBtnSendForNegotiationEnabled = false;
+                                    break flags_check;
+                            }
+                        }
+                    }
+                }
+                btnRemoveHolidayPeriods.setEnabled(isBtnRemoveSelectedHolidayPeriodsEnabled);
+                btnSendForNegotiation.setEnabled(isBtnSendForNegotiationEnabled);
             });
 
             pnlHolidaysLayout.addComponent(grdHolidayPeriods);
@@ -288,7 +315,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     }
 
     protected GridLayout addControlsPanel() {
-        GridLayout addHolidayPeriodLayout = new GridLayout(5, 2);
+        GridLayout addHolidayPeriodLayout = new GridLayout(5, 3);
         addHolidayPeriodLayout.setSpacing(true);
         addHolidayPeriodLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
@@ -298,7 +325,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 holidayPeriodBinder.writeBean(newHolidayPeriod);
 
                 if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
-                    newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
+                    newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
                 }
 
                 if (newHolidayPeriod == null || newHolidayPeriod.getDateStart() == null || newHolidayPeriod.getNumDays() == 0) {
@@ -346,6 +373,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         bindDatePeriodControlFields();
 
+        btnSendForNegotiation.addClickListener(event -> {
+            if (sendForNegotiationButtonClickListener != null) {
+                sendForNegotiationButtonClickListener.onSubmitSelectedPeriodsForNegotiation(this, grdHolidayPeriods.getSelectedItems(), HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
+                refreshDataGrid();
+            }
+        });
+        btnSendForNegotiation.setWidth("100%");
+        btnSendForNegotiation.setEnabled(false);
 
         addHolidayPeriodLayout.addComponent(btnAddHolidayPeriod,0,0);
         addHolidayPeriodLayout.addComponent(lblDatePeriod, 1,0);
@@ -353,6 +388,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         addHolidayPeriodLayout.addComponent(lblNumDays, 3,0);
         addHolidayPeriodLayout.addComponent(txtNumDays, 4,0);
         addHolidayPeriodLayout.addComponent(btnRemoveHolidayPeriods, 0,1);
+        addHolidayPeriodLayout.addComponent(btnSendForNegotiation, 0,2);
+
 
         return addHolidayPeriodLayout;
     }
@@ -422,6 +459,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void setPeriodsForRejectionMap(Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap) {
         this.periodsForRejectionMap = periodsForRejectionMap;
+    }
+
+    public EmployeeHolidaysLayoutSendForNegotiationButtonClickListener getSendForNegotiationButtonClickListener() {
+        return sendForNegotiationButtonClickListener;
+    }
+
+    public void setSendForNegotiationButtonClickListener(EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener) {
+        this.sendForNegotiationButtonClickListener = sendForNegotiationButtonClickListener;
     }
 
 /*    public User getCurrentUser() {

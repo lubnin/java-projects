@@ -35,9 +35,19 @@ public class GlobalConstants {
     public static final String THEME_NAME = "rti";
 
     /**
+     * Style for Grid cells that contain 'New' status for HolidayPeriod
+     */
+    public static final String CSS_NEGOTIATION_STATUS_TYPE_NEW = "neg_status_new";
+
+    /**
      * Style for Grid cells that contain 'Negotiating' status for HolidayPeriod
      */
     public static final String CSS_NEGOTIATION_STATUS_TYPE_NEGOTIATING = "neg_status_negotiating";
+
+    /**
+     * Style for Grid cells that contain 'Partly Negotiated' status for HolidayPeriod
+     */
+    public static final String CSS_NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED= "neg_status_partly_negotiated";
 
     /**
      * Style for Grid cells that contain 'OK' status for HolidayPeriod

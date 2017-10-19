@@ -14757,3 +14757,11 @@ button {
 .neg_status_rejected {
 	color: red;
 }
+
+.neg_status_new {
+	color: yellow;
+}
+
+.neg_status_partly_negotiated {
+	color: cyan;
+}

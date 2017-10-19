@@ -20,6 +20,21 @@ public class HolidayPeriodNegotiationStatusUtils {
         return null;
     }
 
+    public static HolidayPeriodNegotiationStatus getNewStatusFromList(Iterable<HolidayPeriodNegotiationStatus> allStatuses) {
+        if (allStatuses == null) {
+            return null;
+        }
+
+        for (HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus : allStatuses) {
+            if (holidayPeriodNegotiationStatus.getNegotiationStatusType() ==
+                    HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEW) {
+                return holidayPeriodNegotiationStatus;
+            }
+        }
+
+        return null;
+    }
+
     public static HolidayPeriodNegotiationStatus getOkStatusFromList(Iterable<HolidayPeriodNegotiationStatus> allStatuses) {
         if (allStatuses == null) {
             return null;

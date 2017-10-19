@@ -61,14 +61,14 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
         //employeeHolidaysLayout.setCurrentUser(currentUser);
         employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
-            holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+            holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
             emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
             //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
             Page.getCurrent().reload();
         });
 
         employeeHolidaysLayout.setRejectSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
-            holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+            holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
             emailServiceImpl.sendMailHolidayPeriodsRejected(setEmployeeHolPeriods, employee);
             //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
             Page.getCurrent().reload();
@@ -78,8 +78,8 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             newHolidayPeriod.setEmployee(employee);
             HolidayPeriod addedToDBHolidayPeriod = employeeServiceImpl.saveHolidayPeriod(newHolidayPeriod);
 
-            Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
-            emailServiceImpl.sendMailHolidayPeriodSubmitted(newHolidayPeriod, employee, managers);
+            //Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
+            //emailServiceImpl.sendMailHolidayPeriodSubmitted(newHolidayPeriod, employee, managers);
 
             // re-create the instance
             newHolidayPeriod = new HolidayPeriod();
@@ -93,6 +93,22 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             ((EmployeeHolidaysLayout)layoutInstance).setEmployeeHolidayPeriods(employeeHolidayPeriods);
         });
 
+        employeeHolidaysLayout.setSendForNegotiationButtonClickListener((layoutInstance, selectedPeriods, negotiationStatus) -> {
+            Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
+            if (emailServiceImpl.sendMailHolidayPeriodSubmitted(selectedPeriods, employee, managers)) {
+                // if successful mail, change periods statuses in db
+                holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiationStatus);
+                for (HolidayPeriod hp : selectedPeriods) {
+                    hp.setNegotiationStatus(negotiationStatus);
+                }
+            }
+
+            // re-create the instance
+            //newHolidayPeriod = new HolidayPeriod();
+            //layoutInstance.setNewHolidayPeriod(newHolidayPeriod);
+
+            //return addedToDBHolidayPeriod != null;
+        });
 
         employeeHolidaysLayout.addDeleteButtonClickListener((layoutInstance, selectedPeriods) -> {
             if (selectedPeriods != null && selectedPeriods.size() > 0) {

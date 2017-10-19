@@ -36,10 +36,11 @@ public class EmailServiceImpl implements EmailService {
             "ФИО сотрудника: <b>%s</b><br/>" +
             "Дата начала отпуска: <b>%s</b><br/>" +
             "Количество дней: <b>%s</b><br/>" + MAIL_BODY_FOOTER;
+    public static final String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS = "<h3>%s направил на согласование периоды отпуска, требуется Ваше согласование.</h3><br/>";
     public static final String MAIL_BODY_MANAGER_NEGOTIATED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
-            "<b>%s</b> согласовал Ваши периоды отпуска, направленные Вами на согласование:<br/>";
+            "<b>%s</b> согласовал Ваши периоды отпуска, направленные Вами на согласование:<br/><br/>";
     public static final String MAIL_BODY_MANAGER_REJECTED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
-            "<b>%s</b> отклонил Ваши периоды отпуска, направленные Вами на согласование:<br/>";
+            "<b>%s</b> отклонил Ваши периоды отпуска, направленные Вами на согласование:<br/><br/>";
     public static final String MAIL_BODY_PART_HOLIDAY_PERIOD = "Дата начала отпуска: <b>%s</b><br/>" +
             "Количество дней: <b>%s</b>";
 
@@ -62,6 +63,36 @@ public class EmailServiceImpl implements EmailService {
                 holidayPeriod.getDateStartAsString(),
                 holidayPeriod.getNumDaysAsString()
         );
+
+        boolean finalResult = true;
+        for (Employee manager : managers) {
+            finalResult = finalResult && sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD);
+        }
+
+        return finalResult;
+    }
+
+    @Override
+    public boolean sendMailHolidayPeriodSubmitted(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers) {
+        if (holidayPeriods == null || employee == null || managers == null) {
+            log.error("Error: 'null' value detected when not expected! " +
+                    "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodSubmitted, params: holidayPeriods = " + holidayPeriods + ", employee = " + employee + ", managers = " + managers);
+            return false;
+        }
+
+        String messageBodyStart = String.format(MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS,
+                employee.getFullName()
+        );
+
+        StringBuilder sbHolidayPeriods = new StringBuilder();
+        for (HolidayPeriod hp : holidayPeriods) {
+            if (sbHolidayPeriods.length() > 0) {
+                sbHolidayPeriods.append(DOUBLE_BREAK_LINE);
+            }
+            sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, hp.getDateStartAsString(), hp.getNumDaysAsString()));
+        }
+
+        String messageBody = messageBodyStart + sbHolidayPeriods.toString();
 
         boolean finalResult = true;
         for (Employee manager : managers) {

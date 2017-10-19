@@ -77,7 +77,7 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         PasswordField txtPassword = new PasswordField("Пароль:");
         employeeBinder.forField(txtPassword)
                 .asRequired("Необходимо ввести пароль")
-                .bind(Employee::getPassword, Employee::setPassword);
+                .bind(Employee::getEmptyPassword, Employee::setPassword);
 
 
         //employeeBinder.forField(txtPassword)

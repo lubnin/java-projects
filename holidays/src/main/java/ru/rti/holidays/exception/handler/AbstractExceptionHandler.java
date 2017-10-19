@@ -1,5 +1,9 @@
 package ru.rti.holidays.exception.handler;
 
+/**
+ * Abstract Exception Handler, implementing the base logic for all Exception Handlers of the Application.
+ * Supports the chaining, if needed.
+ */
 public class AbstractExceptionHandler implements ExceptionHandler {
 
     ExceptionHandler nextHandler;

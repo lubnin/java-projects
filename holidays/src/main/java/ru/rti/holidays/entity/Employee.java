@@ -223,12 +223,23 @@ public class Employee implements DBEntity, UserDetails {
         return specType.getDescription();
     }
 
+    /**
+     * Returns the name of a Team for The Employee. This is a Team this Employee belongs to.
+     * If the 'team' reference is null, this method returns an empty String.
+     * @return Team name or empty string if no team is connected with this Employee
+     */
     public String getTeamNameAsString() { return team == null ? GlobalConstants.EMPTY_STRING : team.getTeamName(); }
 
     public String getAllManagedTeamsAsString() {
         return getAllManagedTeamsAsString(", ");
     }
 
+    /**
+     * Returns the String representing all managed by this Employee teams. The method is useful for
+     * Employees who have manager role. For particular Employee this method returnes an empty string value.
+     * @param separator the separator for delimiting the Team names.
+     * @return String containing all the teams, managed by this Employee and delimited with 'separator' value. For non-manager Employees method returns an empty stirng.
+     */
     public String getAllManagedTeamsAsString(String separator) {
         if (separator == null) {
             throw new IllegalArgumentException("Separator cannot be null. Please, provide the valid string value.");
@@ -259,6 +270,10 @@ public class Employee implements DBEntity, UserDetails {
         return sbAllTeams.toString();
     }
 
+    /**
+     * Returns true if this Employee instance is an Employee with the manager role capabilities.
+     * @return
+     */
     public boolean isManager() {
         if (projectRole != null) {
             switch (projectRole.getProjectRoleSpecialType()) {
@@ -313,10 +328,28 @@ public class Employee implements DBEntity, UserDetails {
         this.teamLeadTeam = teamLeadTeam;
     }
 
+    /**
+     * Gets the hashed value of the initial Employee password
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Gets the empty string for GUI. The method is needed for Binder classes of Vaading to
+     * restrict binding of hashed values to text field controls.
+     * @return
+     */
+    public String getEmptyPassword() {
+        return GlobalConstants.EMPTY_STRING;
+    }
+
+    /**
+     * Sets the password value for this Employee instance. Takes the plain password value and
+     * performs the encryption of the plain password before persisting to the database.
+     * @param password
+     */
     public void setPassword(String password) {
         String encodedPassword = "";
         if (passwordEncoder != null) {
@@ -362,40 +395,75 @@ public class Employee implements DBEntity, UserDetails {
     }
 
     /**
-     * Spring Security overridden methods and fields needed for authorization
+     * ============================================================================================================
+     * Spring Security overridden methods and fields needed for authorization of the Employee in the Application
+     * ============================================================================================================
+     */
+
+    /**
+     * The password encoder, provided by the Spring Security library
      */
     @Autowired
     @Transient
     BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * The set of authorities (Roles) for this Employee. Defines the access level to different Application areas.
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     Set<Authority> authorities;
 
+    /**
+     * Returns the collection of GrantedAuthority class instances for this Employee. These are
+     * the roles in the System that allow/restrict particular operations.
+     * @return
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
+    /**
+     * Overridden method of UserDetails interface that returns the login name of the user as a username for
+     * loggin-in to the Application.
+     * @return
+     */
     @Override
     public String getUsername() {
         return loginName;
     }
 
+    /**
+     * For now, always return true, that means that Account is never expired.
+     * @return
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * For now, always return true, that means that Account is never locked.
+     * @return
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    /**
+     * For now, always return true, that means that Account credentials are never expired.
+     * @return
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    /**
+     * For now, always return true, that means that Employee is always enabled to login to the Application.
+     * @return
+     */
     @Override
     public boolean isEnabled() {
         return true;

@@ -14,8 +14,10 @@ import java.util.*;
 public class HolidayPeriodNegotiationStatus implements DBEntity {
 
     public enum HolidayPeriodNegotiationStatusType {
+        NEGOTIATION_STATUS_TYPE_NEW(3L, "Новый"),
         NEGOTIATION_STATUS_TYPE_NEGOTIATING(0L, "На согласовании"),
         NEGOTIATION_STATUS_TYPE_OK(1L, "Согласован"),
+        NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED(4L, "Частично согласован"),
         NEGOTIATION_STATUS_TYPE_REJECTED(2L, "Отклонён");
 
         private final Long typeId;
@@ -30,7 +32,9 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
             return Arrays.asList(
                     NEGOTIATION_STATUS_TYPE_NEGOTIATING,
                     NEGOTIATION_STATUS_TYPE_OK,
-                    NEGOTIATION_STATUS_TYPE_REJECTED);
+                    NEGOTIATION_STATUS_TYPE_REJECTED,
+                    NEGOTIATION_STATUS_TYPE_NEW,
+                    NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED);
         }
         public Long getTypeId() { return this.typeId; }
         public String getDescription() { return this.description; }

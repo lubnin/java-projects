@@ -60,6 +60,15 @@ $v-component-group-spacing: 6px;
   .neg_status_rejected {
     color: red;
   }
+
+  .neg_status_new {
+    color: yellow;
+  }
+
+  .neg_status_partly_negotiated {
+    color: cyan;
+  }
+
   /* An actual theme rule */
   /*
   .v-button {

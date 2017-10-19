@@ -19,6 +19,10 @@ public class GridEmployeeHolidayPeriodCellStyleGenerator implements StyleGenerat
                 return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_OK;
             case NEGOTIATION_STATUS_TYPE_REJECTED:
                 return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_REJECTED;
+            case NEGOTIATION_STATUS_TYPE_NEW:
+                return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_NEW;
+            case NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED:
+                return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED;
         }
 
         return GlobalConstants.EMPTY_STRING;

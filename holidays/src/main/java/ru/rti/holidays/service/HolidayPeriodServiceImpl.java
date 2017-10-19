@@ -41,13 +41,26 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     }
 
     @Override
-    public boolean setNegotiationStatusForHolidayPeriods(Iterable<EmployeeHolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus) {
+    public boolean setNegotiationStatusForEmployeeHolidayPeriods(Iterable<EmployeeHolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus) {
         if (holidayPeriods == null || negotiationStatus == null) {
             return false;
         }
 
         for (EmployeeHolidayPeriod ehp : holidayPeriods) {
             HolidayPeriod hp = ehp.getHolidayPeriod();
+            hp.setNegotiationStatus(negotiationStatus);
+            holidayPeriodRepository.saveAndFlush(hp);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean setNegotiationStatusForHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus) {
+        if (holidayPeriods == null || negotiationStatus == null) {
+            return false;
+        }
+
+        for (HolidayPeriod hp : holidayPeriods) {
             hp.setNegotiationStatus(negotiationStatus);
             holidayPeriodRepository.saveAndFlush(hp);
         }

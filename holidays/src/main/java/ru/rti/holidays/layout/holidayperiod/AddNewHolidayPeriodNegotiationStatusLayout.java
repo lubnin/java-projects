@@ -37,6 +37,10 @@ public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayo
                     return "Согласован";
                 case NEGOTIATION_STATUS_TYPE_REJECTED:
                     return "Отклонён";
+                case NEGOTIATION_STATUS_TYPE_NEW:
+                    return "Новый";
+                case NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED:
+                    return "Частично согласован";
                 default:
                     return "Неизвестный статус";
             }
@@ -75,7 +79,7 @@ public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayo
         radioNegotiationStatusType.setItemCaptionGenerator(new AddNewHolidayPeriodNegotiationStatusLayout.NegotiationStatusTypeCaptionGenerator());
         radioNegotiationStatusType.setItems(HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.values());
         radioNegotiationStatusType.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
-        radioNegotiationStatusType.setSelectedItem(HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING);
+        radioNegotiationStatusType.setSelectedItem(HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEW);
         radioNegotiationStatusType.setWidth("100%");
         holidayPeriodNegotiationStatusBinder.forField(radioNegotiationStatusType)
                 .bind(HolidayPeriodNegotiationStatus::getNegotiationStatusType, HolidayPeriodNegotiationStatus::setNegotiationStatusType);
