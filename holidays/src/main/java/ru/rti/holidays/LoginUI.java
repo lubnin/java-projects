@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ru.rti.holidays.exception.handler.CustomVaadinErrorHandler;
 import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.view.LoginPageView;
 import ru.rti.holidays.view.error.AccessDeniedView;
@@ -39,6 +40,7 @@ public class LoginUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         UI.getCurrent().setLocale(new Locale("ru"));
 
+        setErrorHandler(new CustomVaadinErrorHandler());
         final VerticalLayout rootLayout = new VerticalLayout();
         rootLayout.setSizeFull();
         rootLayout.setMargin(true);

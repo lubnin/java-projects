@@ -98,9 +98,9 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             if (emailServiceImpl.sendMailHolidayPeriodSubmitted(selectedPeriods, employee, managers)) {
                 // if successful mail, change periods statuses in db
                 holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiationStatus);
-                for (HolidayPeriod hp : selectedPeriods) {
+/*                for (HolidayPeriod hp : selectedPeriods) {
                     hp.setNegotiationStatus(negotiationStatus);
-                }
+                }*/
             }
 
             // re-create the instance

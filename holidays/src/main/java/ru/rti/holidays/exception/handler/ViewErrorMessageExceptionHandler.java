@@ -3,6 +3,7 @@ package ru.rti.holidays.exception.handler;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
+import ru.rti.holidays.utility.UIHelper;
 
 /**
  * Standard exception handler for Views in UI.
@@ -20,13 +21,7 @@ public class ViewErrorMessageExceptionHandler extends AbstractExceptionHandler {
 
     @Override
     public void handle(Exception e, String errorMessage) {
-        //TODO: remove hardcode later
-        Notification notification = new Notification(
-                "Ошибка",
-                errorMessage,
-                Notification.Type.ERROR_MESSAGE);
-
-        notification.show(UI.getCurrent().getPage());
+        UIHelper.showError(errorMessage);
         super.handle(e, errorMessage);
     }
 }

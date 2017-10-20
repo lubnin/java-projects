@@ -24,6 +24,7 @@ import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.utility.TeamUtils;
 import ru.rti.holidays.validator.HolidayPeriodDateValidator;
 import ru.rti.holidays.validator.HolidayPeriodDayNumValidator;
+import ru.rti.holidays.view.employee.EmployeeSettingsView;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -292,8 +293,15 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 }
             };
 
+            MenuBar.Command cmdSystemSettings = new MenuBar.Command() {
+                public void menuSelected(MenuBar.MenuItem selectedItem) {
+                    UI.getCurrent().getNavigator().navigateTo(EmployeeSettingsView.VIEW_NAME);
+                }
+            };
+
             MenuBar menuBar = new MenuBar();
             MenuBar.MenuItem menuItemSystem = menuBar.addItem("Система", null, null);
+            MenuBar.MenuItem menuItemSystemSettings = menuItemSystem.addItem("Настройки", null, cmdSystemSettings);
             MenuBar.MenuItem menuItemSystemExit = menuItemSystem.addItem("Выход", null, cmdSystemExit);
 
             addComponent(menuBar);
