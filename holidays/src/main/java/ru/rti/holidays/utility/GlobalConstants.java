@@ -10,7 +10,8 @@ public class GlobalConstants {
      * Date format which is used in calendars in UI Views
      */
     public static final String DATE_FORMAT = "dd.MM.yyyy";
-
+    public static final String YES_VALUE = "Да";
+    public static final String NO_VALUE = "Нет";
     /**
      *  URL paths for pages
      */
@@ -33,6 +34,8 @@ public class GlobalConstants {
      * CSS Theme name
      */
     public static final String THEME_NAME = "rti";
+
+    public static final String CSS_DEBUG_BORDER = "debug_border";
 
     /**
      * Style for Grid cells that contain 'New' status for HolidayPeriod
@@ -58,4 +61,15 @@ public class GlobalConstants {
      * Style for Grid cells that contain 'Rejected' status for HolidayPeriod
      */
     public static final String CSS_NEGOTIATION_STATUS_TYPE_REJECTED = "neg_status_rejected";
+
+    /**
+     * Style for Grid cells that have holiday periods having crossings by dates with other employees
+     */
+    public static final String CSS_HOLIDAY_PERIOD_CROSSING_DATES = "hp_crossing_dates";
+
+    /**
+     * Style for warning message when the Employees holiday period is crossing with other Employees dates
+     */
+    public static final String CSS_HOLIDAY_PERIOD_CROSSING_MESSAGE = "hp_crossing_message";
+
 }

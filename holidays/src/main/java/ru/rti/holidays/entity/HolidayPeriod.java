@@ -76,6 +76,20 @@ public class HolidayPeriod implements DBEntity {
     @Column(name = "updated")
     private Date updated;
 
+    @Transient
+    private boolean isCrossingDates;
+
+    public boolean isCrossingDatesDetected() {
+        return isCrossingDates;
+    }
+
+    public String isCrossingDatesAsString() {
+        return isCrossingDates ? GlobalConstants.YES_VALUE : GlobalConstants.NO_VALUE;
+    }
+    public void setCrossingDates(boolean isCrossingDatesDetected) {
+        isCrossingDates = isCrossingDatesDetected;
+    }
+
     public HolidayPeriod() {
 
     }
@@ -117,6 +131,9 @@ public class HolidayPeriod implements DBEntity {
     }
 
     public String getNumDaysAsString() {
+        if (getNumDays() == null) {
+            return GlobalConstants.EMPTY_STRING;
+        }
         return String.valueOf(getNumDays());
     }
     public void setNumDaysAsString(String strNumDays) {

@@ -5,6 +5,7 @@ import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.entity.ProjectRole;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -18,11 +19,8 @@ public interface EmployeeService {
     Employee getByLoginNameAndPassword(String loginName, String password);
     Set<Employee> getByTeamId(Long teamId);
     List<Employee> getAllEmployees();
-    //void resetProjectRoleForEmployees(ProjectRole projectRoleId);
-    List<HolidayPeriod> getHolidayPeriodsForEmployee(Employee employee);
-    HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod);
-    boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods);
     boolean deleteEmployees(Iterable<Employee> employees);
     Set<Employee> getAllManagersForEmployee(Employee employee);
+    Set<Employee> getEmployeesWithCrossingHolidayPeriods(Long employeeId, Long teamId, Date dateStart, Long numDays);
     void flush();
 }

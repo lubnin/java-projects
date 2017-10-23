@@ -26,7 +26,7 @@ public class CommonUtils {
 
     /**
      * Checks if any of the given parameters is null
-     * @param args string array of values
+     * @param args array of values
      * @return true if at least one of the arguments is null
      */
     public static <T> boolean checkIfAnyIsNull(T ... args) {
@@ -36,6 +36,25 @@ public class CommonUtils {
 
         for (int i = 0; i < args.length; i++) {
             if (args[i] == null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if any of the given parameters is null or empty (for string it is an empty string)
+     * @param args array of values
+     * @return true if at least one of the arguments is null or an empty string
+     */
+    public static <T> boolean checkIfAnyIsEmpty(T ... args) {
+        if (args == null) {
+            return true;
+        }
+
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] == null || GlobalConstants.EMPTY_STRING.equals(args[i])) {
                 return true;
             }
         }

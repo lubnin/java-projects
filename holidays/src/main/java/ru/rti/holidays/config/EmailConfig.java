@@ -16,6 +16,7 @@ public class EmailConfig {
 
         JavaMailSenderImpl mailSenderImpl = (JavaMailSenderImpl)mailSender;
 
+        //TODO: change email settings before going to production!!!
         mailSenderImpl.setHost("smtp.gmail.com");
         mailSenderImpl.setPort(587);
         mailSenderImpl.setUsername("mabramkin@gmail.com");

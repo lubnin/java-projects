@@ -5,6 +5,7 @@ import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
+import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
@@ -38,6 +39,20 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     public boolean deleteHolidayPeriodNegotiationStatuses(Iterable<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses) {
         holidayPeriodNegotiationStatusRepository.delete(holidayPeriodNegotiationStatuses);
         return true;
+    }
+
+    public List<HolidayPeriod> getHolidayPeriodsForEmployee(Employee employee) {
+        return holidayPeriodRepository.findByEmployeeId(employee.getId());
+    }
+    @Override
+    public boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods) {
+        holidayPeriodRepository.delete(holidayPeriods);
+        return true;
+    }
+
+    @Override
+    public HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod) {
+        return holidayPeriodRepository.saveAndFlush(holidayPeriod);
     }
 
     @Override

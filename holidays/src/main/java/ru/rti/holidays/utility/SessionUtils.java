@@ -27,7 +27,14 @@ public class SessionUtils {
 
     public static final boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (authentication != null);
+        if (authentication == null) {
+            return false;
+        }
+        Object principal = authentication.getPrincipal();
+        if (principal != null && principal instanceof String && "anonymousUser".equals(principal)) {
+            return false;
+        }
+        return true;
     }
 
     public static final Employee getCurrentUser() {

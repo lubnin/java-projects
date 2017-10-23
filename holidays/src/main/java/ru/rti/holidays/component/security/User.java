@@ -11,6 +11,7 @@ import java.util.Collection;
 @VaadinSessionScope
 /**
  * Session-scope class for currently logged-in User
+ * @deprecated
  */
 public class User {
     private String employeeLoginName;

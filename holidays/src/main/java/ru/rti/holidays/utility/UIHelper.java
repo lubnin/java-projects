@@ -1,5 +1,7 @@
 package ru.rti.holidays.utility;
 
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
@@ -11,13 +13,28 @@ public class UIHelper {
     }
 
     public static void showError(String errorMessage, int delay) {
-        //TODO: remove hardcode later
         Notification notification = new Notification(
                 "Ошибка",
                 errorMessage,
                 Notification.Type.ERROR_MESSAGE);
 
         notification.setDelayMsec(delay);
-        notification.show(UI.getCurrent().getPage());
+        notification.setPosition(Position.BOTTOM_CENTER);
+        notification.show(Page.getCurrent());
+    }
+
+    public static void showNotification(String message) {
+        showNotification(message, DEFAULT_DELAY);
+    }
+
+    public static void showNotification(String message, int delay) {
+        Notification notification = new Notification(
+                "Сообщение",
+                message,
+                Notification.Type.HUMANIZED_MESSAGE);
+
+        notification.setDelayMsec(delay);
+        notification.setPosition(Position.BOTTOM_CENTER);
+        notification.show(Page.getCurrent());
     }
 }

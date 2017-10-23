@@ -3,6 +3,7 @@ package ru.rti.holidays;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.rti.holidays.exception.handler.CustomVaadinErrorHandler;
 import ru.rti.holidays.utility.GlobalConstants;
+import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.view.LoginPageView;
+import ru.rti.holidays.view.employee.EmployeeHolidaysView;
 import ru.rti.holidays.view.error.AccessDeniedView;
 import ru.rti.holidays.view.error.ErrorDefaultView;
 
@@ -66,7 +69,11 @@ public class LoginUI extends UI {
         Navigator navigator = new Navigator(this, panelViewContainer);
         navigator.addProvider(viewProvider);
         navigator.setErrorView(new ErrorDefaultView());
-        navigator.navigateTo(LoginPageView.VIEW_NAME);
+        if (SessionUtils.isAuthenticated()) {
+            Page.getCurrent().setLocation(GlobalConstants.URL_PATH_MAIN_PAGE);
+        } else {
+            navigator.navigateTo(LoginPageView.VIEW_NAME);
+        }
 
         UI.getCurrent().setNavigator(navigator);
     }

@@ -14,6 +14,10 @@ public class GridHolidayPeriodCellStyleGenerator implements StyleGenerator<Holid
             return GlobalConstants.EMPTY_STRING;
         }
 
+        if (holidayPeriod.isCrossingDatesDetected()) {
+            return GlobalConstants.CSS_HOLIDAY_PERIOD_CROSSING_DATES;
+        }
+
         if (holidayPeriod.getNegotiationStatus() != null && holidayPeriod.getNegotiationStatus().getNegotiationStatusType() != null) {
             switch (holidayPeriod.getNegotiationStatus().getNegotiationStatusType()) {
                 case NEGOTIATION_STATUS_TYPE_NEGOTIATING:

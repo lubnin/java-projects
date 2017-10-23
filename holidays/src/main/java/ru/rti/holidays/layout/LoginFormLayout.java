@@ -1,5 +1,6 @@
 package ru.rti.holidays.layout;
 
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -68,12 +69,14 @@ public class LoginFormLayout extends VerticalLayout {
         }
         btnRegister.addClickListener(registerButtonClickListener);
     }
+
     public void addLoginButtonClickListener(Button.ClickListener loginButtonClickListener) {
         if (btnLogin == null) {
             throw new NullPointerException("Button 'btnLogin' is not instantiated yet.");
         }
         btnLogin.addClickListener(loginButtonClickListener);
     }
+
     private void addFormCaption() {
         Label lblFormName = new Label(formCaption);
         lblFormName.addStyleName(ValoTheme.LABEL_H1);
@@ -82,8 +85,11 @@ public class LoginFormLayout extends VerticalLayout {
 
     private void addButtons() {
         btnLogin = new Button("Войти");
+        btnLogin.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         btnLogin.setIcon(VaadinIcons.SIGN_IN);
         btnLogin.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        btnLogin.setWidth("200px");
+
         //btnLogin.addClickListener(btnLoginClickListener);
         buttonsPanel.addComponent(btnLogin);
 
@@ -93,18 +99,21 @@ public class LoginFormLayout extends VerticalLayout {
         //btnRegister.addClickListener(btnRegisterClickListener);
         //buttonsPanel.addComponent(btnRegister);
 
-        buttonsPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        //buttonsPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        buttonsPanel.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
         buttonsPanel.setSpacing(true);
-
+        buttonsPanel.setWidth("30%");
+        //buttonsPanel.addStyleName(GlobalConstants.CSS_DEBUG_BORDER);
         //Link linkForgotPassword = new Link("Забыли пароль?", new ExternalResource("http://ya.ru"));
         //linkForgotPassword.setIcon(VaadinIcons.KEY);
         addComponent(buttonsPanel);
         //addComponent(linkForgotPassword);
     }
+
     private void addForm() {
         formPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         formPanel.setSpacing(true);
-
+        //formPanel.addStyleName(GlobalConstants.CSS_DEBUG_BORDER);
         txtLoginName = new TextField(getNameFieldCaption());
         txtLoginName.setIcon(VaadinIcons.USER);
         txtLoginName.setRequiredIndicatorVisible(true);

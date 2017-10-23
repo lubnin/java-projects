@@ -1,6 +1,5 @@
 package ru.rti.holidays.layout.base;
 
-import com.vaadin.data.Binder;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +8,7 @@ import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
 import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
+import ru.rti.holidays.service.localization.LocalizationService;
 
 /**
  * BaseVerticalLayout is a base layout which extends one of the standard Vaadin layouts (VerticalLayout).
@@ -24,6 +24,21 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     protected RemoveSelectedItemsClickListener removeSelectedItemsClickListener;
     protected BaseLayout parentLayout;
     protected String pageTitle;
+    protected boolean isApplyMargin = true;
+    protected boolean isApplySpacing = true;
+    protected LocalizationService localizationService;
+
+    public BaseVerticalLayout() {
+        setMargin(isApplyMargin);
+        setSpacing(isApplySpacing);
+    }
+
+    public BaseVerticalLayout(boolean isApplyMargin, boolean isApplySpacing) {
+        setApplyMargin(isApplyMargin);
+        setApplySpacing(isApplySpacing);
+        setMargin(isApplyMargin());
+        setSpacing(isApplySpacing());
+    }
 
     public Logger getLogger() {
         return log;
@@ -141,4 +156,29 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     public void setNewBeanValue(DBEntity newBeanValue) {
         handleUnsupportedOperation();
     }
+
+    public boolean isApplyMargin() {
+        return isApplyMargin;
+    }
+
+    public void setApplyMargin(boolean applyMargin) {
+        isApplyMargin = applyMargin;
+    }
+
+    public boolean isApplySpacing() {
+        return isApplySpacing;
+    }
+
+    public void setApplySpacing(boolean applySpacing) {
+        isApplySpacing = applySpacing;
+    }
+
+    public LocalizationService getLocalizationService() {
+        return localizationService;
+    }
+
+    public void setLocalizationService(LocalizationService localizationService) {
+        this.localizationService = localizationService;
+    }
+
 }

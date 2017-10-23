@@ -11,11 +11,13 @@ import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.entity.Team;
+import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
+import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
 import ru.rti.holidays.service.EmailService;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.service.HolidayPeriodService;
-import ru.rti.holidays.utility.SessionUtils;
+import ru.rti.holidays.utility.*;
 import ru.rti.holidays.view.base.AbstractBaseView;
 
 import java.util.*;
@@ -40,13 +42,113 @@ public class EmployeeHolidaysView extends AbstractBaseView {
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Map<Team, Set<EmployeeHolidayPeriod>> teamMembersHolidayPeriods = new HashMap<Team, Set<EmployeeHolidayPeriod>>();
 
-
     @Override
     protected Label getPageTitleLabel() {
         return new Label("Мои отпуска");
     }
 
 
+    private void checkCrossDates(EmployeeHolidaysLayout layoutInstance, boolean checkAllPeriods) {
+        if (employee.getTeam() != null) {
+            Long teamId = employee.getTeam().getId();
+
+            if (checkAllPeriods) {
+                List<HolidayPeriod> allPeriods = holidayPeriodServiceImpl.getHolidayPeriodsForEmployee(employee);
+                if (allPeriods == null || allPeriods.size() == 0) {
+                    return;
+                }
+                boolean isNoCrossedFound = true;
+                StringBuilder sbAllPeriodsCheck = new StringBuilder();
+                for (HolidayPeriod hp : allPeriods) {
+                    if (HolidayPeriodUtils.isHolidayPeriodInOkStatus(hp) ||
+                        HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(hp)) {
+                        continue;
+                    }
+                    Set<Employee> employeesWithCrossingDates = employeeServiceImpl.getEmployeesWithCrossingHolidayPeriods(employee.getId(), teamId, DateUtils.asDate(hp.getDateStart()), hp.getNumDays());
+                    if (employeesWithCrossingDates.size() > 0) {
+                        if (sbAllPeriodsCheck.length() > 0) {
+                            sbAllPeriodsCheck.append("<br><br>");
+                        }
+                        isNoCrossedFound = false;
+                        StringBuilder sb = new StringBuilder();
+                        for (Employee emp : employeesWithCrossingDates) {
+                            if (sb.length() > 0) {
+                                sb.append("<br><br>");
+                            }
+                            List<HolidayPeriod> crossingHolidayPeriods = emp.getHolidayPeriods();
+                            StringBuilder sbPeriods = new StringBuilder();
+                            for (HolidayPeriod hpInTeam : crossingHolidayPeriods) {
+                                if (DateUtils.isIntersectionBetweenDates(
+                                        DateUtils.asDate(hp.getDateStart()),
+                                        DateUtils.addDays(DateUtils.asDate(hp.getDateStart()), hp.getNumDays()),
+                                        DateUtils.asDate(hpInTeam.getDateStart()),
+                                        DateUtils.addDays(DateUtils.asDate(hpInTeam.getDateStart()), hpInTeam.getNumDays()))
+                                ) {
+                                    if (sbPeriods.length() > 0) {
+                                        sbPeriods.append("<br>");
+                                    }
+                                    sbPeriods.append(String.format("<span class='%s'>Ваш отпуск с %s (дней: %s) пересекается с отпуском сотрудника %s:"+
+                                                    " дата начала: %s (дней: %s)!</span>",
+                                            GlobalConstants.CSS_HOLIDAY_PERIOD_CROSSING_MESSAGE,
+                                            hp.getDateStartAsString(),
+                                            hp.getNumDaysAsString(),
+                                            emp.getFullName(),
+                                            hpInTeam.getDateStartAsString(),
+                                            hpInTeam.getNumDaysAsString()));
+                                }
+                            }
+                            sb.append(sbPeriods.toString());
+                        }
+                        sbAllPeriodsCheck.append(sb.toString());
+                    }
+                }
+                if (isNoCrossedFound) {
+                    layoutInstance.setCrossingDatesListValue("", true);
+                } else {
+                    layoutInstance.setCrossingDatesListValue(sbAllPeriodsCheck.toString(), false);
+                }
+            } else {
+                Set<Employee> employeesWithCrossingDates = employeeServiceImpl.getEmployeesWithCrossingHolidayPeriods(employee.getId(), teamId, DateUtils.asDate(newHolidayPeriod.getDateStart()), newHolidayPeriod.getNumDays());
+                if (employeesWithCrossingDates.size() > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Employee emp : employeesWithCrossingDates) {
+                        if (sb.length() > 0) {
+                            sb.append("<br><br>");
+                        }
+                        List<HolidayPeriod> crossingHolidayPeriods = emp.getHolidayPeriods();
+                        StringBuilder sbPeriods = new StringBuilder();
+                        for (HolidayPeriod hpInTeam : crossingHolidayPeriods) {
+                            if (DateUtils.isIntersectionBetweenDates(
+                                    DateUtils.asDate(newHolidayPeriod.getDateStart()),
+                                    DateUtils.addDays(DateUtils.asDate(newHolidayPeriod.getDateStart()), newHolidayPeriod.getNumDays()),
+                                    DateUtils.asDate(hpInTeam.getDateStart()),
+                                    DateUtils.addDays(DateUtils.asDate(hpInTeam.getDateStart()), hpInTeam.getNumDays()))
+                                    ) {
+                                if (sbPeriods.length() > 0) {
+                                    sbPeriods.append("<br>");
+                                }
+                                sbPeriods.append(String.format("<span class='%s'>Ваш отпуск с %s (дней: %s) пересекается с отпуском сотрудника %s:"+
+                                                " дата начала: %s (дней: %s)!</span>",
+                                        GlobalConstants.CSS_HOLIDAY_PERIOD_CROSSING_MESSAGE,
+                                        newHolidayPeriod.getDateStartAsString(),
+                                        newHolidayPeriod.getNumDaysAsString(),
+                                        emp.getFullName(),
+                                        hpInTeam.getDateStartAsString(),
+                                        hpInTeam.getNumDaysAsString()));
+                            }
+                        }
+                        sb.append(sbPeriods.toString());
+                    }
+                    layoutInstance.setCrossingDatesListValue(sb.toString(), false);
+                } else {
+                    layoutInstance.setCrossingDatesListValue("", true);
+                }
+            }
+        }
+    }
+    private void checkCrossDates(EmployeeHolidaysLayout layoutInstance) {
+        checkCrossDates(layoutInstance, false);
+    }
 
     @Override
     protected void addCustomComponents() {
@@ -59,7 +161,6 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         employeeHolidaysLayout.setAllNegotiationStatuses(allNegotiationStatuses);
         employeeHolidaysLayout.setNewHolidayPeriod(newHolidayPeriod);
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
-        //employeeHolidaysLayout.setCurrentUser(currentUser);
         employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
             holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
             emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
@@ -76,20 +177,19 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
         employeeHolidaysLayout.addMainButtonClickListener(layoutInstance -> {
             newHolidayPeriod.setEmployee(employee);
-            HolidayPeriod addedToDBHolidayPeriod = employeeServiceImpl.saveHolidayPeriod(newHolidayPeriod);
-
-            //Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
-            //emailServiceImpl.sendMailHolidayPeriodSubmitted(newHolidayPeriod, employee, managers);
-
-            // re-create the instance
-            newHolidayPeriod = new HolidayPeriod();
-            layoutInstance.setNewHolidayPeriod(newHolidayPeriod);
-
+            HolidayPeriod addedToDBHolidayPeriod = holidayPeriodServiceImpl.saveHolidayPeriod(newHolidayPeriod);
+            checkCrossDates(layoutInstance);
             return addedToDBHolidayPeriod != null;
         });
 
+        employeeHolidaysLayout.setCheckCrossDatesButtonClickListener((layout, params) -> {
+            checkCrossDates((EmployeeHolidaysLayout)layout, true);
+            return new ButtonClickResult(true);
+        });
+
         employeeHolidaysLayout.setRefreshGridDataListener(layoutInstance -> {
-            employeeHolidayPeriods = employeeServiceImpl.getHolidayPeriodsForEmployee(employee);
+            employeeHolidayPeriods = holidayPeriodServiceImpl.getHolidayPeriodsForEmployee(employee);
+            //HolidayPeriodUtils.checkAndMarkEmployeeHolidayPeriodsForCrossingDates(employee, employeeHolidayPeriods);
             ((EmployeeHolidaysLayout)layoutInstance).setEmployeeHolidayPeriods(employeeHolidayPeriods);
         });
 
@@ -98,56 +198,26 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             if (emailServiceImpl.sendMailHolidayPeriodSubmitted(selectedPeriods, employee, managers)) {
                 // if successful mail, change periods statuses in db
                 holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiationStatus);
-/*                for (HolidayPeriod hp : selectedPeriods) {
-                    hp.setNegotiationStatus(negotiationStatus);
-                }*/
             }
-
-            // re-create the instance
-            //newHolidayPeriod = new HolidayPeriod();
-            //layoutInstance.setNewHolidayPeriod(newHolidayPeriod);
-
-            //return addedToDBHolidayPeriod != null;
+            UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование.");
         });
 
         employeeHolidaysLayout.addDeleteButtonClickListener((layoutInstance, selectedPeriods) -> {
             if (selectedPeriods != null && selectedPeriods.size() > 0) {
-                employeeServiceImpl.deleteHolidayPeriods(selectedPeriods);
-                //employeeHolidayPeriods = employeeServiceImpl.getHolidayPeriodsForEmployee(employee);
-                //layoutInstance.setEmployeeHolidayPeriods(employeeHolidayPeriods);
+                holidayPeriodServiceImpl.deleteHolidayPeriods(selectedPeriods);
             }
         });
 
 
-        employeeHolidaysLayout.constructLayout();
-
-        addComponent(employeeHolidaysLayout);
+        new StandardBaseLayoutDrawer(this, employeeHolidaysLayout).drawLayout();
+        //employeeHolidaysLayout.constructLayout();
+        //addComponent(employeeHolidaysLayout);
     }
 
     @Override
     protected boolean prepareViewData() {
-        /*
-        String loginName = parameterMap.get("loginName");
-        String password = parameterMap.get("password");
-
-        if (loginName == null || password == null) {
-            throw new IllegalArgumentException("Login name and password cannot be null!");
-        }*/
-
-
-
-        //employee = currentUser.getLoggedInEmployee();
         employee = SessionUtils.getCurrentUser();
-        //employee = employeeServiceImpl.getByLoginNameAndPassword(
-        //        getCurrentUser().getEmployeeLoginName(),
-        //        getCurrentUser().getEmployeePassword());
-
-
-        //if (employee == null) {
-        //    throw new IllegalArgumentException("Employee not found in the database by login and password provided!");
-        //}
-
-        employeeHolidayPeriods = employeeServiceImpl.getHolidayPeriodsForEmployee(employee);
+        employeeHolidayPeriods = holidayPeriodServiceImpl.getHolidayPeriodsForEmployee(employee);
         allNegotiationStatuses = holidayPeriodServiceImpl.getAllHolidayPeriodNegotiationStatuses();
 
         if (employee.isManager()) {
@@ -158,7 +228,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                     Set<EmployeeHolidayPeriod> empHolidayPeriods = new HashSet<>();
                     if (teamEmployees != null && teamEmployees.size() > 0) {
                         for(Employee emp : teamEmployees) {
-                            List<HolidayPeriod> holidayPeriodsForEmployee = employeeServiceImpl.getHolidayPeriodsForEmployee(emp);
+                            List<HolidayPeriod> holidayPeriodsForEmployee = holidayPeriodServiceImpl.getHolidayPeriodsForEmployee(emp);
                             if (holidayPeriodsForEmployee != null && holidayPeriodsForEmployee.size() > 0) {
                                 holidayPeriodsForEmployee.forEach(holidayPeriod -> {
                                     EmployeeHolidayPeriod empHolidayPeriod = new EmployeeHolidayPeriod();
@@ -177,23 +247,17 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
                         }
                     }
-
                     teamMembersHolidayPeriods.put(team, empHolidayPeriods);
                 });
             }
         }
-        newHolidayPeriod = new HolidayPeriod();
 
+        newHolidayPeriod = new HolidayPeriod();
         return true;
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         super.enter(event);
-        /*
-        if (parameters == null && parameterMap == null) {
-            throw new IllegalArgumentException("EmployeeHolidaysView must be called with initialized parameter map. Something went wrong if you see this message.");
-        }
-        */
     }
 }

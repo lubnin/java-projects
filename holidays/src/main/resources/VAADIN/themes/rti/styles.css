@@ -14765,3 +14765,13 @@ button {
 .neg_status_partly_negotiated {
 	color: cyan;
 }
+
+.hp_crossing_dates {
+	border: 1px dotted red;
+}
+
+.hp_crossing_message {
+	color: white;
+	font-style: italic;
+	font-size: 16px;
+}

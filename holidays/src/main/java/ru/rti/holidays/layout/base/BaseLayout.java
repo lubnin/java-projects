@@ -1,5 +1,6 @@
 package ru.rti.holidays.layout.base;
 
+import com.vaadin.ui.Layout;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.exception.handler.DoNothingExceptionHandler;
@@ -8,7 +9,7 @@ import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
 import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 
-public interface BaseLayout {
+public interface BaseLayout extends Layout {
 
     // Exception Handling
 

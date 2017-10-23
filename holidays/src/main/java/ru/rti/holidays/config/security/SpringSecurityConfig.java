@@ -14,6 +14,9 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 
 import javax.annotation.Resource;
 
+/**
+ * Main Spring Security configuration class
+ */
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource(name = "authService")

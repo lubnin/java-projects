@@ -16,12 +16,50 @@ public class LocalizationServiceImpl implements LocalizationService {
     Environment env;
 
     @Override
+    public String getPropertyValue(String property) {
+        return env.getProperty(property);
+    }
+
+    @Override
     public String getMessageAdminUserMenuSettings() {
-        return env.getProperty("messages.admin.usermenu.settings");
+        return getPropertyValue("messages.admin.usermenu.settings");
     }
 
     @Override
     public String getMessageAdminUserMenuExit() {
-        return env.getProperty("messages.admin.usermenu.exit");
+        return getPropertyValue("messages.admin.usermenu.exit");
+    }
+
+    @Override
+    public String getMessageControlsCommonButtonSaveSettings() {
+        return getPropertyValue("messages.controls.common.buttonsavesettings");
+    }
+
+    public String getMessageCommonValidationErrorPasswordFieldsAreRequired() {
+        return getPropertyValue("messages.common.validation.error.password.fields.are.required");
+    }
+
+    public String getMessageCommonValidationErrorPasswordPasswordsMustBeEqual() {
+        return getPropertyValue("messages.common.validation.error.password.passwords.must.be.equal");
+    }
+
+    @Override
+    public String getMessageEmployeeSettingsLayoutPageTitle() {
+        return getPropertyValue("messages.employeesettingslayout.pagetitle");
+    }
+
+    @Override
+    public String getMessageEmployeeSettingsLayoutPasswordFieldNew() {
+        return getPropertyValue("messages.employeesettingslayout.passwordfield.new");
+    }
+
+    @Override
+    public String getMessageEmployeeSettingsLayoutPasswordFieldNewRequired() {
+        return getPropertyValue("messages.employeesettingslayout.passwordfield.new.required");
+    }
+
+    @Override
+    public String getMessageEmployeeSettingsLayoutPasswordFieldRepeat() {
+        return getPropertyValue("messages.employeesettingslayout.passwordfield.repeat");
     }
 }

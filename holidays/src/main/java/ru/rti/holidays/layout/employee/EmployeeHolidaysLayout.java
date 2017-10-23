@@ -16,12 +16,12 @@ import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.component.security.User;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
+import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
+import ru.rti.holidays.layout.base.behaviour.ButtonClickListener;
 import ru.rti.holidays.layout.behaviour.*;
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
-import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
-import ru.rti.holidays.utility.SessionUtils;
-import ru.rti.holidays.utility.TeamUtils;
+import ru.rti.holidays.utility.*;
 import ru.rti.holidays.validator.HolidayPeriodDateValidator;
 import ru.rti.holidays.validator.HolidayPeriodDayNumValidator;
 import ru.rti.holidays.view.employee.EmployeeSettingsView;
@@ -54,9 +54,15 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
+    //private EmployeeHolidaysLayoutCheckCrossDatesButtonClickListener checkCrossDatesButtonClickListener;
+    private ButtonClickListener checkCrossDatesButtonClickListener;
+
     private HolidayPeriod newHolidayPeriod;
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
     //private User currentUser;
+    public static final String NO_CROSSING_DATES_MESSAGE = "Пересечений на текущий момент не обнаружено.";
+    private Label lblCrossingDatesList = new Label(NO_CROSSING_DATES_MESSAGE);
+    private boolean isCrossingDates = false;
 
     public EmployeeHolidaysLayout(Employee employee) {
         if (employee == null) {
@@ -90,12 +96,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 btnNegotiateSelPeriods.setIcon(VaadinIcons.CHECK);
                 btnNegotiateSelPeriods.setEnabled(false);
                 btnNegotiateSelPeriods.setId("btnNegotiateSelPeriods_" + team.getId());
+                btnNegotiateSelPeriods.setWidth("300px");
 
                 Button btnRejectSelPeriods = new Button("Отклонить выбранные");
                 btnRejectSelPeriods.addStyleName(ValoTheme.BUTTON_DANGER);
                 btnRejectSelPeriods.setIcon(VaadinIcons.STOP);
                 btnRejectSelPeriods.setEnabled(false);
                 btnRejectSelPeriods.setId("btnRejectSelPeriods_" + team.getId());
+                btnRejectSelPeriods.setWidth("300px");
 
                 btnNegotiateSelPeriods.addClickListener(clickEvent -> {
                     String buttonId = clickEvent.getButton().getId();
@@ -172,7 +180,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         for (EmployeeHolidayPeriod empHolPeriod : selectedItems) {
                             if (empHolPeriod.getNegotiationStatus() != null && empHolPeriod.getNegotiationStatus().getNegotiationStatusType() != null) {
                                 HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType selPeriodNegStatusType = empHolPeriod.getNegotiationStatus().getNegotiationStatusType();
-                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK) {
+                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK ||
+                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING) {
                                     hasSelectedPeriodsForRejection = true;
                                 }
                                 if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_REJECTED ||
@@ -186,10 +195,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                             }
                         }
 
-                        if (hasSelectedPeriodsForNegotiation && hasSelectedPeriodsForRejection) {
-                            // Don't enable any buttons at all, because we cannot negotiate and reject holidays periods simultaneously
-                        }
-                        else {
+                        if (hasSelectedPeriodsForNegotiation || hasSelectedPeriodsForRejection) {
+                            if (hasSelectedPeriodsForNegotiation && hasSelectedPeriodsForRejection && selectedItems.size() > 1) {
+                                // Don't enable any buttons at all, because we cannot negotiate and reject holidays periods simultaneously
+                                hasSelectedPeriodsForNegotiation = false;
+                                hasSelectedPeriodsForRejection = false;
+                            }
                             if (hasSelectedPeriodsForNegotiation) {
                                 Button btnNegotiateSelectedPeriods = negotiateSelectedPeriodsButtonsMap.get(selTeamId);
                                 btnNegotiateSelectedPeriods.setEnabled(true);
@@ -241,10 +252,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             VerticalLayout pnlHolidaysLayout = new VerticalLayout();
 
             grdHolidayPeriods.setItems(employeeHolidayPeriods);
-            grdHolidayPeriods.addColumn(HolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска");
-            grdHolidayPeriods.addColumn(HolidayPeriod::getNumDays).setCaption("Количество дней отпуска");
-            grdHolidayPeriods.addColumn(HolidayPeriod::getNegotiationStatusAsString).setCaption("Статус согласования").setStyleGenerator(new GridHolidayPeriodCellStyleGenerator());
-            grdHolidayPeriods.setHeightByRows(3);
+            StyleGenerator<HolidayPeriod> styleGenerator = new GridHolidayPeriodCellStyleGenerator();
+            grdHolidayPeriods.addColumn(HolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска").setStyleGenerator(styleGenerator);
+            grdHolidayPeriods.addColumn(HolidayPeriod::getNumDays).setCaption("Количество дней отпуска").setStyleGenerator(styleGenerator);
+            grdHolidayPeriods.addColumn(HolidayPeriod::getNegotiationStatusAsString).setCaption("Статус согласования").setStyleGenerator(styleGenerator);
+            //grdHolidayPeriods.addColumn(HolidayPeriod::isCrossingDatesAsString).setCaption("Пересечения").setStyleGenerator(styleGenerator);
+            grdHolidayPeriods.setHeightByRows(5);
             grdHolidayPeriods.setWidth("100%");
 
             MultiSelectionModel<HolidayPeriod> selectionModel = (MultiSelectionModel<HolidayPeriod>)grdHolidayPeriods.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -287,24 +300,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             pnlHolidaysLayout.setSizeFull();
             pnlPanelHolidays.setContent(pnlHolidaysLayout);
 
-            MenuBar.Command cmdSystemExit = new MenuBar.Command() {
-                public void menuSelected(MenuBar.MenuItem selectedItem) {
-                    SessionUtils.logout();
-                }
-            };
 
-            MenuBar.Command cmdSystemSettings = new MenuBar.Command() {
-                public void menuSelected(MenuBar.MenuItem selectedItem) {
-                    UI.getCurrent().getNavigator().navigateTo(EmployeeSettingsView.VIEW_NAME);
-                }
-            };
+            EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
+            employeeMenuBarLayout.setMainMenuItemVisible(false);
+            new StandardBaseLayoutDrawer(this, employeeMenuBarLayout).drawLayout();
 
-            MenuBar menuBar = new MenuBar();
-            MenuBar.MenuItem menuItemSystem = menuBar.addItem("Система", null, null);
-            MenuBar.MenuItem menuItemSystemSettings = menuItemSystem.addItem("Настройки", null, cmdSystemSettings);
-            MenuBar.MenuItem menuItemSystemExit = menuItemSystem.addItem("Выход", null, cmdSystemExit);
-
-            addComponent(menuBar);
             addComponent(lblEmployeeName);
             addComponent(lblProjectRole);
             addComponent(lblProjectRoleType);
@@ -323,43 +323,46 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     }
 
     protected GridLayout addControlsPanel() {
-        GridLayout addHolidayPeriodLayout = new GridLayout(5, 3);
+        GridLayout addHolidayPeriodLayout = new GridLayout(5, 6);
+        addHolidayPeriodLayout.setSizeFull();
         addHolidayPeriodLayout.setSpacing(true);
         addHolidayPeriodLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        addHolidayPeriodLayout.addStyleName(GlobalConstants.CSS_DEBUG_BORDER);
 
         Button btnAddHolidayPeriod = new Button("Добавить период отпуска", VaadinIcons.CHECK);
         btnAddHolidayPeriod.addClickListener(event -> {
             try {
                 holidayPeriodBinder.writeBean(newHolidayPeriod);
-
-                if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
-                    newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
-                }
-
                 if (newHolidayPeriod == null || newHolidayPeriod.getDateStart() == null || newHolidayPeriod.getNumDays() == 0) {
-                    Notification errorNotification = new Notification("Ошибка: Вы должны ввести данные в поля для Вашего отпуска!", Notification.Type.ERROR_MESSAGE);
-                    errorNotification.setDescription("Поля для отпуска должны быть заполнены");
-                    errorNotification.setDelayMsec(5000);
-                    errorNotification.setPosition(Position.TOP_RIGHT);
-                    errorNotification.show(Page.getCurrent());
-                } else {
+                    UIHelper.showError("Поля для отпуска должны быть заполнены.");
+                }
+                else {
+                    if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
+                        newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
+                    }
                     if (mainButtonClickListener != null) {
                         mainButtonClickListener.onAddSelectedPeriods(this);
                     }
-
-                    txtNumDays.clear();
-                    datePeriod.clear();
-
+                    newHolidayPeriod = new HolidayPeriod();
+                    setNewHolidayPeriod(newHolidayPeriod);
+                    //txtNumDays.clear();
+                    //datePeriod.clear();
+                    holidayPeriodBinder.readBean(newHolidayPeriod);
                     refreshDataGrid();
-                    Notification.show("Период отпуска успешно сохранен");
+                    UIHelper.showNotification("Период отпуска успешно сохранен.");
                 }
             } catch (ValidationException e) {
-                Notification.show("Невозможно сохранить период отпуска. Проверьте поля ввода на наличие сообщений об ошибках.");
+                UIHelper.showError("Невозможно сохранить период отпуска. Проверьте заполненность полей ввода, а также наличие сообщений об ошибках для полей.");
             }
-
-
         });
 
+        addHolidayPeriodLayout.setColumnExpandRatio(0, 3);
+        addHolidayPeriodLayout.setColumnExpandRatio(1, 1);
+        addHolidayPeriodLayout.setColumnExpandRatio(2, 1);
+        addHolidayPeriodLayout.setColumnExpandRatio(3, 1);
+        addHolidayPeriodLayout.setColumnExpandRatio(4, 1);
+
+        btnAddHolidayPeriod.setWidth("300px");
         btnAddHolidayPeriod.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
         btnRemoveHolidayPeriods.addStyleName(ValoTheme.BUTTON_DANGER);
@@ -368,16 +371,29 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 deleteButtonClickListener.onDeleteSelectedPeriods(this, grdHolidayPeriods.getSelectedItems());
                 refreshDataGrid();
             }
-            Notification.show("Выбранные периоды отпуска успешно удалены");
+            UIHelper.showNotification("Выбранные периоды отпуска успешно удалены.");
         });
-        btnRemoveHolidayPeriods.setWidth("100%");
+        btnRemoveHolidayPeriods.setWidth("300px");
         btnRemoveHolidayPeriods.setEnabled(false);
 
         Label lblDatePeriod = new Label("Период отпуска:");
 
         datePeriod.addValueChangeListener(new EmployeeHolidayPeriodValueChangeListener());
-
         Label lblNumDays = new Label("Количество дней отпуска:");
+        Button btnCheckCrossingDates = new Button("Проверить пересечения");
+        btnCheckCrossingDates.setIcon(VaadinIcons.CALENDAR);
+        btnCheckCrossingDates.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        btnCheckCrossingDates.setWidth("300px");
+        btnCheckCrossingDates.addClickListener(clickEvent -> {
+            if (checkCrossDatesButtonClickListener != null) {
+                checkCrossDatesButtonClickListener.onClick(this);
+            }
+        });
+
+        Label lblCrossingDates = new Label("Пересечения по датам отпусков:");
+        //Label lblCrossingDatesList = new Label("Пересечений на текущий момент не обнаружено");
+        lblCrossingDatesList.setContentMode(ContentMode.HTML);
+        lblCrossingDatesList.setSizeFull();
 
         bindDatePeriodControlFields();
 
@@ -387,8 +403,9 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 refreshDataGrid();
             }
         });
-        btnSendForNegotiation.setWidth("100%");
+        btnSendForNegotiation.setWidth("300px");
         btnSendForNegotiation.setEnabled(false);
+
 
         addHolidayPeriodLayout.addComponent(btnAddHolidayPeriod,0,0);
         addHolidayPeriodLayout.addComponent(lblDatePeriod, 1,0);
@@ -397,8 +414,9 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         addHolidayPeriodLayout.addComponent(txtNumDays, 4,0);
         addHolidayPeriodLayout.addComponent(btnRemoveHolidayPeriods, 0,1);
         addHolidayPeriodLayout.addComponent(btnSendForNegotiation, 0,2);
-
-
+        addHolidayPeriodLayout.addComponent(btnCheckCrossingDates, 0,3);
+        addHolidayPeriodLayout.addComponent(lblCrossingDates, 0, 4, 4, 4);
+        addHolidayPeriodLayout.addComponent(lblCrossingDatesList, 0, 5, 4, 5);
         return addHolidayPeriodLayout;
     }
 
@@ -408,6 +426,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 .bind(HolidayPeriod::getDateStart, HolidayPeriod::setDateStart);
 
         holidayPeriodBinder.forField(txtNumDays)
+                .withNullRepresentation("")
                 .withValidator(new HolidayPeriodDayNumValidator())
                 .bind(HolidayPeriod::getNumDaysAsString, HolidayPeriod::setNumDaysAsString);
 
@@ -526,6 +545,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.mainButtonClickListener = mainButtonClickListener;
     }
 
+    public ButtonClickListener getCheckCrossDatesButtonClickListener() {
+        return checkCrossDatesButtonClickListener;
+    }
+
+    public void setCheckCrossDatesButtonClickListener(ButtonClickListener checkCrossDatesButtonClickListener) {
+        this.checkCrossDatesButtonClickListener = checkCrossDatesButtonClickListener;
+    }
+
     public HolidayPeriod getNewHolidayPeriod() {
         return newHolidayPeriod;
     }
@@ -533,7 +560,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     public void setNewHolidayPeriod(HolidayPeriod newHolidayPeriod) {
         this.newHolidayPeriod = newHolidayPeriod;
         if (this.newHolidayPeriod != null && this.newHolidayPeriod.getNegotiationStatus() == null) {
-            this.newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
+            this.newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
         }
     }
 
@@ -558,4 +585,24 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.managedTeamMembersHolidays = managedTeamMembersHolidays;
     }
 
+    public void setCrossingDatesListValue(String message, boolean isCrossingDatesFixed) {
+        if (isCrossingDatesFixed) {
+            lblCrossingDatesList.setValue(NO_CROSSING_DATES_MESSAGE);
+        } else {
+            lblCrossingDatesList.setValue(message);
+        }
+/*        if (!isCrossingDates && !isCrossingDatesFixed) {
+            lblCrossingDatesList.setValue(message);
+            isCrossingDates = true;
+        } else {
+            if (!isCrossingDatesFixed) {
+                String currentValue = lblCrossingDatesList.getValue();
+                String newValue = currentValue + "<br>" + message;
+                lblCrossingDatesList.setValue(newValue);
+            } else {
+                lblCrossingDatesList.setValue(NO_CROSSING_DATES_MESSAGE);
+            }
+        }*/
+
+    }
 }
