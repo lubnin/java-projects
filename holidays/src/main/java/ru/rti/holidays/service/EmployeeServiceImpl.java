@@ -171,4 +171,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return resultEmployeeSet;
     }
+
+    @Override
+    public Set<Employee> getAllEmployeesExcludingLoginName(String loginNameToExclude) {
+        return employeeRepository.findByLoginNameNot(loginNameToExclude);
+    }
 }

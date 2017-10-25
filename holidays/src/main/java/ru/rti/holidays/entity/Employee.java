@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "employee")
 @SuppressWarnings("unused")
-public class Employee implements DBEntity, UserDetails {
+public class Employee implements DBEntity, UserDetails, NavigationContextHolder {
     /**
      * The primary key for the table holding Employee instances
      */
@@ -467,5 +467,21 @@ public class Employee implements DBEntity, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    // NavigationContextHolder fields & methods
+
+    @Transient
+    private String currentView;
+
+    @Override
+    public String getCurrentView() {
+        return currentView;
+    }
+
+    @Override
+    public void setCurrentView(String currentView) {
+        this.currentView = currentView;
     }
 }

@@ -6,6 +6,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.rti.holidays.adapter.EmployeeToEmployeeHolidayPeriodAdapter;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
@@ -40,7 +41,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
     private List<HolidayPeriod> employeeHolidayPeriods;
     private HolidayPeriod newHolidayPeriod;
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
-    private Map<Team, Set<EmployeeHolidayPeriod>> teamMembersHolidayPeriods = new HashMap<Team, Set<EmployeeHolidayPeriod>>();
+    private Map<Team, Collection<EmployeeHolidayPeriod>> teamMembersHolidayPeriods = new HashMap<>();
 
     @Override
     protected Label getPageTitleLabel() {
@@ -225,7 +226,14 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             if (managedTeams != null && managedTeams.size() > 0) {
                 managedTeams.forEach(team -> {
                     Set<Employee> teamEmployees = employeeServiceImpl.getByTeamId(team.getId());
-                    Set<EmployeeHolidayPeriod> empHolidayPeriods = new HashSet<>();
+
+                    EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod> adapter =
+                            new EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod>(EmployeeHolidayPeriod::new, holidayPeriodServiceImpl);
+
+                    Collection<EmployeeHolidayPeriod> empHolidayPeriods = adapter.convert(teamEmployees);
+
+                    //TODO: remove refactored block later
+                    /*Set<EmployeeHolidayPeriod> empHolidayPeriods = new HashSet<>();
                     if (teamEmployees != null && teamEmployees.size() > 0) {
                         for(Employee emp : teamEmployees) {
                             List<HolidayPeriod> holidayPeriodsForEmployee = holidayPeriodServiceImpl.getHolidayPeriodsForEmployee(emp);
@@ -246,7 +254,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                             }
 
                         }
-                    }
+                    }*/
                     teamMembersHolidayPeriods.put(team, empHolidayPeriods);
                 });
             }

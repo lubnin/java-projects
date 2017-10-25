@@ -62,6 +62,17 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="negotiation_status_type" id="37C6B9F8-651E-597D-89BD-CEFDFBE50797">
+<createdBy>Максим</createdBy>
+<createdTime>2017-10-25 21:26:26 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="DA79C6BE-AD48-4FE9-0C25-162F37E56547" name="holiday_period_neg_status_PK">

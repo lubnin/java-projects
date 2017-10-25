@@ -19,6 +19,7 @@ public interface EmployeeService {
     Employee getByLoginNameAndPassword(String loginName, String password);
     Set<Employee> getByTeamId(Long teamId);
     List<Employee> getAllEmployees();
+    Set<Employee> getAllEmployeesExcludingLoginName(String loginNameToExclude);
     boolean deleteEmployees(Iterable<Employee> employees);
     Set<Employee> getAllManagersForEmployee(Employee employee);
     Set<Employee> getEmployeesWithCrossingHolidayPeriods(Long employeeId, Long teamId, Date dateStart, Long numDays);

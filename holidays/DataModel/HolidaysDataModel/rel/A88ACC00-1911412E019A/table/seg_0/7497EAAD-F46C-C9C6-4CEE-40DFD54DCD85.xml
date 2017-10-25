@@ -75,6 +75,19 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="hp_negotiation_status_id" id="45AFCCD5-58FF-0237-12A6-D0C0B79485A5">
+<createdBy>Максим</createdBy>
+<createdTime>2017-10-25 21:27:08 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D251333E-DA2F-4130-08B2-98028405750F" referredColumn="4FDE6DAC-A5DA-A113-F90C-8DCA0410CACF"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="87319123-1B22-D19D-F358-57C39F2D6E56" name="holiday_period_PK">
@@ -96,6 +109,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="9D8D6AD2-CECA-4DED-9C7B-999EAE6F7CE6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9E0E6685-EDC6-5FB1-C544-088F357EE0F2" name="holiday_period_holiday_period_neg_status_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-10-25 21:27:40 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="45AFCCD5-58FF-0237-12A6-D0C0B79485A5"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

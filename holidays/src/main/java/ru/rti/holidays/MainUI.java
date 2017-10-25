@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.exception.handler.CustomVaadinErrorHandler;
 import ru.rti.holidays.utility.GlobalConstants;
+import ru.rti.holidays.utility.NavigationUtils;
 import ru.rti.holidays.utility.SessionUtils;
 import ru.rti.holidays.view.admin.AdminMainView;
 import ru.rti.holidays.view.employee.EmployeeHolidaysView;
@@ -35,6 +36,9 @@ import java.util.Locale;
 public class MainUI extends UI {
     @Autowired
     private SpringViewProvider viewProvider;
+
+    @Autowired
+    private SpringViewProvider errorViewProvider;
 
     //@Autowired
     //private User currentUser;
@@ -56,18 +60,23 @@ public class MainUI extends UI {
         root.setExpandRatio(viewContainer, 1.0f);
 
         viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
+        errorViewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
 
         Navigator navigator = new Navigator(this, viewContainer);
         navigator.addProvider(viewProvider);
         navigator.setErrorView(new ErrorDefaultView());
+        navigator.setErrorProvider(errorViewProvider);
 
         if (SessionUtils.isAuthenticated()) {
             Employee currentUser = SessionUtils.getCurrentUser();
-            if (currentUser.isAdmin()) {
-                navigator.navigateTo(AdminMainView.VIEW_NAME);
+            NavigationUtils.navigateToCurrentView(currentUser);
+           /* if (currentUser.isAdmin()) {
+                //navigator.navigateTo(AdminMainView.VIEW_NAME);
+                NavigationUtils.navigateToView(AdminMainView.VIEW_NAME);
             } else {
-                navigator.navigateTo(EmployeeHolidaysView.VIEW_NAME);
-            }
+                //navigator.navigateTo(EmployeeHolidaysView.VIEW_NAME);
+                NavigationUtils.navigateToCurrentView(currentUser);
+            }*/
         }
 
         UI.getCurrent().setNavigator(navigator);

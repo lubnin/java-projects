@@ -19,9 +19,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findByLastNameStartsWithIgnoreCase(String lastName);
     List<Employee> findByLastName(String lastName);
     Employee findByLoginName(String loginName);
+    Set<Employee> findByLoginNameNot(String loginName);
     Employee findByLoginNameAndPassword(String loginName, String password);
     Set<Employee> findByTeamId(Long teamId);
     Set<Employee> findByTeamIdAndIdNot(Long teamId, Long employeeId);
+
     //@Query(value = "SELECT * FROM #{#entityName} mgr " +
     //        "INNER JOIN mgr.managedTeams mt WHERE e.projectRole = :projRole")
     @Query(value = "SELECT mgr.* " +

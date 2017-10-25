@@ -14,6 +14,7 @@ public class EmployeeHolidayPeriod {
     private String employeeFullName;
     private String employeeEmail;
     private Long teamId;
+    private String teamName;
     private LocalDate dateStart;
     private Long numDays;
     private String holidayPeriodNegotiationStatus;
@@ -85,7 +86,8 @@ public class EmployeeHolidayPeriod {
                 numDays == employeeHolidayPeriod.getNumDays() &&
                 holidayPeriodNegotiationStatus == employeeHolidayPeriod.getHolidayPeriodNegotiationStatus() &&
                 employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName() &&
-                employeeEmail == employeeHolidayPeriod.getEmployeeEmail();
+                employeeEmail == employeeHolidayPeriod.getEmployeeEmail() &&
+                teamName == employeeHolidayPeriod.getTeamName();
     }
 
     @Override
@@ -98,6 +100,7 @@ public class EmployeeHolidayPeriod {
         result = prime * result + ((holidayPeriodNegotiationStatus == null) ? 0 : holidayPeriodNegotiationStatus.hashCode());
         result = prime * result + ((employeeRoleName == null) ? 0 : employeeRoleName.hashCode());
         result = prime * result + ((employeeEmail == null) ? 0 : employeeEmail.hashCode());
+        result = prime * result + ((teamName == null) ? 0 : teamName.hashCode());
         return result;
     }
 
@@ -139,5 +142,13 @@ public class EmployeeHolidayPeriod {
 
     public void setEmployeeEmail(String employeeEmail) {
         this.employeeEmail = employeeEmail;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }

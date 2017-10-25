@@ -37,7 +37,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private Employee employee;
     private String panelName;
     private Grid<HolidayPeriod> grdHolidayPeriods = new Grid<>();
-    private Map<Team, Set<EmployeeHolidayPeriod>> managedTeamMembersHolidays = null;
+    private Map<Team, Collection<EmployeeHolidayPeriod>> managedTeamMembersHolidays = null;
     private Map<Long, Button> negotiateSelectedPeriodsButtonsMap = new HashMap<>();
     private Map<Long, Button> rejectSelectedPeriodsButtonsMap = new HashMap<>();
     private Map<Long, Set<EmployeeHolidayPeriod>> periodsForNegotiationMap = new HashMap<>();
@@ -140,7 +140,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 negotiateSelectedPeriodsButtonsMap.put(team.getId(), btnNegotiateSelPeriods);
                 rejectSelectedPeriodsButtonsMap.put(team.getId(), btnRejectSelPeriods);
 
-                Set<EmployeeHolidayPeriod> teamMembersHolidayPeriods = null;
+                Collection<EmployeeHolidayPeriod> teamMembersHolidayPeriods = null;
                 if(managedTeamMembersHolidays != null && managedTeamMembersHolidays.size() > 0) {
                     teamMembersHolidayPeriods = managedTeamMembersHolidays.get(team);
                 } else {
@@ -327,7 +327,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         addHolidayPeriodLayout.setSizeFull();
         addHolidayPeriodLayout.setSpacing(true);
         addHolidayPeriodLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        addHolidayPeriodLayout.addStyleName(GlobalConstants.CSS_DEBUG_BORDER);
+        //addHolidayPeriodLayout.addStyleName(GlobalConstants.CSS_DEBUG_BORDER);
 
         Button btnAddHolidayPeriod = new Button("Добавить период отпуска", VaadinIcons.CHECK);
         btnAddHolidayPeriod.addClickListener(event -> {
@@ -577,11 +577,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     }
 
-    public Map<Team, Set<EmployeeHolidayPeriod>> getManagedTeamMembersHolidays() {
+    public Map<Team, Collection<EmployeeHolidayPeriod>> getManagedTeamMembersHolidays() {
         return managedTeamMembersHolidays;
     }
 
-    public void setManagedTeamMembersHolidays(Map<Team, Set<EmployeeHolidayPeriod>> managedTeamMembersHolidays) {
+    public void setManagedTeamMembersHolidays(Map<Team, Collection<EmployeeHolidayPeriod>> managedTeamMembersHolidays) {
         this.managedTeamMembersHolidays = managedTeamMembersHolidays;
     }
 
