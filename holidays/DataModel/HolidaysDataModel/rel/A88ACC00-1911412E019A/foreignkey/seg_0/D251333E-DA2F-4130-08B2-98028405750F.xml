@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="D251333E-DA2F-4130-08B2-98028405750F" containerWithKeyObject="7497EAAD-F46C-C9C6-4CEE-40DFD54DCD85" localFKIndex="9E0E6685-EDC6-5FB1-C544-088F357EE0F2" name="holiday_period_holiday_period_neg_status_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-10-25 21:27:40 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<referredTableLongName>holiday_period_neg_status</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>098A0721-1348-399F-2495-18DF15100F98</referredTableID>
+<keyObject>DA79C6BE-AD48-4FE9-0C25-162F37E56547</keyObject>
+<referredKeyID>DA79C6BE-AD48-4FE9-0C25-162F37E56547</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>hol_period_neg_status_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

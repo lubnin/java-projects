@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="63DF53AD-B1BF-D08F-D7A0-006B55527F66" containerWithKeyObject="19CC7129-A5AA-6668-2D7F-D172536F2CAA" localFKIndex="87ACD226-6D11-1F22-5075-8B870F2A4DCD" name="employee_authorities_employee_FK">
+<createdBy>Максим</createdBy>
+<createdTime>2017-10-25 21:23:23 UTC</createdTime>
+<ownerDesignName>HolidaysDataModel</ownerDesignName>
+<referredTableLongName>employee</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>42424070-C01D-322C-8EFC-CF3C74E7647F</referredTableID>
+<keyObject>901DAEAC-E472-62EB-4A13-63AF9A4F3538</keyObject>
+<referredKeyID>901DAEAC-E472-62EB-4A13-63AF9A4F3538</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>emp_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
