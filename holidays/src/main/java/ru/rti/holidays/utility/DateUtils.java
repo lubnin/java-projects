@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,6 +35,19 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.add(Calendar.DATE, days);
         return calendar.getTime();
+    }
+
+    public static String getDateAsString(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(GlobalConstants.DATE_FORMAT);
+
+        if (date == null) return GlobalConstants.EMPTY_STRING;
+
+        try {
+            String dateStartAsString = date.format(formatter);
+            return dateStartAsString;
+        } catch (IllegalArgumentException e) {
+            return GlobalConstants.EMPTY_STRING;
+        }
     }
 
     public static Date addDays(Date date, Long days) {

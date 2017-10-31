@@ -11,7 +11,7 @@ public class CustomVaadinErrorHandler extends DefaultErrorHandler {
     public void error(ErrorEvent event) {
         super.error(event);
         // Find the final cause
-        String cause = "<b>Произошла ошибка по следующей причине:</b><br/>";
+        String cause = "<b>Произошла ошибка по следующей причине:</b><br/><br/>";
         for (Throwable t = event.getThrowable(); t != null;
              t = t.getCause())
             if (t.getCause() == null) // We're at final cause

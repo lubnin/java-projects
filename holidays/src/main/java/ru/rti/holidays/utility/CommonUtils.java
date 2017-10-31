@@ -75,19 +75,4 @@ public class CommonUtils {
     public static <T> boolean checkIfNotEqual(T object1, T object2) {
         return !checkIfEqual(object1, object2);
     }
-
-/*
-    public static boolean checkIfAnyIsNull(String ... args) {
-        if (args == null) {
-            return true;
-        }
-
-        for (int i = 0; i < args.length; i++) {
-            if (args[i] == null) {
-                return true;
-            }
-        }
-
-        return false;
-    }*/
 }

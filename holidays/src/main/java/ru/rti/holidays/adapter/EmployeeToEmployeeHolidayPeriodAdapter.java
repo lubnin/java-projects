@@ -85,10 +85,8 @@ public class EmployeeToEmployeeHolidayPeriodAdapter<T extends EmployeeHolidayPer
         try {
             convertedResult = employees.getClass().newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
             log.error(e.getLocalizedMessage());
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
             log.error(e.getLocalizedMessage());
         }
 

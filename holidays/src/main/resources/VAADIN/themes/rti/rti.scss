@@ -41,43 +41,73 @@ $v-component-group-spacing: 6px;
 
 
 @mixin rti {
-  @include valo;
-  /*@include hybrid-menu;*/
-  /*@include material;*/
+    @include valo;
+    /*@include hybrid-menu;*/
+    /*@include material;*/
 
-  .debug_border {
-    border: 1px dotted green;
-  }
+    .debug_border {
+        border: 1px dotted green;
+    }
 
-  .neg_status_negotiating {
-    color: orange;
-  }
+    .neg_status_negotiating {
+        color: orange;
+    }
 
-  .neg_status_ok {
-    color: green;
-  }
+    .neg_status_ok {
+        color: green;
+    }
 
-  .neg_status_rejected {
-    color: red;
-  }
+    .neg_status_rejected {
+        color: red;
+    }
 
-  .neg_status_new {
-    color: yellow;
-  }
+    .neg_status_new {
+        color: yellow;
+    }
 
-  .neg_status_partly_negotiated {
-    color: cyan;
-  }
+    .neg_status_partly_negotiated {
+        color: cyan;
+    }
 
-  .hp_crossing_dates {
-    border:1px dotted red;
-  }
+    .hp_crossing_dates {
+        border:1px dotted red;
+    }
 
-  .hp_crossing_message {
-    color: white;
-    font-style: italic;
-    font-size:16px;
-  }
+    .hp_crossing_message {
+        color: white;
+        font-style: italic;
+        font-size:16px;
+    }
+
+    .hp_crossing_check_ok {
+        color: #7FFF00;
+    }
+
+    .hp_crossing_check_failed {
+        color: #7FFF00;
+    }
+
+    .rti_info, .rti_success, .rti_warning, .rti_error {
+        margin: 10px 0px;
+        padding: 12px;
+    }
+
+    .rti_info {
+        color: #00529B;
+        background-color: #BDE5F8;
+    }
+    .rti_success {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+    }
+    .rti_warning {
+        color: #9F6000;
+        background-color: #FEEFB3;
+    }
+    .rti_error {
+        color: #D8000C;
+        background-color: #FFD2D2;
+    }
 
   /* An actual theme rule */
   /*

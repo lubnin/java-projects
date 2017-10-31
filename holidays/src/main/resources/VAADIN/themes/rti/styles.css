@@ -14775,3 +14775,36 @@ button {
 	font-style: italic;
 	font-size: 16px;
 }
+
+.hp_crossing_check_ok {
+	color: #7FFF00;
+}
+
+.hp_crossing_check_failed {
+	color: #7FFF00;
+}
+
+.rti_info, .rti_success, .rti_warning, .rti_error {
+	margin: 10px 0px;
+	padding: 12px;
+}
+
+.rti_info {
+	color: #00529B;
+	background-color: #BDE5F8;
+}
+
+.rti_success {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+}
+
+.rti_warning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+}
+
+.rti_error {
+	color: #D8000C;
+	background-color: #FFD2D2;
+}

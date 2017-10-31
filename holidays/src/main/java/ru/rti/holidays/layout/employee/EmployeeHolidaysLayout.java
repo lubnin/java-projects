@@ -4,8 +4,6 @@ import com.vaadin.data.Binder;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.Page;
-import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
@@ -13,18 +11,20 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
-import ru.rti.holidays.component.security.User;
+import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickListener;
+import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.layout.behaviour.*;
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
-import ru.rti.holidays.utility.*;
+import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
+import ru.rti.holidays.utility.TeamUtils;
+import ru.rti.holidays.utility.UIHelper;
 import ru.rti.holidays.validator.HolidayPeriodDateValidator;
 import ru.rti.holidays.validator.HolidayPeriodDayNumValidator;
-import ru.rti.holidays.view.employee.EmployeeSettingsView;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -49,20 +49,16 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private DateField datePeriod = new DateField();
     private TextField txtNumDays = new TextField();
     private EmployeeHolidaysLayoutMainButtonClickListener mainButtonClickListener;
-    //private RefreshGridDataListener refreshGridDataListener;
     private EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener;
     private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
-    //private EmployeeHolidaysLayoutCheckCrossDatesButtonClickListener checkCrossDatesButtonClickListener;
-    private ButtonClickListener checkCrossDatesButtonClickListener;
-
+    private ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener;
     private HolidayPeriod newHolidayPeriod;
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
-    //private User currentUser;
-    public static final String NO_CROSSING_DATES_MESSAGE = "Пересечений на текущий момент не обнаружено.";
-    private Label lblCrossingDatesList = new Label(NO_CROSSING_DATES_MESSAGE);
-    private boolean isCrossingDates = false;
+    private EmployeeHolidayPeriodsCrossingDatesLayout employeeHolidayPeriodsCrossingDatesLayout =
+            new EmployeeHolidayPeriodsCrossingDatesLayout(false, false);
+
 
     public EmployeeHolidaysLayout(Employee employee) {
         if (employee == null) {
@@ -311,6 +307,10 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             addComponent(lblTeam);
             addComponent(pnlPanelHolidays);
 
+            employeeHolidayPeriodsCrossingDatesLayout.setCheckCrossingDatesButtonClickListener(checkCrossingDatesButtonClickListener);
+            employeeHolidayPeriodsCrossingDatesLayout.setSubmitterEmployeeFullNameColumnVisible(false);
+            new StandardBaseLayoutDrawer(this, employeeHolidayPeriodsCrossingDatesLayout).drawLayout();
+
             if (employee.isManager()) {
                 addTeamMembersHolidaysTables();
             }
@@ -322,8 +322,25 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     }
 
+    private void fireCheckCrossingDatesButtonClickedEvent() {
+        if (checkCrossingDatesButtonClickListener != null) {
+            ButtonClickResult<EmployeeHolidayPeriodCrossing> buttonClickResult = checkCrossingDatesButtonClickListener.onClick(employeeHolidayPeriodsCrossingDatesLayout);
+            if (buttonClickResult.isResult()) {
+                Collection<EmployeeHolidayPeriodCrossing> resultItems = buttonClickResult.getResultItems();
+                employeeHolidayPeriodsCrossingDatesLayout.setHolidayPeriodCrossings(resultItems);
+                employeeHolidayPeriodsCrossingDatesLayout.refreshDataGrid();
+            }
+        }
+    }
+
+    private void fireMainButtonClickedEvent() {
+        if (mainButtonClickListener != null) {
+            mainButtonClickListener.onAddSelectedPeriods(this);
+        }
+    }
+
     protected GridLayout addControlsPanel() {
-        GridLayout addHolidayPeriodLayout = new GridLayout(5, 6);
+        GridLayout addHolidayPeriodLayout = new GridLayout(5, 3);
         addHolidayPeriodLayout.setSizeFull();
         addHolidayPeriodLayout.setSpacing(true);
         addHolidayPeriodLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -340,9 +357,10 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
                         newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
                     }
-                    if (mainButtonClickListener != null) {
-                        mainButtonClickListener.onAddSelectedPeriods(this);
-                    }
+
+                    fireMainButtonClickedEvent();
+                    fireCheckCrossingDatesButtonClickedEvent();
+
                     newHolidayPeriod = new HolidayPeriod();
                     setNewHolidayPeriod(newHolidayPeriod);
                     //txtNumDays.clear();
@@ -371,6 +389,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 deleteButtonClickListener.onDeleteSelectedPeriods(this, grdHolidayPeriods.getSelectedItems());
                 refreshDataGrid();
             }
+            fireCheckCrossingDatesButtonClickedEvent();
             UIHelper.showNotification("Выбранные периоды отпуска успешно удалены.");
         });
         btnRemoveHolidayPeriods.setWidth("300px");
@@ -380,20 +399,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         datePeriod.addValueChangeListener(new EmployeeHolidayPeriodValueChangeListener());
         Label lblNumDays = new Label("Количество дней отпуска:");
-        Button btnCheckCrossingDates = new Button("Проверить пересечения");
-        btnCheckCrossingDates.setIcon(VaadinIcons.CALENDAR);
-        btnCheckCrossingDates.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-        btnCheckCrossingDates.setWidth("300px");
-        btnCheckCrossingDates.addClickListener(clickEvent -> {
-            if (checkCrossDatesButtonClickListener != null) {
-                checkCrossDatesButtonClickListener.onClick(this);
-            }
-        });
-
-        Label lblCrossingDates = new Label("Пересечения по датам отпусков:");
-        //Label lblCrossingDatesList = new Label("Пересечений на текущий момент не обнаружено");
-        lblCrossingDatesList.setContentMode(ContentMode.HTML);
-        lblCrossingDatesList.setSizeFull();
 
         bindDatePeriodControlFields();
 
@@ -414,9 +419,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         addHolidayPeriodLayout.addComponent(txtNumDays, 4,0);
         addHolidayPeriodLayout.addComponent(btnRemoveHolidayPeriods, 0,1);
         addHolidayPeriodLayout.addComponent(btnSendForNegotiation, 0,2);
-        addHolidayPeriodLayout.addComponent(btnCheckCrossingDates, 0,3);
-        addHolidayPeriodLayout.addComponent(lblCrossingDates, 0, 4, 4, 4);
-        addHolidayPeriodLayout.addComponent(lblCrossingDatesList, 0, 5, 4, 5);
         return addHolidayPeriodLayout;
     }
 
@@ -496,14 +498,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.sendForNegotiationButtonClickListener = sendForNegotiationButtonClickListener;
     }
 
-/*    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }*/
-
     class EmployeeHolidayPeriodValueChangeListener implements HasValue.ValueChangeListener<LocalDate> {
         @Override
         public void valueChange(HasValue.ValueChangeEvent<LocalDate> event) {
@@ -545,13 +539,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.mainButtonClickListener = mainButtonClickListener;
     }
 
-    public ButtonClickListener getCheckCrossDatesButtonClickListener() {
-        return checkCrossDatesButtonClickListener;
+    public ButtonClickListener<EmployeeHolidayPeriodCrossing> getCheckCrossingDatesButtonClickListener() {
+        return checkCrossingDatesButtonClickListener;
     }
 
-    public void setCheckCrossDatesButtonClickListener(ButtonClickListener checkCrossDatesButtonClickListener) {
-        this.checkCrossDatesButtonClickListener = checkCrossDatesButtonClickListener;
+    public void setCheckCrossingDatesButtonClickListener(ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener) {
+        this.checkCrossingDatesButtonClickListener = checkCrossingDatesButtonClickListener;
     }
+
 
     public HolidayPeriod getNewHolidayPeriod() {
         return newHolidayPeriod;
@@ -583,26 +578,5 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void setManagedTeamMembersHolidays(Map<Team, Collection<EmployeeHolidayPeriod>> managedTeamMembersHolidays) {
         this.managedTeamMembersHolidays = managedTeamMembersHolidays;
-    }
-
-    public void setCrossingDatesListValue(String message, boolean isCrossingDatesFixed) {
-        if (isCrossingDatesFixed) {
-            lblCrossingDatesList.setValue(NO_CROSSING_DATES_MESSAGE);
-        } else {
-            lblCrossingDatesList.setValue(message);
-        }
-/*        if (!isCrossingDates && !isCrossingDatesFixed) {
-            lblCrossingDatesList.setValue(message);
-            isCrossingDates = true;
-        } else {
-            if (!isCrossingDatesFixed) {
-                String currentValue = lblCrossingDatesList.getValue();
-                String newValue = currentValue + "<br>" + message;
-                lblCrossingDatesList.setValue(newValue);
-            } else {
-                lblCrossingDatesList.setValue(NO_CROSSING_DATES_MESSAGE);
-            }
-        }*/
-
     }
 }

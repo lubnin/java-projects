@@ -45,6 +45,11 @@ public class HolidayPeriodUtils {
                 .getNegotiationStatusType()));
     }
 
+    /**
+     * @deprecated
+     * @param employee
+     * @param holidayPeriods
+     */
     public static void checkAndMarkEmployeeHolidayPeriodsForCrossingDates(Employee employee, Iterable<HolidayPeriod> holidayPeriods) {
         /*
         if (employee == null || holidayPeriods == null || employee.getTeam() == null) {

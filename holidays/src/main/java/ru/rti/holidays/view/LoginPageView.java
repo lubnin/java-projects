@@ -8,6 +8,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -56,9 +57,11 @@ public class LoginPageView extends AbstractBaseView {
                 Authentication auth = new UsernamePasswordAuthenticationToken(loginName, password);
                 Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
                 SecurityContextHolder.getContext().setAuthentication(authenticated);
-                Page.getCurrent().setLocation("/main");
-            } catch (BadCredentialsException bce) {
-                handleException(bce, "Введённые имя пользователя и пароль неверны. Попробуйте еще раз.");
+                Page.getCurrent().setLocation(GlobalConstants.URL_PATH_MAIN_PAGE);
+            } catch (BadCredentialsException | InternalAuthenticationServiceException e) {
+                handleException(e, "Введённые имя пользователя и пароль неверны. Попробуйте еще раз.");
+            } catch (Exception e) {
+                handleException(e, "Введённые имя пользователя и пароль неверны. Попробуйте еще раз.");
             }
 
 

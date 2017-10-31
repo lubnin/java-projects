@@ -2,6 +2,7 @@ package ru.rti.holidays.aggregators;
 
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
+import ru.rti.holidays.utility.DateUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import java.time.LocalDate;
@@ -51,16 +52,7 @@ public class EmployeeHolidayPeriod {
     }
 
     public String getDateStartAsString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(GlobalConstants.DATE_FORMAT);
-
-        if (dateStart == null) return GlobalConstants.EMPTY_STRING;
-
-        try {
-            String dateStartAsString = this.dateStart.format(formatter);
-            return dateStartAsString;
-        } catch (IllegalArgumentException e) {
-            return GlobalConstants.EMPTY_STRING;
-        }
+        return DateUtils.getDateAsString(this.dateStart);
     }
 
     public String getHolidayPeriodNegotiationStatus() {

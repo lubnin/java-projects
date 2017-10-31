@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.annotation.Resource;
 
@@ -30,25 +31,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     // custom 403 access denied handler
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-/*        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/#!LoginPage").permitAll()
-                .antMatchers("/#!AdminMain").hasAnyRole("ADMIN")
-                .antMatchers("/#!EmployeeHolidays").hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/#!LoginPage")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);*/
         http.csrf().disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(GlobalConstants.URL_PATH_LOGIN))
                 .accessDeniedPage("/accessDenied")
                 .and()
                 .authorizeRequests()
@@ -56,21 +41,21 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/VAADIN/**",
                         "/PUSH/**",
                         "/UIDL/**",
-                        "/login",
-                        "/login/**",
+                        GlobalConstants.URL_PATH_LOGIN,
+                        GlobalConstants.URL_PATH_LOGIN + "/**",
                         "/error/**",
                         "/accessDenied/**",
                         "/vaadinServlet/**").permitAll()
                 .antMatchers(
                         "/authorized",
-                        "/main", "/main/**")
+                        GlobalConstants.URL_PATH_MAIN_PAGE, GlobalConstants.URL_PATH_MAIN_PAGE + "/**")
                 .fullyAuthenticated()
                 //.antMatchers("/admin", "/admin/**")
                 //.hasAuthority("ADMIN")
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutUrl(GlobalConstants.URL_PATH_LOGOUT)
+                .logoutSuccessUrl(GlobalConstants.URL_PATH_LOGIN)
                 .invalidateHttpSession(true);
     }
 
@@ -80,6 +65,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+
         return provider;
     }
 

@@ -7,19 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.service.config.ConfigurationService;
 import ru.rti.holidays.utility.CommonUtils;
+import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Set;
 
+@Service
 @SpringComponent
 public class EmailServiceImpl implements EmailService {
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
+
+    @Autowired
+    public ConfigurationService configurationServiceImpl;
 
     @Autowired
     public JavaMailSender emailSender;
@@ -30,12 +37,8 @@ public class EmailServiceImpl implements EmailService {
     public static final String MAIL_SUBJECT_PREFIX = "[Система отпусков РТИ]: ";
     public static final String MAIL_FROM = "Система отпусков РТИ";
     public static final String DOUBLE_BREAK_LINE = "<br/><br/>";
-    //TODO: update link before going to production mode!!!
-    public static final String MAIL_BODY_FOOTER = DOUBLE_BREAK_LINE + "Для просмотра текущего статуса Ваших отпусков перейдите по следующей <a href='http://localhost:8080/main'>ссылке</a>";
-    public static final String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION = "<h3>Сотрудник направил на согласование период отпуска, требуется Ваше согласование.</h3><br/>"+
-            "ФИО сотрудника: <b>%s</b><br/>" +
-            "Дата начала отпуска: <b>%s</b><br/>" +
-            "Количество дней: <b>%s</b><br/>" + MAIL_BODY_FOOTER;
+    public String MAIL_BODY_FOOTER = "";
+    public String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION = "";
     public static final String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS = "<h3>%s направил на согласование периоды отпуска, требуется Ваше согласование.</h3><br/>";
     public static final String MAIL_BODY_MANAGER_NEGOTIATED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
             "<b>%s</b> согласовал Ваши периоды отпуска, направленные Вами на согласование:<br/><br/>";
@@ -43,6 +46,39 @@ public class EmailServiceImpl implements EmailService {
             "<b>%s</b> отклонил Ваши периоды отпуска, направленные Вами на согласование:<br/><br/>";
     public static final String MAIL_BODY_PART_HOLIDAY_PERIOD = "Дата начала отпуска: <b>%s</b><br/>" +
             "Количество дней: <b>%s</b>";
+
+    public EmailServiceImpl() {
+
+    }
+
+    private boolean isConfigurationReady() {
+        return (!CommonUtils.checkIfEmpty(MAIL_BODY_FOOTER) &&
+                !CommonUtils.checkIfEmpty(MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION));
+    }
+
+    private boolean configure() {
+        if (!CommonUtils.checkIfEmpty(MAIL_BODY_FOOTER) &&
+                !CommonUtils.checkIfEmpty(MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION)) {
+            return true;
+        }
+        try {
+            MAIL_BODY_FOOTER = DOUBLE_BREAK_LINE + "Вы можете перейти в Систему отпусков РТИ по следующей <a href='http://" +
+                    configurationServiceImpl.getServerAddress() + ":" + configurationServiceImpl.getServerPort() + GlobalConstants.URL_PATH_MAIN_PAGE + "'>ссылке</a>";
+            MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION = "<h3>Сотрудник направил на согласование период отпуска, требуется Ваше согласование.</h3><br/>" +
+                    "ФИО сотрудника: <b>%s</b><br/>" +
+                    "Дата начала отпуска: <b>%s</b><br/>" +
+                    "Количество дней: <b>%s</b><br/>" + MAIL_BODY_FOOTER;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private void checkConfiguration() {
+        if (!isConfigurationReady()) {
+            configure();
+        }
+    }
 
     /**
      * Sends the Email to all the managers of the Employee, when the Employee submits new holiday period for negotiation
@@ -52,6 +88,8 @@ public class EmailServiceImpl implements EmailService {
      * @return
      */
     public boolean sendMailHolidayPeriodSubmitted(HolidayPeriod holidayPeriod, Employee employee, Set<Employee> managers) {
+        checkConfiguration();
+
         if (holidayPeriod == null || employee == null || managers == null) {
             log.error("Error: 'null' value detected when not expected! " +
                     "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodSubmitted, params: holidayPeriod = " + holidayPeriod + ", employee = " + employee + ", managers = " + managers);
@@ -74,6 +112,8 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public boolean sendMailHolidayPeriodSubmitted(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers) {
+        checkConfiguration();
+
         if (holidayPeriods == null || employee == null || managers == null) {
             log.error("Error: 'null' value detected when not expected! " +
                     "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodSubmitted, params: holidayPeriods = " + holidayPeriods + ", employee = " + employee + ", managers = " + managers);
@@ -92,7 +132,7 @@ public class EmailServiceImpl implements EmailService {
             sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, hp.getDateStartAsString(), hp.getNumDaysAsString()));
         }
 
-        String messageBody = messageBodyStart + sbHolidayPeriods.toString();
+        String messageBody = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
 
         boolean finalResult = true;
         for (Employee manager : managers) {
@@ -110,6 +150,8 @@ public class EmailServiceImpl implements EmailService {
      */
     @Override
     public boolean sendMailHolidayPeriodsNegotiated(Iterable<EmployeeHolidayPeriod> holidayPeriods, Employee manager) {
+        checkConfiguration();
+
         if (holidayPeriods == null || manager == null) {
             log.error("Error: 'null' value detected when not expected! " +
                     "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodsNegotiated, params: holidayPeriods = " + holidayPeriods + ", manager = " + manager);
@@ -154,6 +196,8 @@ public class EmailServiceImpl implements EmailService {
      */
     @Override
     public boolean sendMailHolidayPeriodsRejected(Iterable<EmployeeHolidayPeriod> holidayPeriods, Employee manager) {
+        checkConfiguration();
+
         if (holidayPeriods == null || manager == null) {
             log.error("Error: 'null' value detected when not expected! " +
                     "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodsRejected, params: holidayPeriods = " + holidayPeriods + ", manager = " + manager);
@@ -198,16 +242,18 @@ public class EmailServiceImpl implements EmailService {
      * @return returns true if no errors occurred while the whole delivery process of the email. Otherwise, false.
      */
     public boolean sendMail(String to, String messageBody, String subject) {
+        checkConfiguration();
+
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper mimeMsgHelper = null;
         try {
-            mimeMsgHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            mimeMessage.setContent(messageBody, "text/html; charset=UTF-8");
+            mimeMsgHelper = new MimeMessageHelper(mimeMessage, false, configurationServiceImpl.getSpringMailDefaultEncoding());
+            mimeMessage.setContent(messageBody, "text/html; charset=" + configurationServiceImpl.getSpringMailDefaultEncoding());
             mimeMsgHelper.setTo(to);
             mimeMessage.setSentDate(new Date());
             mimeMsgHelper.setSubject(MAIL_SUBJECT_PREFIX + subject);
             //TODO:change email to real address before going to production mode!!!
-            mimeMsgHelper.setFrom(MAIL_FROM + "<mabramkin@gmail.com>");
+            mimeMsgHelper.setFrom(MAIL_FROM + "<" + configurationServiceImpl.getSpringMailUsername() + ">");
             emailSender.send(mimeMessage);
         } catch (MessagingException msge) {
             log.error("Cannot send E-Mail message (MessagingException caught). Reason: " + msge.getLocalizedMessage());

@@ -34,15 +34,39 @@ public class LoginUI extends UI {
     private static final Logger log = LoggerFactory.getLogger(LoginUI.class);
 
     @Autowired
-    private SpringViewProvider viewProvider;
+    protected SpringViewProvider viewProvider;
 
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    protected SpringViewProvider errorViewProvider;
+
+    @Autowired
+    protected BCryptPasswordEncoder passwordEncoder;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        UI.getCurrent().setLocale(new Locale("ru"));
+/*        super.init(vaadinRequest);
 
+        viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
+
+        //TODO: remove for production mode!!!
+        String encodedAdminPwd = passwordEncoder.encode("B09108b198613");
+        log.info("Encoded admin password: " + encodedAdminPwd);
+
+        //TODO: remove for production mode!!!
+        String encodedTestPwd = passwordEncoder.encode("Qwerty123");
+        log.info("Encoded test password: " + encodedTestPwd);
+
+        Navigator navigator = new Navigator(this, getPanelViewContainer());
+        navigator.addProvider(viewProvider);
+        navigator.setErrorView(new ErrorDefaultView());
+
+        if (SessionUtils.isAuthenticated()) {
+            Page.getCurrent().setLocation(GlobalConstants.URL_PATH_MAIN_PAGE);
+        } else {
+            navigator.navigateTo(LoginPageView.VIEW_NAME);
+        }
+
+        UI.getCurrent().setNavigator(navigator);*/
         setErrorHandler(new CustomVaadinErrorHandler());
         final VerticalLayout rootLayout = new VerticalLayout();
         rootLayout.setSizeFull();

@@ -3,7 +3,6 @@ package ru.rti.holidays.utility;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 
 public class UIHelper {
     public static final int DEFAULT_DELAY = 5000;
