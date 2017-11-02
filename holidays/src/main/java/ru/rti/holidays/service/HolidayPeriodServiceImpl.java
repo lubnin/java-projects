@@ -46,7 +46,7 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     }
     @Override
     public boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods) {
-        holidayPeriodRepository.delete(holidayPeriods);
+        holidayPeriodRepository.deleteInBatch(holidayPeriods);
         return true;
     }
 

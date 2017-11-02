@@ -185,6 +185,9 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
         employeeHolidaysLayout.addDeleteButtonClickListener((layoutInstance, selectedPeriods) -> {
             if (selectedPeriods != null && selectedPeriods.size() > 0) {
+                if (employee.getHolidayPeriods() != null) {
+                    employee.getHolidayPeriods().removeAll(selectedPeriods);
+                }
                 holidayPeriodServiceImpl.deleteHolidayPeriods(selectedPeriods);
             }
         });
