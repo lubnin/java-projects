@@ -148,9 +148,7 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
                     }
                 }
 
-                if (saveButtonClickListener != null) {
-                    saveButtonClickListener.onSaveData(this, newEmployee);
-                }
+                fireSaveButtonClickedEvent(newEmployee);
 
                 clearAllControls();
 

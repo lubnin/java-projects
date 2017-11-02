@@ -92,6 +92,13 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     }
 
     @Override
+    public void fireSaveButtonClickedEvent(Object objectForSave) {
+        if (this.saveButtonClickListener != null) {
+            this.saveButtonClickListener.onSaveData(this, objectForSave);
+        }
+    }
+
+    @Override
     public void setParentLayout(BaseLayout parentLayout) {
         this.parentLayout = parentLayout;
     }

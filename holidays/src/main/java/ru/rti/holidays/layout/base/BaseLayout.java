@@ -64,6 +64,8 @@ public interface BaseLayout extends Layout {
 
     void refreshDataGrid();
 
+    void fireSaveButtonClickedEvent(Object objectForSave);
+
     // Refresh Grid Listener
     RefreshGridDataListener getRefreshGridDataListener();
     void setRefreshGridDataListener(RefreshGridDataListener refreshGridDataListener);

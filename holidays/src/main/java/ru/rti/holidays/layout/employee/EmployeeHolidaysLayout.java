@@ -48,13 +48,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private List<HolidayPeriod> employeeHolidayPeriods;
     private DateField datePeriod = new DateField();
     private TextField txtNumDays = new TextField();
-    private EmployeeHolidaysLayoutMainButtonClickListener mainButtonClickListener;
+    //private EmployeeHolidaysLayoutMainButtonClickListener mainButtonClickListener;
     private EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener;
     private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
+
     private ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener;
-    private HolidayPeriod newHolidayPeriod;
+    private HolidayPeriod newHolidayPeriod = new HolidayPeriod();
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
     private EmployeeHolidayPeriodsCrossingDatesLayout employeeHolidayPeriodsCrossingDatesLayout =
             new EmployeeHolidayPeriodsCrossingDatesLayout(false, false);
@@ -322,6 +323,21 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     }
 
+    @Override
+    public void updateControlsFromBeanState() {
+        holidayPeriodBinder.readBean(newHolidayPeriod);
+    }
+
+    @Override
+    public void setNewBeanValue(DBEntity newBeanValue) {
+        if (newBeanValue instanceof HolidayPeriod) {
+            this.newHolidayPeriod = (HolidayPeriod)newBeanValue;
+            if (this.newHolidayPeriod != null && this.newHolidayPeriod.getNegotiationStatus() == null) {
+                this.newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
+            }
+        }
+    }
+
     private void fireCheckCrossingDatesButtonClickedEvent() {
         if (checkCrossingDatesButtonClickListener != null) {
             ButtonClickResult<EmployeeHolidayPeriodCrossing> buttonClickResult = checkCrossingDatesButtonClickListener.onClick(employeeHolidayPeriodsCrossingDatesLayout);
@@ -333,11 +349,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         }
     }
 
-    private void fireMainButtonClickedEvent() {
+/*    private void fireMainButtonClickedEvent() {
         if (mainButtonClickListener != null) {
             mainButtonClickListener.onAddSelectedPeriods(this);
         }
-    }
+    }*/
 
     protected GridLayout addControlsPanel() {
         GridLayout addHolidayPeriodLayout = new GridLayout(5, 3);
@@ -358,14 +374,15 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
                     }
 
-                    fireMainButtonClickedEvent();
+
+                    newHolidayPeriod.setEmployee(employee);
+
+                    fireSaveButtonClickedEvent(newHolidayPeriod);
                     fireCheckCrossingDatesButtonClickedEvent();
 
-                    newHolidayPeriod = new HolidayPeriod();
-                    setNewHolidayPeriod(newHolidayPeriod);
-                    //txtNumDays.clear();
-                    //datePeriod.clear();
-                    holidayPeriodBinder.readBean(newHolidayPeriod);
+                    clearAllControls();
+
+                    updateControlsFromBeanState();
                     refreshDataGrid();
                     UIHelper.showNotification("Период отпуска успешно сохранен.");
                 }
@@ -420,6 +437,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         addHolidayPeriodLayout.addComponent(btnRemoveHolidayPeriods, 0,1);
         addHolidayPeriodLayout.addComponent(btnSendForNegotiation, 0,2);
         return addHolidayPeriodLayout;
+    }
+
+    @Override
+    public void clearAllControls() {
+        setNewBeanValue(new HolidayPeriod());
+        updateControlsFromBeanState();
     }
 
     private void bindDatePeriodControlFields() {
@@ -531,32 +554,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.employeeHolidayPeriods = employeeHolidayPeriods;
     }
 
-    public EmployeeHolidaysLayoutMainButtonClickListener getMainButtonClickListener() {
-        return mainButtonClickListener;
-    }
-
-    public void addMainButtonClickListener(EmployeeHolidaysLayoutMainButtonClickListener mainButtonClickListener) {
-        this.mainButtonClickListener = mainButtonClickListener;
-    }
-
     public ButtonClickListener<EmployeeHolidayPeriodCrossing> getCheckCrossingDatesButtonClickListener() {
         return checkCrossingDatesButtonClickListener;
     }
 
     public void setCheckCrossingDatesButtonClickListener(ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener) {
         this.checkCrossingDatesButtonClickListener = checkCrossingDatesButtonClickListener;
-    }
-
-
-    public HolidayPeriod getNewHolidayPeriod() {
-        return newHolidayPeriod;
-    }
-
-    public void setNewHolidayPeriod(HolidayPeriod newHolidayPeriod) {
-        this.newHolidayPeriod = newHolidayPeriod;
-        if (this.newHolidayPeriod != null && this.newHolidayPeriod.getNegotiationStatus() == null) {
-            this.newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
-        }
     }
 
     @Override
