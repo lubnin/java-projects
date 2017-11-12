@@ -22,6 +22,7 @@ import java.util.Set;
 
 @Service
 @SpringComponent
+@SuppressWarnings("unused")
 public class EmailServiceImpl implements EmailService {
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 

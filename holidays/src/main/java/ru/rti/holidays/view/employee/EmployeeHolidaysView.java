@@ -139,8 +139,15 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         //employeeHolidaysLayout.setNewHolidayPeriod(newHolidayPeriod);
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
         employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
-            holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
-            emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+            //TODO: Hardcode for now. Get it from global config later
+            boolean isWorkflowMode = true;
+            if (isWorkflowMode) {
+                holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(SessionUtils.getCurrentUser(), setEmployeeHolPeriods, allNegotiationStatuses);
+                emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+            } else {
+                holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+                emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+            }
             //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
             Page.getCurrent().reload();
         });
@@ -214,6 +221,19 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                             new EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod>(EmployeeHolidayPeriod::new, holidayPeriodServiceImpl);
 
                     Collection<EmployeeHolidayPeriod> empHolidayPeriods = adapter.convert(teamEmployees);
+                    Collection<EmployeeHolidayPeriod> periodsToRemoveByNegotiationMask = new ArrayList<>();
+
+                    for (EmployeeHolidayPeriod curPeriod : empHolidayPeriods) {
+                        HolidayPeriod curHolidayPeriod = curPeriod.getHolidayPeriod();
+                        if (HolidayPeriodUtils.isVisibleForCurrentUser(curHolidayPeriod)) {
+                            continue;
+                        }
+                        periodsToRemoveByNegotiationMask.add(curPeriod);
+                    }
+
+                    // Perform filtering according to project role of current manager
+                    empHolidayPeriods.removeAll(periodsToRemoveByNegotiationMask);
+
 
                     //TODO: remove refactored block later
                     /*Set<EmployeeHolidayPeriod> empHolidayPeriods = new HashSet<>();

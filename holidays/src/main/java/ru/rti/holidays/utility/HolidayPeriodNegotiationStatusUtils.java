@@ -1,7 +1,9 @@
 package ru.rti.holidays.utility;
 
+import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 public class HolidayPeriodNegotiationStatusUtils {
@@ -41,6 +43,14 @@ public class HolidayPeriodNegotiationStatusUtils {
         return getStatusFromList(allStatuses, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_REJECTED);
     }
 
+    /**
+     * Gets the 'NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED' value from the list of all available statuses
+     * @param allStatuses the list of all available statuses
+     * @return
+     */
+    public static HolidayPeriodNegotiationStatus getPartlyNegotiatedStatusFromList(Iterable<HolidayPeriodNegotiationStatus> allStatuses) {
+        return getStatusFromList(allStatuses, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED);
+    }
 
     /**
      * Gets the status value from the list of all available statuses
@@ -57,6 +67,26 @@ public class HolidayPeriodNegotiationStatusUtils {
             if (status.equals(holidayPeriodNegotiationStatus.getNegotiationStatusType())) {
                 return holidayPeriodNegotiationStatus;
             }
+        }
+
+        return null;
+    }
+
+    public static HolidayPeriodNegotiationStatus getNextStatusByNegotiationMask(HolidayPeriod holidayPeriod, Collection<HolidayPeriodNegotiationStatus> allNegotiationStatuses) {
+        if (holidayPeriod == null || allNegotiationStatuses == null) {
+            return null;
+        }
+
+        byte negotiationMask = holidayPeriod.getNegotiationMask();
+        if (negotiationMask == 1) {
+            // team lead
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == 3) {
+            // team lead + project manager
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == 7) {
+            // all
+            return HolidayPeriodNegotiationStatusUtils.getOkStatusFromList(allNegotiationStatuses);
         }
 
         return null;

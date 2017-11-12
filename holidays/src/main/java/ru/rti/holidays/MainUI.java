@@ -69,6 +69,7 @@ public class MainUI extends UI {
                 new CustomNavigationStateManager(this.getPage()),
                 (ViewDisplay)(new Navigator.SingleComponentContainerViewDisplay(panelViewContainer))
         );*/
+
         Navigator navigator = new Navigator(this, panelViewContainer);
         navigator.addProvider(viewProvider);
         navigator.setErrorView(new ErrorDefaultView());

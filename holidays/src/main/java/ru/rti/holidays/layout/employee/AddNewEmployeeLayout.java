@@ -7,12 +7,11 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.rti.holidays.entity.DBEntity;
-import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.ProjectRole;
-import ru.rti.holidays.entity.Team;
+import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
+import ru.rti.holidays.utility.CommonUtils;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -23,10 +22,14 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
     private Employee newEmployee = new Employee();
     private List<ProjectRole> projectRoles;
     private List<Team> allTeams;
+    private List<Department> departments;
+
     private Button btnRemoveSelectedEmployees = new Button("Удалить выбранных сотрудников");
     private PasswordField txtPasswordCheck = new PasswordField("Повтор пароля:");
     private ComboBox<ProjectRole> cboProjectRole;
     private ComboBox<Team> cboTeam;
+    private ComboBox<Department> cboDepartment;
+
     private Label lblTeamsCheckboxes = new Label("Команды в управлении:");
     private Team[] teamsArray = null;
     /**
@@ -39,6 +42,14 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         this.projectRoles = projectRoles;
     }
     public void setButtonRemoveSelectedEnabled(boolean isEnabled) { btnRemoveSelectedEmployees.setEnabled(isEnabled);}
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
+    }
 
     @Override
     public void setNewBeanValue(DBEntity newBeanValue) {
@@ -76,7 +87,6 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
         PasswordField txtPassword = new PasswordField("Пароль:");
         employeeBinder.forField(txtPassword)
-                .asRequired("Необходимо ввести пароль")
                 .bind(Employee::getEmptyPassword, Employee::setPassword);
 
 
@@ -86,6 +96,7 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
         cboProjectRole = new ComboBox<>("Проектная роль:");
         cboTeam = new ComboBox<>("Команда:");
+        cboDepartment = new ComboBox<>("Подразделение:");
 
         if (allTeams != null && allTeams.size() > 0) {
             teamCheckboxes = new CheckBox[allTeams.size()];
@@ -119,8 +130,22 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
         });
 
+        cboDepartment.setEmptySelectionAllowed(true);
+        cboDepartment.setEmptySelectionCaption("Подразделение не выбрано");
+        cboDepartment.setTextInputAllowed(false);
+        cboDepartment.setItems(departments);
+        cboDepartment.setItemCaptionGenerator(Department::getName);
+        cboDepartment.addValueChangeListener(valueChangeEvent -> {
+            if (valueChangeEvent.isUserOriginated()) {
+                Department selectedDepartment = valueChangeEvent.getValue();
+            }
+        });
+
         employeeBinder.forField(cboProjectRole)
                 .bind(Employee::getProjectRole, Employee::setProjectRole);
+
+        employeeBinder.forField(cboDepartment)
+                .bind(Employee::getDepartment, Employee::setDepartment);
 
         cboTeam.setEmptySelectionAllowed(true);
         cboTeam.setEmptySelectionCaption("Команда не выбрана");
@@ -133,16 +158,31 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
 
         Button btnSaveEmployee = new Button("Сохранить", event -> {
             try {
+                String oldPassword = "";
+                if (txtPassword.isEmpty() || CommonUtils.checkIfEmpty(txtPassword.getValue())) {
+                    oldPassword = newEmployee.getPassword();
+                }
+
                 employeeBinder.writeBean(newEmployee);
+
+                // manually set (restore) the old user's password if we didn't change it for user in the admin panel
+                // as the binding above overwrites it with the empty text field value.
+                if (!CommonUtils.checkIfEmpty(oldPassword)) {
+                    newEmployee.setPasswordEncoded(oldPassword);
+                }
 
                 if (newEmployee.isManager()) {
                     Set<Team> managedTeams = newEmployee.getManagedTeams();
-                    if (managedTeams != null) {
-                        log.info("Managed teams size: " + managedTeams.size());
+                    if (managedTeams == null) {
+                        managedTeams = new HashSet<>();
+                    } else {
                         managedTeams.clear();
-                        for (int i = 0; i < teamCheckboxes.length; i++) {
-                            if (teamCheckboxes[i].getValue() != null && teamCheckboxes[i].getValue()) {
-                                managedTeams.add(teamsArray[i]);
+                    }
+                    for (int i = 0; i < teamCheckboxes.length; i++) {
+                        if (teamCheckboxes[i].getValue() != null && teamCheckboxes[i].getValue()) {
+                            int ind = allTeams.indexOf(teamsArray[i]);
+                            if (ind >= 0) {
+                                managedTeams.add(allTeams.get(ind));
                             }
                         }
                     }
@@ -184,9 +224,10 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         btnRemoveSelectedEmployees.setWidth("100%");
         cboProjectRole.setWidth("100%");
         cboTeam.setWidth("100%");
+        cboDepartment.setWidth("100%");
 
         int teamsRowsIncrement = allTeams != null && allTeams.size() > 0 ? allTeams.size() + 1 : 0;
-        GridLayout addEmployeeGridLayout = new GridLayout(5, 5 + teamsRowsIncrement);
+        GridLayout addEmployeeGridLayout = new GridLayout(5, 6 + teamsRowsIncrement);
 
         addEmployeeGridLayout.setSizeFull();
         //addEmployeeGridLayout.addStyleName("debug_border");
@@ -200,21 +241,23 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         addEmployeeGridLayout.addComponent(txtEmail, 4,0);
         addEmployeeGridLayout.addComponent(txtPassword, 0,1, 1,1);
         addEmployeeGridLayout.addComponent(txtPasswordCheck, 2,1, 3,1);
-        addEmployeeGridLayout.addComponent(cboProjectRole, 0,2, 4,2);
-        addEmployeeGridLayout.addComponent(cboTeam, 0,3,4,3);
+        addEmployeeGridLayout.addComponent(cboDepartment, 0,2,4,2);
+        addEmployeeGridLayout.addComponent(cboProjectRole, 0,3, 4,3);
+        addEmployeeGridLayout.addComponent(cboTeam, 0,4,4,4);
         addEmployeeGridLayout.setRowExpandRatio(1,1);
         addEmployeeGridLayout.setRowExpandRatio(2,1);
+        addEmployeeGridLayout.setRowExpandRatio(3,1);
 
         if (allTeams != null && allTeams.size() > 0) {
             lblTeamsCheckboxes.addStyleName(ValoTheme.LABEL_SMALL);
-            addEmployeeGridLayout.addComponent(lblTeamsCheckboxes, 0, 4);
+            addEmployeeGridLayout.addComponent(lblTeamsCheckboxes, 0, 5);
             for (int i = 0; i < teamCheckboxes.length; i++) {
-                addEmployeeGridLayout.addComponent(teamCheckboxes[i], 0, 4 + i + 1);
+                addEmployeeGridLayout.addComponent(teamCheckboxes[i], 0, 5 + i + 1);
             }
         }
 
-        addEmployeeGridLayout.addComponent(btnSaveEmployee, 0,4 + teamsRowsIncrement);
-        addEmployeeGridLayout.addComponent(btnRemoveSelectedEmployees, 1,4 + teamsRowsIncrement,2,4 + teamsRowsIncrement);
+        addEmployeeGridLayout.addComponent(btnSaveEmployee, 0,5 + teamsRowsIncrement);
+        addEmployeeGridLayout.addComponent(btnRemoveSelectedEmployees, 1,5 + teamsRowsIncrement,2,5 + teamsRowsIncrement);
 
         addComponents(addEmployeeGridLayout);
     }
@@ -279,10 +322,15 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
             for (int i = 0; i < teamCheckboxes.length; i++) {
                 Team currentTeam = teamsArray[i];
                 boolean isTeamSelected = false;
-                for (Team managedTeam : managedTeams) {
-                    if (managedTeam.getId().equals(currentTeam.getId())) {
-                        isTeamSelected = true;
-                        break;
+                if (managedTeams != null) {
+                    for (Team managedTeam : managedTeams) {
+                        if (CommonUtils.checkIfAnyIsNull(managedTeam.getId(), currentTeam.getId())) {
+                            continue;
+                        }
+                        if (managedTeam.getId().equals(currentTeam.getId())) {
+                            isTeamSelected = true;
+                            break;
+                        }
                     }
                 }
                 teamCheckboxes[i].setValue(isTeamSelected);

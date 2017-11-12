@@ -10,7 +10,10 @@ import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
 import ru.rti.holidays.repository.HolidayPeriodRepository;
+import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
+import ru.rti.holidays.utility.HolidayPeriodUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +56,27 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     @Override
     public HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod) {
         return holidayPeriodRepository.saveAndFlush(holidayPeriod);
+    }
+
+    @Override
+    public boolean setNegotiationStatusForEmployeeHolidayPeriods(Employee currentManager,
+                                                                 Iterable<EmployeeHolidayPeriod> holidayPeriods,
+                                                                 Collection<HolidayPeriodNegotiationStatus> allStatuses) {
+        if (holidayPeriods == null || allStatuses == null || currentManager == null) {
+            return false;
+        }
+
+        for (EmployeeHolidayPeriod ehp : holidayPeriods) {
+            HolidayPeriod hp = ehp.getHolidayPeriod();
+            HolidayPeriodNegotiationStatus currentStatus = hp.getNegotiationStatus();
+            hp.setNegotiationMaskByManager(currentManager);
+            HolidayPeriodNegotiationStatus nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
+            if (nextStatus != null && !nextStatus.equals(currentStatus)) {
+                hp.setNegotiationStatus(nextStatus);
+            }
+            holidayPeriodRepository.saveAndFlush(hp);
+        }
+        return false;
     }
 
     @Override

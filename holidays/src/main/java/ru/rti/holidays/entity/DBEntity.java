@@ -44,10 +44,4 @@ public interface DBEntity {
      * @return Date value representing the last time when the Entity object was updated.
      */
     Date getUpdatedDate();
-
-    /**
-     * Constructs the instance of particular class implementing the {@link DBEntity} interface
-     * @return
-     */
-    DBEntity construct();
 }

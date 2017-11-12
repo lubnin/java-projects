@@ -24,6 +24,18 @@ public class SessionUtils {
         return true;
     }
 
+    public static boolean isCurrentUserTeamLead() {
+        return getCurrentUser().isTeamLead();
+    }
+
+    public static boolean isCurrentUserLineManager() {
+        return getCurrentUser().isLineManager();
+    }
+
+    public static boolean isCurrentUserProjectManager() {
+        return getCurrentUser().isProjectManager();
+    }
+
     public static final Employee getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {

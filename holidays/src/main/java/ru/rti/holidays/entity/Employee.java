@@ -25,14 +25,12 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
     /**
      * The primary key for the table holding Employee instances
      */
-
-    //TODO: fix 9 to 1 sequence start value before going to production mode
     @GenericGenerator(
             name = "employeeSequenceGenerator",
             strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
             parameters = {
                     @org.hibernate.annotations.Parameter(name = "sequence_name", value = "seq_emp_id"),
-                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "9"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "2"),
                     @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
             }
     )
@@ -84,29 +82,31 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
     private List<HolidayPeriod> holidayPeriods;
 
     /**
-     * The reference to the ProjectRole newEntity. Describes the project role of the Employee in the company.
+     * The reference to the ProjectRole. Describes the project role of the Employee in the company.
      */
-    //cascade = { CascadeType.REMOVE, CascadeType.MERGE }
-    @ManyToOne(cascade = {
-        CascadeType.MERGE
-    })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "project_role_id")
     private ProjectRole projectRole;
 
     /**
      * The reference to a Team for all employees. All employees belong to some Team
      */
-    @ManyToOne(cascade = {
-        CascadeType.MERGE
-    })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "team_id")
     private Team team;
+
+    /**
+     * The reference to a Department for all employees. All employees belong to some Department
+     */
+    @ManyToOne(cascade = {CascadeType.MERGE })
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     /**
      * The reference to a Set of teams, managed by this Employee.
      */
     @ManyToMany(cascade = {
-        CascadeType.MERGE
+        //CascadeType.MERGE
     }, fetch = FetchType.EAGER)
     @JoinTable(
             name = "managed_teams",
@@ -203,6 +203,14 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
 
     public void setLoginName(String loginName) { this.loginName = loginName; }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public ProjectRole getProjectRole() {
         return projectRole;
     }
@@ -252,6 +260,7 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
                 case PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD:
                 case PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER:
                 case PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER:
+                case PROJECT_ROLE_SPECIAL_TYPE_SUPERVISOR:
                     if (managedTeams != null) {
                         int i = 0;
                         for (Team currentManagedTeam: managedTeams) {
@@ -275,17 +284,41 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
      * @return
      */
     public boolean isManager() {
-        if (projectRole != null) {
+        if (projectRole != null && projectRole.getProjectRoleSpecialType() != null) {
             switch (projectRole.getProjectRoleSpecialType()) {
                 case PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER:
                 case PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER:
                 case PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD:
+                case PROJECT_ROLE_SPECIAL_TYPE_SUPERVISOR:
                     return true;
                 default:
                     return false;
             }
         }
         return false;
+    }
+
+    public boolean isOfSpecialRoleType(ProjectRole.ProjectRoleSpecialType specialType) {
+        if (projectRole == null || projectRole.getProjectRoleSpecialType() == null || specialType == null) {
+            return false;
+        }
+        return (projectRole.getProjectRoleSpecialType() == specialType);
+    }
+
+    public boolean isTeamLead() {
+        return isOfSpecialRoleType(ProjectRole.ProjectRoleSpecialType.PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD);
+    }
+
+    public boolean isProjectManager() {
+        return isOfSpecialRoleType(ProjectRole.ProjectRoleSpecialType.PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER);
+    }
+
+    public boolean isLineManager() {
+        return isOfSpecialRoleType(ProjectRole.ProjectRoleSpecialType.PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER);
+    }
+
+    public boolean isSupervisor() {
+        return isOfSpecialRoleType(ProjectRole.ProjectRoleSpecialType.PROJECT_ROLE_SPECIAL_TYPE_SUPERVISOR);
     }
 
     public boolean isAdmin() {
@@ -360,6 +393,10 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
         this.password = encodedPassword;
     }
 
+    public void setPasswordEncoded(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
     @Override
     public String toString() {
         return String.format("Employee[id=%d, firstName='%s', lastName='%s', middleName='%s', loginName='%s', email='%s']",
@@ -369,11 +406,6 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
                 middleName,
                 loginName,
                 email);
-    }
-
-    @Override
-    public DBEntity construct() {
-        return new Employee();
     }
 
     public Set<Team> getManagedTeams() {

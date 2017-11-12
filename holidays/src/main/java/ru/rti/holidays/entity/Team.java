@@ -38,7 +38,7 @@ public class Team implements DBEntity {
     //TODO: old cascade was: ALL + FetchType.LAZY, changed to EAGER+MERGE to implement correct deletion of team without
     //TODO: removing employees from the database
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER, cascade = {
-        CascadeType.MERGE
+        //CascadeType.MERGE
     })
     private Set<Employee> employees;
 
@@ -126,13 +126,6 @@ public class Team implements DBEntity {
                 updated
         );
     }
-
-    @Override
-    public DBEntity construct() {
-        return new Team();
-    }
-
-
 
     @Override
     public boolean equals(Object obj) {

@@ -6,11 +6,25 @@ import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 public class HolidayPeriodUtils {
     private static final Logger log = LoggerFactory.getLogger(HolidayPeriodUtils.class);
+
+    public static boolean isVisibleForCurrentUser(HolidayPeriod holidayPeriod) {
+        if (holidayPeriod == null) return false;
+        //byte negotiationMask = holidayPeriod.getNegotiationMask();
+        if (SessionUtils.isCurrentUserTeamLead()) {
+            return holidayPeriod.isVisibleForTeamLead();
+        } else if (SessionUtils.isCurrentUserProjectManager()) {
+            return holidayPeriod.isVisibleForProjectManager();
+        } else if (SessionUtils.isCurrentUserLineManager()) {
+            return holidayPeriod.isVisibleForLineManager();
+        }
+        return false;
+    }
 
     public static boolean isHolidayPeriodInOkStatus(HolidayPeriod holidayPeriod) {
         return isHolidayPeriodInSpecifiedStatus(holidayPeriod, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK);

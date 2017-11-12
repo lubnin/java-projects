@@ -39,7 +39,9 @@ SELECT to_date('2014/04/25', 'YYYY/MM/DD');
 
 select to_date('2017-11-01 00:00:00', 'DD-MM-YYYY HH24:MI:SS');
 
-
+/*
+ * Плоские запросы к основным таблицам
+ */
 select * from authority;
 select * from employee_authorities
 
@@ -52,7 +54,9 @@ from holiday_period hp
 left join employee emp on (hp.emp_id = emp.emp_id)
 left join holiday_period_neg_status hpns on (hp.hp_negotiation_status_id = hpns.hol_period_neg_status_id);
 
-
+select * from employee;
+select * from team;
+select * from holiday_period;
 
 --drop database holidays;
 

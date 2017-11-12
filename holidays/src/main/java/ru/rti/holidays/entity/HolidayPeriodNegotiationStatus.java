@@ -44,13 +44,12 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
         negotiationStatusType = HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING;
     }
 
-    //TODO: fix 9 to 1 sequence start value before going to production mode
     @GenericGenerator(
             name = "holidayPeriodNegStatusSequenceGenerator",
             strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
             parameters = {
                     @org.hibernate.annotations.Parameter(name = "sequence_name", value = "seq_hol_period_neg_status_id"),
-                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "9"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
                     @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
             }
     )
@@ -138,11 +137,6 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
                 statusDescription,
                 created,
                 updated);
-    }
-
-    @Override
-    public DBEntity construct() {
-        return new HolidayPeriodNegotiationStatus();
     }
 
     @Override

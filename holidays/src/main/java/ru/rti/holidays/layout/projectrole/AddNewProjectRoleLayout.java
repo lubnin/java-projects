@@ -8,6 +8,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
+import ru.rti.holidays.layout.common.ProjectRoleSpecialTypeCaptionGenerator;
 
 public class AddNewProjectRoleLayout extends BaseVerticalLayout {
     private Binder<ProjectRole> projectRoleBinder = new Binder<ProjectRole>();
@@ -20,24 +21,6 @@ public class AddNewProjectRoleLayout extends BaseVerticalLayout {
     public void setNewBeanValue(DBEntity newBeanValue) {
         if (newBeanValue instanceof ProjectRole) {
             newProjectRole = (ProjectRole)newBeanValue;
-        }
-    }
-
-    private class ProjectRoleSpecialTypeCaptionGenerator implements ItemCaptionGenerator<ProjectRole.ProjectRoleSpecialType> {
-        @Override
-        public String apply(ProjectRole.ProjectRoleSpecialType projectRoleSpecialType) {
-            switch (projectRoleSpecialType) {
-                case PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD:
-                    return "Тимлид команды";
-                case PROJECT_ROLE_SPECIAL_TYPE_REGULAR:
-                    return "Обычная";
-                case PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER:
-                    return "Руководитель проекта";
-                case PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER:
-                    return "Линейный руководитель";
-                default:
-                    return "Неизвестная роль";
-            }
         }
     }
 
@@ -97,36 +80,20 @@ public class AddNewProjectRoleLayout extends BaseVerticalLayout {
         btnRemoveSelectedProjectRoles.setWidth("100%");
         btnSaveRole.setWidth("100%");
 
-        //this.addStyleName("debug_border");
         setMargin(false);
 
         addComponent(radioProjectRoleSpecialType);
 
         GridLayout addProjectRoleGridLayout = new GridLayout(3, 3);
-        //addProjectRoleGridLayout.addStyleName("debug_border");
+
         addProjectRoleGridLayout.setSpacing(true);
         addProjectRoleGridLayout.setSizeFull();
         addProjectRoleGridLayout.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-
         addProjectRoleGridLayout.setColumnExpandRatio(0,1);
         addProjectRoleGridLayout.setColumnExpandRatio(1,1);
         addProjectRoleGridLayout.setColumnExpandRatio(2,2);
-        //addProjectRoleGridLayout.setRowExpandRatio(1,1);
-        //addProjectRoleGridLayout.setRowExpandRatio(2,1);
-
-
         addProjectRoleGridLayout.addComponent(txtProjectRoleName, 0,0,2,0);
         addProjectRoleGridLayout.addComponent(txtProjectRoleDescription, 0,1,2,1);
-
-        //Label lbl1 = new Label("Test label 1");
-        //Label lbl2 = new Label("Test label 2");
-        //Label lbl3 = new Label("Test label 3");
-
-        //addProjectRoleGridLayout.addComponent(radioProjectRoleSpecialType, 0,2, 2,2);
-        //addProjectRoleGridLayout.addComponent(lbl1, 0,2, 2,2);
-        //addProjectRoleGridLayout.addComponent(lbl2, 0,3, 2,3);
-        //addProjectRoleGridLayout.addComponent(lbl3, 0,4, 2,4);
-
         addProjectRoleGridLayout.addComponent(btnSaveRole, 0,2);
         addProjectRoleGridLayout.addComponent(btnRemoveSelectedProjectRoles, 1,2);
 

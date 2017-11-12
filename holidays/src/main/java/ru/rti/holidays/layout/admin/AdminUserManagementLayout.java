@@ -22,6 +22,7 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
     private List<Employee> employees;
     private List<ProjectRole> projectRoles;
     private List<Team> teams;
+    private List<Department> departments;
 
     public void setTeams(List<Team> teams) { this.teams = teams; }
     public void setProjectRoles(List<ProjectRole> projectRoles) {
@@ -54,6 +55,7 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             addEmployeeLayout.setParentLayout(this);
             addEmployeeLayout.setProjectRoles(projectRoles);
             addEmployeeLayout.setAllTeams(teams);
+            addEmployeeLayout.setDepartments(departments);
             addEmployeeLayout.setExceptionHandler(getExceptionHandler());
             addEmployeeLayout.setSaveButtonClickListener(saveButtonClickListener);
             addEmployeeLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
@@ -114,5 +116,13 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 }

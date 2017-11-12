@@ -3,25 +3,16 @@ package ru.rti.holidays.view.admin;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.teemusa.sidemenu.SideMenu;
-import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
-import ru.rti.holidays.entity.ProjectRole;
-import ru.rti.holidays.entity.Team;
-import ru.rti.holidays.exception.handler.RedirectToURLExceptionHandler;
+import ru.rti.holidays.entity.*;
 import ru.rti.holidays.exception.handler.ViewErrorMessageExceptionHandler;
-import ru.rti.holidays.layout.admin.AdminHolidayPeriodNegotiationStatusLayout;
-import ru.rti.holidays.layout.admin.AdminProjectRoleManagementLayout;
-import ru.rti.holidays.layout.admin.AdminTeamManagementLayout;
-import ru.rti.holidays.layout.admin.AdminUserManagementLayout;
-import ru.rti.holidays.service.EmployeeService;
-import ru.rti.holidays.service.HolidayPeriodService;
-import ru.rti.holidays.service.ProjectRoleService;
-import ru.rti.holidays.service.TeamService;
+import ru.rti.holidays.layout.admin.*;
+import ru.rti.holidays.service.*;
 import ru.rti.holidays.service.localization.LocalizationService;
 import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.utility.SessionUtils;
@@ -47,6 +38,9 @@ public class AdminMainView extends AbstractBaseView {
 
     @Autowired
     TeamService teamServiceImpl;
+
+    @Autowired
+    DepartmentService departmentServiceImpl;
 
     //@Autowired
     //ConfigurationService configurationServiceImpl;
@@ -80,6 +74,7 @@ public class AdminMainView extends AbstractBaseView {
         addUserManagementMenuItem(sideMenu);
         addTeamManagementMenuItem(sideMenu);
         addProjectRoleManagementMenuItem(sideMenu);
+        addDepartmentManagementMenuItem(sideMenu);
 
 /*        sideMenu.addMenuItem("Встроенное меню", () -> {
             VerticalLayout content = new VerticalLayout();
@@ -90,6 +85,36 @@ public class AdminMainView extends AbstractBaseView {
         addComponent(sideMenu);
     }
 
+
+    private void addDepartmentManagementMenuItem(SideMenu sideMenu) {
+        sideMenu.addMenuItem("Управление подразделениями", VaadinIcons.BUILDING, () -> {
+            AdminDepartmentManagementLayout adminDepartmentManagementLayout = new AdminDepartmentManagementLayout();
+
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
+            adminDepartmentManagementLayout.setMargin(marginInfoLayout);
+            adminDepartmentManagementLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
+
+            adminDepartmentManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+                departmentServiceImpl.saveDepartment((Department)objectForSave);
+                Notification.show("Подразделение успешно сохранено!");
+            });
+
+            adminDepartmentManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                departmentServiceImpl.deleteDepartments((Set<Department>)entities);
+                Notification.show("Выбранные подразделения успешно удалены!");
+            });
+
+            adminDepartmentManagementLayout.setRefreshGridDataListener(layout -> {
+                List<Department> allDepartments = departmentServiceImpl.getAllDepartmentsSortedByNameAsc();
+                ((AdminDepartmentManagementLayout)layout).setDepartments(allDepartments);
+            });
+
+            adminDepartmentManagementLayout.constructLayout();
+            adminDepartmentManagementLayout.postConstructLayout();
+
+            sideMenu.setContent(adminDepartmentManagementLayout);
+        });
+    }
 
     private void addProjectRoleManagementMenuItem(SideMenu sideMenu) {
         sideMenu.addMenuItem("Управление проектными ролями", VaadinIcons.USER_STAR, () -> {
@@ -195,6 +220,7 @@ public class AdminMainView extends AbstractBaseView {
             adminUserManagementLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
             adminUserManagementLayout.setProjectRoles(projectRoleServiceImpl.getAllProjectRoles());
             adminUserManagementLayout.setTeams(teamServiceImpl.getAllTeamsSortedByTeamNameAsc());
+            adminUserManagementLayout.setDepartments(departmentServiceImpl.getAllDepartmentsSortedByNameAsc());
 
             adminUserManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
                 employeeServiceImpl.deleteEmployees((Set<Employee>)entities);

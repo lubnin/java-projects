@@ -27,7 +27,8 @@ public class ProjectRole implements DBEntity {
         PROJECT_ROLE_SPECIAL_TYPE_REGULAR(0L, "Обычная роль"),
         PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD(1L, "Тимлид команды"),
         PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER(2L, "Руководитель проекта"),
-        PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER(3L, "Линейный руководитель");
+        PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER(3L, "Линейный руководитель"),
+        PROJECT_ROLE_SPECIAL_TYPE_SUPERVISOR(4L, "Супервизор");
 
         private final Long typeId;
         private final String description;
@@ -41,7 +42,8 @@ public class ProjectRole implements DBEntity {
             return Arrays.asList(
                     PROJECT_ROLE_SPECIAL_TYPE_TEAM_LEAD,
                     PROJECT_ROLE_SPECIAL_TYPE_PROJECT_MANAGER,
-                    PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER);
+                    PROJECT_ROLE_SPECIAL_TYPE_LINE_MANAGER,
+                    PROJECT_ROLE_SPECIAL_TYPE_SUPERVISOR);
         }
         public Long getTypeId() { return this.typeId; }
         public String getDescription() { return this.description; }
@@ -184,11 +186,6 @@ public class ProjectRole implements DBEntity {
                 roleDescription,
                 created,
                 updated);
-    }
-
-    @Override
-    public DBEntity construct() {
-        return new ProjectRole();
     }
 
     @Override

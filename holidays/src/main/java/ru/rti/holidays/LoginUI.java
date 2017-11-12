@@ -44,29 +44,6 @@ public class LoginUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-/*        super.init(vaadinRequest);
-
-        viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-
-        //TODO: remove for production mode!!!
-        String encodedAdminPwd = passwordEncoder.encode("B09108b198613");
-        log.info("Encoded admin password: " + encodedAdminPwd);
-
-        //TODO: remove for production mode!!!
-        String encodedTestPwd = passwordEncoder.encode("Qwerty123");
-        log.info("Encoded test password: " + encodedTestPwd);
-
-        Navigator navigator = new Navigator(this, getPanelViewContainer());
-        navigator.addProvider(viewProvider);
-        navigator.setErrorView(new ErrorDefaultView());
-
-        if (SessionUtils.isAuthenticated()) {
-            Page.getCurrent().setLocation(GlobalConstants.URL_PATH_MAIN_PAGE);
-        } else {
-            navigator.navigateTo(LoginPageView.VIEW_NAME);
-        }
-
-        UI.getCurrent().setNavigator(navigator);*/
         setErrorHandler(new CustomVaadinErrorHandler());
         final VerticalLayout rootLayout = new VerticalLayout();
         rootLayout.setSizeFull();
@@ -81,14 +58,6 @@ public class LoginUI extends UI {
         rootLayout.setExpandRatio(panelViewContainer, 1.0f);
 
         viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-
-        //TODO: remove for production mode!!!
-        String encodedAdminPwd = passwordEncoder.encode("B09108b198613");
-        log.info("Encoded admin password: " + encodedAdminPwd);
-
-        //TODO: remove for production mode!!!
-        String encodedTestPwd = passwordEncoder.encode("Qwerty123");
-        log.info("Encoded test password: " + encodedTestPwd);
 
         Navigator navigator = new Navigator(this, panelViewContainer);
         navigator.addProvider(viewProvider);
