@@ -26,6 +26,11 @@ public class AddNewDepartmentLayout extends BaseVerticalLayout {
     }
 
     @Override
+    public void setButtonRemoveSelectedEnabled(boolean isEnabled) {
+        btnRemoveSelectedDepartments.setEnabled(isEnabled);
+    }
+
+    @Override
     public void constructLayout() {
         TextField txtDepartmentName = new TextField("Название подразделения:");
         txtDepartmentName.setWidth("100%");

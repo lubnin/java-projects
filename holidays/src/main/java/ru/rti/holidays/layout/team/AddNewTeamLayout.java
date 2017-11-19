@@ -18,7 +18,10 @@ public class AddNewTeamLayout extends BaseVerticalLayout {
     private Team newTeam = new Team();
     private Button btnRemoveSelectedTeams = new Button("Удалить выбранные команды");
 
-    public void setButtonRemoveSelectedEnabled(boolean isEnabled) { btnRemoveSelectedTeams.setEnabled(isEnabled);}
+    @Override
+    public void setButtonRemoveSelectedEnabled(boolean isEnabled) {
+        btnRemoveSelectedTeams.setEnabled(isEnabled);
+    }
 
     @Override
     public void setNewBeanValue(DBEntity newBeanValue) {

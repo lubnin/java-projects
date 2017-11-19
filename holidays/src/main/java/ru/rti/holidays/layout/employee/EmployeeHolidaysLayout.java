@@ -20,9 +20,7 @@ import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.layout.behaviour.*;
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
-import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
-import ru.rti.holidays.utility.TeamUtils;
-import ru.rti.holidays.utility.UIHelper;
+import ru.rti.holidays.utility.*;
 import ru.rti.holidays.validator.HolidayPeriodDateValidator;
 import ru.rti.holidays.validator.HolidayPeriodDayNumValidator;
 
@@ -228,19 +226,42 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void constructLayout() {
         try {
-            Label lblEmployeeName = new Label("ФИО: <b>" + employee.getFullName() + "</b>", ContentMode.HTML);
-            Label lblProjectRole = new Label("Проектная роль: <b>" + employee.getProjectRoleAsString() + "</b>", ContentMode.HTML);
-            Label lblProjectRoleType = new Label("Тип проектной роли: <b>" + employee.getProjectRoleSpecialTypeAsString() + "</b>", ContentMode.HTML);
+            boolean isNoTeam = CommonUtils.checkIfEmpty(employee.getTeam());
+            boolean isNoRole = CommonUtils.checkIfEmpty(employee.getProjectRole());
 
+            Label lblEmployeeName = new Label("ФИО: " + HtmlUtils.bold(employee.getFullName()), ContentMode.HTML);
+
+
+            Label lblProjectRole = new Label("Проектная роль: " + HtmlUtils.newBuilder()
+                    .withMessage(isNoTeam ?
+                            HtmlUtils.newBuilder()
+                                    .withMessage("Роль не назначена, обратитесь к администратору Системы.")
+                                    .wrapSpan(GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_REJECTED)
+                                    .build()
+                                    .getHTML()
+                            :
+                            employee.getProjectRoleAsString()
+                    ).wrapBold()
+                    .build()
+                    .getHTML(), ContentMode.HTML);
+
+            Label lblProjectRoleType = new Label("Тип проектной роли: <b>" + employee.getProjectRoleSpecialTypeAsString() + "</b>", ContentMode.HTML);
             Label lblTeam = null;
 
-            if (employee.getProjectRole() != null) {
+            if (!isNoRole) {
                 if (ProjectRole.ProjectRoleSpecialType.getRolesWithTeamManagementAbility().contains(employee.getProjectRole().getProjectRoleSpecialType())) {
                     Set<Team> managedTeams = employee.getManagedTeams();
                     lblTeam = new Label("Команды под руководством: <b>" + TeamUtils.getDelimitedTeamsString(managedTeams, ", ") + "</b>", ContentMode.HTML);
                 } else {
                     lblTeam = new Label("Ваша команда: <b>" + employee.getTeamNameAsString() + "</b>", ContentMode.HTML);
                 }
+            } else {
+                lblTeam = new Label(HtmlUtils.newBuilder()
+                        .withMessage("Ваша роль не определена. Обратитесь к администратору Системы.")
+                        .wrapSpan(GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_REJECTED)
+                        .build()
+                        .getHTML(), ContentMode.HTML);
+
             }
 
             Panel pnlPanelHolidays = new Panel(getPanelName());
