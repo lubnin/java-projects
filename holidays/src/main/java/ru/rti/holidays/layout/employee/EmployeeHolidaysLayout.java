@@ -430,6 +430,20 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
                     }
 
+                    LocalDate holidayDateStart = newHolidayPeriod.getDateStart();
+                    LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
+                    if (holidayDateStart.isBefore(nowPlus14Days)) {
+                        HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
+                        hpNegHistory.setComment("Дата отпуска отстоит от даты добавления отпуска менее, чем 14 дней (2 недели).");
+                        hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
+                        hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
+                        Set<HolidayPeriodNegotiationHistory> setHistories = newHolidayPeriod.getHolidayPeriodNegotiationHistories();
+                        if (setHistories == null) {
+                            setHistories = new HashSet<HolidayPeriodNegotiationHistory>();
+                        }
+                        setHistories.add(hpNegHistory);
+                        UIHelper.showNotification("Внимание: дата начала добавленного Вами отпуска отстоит от текущей даты менее, чем 14 дней.");
+                    }
 
                     newHolidayPeriod.setEmployee(employee);
 

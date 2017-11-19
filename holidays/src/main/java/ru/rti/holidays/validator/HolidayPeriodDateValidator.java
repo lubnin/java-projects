@@ -20,10 +20,10 @@ public class HolidayPeriodDateValidator implements Validator<LocalDate> {
             return ValidationResult.error("Дата начала отпуска не может быть в прошлом");
         }
 
-        LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
+        /*LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
         if (value.isBefore(nowPlus14Days)) {
             return ValidationResult.error("Дата начала отпуска должна отстоять от текущей даты на 14 дней (2 недели)");
-        }
+        }*/
 
         return ValidationResult.ok();
     }
