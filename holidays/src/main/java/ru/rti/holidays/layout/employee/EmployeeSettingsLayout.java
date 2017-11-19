@@ -9,6 +9,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
+import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.UIHelper;
 
@@ -49,11 +50,15 @@ public class EmployeeSettingsLayout extends BaseVerticalLayout {
         btnSaveSettings.addStyleName(ValoTheme.BUTTON_FRIENDLY);
         btnSaveSettings.setIcon(VaadinIcons.CHECK);
 
-        EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
-        employeeMenuBarLayout.setSettingsMenutItemVisible(false);
-        employeeMenuBarLayout.constructLayout();
+        //EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
+        //employeeMenuBarLayout.setSettingsMenutItemVisible(false);
+        //employeeMenuBarLayout.constructLayout();
+        EmployeeHorizontalButtonMenuBarLayout employeeHorizontalButtonMenuBarLayout = new EmployeeHorizontalButtonMenuBarLayout(false, false);
+        //employeeHorizontalButtonMenuBarLayout.constructLayout();
+        new StandardBaseLayoutDrawer(this, employeeHorizontalButtonMenuBarLayout).drawLayout();
 
-        addComponent(employeeMenuBarLayout);
+        //addComponent(employeeMenuBarLayout);
+        //addComponent(employeeMenuBarLayout);
         addComponent(lblChangePassword);
         addComponent(txtNewPassword);
         addComponent(txtPasswordRepeat);

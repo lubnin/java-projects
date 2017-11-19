@@ -31,9 +31,13 @@ public class DateUtils {
     }
 
     public static Date addDays(Date date, int days) {
+        if (days <= 1) {
+            return date;
+        }
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.DATE, days);
+        calendar.add(Calendar.DATE, days - 1);
         return calendar.getTime();
     }
 

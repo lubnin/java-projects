@@ -2,6 +2,7 @@ package ru.rti.holidays.entity;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import org.hibernate.annotations.GenericGenerator;
+import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
@@ -255,6 +256,21 @@ public class HolidayPeriod implements DBEntity {
 
     public void setHolidayPeriodNegotiationHistories(Set<HolidayPeriodNegotiationHistory> holidayPeriodNegotiationHistories) {
         this.holidayPeriodNegotiationHistories = holidayPeriodNegotiationHistories;
+    }
+
+    public String getHolidayPeriodNegotiationHistoryComment() {
+        if (!CommonUtils.checkIfEmpty(holidayPeriodNegotiationHistories)) {
+            StringBuilder sb = new StringBuilder();
+            for (HolidayPeriodNegotiationHistory history : holidayPeriodNegotiationHistories) {
+                if (sb.length() > 0) {
+                    sb.append("<br/>");
+                }
+                sb.append(history.getComment());
+            }
+            return sb.toString();
+        } else {
+            return GlobalConstants.EMPTY_STRING;
+        }
     }
 
     @Override

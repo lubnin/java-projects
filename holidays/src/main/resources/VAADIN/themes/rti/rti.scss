@@ -34,7 +34,7 @@ $v-component-group-spacing: 6px;
 /*
 .rti {
 @include addons;
-  // Include rti theme styles in your theme
+  // Include rti theme styles in theme
   @include rti;
 }
 */
@@ -108,6 +108,47 @@ $v-component-group-spacing: 6px;
         color: #D8000C;
         background-color: #FFD2D2;
     }
+
+    .rti-button-orange {
+        height: 40px;
+        padding: 0 18px;
+        color: #f9f0ef;
+        font-weight: 500;
+
+        border-radius: 3px;
+        border: 1px solid #303739;
+        border-top-color: #363d40;
+        border-bottom-color: #272c2e;
+        background-color: #ed473b;
+        background-image: -webkit-linear-gradient(top, #ef4f42 2%, #db3a2f 98%);
+        background-image: linear-gradient(to bottom,#ef4f42 2%, #db3a2f 98%);
+        -webkit-box-shadow: inset 0 1px 2px #f18880, inset 0 0 1px #ef645b, 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
+        box-shadow: inset 0 1px 2px #f18880, inset 0 0 1px #ef645b, 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .rti-button-orange:after {
+        border: inherit;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+    }
+
+    .rti-button-orange:hover:after {
+        background-color: rgba(243, 137, 129, 0.1);
+    }
+
+    .rti-button-orange:focus:after {
+        border: inherit;
+        -webkit-box-shadow: 0 0 3px 2px #07a9ca;
+        box-shadow: 0 0 3px 2px #07a9ca;
+    }
+
+    .rti-button-orange:active:after {
+        background-color: rgba(146, 12, 2, 0.2);
+    }
+
 
   /* An actual theme rule */
   /*

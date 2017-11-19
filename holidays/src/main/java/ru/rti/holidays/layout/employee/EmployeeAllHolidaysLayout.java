@@ -18,9 +18,14 @@ public class EmployeeAllHolidaysLayout extends BaseVerticalLayout {
     public void constructLayout() {
         grdHolidayPeriods.setItems(employeeHolidayPeriods);
         grdHolidayPeriods.setSizeFull();
+        grdHolidayPeriods.setHeight("100%");
+
         if (gridHeightByRows > 0d) {
             grdHolidayPeriods.setHeightByRows(gridHeightByRows);
+        } else {
+            grdHolidayPeriods.setHeightByRows(DEFAULT_HEIGHT_BY_ROWS);
         }
+
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getEmployeeFullName).setCaption("ФИО сотрудника");
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getTeamName).setCaption("Команда");
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getEmployeeRoleName).setCaption("Роль на проекте");
@@ -28,9 +33,10 @@ public class EmployeeAllHolidaysLayout extends BaseVerticalLayout {
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getNumDays).setCaption("Количество дней отпуска");
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getHolidayPeriodNegotiationStatus).setCaption("Статус согласования").setStyleGenerator(new GridEmployeeHolidayPeriodCellStyleGenerator());
 
-        EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
-        employeeMenuBarLayout.setHolidaysViewAllMenuItemVisible(false);
-        new StandardBaseLayoutDrawer(this, employeeMenuBarLayout).drawLayout();
+        //EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
+        //employeeMenuBarLayout.setHolidaysViewAllMenuItemVisible(false);
+        EmployeeHorizontalButtonMenuBarLayout employeeHorizontalButtonMenuBarLayout = new EmployeeHorizontalButtonMenuBarLayout(false, false);
+        new StandardBaseLayoutDrawer(this, employeeHorizontalButtonMenuBarLayout).drawLayout();
 
         addComponent(grdHolidayPeriods);
     }

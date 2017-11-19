@@ -3,6 +3,8 @@ package ru.rti.holidays.layout.employee;
 import com.vaadin.data.Binder;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.ValidationException;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
@@ -274,6 +276,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             grdHolidayPeriods.addColumn(HolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска").setStyleGenerator(styleGenerator);
             grdHolidayPeriods.addColumn(HolidayPeriod::getNumDays).setCaption("Количество дней отпуска").setStyleGenerator(styleGenerator);
             grdHolidayPeriods.addColumn(HolidayPeriod::getNegotiationStatusAsString).setCaption("Статус согласования").setStyleGenerator(styleGenerator);
+            grdHolidayPeriods.addColumn(HolidayPeriod::getHolidayPeriodNegotiationHistoryComment).setCaption("Комментарий").setStyleGenerator(styleGenerator);
             //grdHolidayPeriods.addColumn(HolidayPeriod::isCrossingDatesAsString).setCaption("Пересечения").setStyleGenerator(styleGenerator);
             grdHolidayPeriods.setHeightByRows(5);
             grdHolidayPeriods.setWidth("100%");
@@ -319,9 +322,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             pnlPanelHolidays.setContent(pnlHolidaysLayout);
 
 
-            EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
-            employeeMenuBarLayout.setMainMenuItemVisible(false);
-            new StandardBaseLayoutDrawer(this, employeeMenuBarLayout).drawLayout();
+            //EmployeeMenuBarLayout employeeMenuBarLayout = new EmployeeMenuBarLayout(false, false);
+            //employeeMenuBarLayout.setMainMenuItemVisible(false);
+            //new StandardBaseLayoutDrawer(this, employeeMenuBarLayout).drawLayout();
+            EmployeeHorizontalButtonMenuBarLayout employeeHorizontalButtonMenuBarLayout = new EmployeeHorizontalButtonMenuBarLayout(false, false);
+            new StandardBaseLayoutDrawer(this, employeeHorizontalButtonMenuBarLayout).drawLayout();
+
 
             addComponent(lblEmployeeName);
             addComponent(lblProjectRole);
@@ -376,6 +382,33 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         }
     }*/
 
+    private boolean checkForOwnCrossingDates(HolidayPeriod addedHolidayPeriod) {
+        Date addedHPDateStart = DateUtils.asDate(addedHolidayPeriod.getDateStart());
+        Long addedHPNumDays = addedHolidayPeriod.getNumDays();
+        Date addedHPDateEnd = DateUtils.addDays(addedHPDateStart, addedHPNumDays);
+
+        DataProvider<HolidayPeriod, ?> dataProvider = grdHolidayPeriods.getDataProvider();
+        if (dataProvider != null && dataProvider instanceof ListDataProvider) {
+            ListDataProvider<HolidayPeriod> allItemsDataProvider = (ListDataProvider<HolidayPeriod>)dataProvider;
+            Collection<HolidayPeriod> allSavedHolidayPeriods = allItemsDataProvider.getItems();
+            if (allSavedHolidayPeriods == null || allSavedHolidayPeriods.size() == 0) {
+                return false;
+            }
+
+            for (HolidayPeriod hp : allSavedHolidayPeriods) {
+                Long curHPNumDays = hp.getNumDays();
+                Date curHPDateStart = DateUtils.asDate(hp.getDateStart());
+                Date curHPDateEnd = DateUtils.addDays(curHPDateStart, curHPNumDays);
+
+                if (DateUtils.isIntersectionBetweenDates(addedHPDateStart, addedHPDateEnd, curHPDateStart, curHPDateEnd)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     protected GridLayout addControlsPanel() {
         GridLayout addHolidayPeriodLayout = new GridLayout(5, 3);
         addHolidayPeriodLayout.setSizeFull();
@@ -387,8 +420,10 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         btnAddHolidayPeriod.addClickListener(event -> {
             try {
                 holidayPeriodBinder.writeBean(newHolidayPeriod);
-                if (newHolidayPeriod == null || newHolidayPeriod.getDateStart() == null || newHolidayPeriod.getNumDays() == 0) {
+                if (newHolidayPeriod == null || newHolidayPeriod.getDateStart() == null || newHolidayPeriod.getNumDays() == null || newHolidayPeriod.getNumDays() <= 0) {
                     UIHelper.showError("Поля для отпуска должны быть заполнены.");
+                } else if (checkForOwnCrossingDates(newHolidayPeriod)) {
+                    UIHelper.showError("Добавляемый период отпуска пересекается с Вашими ранее добавленными периодами отпуска! Период не будет добавлен.");
                 }
                 else {
                     if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
@@ -433,7 +468,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         btnRemoveHolidayPeriods.setWidth("300px");
         btnRemoveHolidayPeriods.setEnabled(false);
 
-        Label lblDatePeriod = new Label("Период отпуска:");
+        Label lblDatePeriod = new Label("Дата начала отпуска:");
 
         datePeriod.addValueChangeListener(new EmployeeHolidayPeriodValueChangeListener());
         Label lblNumDays = new Label("Количество дней отпуска:");

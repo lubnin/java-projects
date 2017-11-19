@@ -52,8 +52,8 @@ public class MainUI extends UI {
 
         final VerticalLayout rootLayout = new VerticalLayout();
         rootLayout.setSizeFull();
-        rootLayout.setMargin(true);
-        rootLayout.setSpacing(true);
+        rootLayout.setMargin(false);
+        rootLayout.setSpacing(false);
 
         setContent(rootLayout);
 

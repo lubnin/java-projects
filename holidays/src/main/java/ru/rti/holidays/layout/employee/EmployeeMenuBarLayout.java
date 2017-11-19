@@ -2,6 +2,7 @@ package ru.rti.holidays.layout.employee;
 
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.UI;
+import ru.rti.holidays.layout.base.BaseGridLayout;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.utility.NavigationUtils;
 import ru.rti.holidays.utility.SessionUtils;
