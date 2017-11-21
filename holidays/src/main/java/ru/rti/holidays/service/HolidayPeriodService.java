@@ -1,10 +1,7 @@
 package ru.rti.holidays.service;
 
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
-import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
-import ru.rti.holidays.entity.ProjectRole;
+import ru.rti.holidays.entity.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.Set;
 public interface HolidayPeriodService {
     List<HolidayPeriodNegotiationStatus> getAllHolidayPeriodNegotiationStatuses();
     HolidayPeriodNegotiationStatus saveHolidayPeriodNegotiationStatus(HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus);
+    HolidayPeriodNegotiationHistory saveHolidayPeriodNegotiationHistory(HolidayPeriodNegotiationHistory holidayPeriodNegotiationHistory);
     boolean deleteHolidayPeriodNegotiationStatuses(Iterable<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses);
     boolean setNegotiationStatusForEmployeeHolidayPeriods(Employee currentManager, Iterable<EmployeeHolidayPeriod> holidayPeriods, Collection<HolidayPeriodNegotiationStatus> allStatuses);
     boolean setNegotiationStatusForEmployeeHolidayPeriods(Iterable<EmployeeHolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus);

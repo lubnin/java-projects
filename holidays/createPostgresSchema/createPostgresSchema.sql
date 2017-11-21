@@ -55,8 +55,14 @@ left join employee emp on (hp.emp_id = emp.emp_id)
 left join holiday_period_neg_status hpns on (hp.hp_negotiation_status_id = hpns.hol_period_neg_status_id);
 
 select * from employee;
+update employee set password = '$2a$10$U5KvCQNEWbBXK3uPPUUwyutezoQLFf5W1pY1vIj..FnxU7VbmFa2O' where login_name = 'admin';
+--$2a$10$U5KvCQNEWbBXK3uPPUUwyutezoQLFf5W1pY1vIj..FnxU7VbmFa2O
 select * from team;
 select * from holiday_period;
+select * from department;
+select * from managed_teams;
+select * from project_role;
+select * from holiday_period_neg_history;
 
 --drop database holidays;
 

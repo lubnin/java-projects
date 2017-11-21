@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.rti.holidays.adapter.EmployeeToEmployeeHolidayPeriodAdapter;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
-import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
-import ru.rti.holidays.entity.Team;
+import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
+import ru.rti.holidays.layout.base.behaviour.ActionPerformedResult;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.layout.employee.EmployeeHolidayPeriodsCrossingDatesLayout;
 import ru.rti.holidays.layout.employee.EmployeeHolidaysLayout;
@@ -163,6 +161,16 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             holidayPeriodServiceImpl.saveHolidayPeriod((HolidayPeriod)objectForSave);
             //HolidayPeriod addedToDBHolidayPeriod = holidayPeriodServiceImpl.saveHolidayPeriod(newHolidayPeriod);
             //return addedToDBHolidayPeriod != null;
+        });
+
+        employeeHolidaysLayout.setAddNegotiationHistoryActionListener((layout, params) -> {
+            ActionPerformedResult<HolidayPeriodNegotiationHistory> actionPerformedResult = new ActionPerformedResult<>(true);
+            EmployeeHolidaysLayout layoutInstance = (EmployeeHolidaysLayout)layout;
+            if (params != null && params.length > 0) {
+                HolidayPeriodNegotiationHistory holidayPeriodNegotiationHistory = (HolidayPeriodNegotiationHistory)params[0];
+                holidayPeriodServiceImpl.saveHolidayPeriodNegotiationHistory(holidayPeriodNegotiationHistory);
+            }
+            return actionPerformedResult;
         });
 
         employeeHolidaysLayout.setCheckCrossingDatesButtonClickListener((layout, params) -> {

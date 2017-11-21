@@ -17,6 +17,8 @@ import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
+import ru.rti.holidays.layout.base.behaviour.ActionPerformedListener;
+import ru.rti.holidays.layout.base.behaviour.ActionPerformedResult;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickListener;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.layout.behaviour.*;
@@ -54,6 +56,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
 
+    private ActionPerformedListener<HolidayPeriodNegotiationHistory> addNegotiationHistoryActionListener;
     private ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener;
     private HolidayPeriod newHolidayPeriod = new HolidayPeriod();
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
@@ -365,6 +368,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         }
     }
 
+    private void fireSaveHolidayPeriodHistoryActionPerformedEvent(HolidayPeriodNegotiationHistory holidayPeriodNegotiationHistory) {
+        if (addNegotiationHistoryActionListener != null) {
+            addNegotiationHistoryActionListener.onActionPerformed(this, holidayPeriodNegotiationHistory);
+        }
+    }
     private void fireCheckCrossingDatesButtonClickedEvent() {
         if (checkCrossingDatesButtonClickListener != null) {
             ButtonClickResult<EmployeeHolidayPeriodCrossing> buttonClickResult = checkCrossingDatesButtonClickListener.onClick(employeeHolidayPeriodsCrossingDatesLayout);
@@ -434,15 +442,17 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
                     if (holidayDateStart.isBefore(nowPlus14Days)) {
                         HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
-                        hpNegHistory.setComment("Дата отпуска отстоит от даты добавления отпуска менее, чем 14 дней (2 недели).");
+                        hpNegHistory.setComment("Дата начала отпуска отстоит от даты добавления отпуска сотрудником менее, чем 14 дней (2 недели).");
                         hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
                         hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
-                        Set<HolidayPeriodNegotiationHistory> setHistories = newHolidayPeriod.getHolidayPeriodNegotiationHistories();
-                        if (setHistories == null) {
-                            setHistories = new HashSet<HolidayPeriodNegotiationHistory>();
-                        }
-                        setHistories.add(hpNegHistory);
-                        UIHelper.showNotification("Внимание: дата начала добавленного Вами отпуска отстоит от текущей даты менее, чем 14 дней.");
+                        //Set<HolidayPeriodNegotiationHistory> setHistories = newHolidayPeriod.getHolidayPeriodNegotiationHistories();
+                        //if (setHistories == null) {
+                        //    setHistories = new HashSet<HolidayPeriodNegotiationHistory>();
+                        //}
+                        //setHistories.add(hpNegHistory);
+                        hpNegHistory.setHolidayPeriod(newHolidayPeriod);
+                        fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
+                        //UIHelper.showNotification("Внимание: дата начала добавленного Вами отпуска отстоит от текущей даты менее, чем 14 дней.");
                     }
 
                     newHolidayPeriod.setEmployee(employee);
@@ -589,6 +599,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void setSendForNegotiationButtonClickListener(EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener) {
         this.sendForNegotiationButtonClickListener = sendForNegotiationButtonClickListener;
+    }
+
+    public ActionPerformedListener<HolidayPeriodNegotiationHistory> getAddNegotiationHistoryActionListener() {
+        return addNegotiationHistoryActionListener;
+    }
+
+    public void setAddNegotiationHistoryActionListener(ActionPerformedListener<HolidayPeriodNegotiationHistory> addNegotiationHistoryActionListener) {
+        this.addNegotiationHistoryActionListener = addNegotiationHistoryActionListener;
     }
 
     class EmployeeHolidayPeriodValueChangeListener implements HasValue.ValueChangeListener<LocalDate> {

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationHistory;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
+import ru.rti.holidays.repository.HolidayPeriodNegotiationHistoryRepository;
 import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
 import ru.rti.holidays.repository.HolidayPeriodRepository;
 import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
@@ -27,6 +29,9 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
 
     @Autowired
     private HolidayPeriodRepository holidayPeriodRepository;
+
+    @Autowired
+    private HolidayPeriodNegotiationHistoryRepository holidayPeriodNegotiationHistoryRepository;
 
     @Override
     public List<HolidayPeriodNegotiationStatus> getAllHolidayPeriodNegotiationStatuses() {
@@ -56,6 +61,11 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     @Override
     public HolidayPeriod saveHolidayPeriod(HolidayPeriod holidayPeriod) {
         return holidayPeriodRepository.saveAndFlush(holidayPeriod);
+    }
+
+    @Override
+    public HolidayPeriodNegotiationHistory saveHolidayPeriodNegotiationHistory(HolidayPeriodNegotiationHistory holidayPeriodNegotiationHistory) {
+        return holidayPeriodNegotiationHistoryRepository.saveAndFlush(holidayPeriodNegotiationHistory);
     }
 
     @Override
