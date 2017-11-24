@@ -12,6 +12,7 @@ import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
 import ru.rti.holidays.entity.*;
@@ -63,6 +64,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private EmployeeHolidayPeriodsCrossingDatesLayout employeeHolidayPeriodsCrossingDatesLayout =
             new EmployeeHolidayPeriodsCrossingDatesLayout(false, false);
 
+    private boolean isNowPlus14DaysCancelled = false;
 
     public EmployeeHolidaysLayout(Employee employee) {
         if (employee == null) {
@@ -438,33 +440,70 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
                     }
 
+
                     LocalDate holidayDateStart = newHolidayPeriod.getDateStart();
                     LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
+
+                    boolean isNowPlus14Days = false;
+                    isNowPlus14DaysCancelled = false;
+                    HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
+
                     if (holidayDateStart.isBefore(nowPlus14Days)) {
-                        HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
-                        hpNegHistory.setComment("Дата начала отпуска отстоит от даты добавления отпуска сотрудником менее, чем 14 дней (2 недели).");
+                        isNowPlus14Days = true;
+                        ConfirmDialog.show(UI.getCurrent(),
+                                "Внимание",
+                                "Вы действительно хотите добавить период отпуска, дата начала которого отстоит от текущей менее, чем на 14 дней?",
+                                "Да",
+                                "Нет",
+                                new ConfirmDialog.Listener() {
+                            @Override
+                            public void onClose(ConfirmDialog confirmDialog) {
+                                if (confirmDialog.isConfirmed()) {
+                                    //HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
+                                    hpNegHistory.setComment("Дата начала отпуска отстоит от даты добавления отпуска сотрудником менее, чем 14 дней (2 недели).");
+                                    hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
+                                    hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
+
+                                    newHolidayPeriod.setEmployee(employee);
+
+                                    fireSaveButtonClickedEvent(newHolidayPeriod);
+                                    hpNegHistory.setHolidayPeriod(newHolidayPeriod);
+                                    fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
+
+                                    fireCheckCrossingDatesButtonClickedEvent();
+
+                                    clearAllControls();
+
+                                    updateControlsFromBeanState();
+                                    refreshDataGrid();
+                                    UIHelper.showNotification("Период отпуска успешно сохранен.");
+                                } else {
+                                    isNowPlus14DaysCancelled = true;
+                                    // do nothing & don't add HP
+                                }
+                            }
+                        });
+                    } else {
+                        hpNegHistory.setComment("Сотрудник добавил период отпуска.");
                         hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
                         hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
-                        //Set<HolidayPeriodNegotiationHistory> setHistories = newHolidayPeriod.getHolidayPeriodNegotiationHistories();
-                        //if (setHistories == null) {
-                        //    setHistories = new HashSet<HolidayPeriodNegotiationHistory>();
-                        //}
-                        //setHistories.add(hpNegHistory);
-                        hpNegHistory.setHolidayPeriod(newHolidayPeriod);
-                        fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
-                        //UIHelper.showNotification("Внимание: дата начала добавленного Вами отпуска отстоит от текущей даты менее, чем 14 дней.");
                     }
 
-                    newHolidayPeriod.setEmployee(employee);
+                    if (!isNowPlus14Days) {
+                        newHolidayPeriod.setEmployee(employee);
 
-                    fireSaveButtonClickedEvent(newHolidayPeriod);
-                    fireCheckCrossingDatesButtonClickedEvent();
+                        fireSaveButtonClickedEvent(newHolidayPeriod);
+                        hpNegHistory.setHolidayPeriod(newHolidayPeriod);
+                        fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
 
-                    clearAllControls();
+                        fireCheckCrossingDatesButtonClickedEvent();
 
-                    updateControlsFromBeanState();
-                    refreshDataGrid();
-                    UIHelper.showNotification("Период отпуска успешно сохранен.");
+                        clearAllControls();
+
+                        updateControlsFromBeanState();
+                        refreshDataGrid();
+                        UIHelper.showNotification("Период отпуска успешно сохранен.");
+                    }
                 }
             } catch (ValidationException e) {
                 UIHelper.showError("Невозможно сохранить период отпуска. Проверьте заполненность полей ввода, а также наличие сообщений об ошибках для полей.");

@@ -54,7 +54,19 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     }
     @Override
     public boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods) {
-        holidayPeriodRepository.deleteInBatch(holidayPeriods);
+        try {
+            if (holidayPeriods != null) {
+                for (HolidayPeriod hp : holidayPeriods) {
+                    Set<HolidayPeriodNegotiationHistory> histories = hp.getHolidayPeriodNegotiationHistories();
+                    if (histories != null) {
+                        holidayPeriodNegotiationHistoryRepository.deleteInBatch(histories);
+                    }
+                }
+            }
+            holidayPeriodRepository.deleteInBatch(holidayPeriods);
+        } catch (Exception e) {
+            return false;
+        }
         return true;
     }
 
