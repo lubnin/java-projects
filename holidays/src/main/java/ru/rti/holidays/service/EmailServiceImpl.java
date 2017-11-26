@@ -13,6 +13,7 @@ import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.service.config.ConfigurationService;
 import ru.rti.holidays.utility.CommonUtils;
+import ru.rti.holidays.utility.EmailUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.mail.MessagingException;
@@ -105,7 +106,11 @@ public class EmailServiceImpl implements EmailService {
 
         boolean finalResult = true;
         for (Employee manager : managers) {
-            finalResult = finalResult && sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD);
+            if (!EmailUtils.isValidEmailAddress(manager.getEmail())) {
+                log.error("Invalid E-Mail address found: " + manager.getEmail());
+                continue;
+            }
+            finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD) && finalResult;
         }
 
         return finalResult;
@@ -137,7 +142,11 @@ public class EmailServiceImpl implements EmailService {
 
         boolean finalResult = true;
         for (Employee manager : managers) {
-            finalResult = finalResult && sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD);
+            if (!EmailUtils.isValidEmailAddress(manager.getEmail())) {
+                log.error("Invalid E-Mail address found: " + manager.getEmail());
+                continue;
+            }
+            finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD) && finalResult;
         }
 
         return finalResult;
@@ -184,7 +193,12 @@ public class EmailServiceImpl implements EmailService {
 
         String messageBodyFull = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
 
-        boolean result = sendMail(employeeEmail, messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_NEGOTIATED);
+        boolean result = false;
+        if (EmailUtils.isValidEmailAddress(employeeEmail)) {
+            result = sendMail(employeeEmail, messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_NEGOTIATED);
+        } else {
+            log.error("Invalid E-Mail address found: " + employeeEmail);
+        }
 
         return result;
     }
@@ -230,7 +244,12 @@ public class EmailServiceImpl implements EmailService {
 
         String messageBodyFull = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
 
-        boolean result = sendMail(employeeEmail, messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_REJECTED);
+        boolean result = false;
+        if (EmailUtils.isValidEmailAddress(employeeEmail)) {
+            result = sendMail(employeeEmail, messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_REJECTED);
+        } else {
+            log.error("Invalid E-Mail address found: " + employeeEmail);
+        }
 
         return result;
     }

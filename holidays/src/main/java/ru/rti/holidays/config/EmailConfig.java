@@ -32,7 +32,13 @@ public class EmailConfig {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
-
+        // Yandex special:
+        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.ssl.checkserveridentity", "false");
+        props.put("mail.smtp.ssl.trust", "*");
+        props.put("mail.smtp.connectiontimeout", "10000");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         return mailSender;
     }
 

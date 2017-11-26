@@ -2,59 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83b7ab4c-1867-4086-9ea6-ed5a1fb4f39b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringValueProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationHistoryUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/EmailUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/LoginFormLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/LoginFormLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminDepartmentManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminDepartmentManagementLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminHolidayPeriodNegotiationStatusLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminHolidayPeriodNegotiationStatusLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminProjectRoleManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminProjectRoleManagementLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminTeamManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminTeamManagementLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidayPeriodsCrossingDatesLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidayPeriodsCrossingDatesLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/generic/AddNewEntityLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/generic/AddNewEntityLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/team/AddNewTeamLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/team/AddNewTeamLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/EmployeeRepository.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/EmployeeRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodRepository.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/TeamRepository.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/TeamRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/ProjectRoleService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/ProjectRoleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/config/ConfigurationServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/config/ConfigurationServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/localization/LocalizationServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/localization/LocalizationServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/GlobalConstants.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/GlobalConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminPageView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminPageView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeSettingsView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeSettingsView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/error/AccessDeniedView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/error/AccessDeniedView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss" afterPath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/styles.css" afterPath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,31 +17,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EmployeeHolidaysLayout.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="301" column="35" lean-forward="false" selection-start-line="301" selection-start-column="35" selection-end-line="301" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StringValueProvider.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringValueProvider.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="7" column="55" lean-forward="false" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
-              <folding>
-                <element signature="e#199#200#0" expanded="true" />
-                <element signature="e#276#277#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="HolidayPeriod.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -104,11 +30,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HolidayPeriodDateValidator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/validator/HolidayPeriodDateValidator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmailUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/EmailUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="6" column="45" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="43" column="34" lean-forward="true" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+            <state relative-caret-position="545">
+              <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmailConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="592">
+              <caret line="37" column="28" lean-forward="false" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmailServiceImpl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="244">
+              <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -146,31 +116,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HolidayPeriodService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="HolidayPeriodNegotiationStatusUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="236">
               <caret line="90" column="30" lean-forward="false" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HolidayPeriodServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="102" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -232,8 +182,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeSettingsView.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/error/AccessDeniedView.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamServiceImpl.java" />
@@ -264,7 +212,6 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java" />
@@ -283,6 +230,9 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/EmailUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -581,6 +531,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
               <item name="converter" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -637,6 +596,15 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="holidays" type="462c0819:PsiDirectoryNode" />
               <item name="utility" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="validator" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
@@ -749,7 +717,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.Maven Debug">
+  <component name="RunManager" selected="Remote.Remote Debug">
     <configuration name="Compile Theme" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -1431,7 +1399,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40723982" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1441,7 +1408,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15837105" sideWeight="0.2671149" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26629212" sideWeight="0.73288506" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39101124" sideWeight="0.73288506" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1490,10 +1457,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java</url>
+          <line>107</line>
+          <properties />
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="199" />
+      <option name="time" value="201" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Remote">
@@ -1506,30 +1481,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/DoNothingExceptionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ExceptionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/RedirectToURLExceptionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="32">
@@ -1626,14 +1577,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
           <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="3" column="7" lean-forward="false" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -1953,8 +1896,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="43" column="34" lean-forward="true" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+        <state relative-caret-position="545">
+          <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/validator/HolidayPeriodDateValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/EmailUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="45" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="592">
+          <caret line="37" column="28" lean-forward="false" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding />
         </state>
       </provider>
