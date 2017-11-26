@@ -2,7 +2,6 @@ package ru.rti.holidays.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 
 import java.util.List;
@@ -11,4 +10,5 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface HolidayPeriodRepository extends JpaRepository<HolidayPeriod, Long> {
     List<HolidayPeriod> findByEmployeeId(Long employeeId);
+    HolidayPeriod findById(Long id);
 }

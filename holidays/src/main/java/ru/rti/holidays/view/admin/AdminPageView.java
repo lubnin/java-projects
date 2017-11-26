@@ -2,10 +2,7 @@ package ru.rti.holidays.view.admin;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Label;
 import ru.rti.holidays.design.admin.AdminPageDesign;
-import ru.rti.holidays.view.base.AbstractBaseView;
-import ru.rti.holidays.view.employee.EmployeeHolidaysView;
 
 /**
  * @deprecated

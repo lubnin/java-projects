@@ -1,14 +1,17 @@
 package ru.rti.holidays.service;
 
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
-import ru.rti.holidays.entity.*;
+import ru.rti.holidays.entity.Employee;
+import ru.rti.holidays.entity.HolidayPeriod;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationHistory;
+import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @SuppressWarnings("unused")
 public interface HolidayPeriodService {
+    HolidayPeriod getById(Long id);
     List<HolidayPeriodNegotiationStatus> getAllHolidayPeriodNegotiationStatuses();
     HolidayPeriodNegotiationStatus saveHolidayPeriodNegotiationStatus(HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus);
     HolidayPeriodNegotiationHistory saveHolidayPeriodNegotiationHistory(HolidayPeriodNegotiationHistory holidayPeriodNegotiationHistory);

@@ -7,10 +7,8 @@ import org.slf4j.LoggerFactory;
 import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
 import ru.rti.holidays.entity.Department;
-import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.department.AddNewDepartmentLayout;
-import ru.rti.holidays.layout.team.AddNewTeamLayout;
 
 import java.util.List;
 import java.util.Set;

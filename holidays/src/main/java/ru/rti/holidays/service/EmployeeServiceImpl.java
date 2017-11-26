@@ -3,18 +3,17 @@ package ru.rti.holidays.service;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.repository.EmployeeRepository;
 import ru.rti.holidays.repository.HolidayPeriodRepository;
 import ru.rti.holidays.utility.DateUtils;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @UIScope

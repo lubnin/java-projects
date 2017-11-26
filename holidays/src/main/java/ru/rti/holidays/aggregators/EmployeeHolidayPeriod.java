@@ -3,10 +3,8 @@ package ru.rti.holidays.aggregators;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.utility.DateUtils;
-import ru.rti.holidays.utility.GlobalConstants;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Class aggregator for displaying Employee's holiday periods in grids.

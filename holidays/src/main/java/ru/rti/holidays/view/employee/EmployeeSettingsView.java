@@ -3,7 +3,6 @@ package ru.rti.holidays.view.employee;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;

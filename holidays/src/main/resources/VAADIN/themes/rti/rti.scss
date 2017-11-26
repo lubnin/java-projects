@@ -119,10 +119,14 @@ $v-component-group-spacing: 6px;
         border: 1px solid #303739;
         border-top-color: #363d40;
         border-bottom-color: #272c2e;
-        background-color: #ed473b;
-        background-image: -webkit-linear-gradient(top, #ef4f42 2%, #db3a2f 98%);
-        background-image: linear-gradient(to bottom,#ef4f42 2%, #db3a2f 98%);
-        -webkit-box-shadow: inset 0 1px 2px #f18880, inset 0 0 1px #ef645b, 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
+        /*background-color: #ed473b;*/
+        background-color: #ff6600;
+        /*background-image: -webkit-linear-gradient(top, #ef4f42 2%, #db3a2f 98%);*/
+        background-image: -webkit-linear-gradient(top, #ff8533 2%, #e65c00 98%);
+        /*background-image: linear-gradient(to bottom,#ef4f42 2%, #db3a2f 98%);*/
+        background-image: linear-gradient(to bottom,#ff8533 2%, #e65c00 98%);
+        /*-webkit-box-shadow: inset 0 1px 2px #f18880, inset 0 0 1px #ef645b, 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);*/
+        -webkit-box-shadow: inset 0 1px 2px #ffa366, inset 0 0 1px #ff8533, 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
         box-shadow: inset 0 1px 2px #f18880, inset 0 0 1px #ef645b, 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
     }
@@ -149,6 +153,16 @@ $v-component-group-spacing: 6px;
         background-color: rgba(146, 12, 2, 0.2);
     }
 
+    p.rti-wrap {
+        width: 45em;
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: normal;
+    }
+
+    .rti-grid-comments td {
+        height:150px !important;
+    }
 
   /* An actual theme rule */
   /*

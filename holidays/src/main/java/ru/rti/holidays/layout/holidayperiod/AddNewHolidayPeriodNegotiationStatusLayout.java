@@ -7,9 +7,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
-import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
-import ru.rti.holidays.layout.projectrole.AddNewProjectRoleLayout;
 
 public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayout {
     private Binder<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatusBinder = new Binder<HolidayPeriodNegotiationStatus>();

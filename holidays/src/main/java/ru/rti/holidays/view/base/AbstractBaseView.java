@@ -4,24 +4,17 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.exception.NotAuthorizedAccessException;
 import ru.rti.holidays.exception.handler.DoNothingExceptionHandler;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
-import ru.rti.holidays.exception.handler.RedirectToURLExceptionHandler;
 import ru.rti.holidays.exception.handler.ViewErrorMessageExceptionHandler;
-import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**

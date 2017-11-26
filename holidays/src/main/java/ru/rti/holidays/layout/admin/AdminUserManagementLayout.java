@@ -3,12 +3,14 @@ package ru.rti.holidays.layout.admin;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
-import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
-import ru.rti.holidays.entity.*;
+import ru.rti.holidays.entity.Department;
+import ru.rti.holidays.entity.Employee;
+import ru.rti.holidays.entity.ProjectRole;
+import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.employee.AddNewEmployeeLayout;
 

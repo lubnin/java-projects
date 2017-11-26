@@ -1,7 +1,6 @@
 package ru.rti.holidays.service;
 
 import ru.rti.holidays.entity.Department;
-import ru.rti.holidays.entity.Team;
 
 import java.util.List;
 

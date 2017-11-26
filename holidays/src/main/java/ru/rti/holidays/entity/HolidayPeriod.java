@@ -3,13 +3,14 @@ package ru.rti.holidays.entity;
 import com.vaadin.spring.annotation.SpringComponent;
 import org.hibernate.annotations.GenericGenerator;
 import ru.rti.holidays.utility.CommonUtils;
+import ru.rti.holidays.utility.DateUtils;
 import ru.rti.holidays.utility.GlobalConstants;
+import ru.rti.holidays.utility.HolidayPeriodUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Entity which describes the holiday period for a particular Employee in the company.
@@ -22,13 +23,20 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class HolidayPeriod implements DBEntity {
     @Transient
+    public static final byte NEGOTIATION_MASK_NONE = 0;
+    @Transient
     public static final byte NEGOTIATION_MASK_TEAM_LEAD_ONLY = 1;
     @Transient
     public static final byte NEGOTIATION_MASK_PROJECT_MANAGER_ONLY = 2;
     @Transient
     public static final byte NEGOTIATION_MASK_LINE_MANAGER_ONLY = 4;
+    /* Combinations */
     @Transient
     public static final byte NEGOTIATION_MASK_TEAM_LEAD_AND_PROJECT_MANAGER = 3;
+    @Transient
+    public static final byte NEGOTIATION_MASK_LINE_MANAGER_AND_TEAM_LEAD = 5;
+    @Transient
+    public static final byte NEGOTIATION_MASK_LINE_MANAGER_AND_PROJECT_MANAGER = 6;
     @Transient
     public static final byte NEGOTIATION_MASK_ALL = 7;
 
@@ -88,6 +96,9 @@ public class HolidayPeriod implements DBEntity {
      *  0   0   0     = 0           This holiday period has not been negotiated by any of managers: LM, PM and TL
      *  0   0   1     = 1           This holiday period has been negotiated by TL
      *  0   1   1     = 3           This holiday period has been negotiated by TL & PM
+     *  1   0   0     = 4           This holiday period has been negotiated by LM
+     *  1   0   1     = 5           This holiday period has been negotiated by LM & TL
+     *  1   1   0     = 6           This holiday period has been negotiated by LM & PM
      *  1   1   1     = 7           This holiday period has been negotiated by All managers : TL, PM & LM
      */
     @Column(name = "negotiationMask")
@@ -235,19 +246,62 @@ public class HolidayPeriod implements DBEntity {
             setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_PROJECT_MANAGER_ONLY));
         } else if (manager.isLineManager()) {
             setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_LINE_MANAGER_ONLY));
+        } else if (manager.isSupervisor()) {
+            setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_ALL));
         }
     }
 
+    public byte getNegotiationMaskByManager(Employee manager) {
+        if (manager == null  || !manager.isManager()) {
+            return 0;
+        }
+        if (manager.isTeamLead()) {
+            return ((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_TEAM_LEAD_ONLY));
+        } else if (manager.isProjectManager()) {
+            return ((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_PROJECT_MANAGER_ONLY));
+        } else if (manager.isLineManager()) {
+            return ((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_LINE_MANAGER_ONLY));
+        } else if (manager.isSupervisor()) {
+            return ((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_ALL));
+        }
+        return 0;
+    }
+
+    private boolean isVisibleCommon() {
+        if (HolidayPeriodUtils.isHolidayPeriodInNewStatus(this)) {
+            return false;
+        }
+        return true;
+    }
+
     public boolean isVisibleForTeamLead() {
+        if (!isVisibleCommon()) {
+            return false;
+        }
+
         return true; // Always visible for team lead
     }
 
     public boolean isVisibleForProjectManager() {
-        return getSafeNegotiationMask() >= 1;
+        if (!isVisibleCommon()) {
+            return false;
+        }
+
+        return true;
+        //return getSafeNegotiationMask() >= 1;
     }
 
     public boolean isVisibleForLineManager() {
-        return getSafeNegotiationMask() >= 5;
+        if (!isVisibleCommon()) {
+            return false;
+        }
+
+        return true;
+        //return getSafeNegotiationMask() >= 5;
+    }
+
+    public boolean isVisibleForSupervisor() {
+        return true;
     }
 
     public Set<HolidayPeriodNegotiationHistory> getHolidayPeriodNegotiationHistories() {
@@ -261,11 +315,36 @@ public class HolidayPeriod implements DBEntity {
     public String getHolidayPeriodNegotiationHistoryComment() {
         if (!CommonUtils.checkIfEmpty(holidayPeriodNegotiationHistories)) {
             StringBuilder sb = new StringBuilder();
-            for (HolidayPeriodNegotiationHistory history : holidayPeriodNegotiationHistories) {
+
+            Set<HolidayPeriodNegotiationHistory> sortedHistories = new TreeSet<HolidayPeriodNegotiationHistory>(new Comparator<HolidayPeriodNegotiationHistory>() {
+                @Override
+                public int compare(HolidayPeriodNegotiationHistory o1, HolidayPeriodNegotiationHistory o2) {
+                    if (o1.getCreatedDate().before(o2.getCreatedDate())) {
+                        return -1;
+                    } else if (o2.getCreatedDate().before(o1.getCreatedDate())) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+
+            sortedHistories.addAll(holidayPeriodNegotiationHistories);
+
+            for (HolidayPeriodNegotiationHistory history : sortedHistories) {
                 if (sb.length() > 0) {
                     sb.append("<br/>");
                 }
-                sb.append(history.getComment());
+                String oldStatus = history.getOldStatus();
+                String newStatus = history.getNewStatus();
+                String fullComment = "";
+                if (CommonUtils.checkIfAnyIsEmpty(oldStatus, newStatus) || oldStatus.equals(newStatus)) {
+                    fullComment = String.format("[%s] - %s", DateUtils.getDateAsString(DateUtils.asLocalDate(history.getCreatedDate())), history.getComment());
+                } else {
+                    fullComment = String.format("[%s] - %s, Статус изменён с \"%s\" на \"%s\"", DateUtils.getDateAsString(DateUtils.asLocalDate(history.getCreatedDate())), history.getComment(), oldStatus, newStatus);
+                }
+
+                sb.append(fullComment);
             }
             return sb.toString();
         } else {

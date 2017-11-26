@@ -13,7 +13,6 @@ import ru.rti.holidays.repository.HolidayPeriodNegotiationHistoryRepository;
 import ru.rti.holidays.repository.HolidayPeriodNegotiationStatusRepository;
 import ru.rti.holidays.repository.HolidayPeriodRepository;
 import ru.rti.holidays.utility.HolidayPeriodNegotiationStatusUtils;
-import ru.rti.holidays.utility.HolidayPeriodUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -88,17 +87,32 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
             return false;
         }
 
-        for (EmployeeHolidayPeriod ehp : holidayPeriods) {
-            HolidayPeriod hp = ehp.getHolidayPeriod();
-            HolidayPeriodNegotiationStatus currentStatus = hp.getNegotiationStatus();
-            hp.setNegotiationMaskByManager(currentManager);
-            HolidayPeriodNegotiationStatus nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
-            if (nextStatus != null && !nextStatus.equals(currentStatus)) {
-                hp.setNegotiationStatus(nextStatus);
+        try {
+            for (EmployeeHolidayPeriod ehp : holidayPeriods) {
+                HolidayPeriod hp = ehp.getHolidayPeriod();
+                HolidayPeriodNegotiationStatus currentStatus = hp.getNegotiationStatus();
+                hp.setNegotiationMaskByManager(currentManager);
+                HolidayPeriodNegotiationStatus nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
+
+                HolidayPeriod hpToSave = holidayPeriodRepository.findById(hp.getId());
+                hpToSave.setNegotiationMaskByManager(currentManager);
+
+                if (nextStatus != null && !nextStatus.getId().equals(currentStatus.getId())) {
+                    hp.setNegotiationStatus(nextStatus);
+                    hpToSave.setNegotiationStatus(nextStatus);
+                }
+
+                holidayPeriodRepository.saveAndFlush(hpToSave);
             }
-            holidayPeriodRepository.saveAndFlush(hp);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public HolidayPeriod getById(Long id) {
+        return holidayPeriodRepository.findById(id);
     }
 
     @Override

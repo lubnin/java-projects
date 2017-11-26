@@ -2,11 +2,9 @@ package ru.rti.holidays.entity;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import org.hibernate.annotations.GenericGenerator;
-import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**

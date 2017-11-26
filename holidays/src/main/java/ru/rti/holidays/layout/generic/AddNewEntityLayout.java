@@ -6,7 +6,6 @@ import com.vaadin.data.ValueProvider;
 import com.vaadin.server.Setter;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 

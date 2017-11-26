@@ -10,7 +10,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.entity.Department;
-import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 
 public class AddNewDepartmentLayout extends BaseVerticalLayout {

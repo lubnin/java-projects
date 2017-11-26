@@ -2,17 +2,15 @@ package ru.rti.holidays.service;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
-import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.repository.TeamRepository;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 @UIScope

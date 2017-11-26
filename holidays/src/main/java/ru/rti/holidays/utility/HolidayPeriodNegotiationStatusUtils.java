@@ -1,5 +1,6 @@
 package ru.rti.holidays.utility;
 
+import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 
@@ -71,6 +72,64 @@ public class HolidayPeriodNegotiationStatusUtils {
 
         return null;
     }
+    public static HolidayPeriodNegotiationStatus getStatusBySpecialTypeFromList(Iterable<HolidayPeriodNegotiationStatus> allStatuses, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType statusType) {
+        if (statusType != null) {
+            return getStatusFromList(allStatuses, statusType);
+        }
+        return getNewStatusFromList(allStatuses);
+    }
+
+    public static HolidayPeriodNegotiationStatus calculateNextStatus(Employee manager, HolidayPeriod holidayPeriod, Collection<HolidayPeriodNegotiationStatus> allNegotiationStatuses) {
+        if (CommonUtils.checkIfAnyIsNull(manager, holidayPeriod, allNegotiationStatuses)) {
+            return null;
+        }
+        HolidayPeriodNegotiationStatus currentStatus = holidayPeriod.getNegotiationStatus();
+        if (currentStatus == null) {
+            return null;
+        }
+        byte futureNegMask = holidayPeriod.getNegotiationMaskByManager(manager);
+        if (futureNegMask == 0) {
+            return null;
+        }
+
+        HolidayPeriodNegotiationStatus futureStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(futureNegMask, allNegotiationStatuses);
+
+        return futureStatus;
+    }
+
+    public static HolidayPeriodNegotiationStatus getNextStatusByNegotiationMask(byte negMask, Collection<HolidayPeriodNegotiationStatus> allNegotiationStatuses) {
+        if (allNegotiationStatuses == null) {
+            return null;
+        }
+
+        byte negotiationMask = negMask;
+
+        if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_TEAM_LEAD_ONLY) {
+            // TL only
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_TEAM_LEAD_AND_PROJECT_MANAGER) {
+            // TL & PM
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_LINE_MANAGER_ONLY) {
+            // LM only
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_LINE_MANAGER_AND_PROJECT_MANAGER) {
+            // LM & PM
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_LINE_MANAGER_AND_TEAM_LEAD) {
+            // LM & TL
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_PROJECT_MANAGER_ONLY) {
+            // PM only
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_ALL) {
+            // all
+            return HolidayPeriodNegotiationStatusUtils.getOkStatusFromList(allNegotiationStatuses);
+        }
+        else {
+            return null;
+        }
+    }
 
     public static HolidayPeriodNegotiationStatus getNextStatusByNegotiationMask(HolidayPeriod holidayPeriod, Collection<HolidayPeriodNegotiationStatus> allNegotiationStatuses) {
         if (holidayPeriod == null || allNegotiationStatuses == null) {
@@ -78,15 +137,34 @@ public class HolidayPeriodNegotiationStatusUtils {
         }
 
         byte negotiationMask = holidayPeriod.getNegotiationMask();
-        if (negotiationMask == 1) {
-            // team lead
+        if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_TEAM_LEAD_ONLY) {
+            // TL only
             return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
-        } else if (negotiationMask == 3) {
-            // team lead + project manager
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_TEAM_LEAD_AND_PROJECT_MANAGER) {
+            // TL & PM
             return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
-        } else if (negotiationMask == 7) {
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_LINE_MANAGER_ONLY) {
+            // LM only
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_LINE_MANAGER_AND_PROJECT_MANAGER) {
+            // LM & PM
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_LINE_MANAGER_AND_TEAM_LEAD) {
+            // LM & TL
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_PROJECT_MANAGER_ONLY) {
+            // PM only
+            return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);
+        } else if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_ALL) {
             // all
             return HolidayPeriodNegotiationStatusUtils.getOkStatusFromList(allNegotiationStatuses);
+        }
+        else {
+            // return self
+            HolidayPeriodNegotiationStatus selfStatus = holidayPeriod.getNegotiationStatus();
+            if (selfStatus != null) {
+                HolidayPeriodNegotiationStatusUtils.getStatusBySpecialTypeFromList(allNegotiationStatuses, selfStatus.getNegotiationStatusType());
+            }
         }
 
         return null;

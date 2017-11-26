@@ -32,6 +32,10 @@ public class SessionUtils {
         return getCurrentUser().isLineManager();
     }
 
+    public static boolean isCurrentUserSupervisor() {
+        return getCurrentUser().isSupervisor();
+    }
+
     public static boolean isCurrentUserProjectManager() {
         return getCurrentUser().isProjectManager();
     }

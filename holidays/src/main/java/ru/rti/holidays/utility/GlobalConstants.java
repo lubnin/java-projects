@@ -73,6 +73,11 @@ public class GlobalConstants {
     public static final String CSS_HOLIDAY_PERIOD_CROSSING_MESSAGE = "hp_crossing_message";
 
     /**
+     * Style for Orange Buttons
+     */
+    public static final String CSS_RTI_BUTTON_ORANGE = "rti-button-orange";
+
+    /**
      * Style for info message RTI customized
      */
     public static final String CSS_INFO_MESSAGE = "rti_info";

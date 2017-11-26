@@ -1,13 +1,10 @@
 package ru.rti.holidays.layout.employee;
 
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickListener;
-import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import java.util.ArrayList;
@@ -82,9 +79,9 @@ public class EmployeeHolidayPeriodsCrossingDatesLayout extends BaseVerticalLayou
         controlPanelLayout.setSpacing(true);
         controlPanelLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        Button btnCheckCrossingDates = new Button("Проверить пересечения");
+       /* Button btnCheckCrossingDates = new Button("Проверить пересечения");
         btnCheckCrossingDates.setIcon(VaadinIcons.CALENDAR);
-        btnCheckCrossingDates.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        btnCheckCrossingDates.addStyleName(GlobalConstants.CSS_RTI_BUTTON_ORANGE); //(ValoTheme.BUTTON_FRIENDLY);
         btnCheckCrossingDates.setWidth("300px");
         btnCheckCrossingDates.addClickListener(clickEvent -> {
             if (checkCrossingDatesButtonClickListener != null) {
@@ -94,9 +91,9 @@ public class EmployeeHolidayPeriodsCrossingDatesLayout extends BaseVerticalLayou
                     grdHolidayCrossings.setItems(resultItems);
                 }
             }
-        });
+        });*/
 
-        controlPanelLayout.addComponent(btnCheckCrossingDates, 0, 0);
+        //controlPanelLayout.addComponent(btnCheckCrossingDates, 0, 0);
         controlPanelLayout.addComponent(lblInformationMessage, 0, 1);
 
         return controlPanelLayout;

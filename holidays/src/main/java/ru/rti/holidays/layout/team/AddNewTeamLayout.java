@@ -3,15 +3,14 @@ package ru.rti.holidays.layout.team;
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.entity.DBEntity;
-import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
-
-import java.util.List;
 
 public class AddNewTeamLayout extends BaseVerticalLayout {
     private Binder<Team> teamBinder = new Binder<Team>();

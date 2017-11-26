@@ -7,19 +7,21 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.grid.ColumnResizeMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
+import com.vaadin.ui.renderers.HtmlRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
+import ru.rti.holidays.converter.StringValueProvider;
 import ru.rti.holidays.entity.*;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.layout.base.behaviour.ActionPerformedListener;
-import ru.rti.holidays.layout.base.behaviour.ActionPerformedResult;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickListener;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
 import ru.rti.holidays.layout.behaviour.*;
@@ -48,6 +50,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Button btnRemoveHolidayPeriods = new Button("Удалить выбранные", VaadinIcons.DEL);
     private Button btnSendForNegotiation = new Button("Отправить на согласование", VaadinIcons.USERS);
+    private Button btnCheckCrossingDates = new Button("Проверить пересечения", VaadinIcons.ARROWS_CROSS);
+
     private List<HolidayPeriod> employeeHolidayPeriods;
     private DateField datePeriod = new DateField();
     private TextField txtNumDays = new TextField();
@@ -63,8 +67,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
     private EmployeeHolidayPeriodsCrossingDatesLayout employeeHolidayPeriodsCrossingDatesLayout =
             new EmployeeHolidayPeriodsCrossingDatesLayout(false, false);
-
-    private boolean isNowPlus14DaysCancelled = false;
 
     public EmployeeHolidaysLayout(Employee employee) {
         if (employee == null) {
@@ -181,15 +183,27 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
                         for (EmployeeHolidayPeriod empHolPeriod : selectedItems) {
                             if (empHolPeriod.getNegotiationStatus() != null && empHolPeriod.getNegotiationStatus().getNegotiationStatusType() != null) {
-                                HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType selPeriodNegStatusType = empHolPeriod.getNegotiationStatus().getNegotiationStatusType();
-                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK ||
-                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING) {
+                                //HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType selPeriodNegStatusType = empHolPeriod.getNegotiationStatus().getNegotiationStatusType();
+                                HolidayPeriod curHP = empHolPeriod.getHolidayPeriod();
+                                if (HolidayPeriodUtils.isHolidayPeriodInPartlyNegotiatedStatus(curHP) ||
+                                        HolidayPeriodUtils.isHolidayPeriodInOkStatus(curHP) ||
+                                        HolidayPeriodUtils.isHolidayPeriodInNegotiatingStatus(curHP)) {
+                                    hasSelectedPeriodsForRejection = true;
+                                }
+                                if (HolidayPeriodUtils.isHolidayPeriodInPartlyNegotiatedStatus(curHP) ||
+                                        HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(curHP) ||
+                                        HolidayPeriodUtils.isHolidayPeriodInNegotiatingStatus(curHP)) {
+                                    hasSelectedPeriodsForNegotiation = true;
+                                }
+/*                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK ||
+                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING ||
+                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus) {
                                     hasSelectedPeriodsForRejection = true;
                                 }
                                 if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_REJECTED ||
                                         selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING) {
                                     hasSelectedPeriodsForNegotiation = true;
-                                }
+                                }*/
                             }
 
                             if (selTeamId < 0) {
@@ -252,7 +266,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     .build()
                     .getHTML(), ContentMode.HTML);
 
-            Label lblProjectRoleType = new Label("Тип проектной роли: <b>" + employee.getProjectRoleSpecialTypeAsString() + "</b>", ContentMode.HTML);
+            //Label lblProjectRoleType = new Label("Тип проектной роли: <b>" + employee.getProjectRoleSpecialTypeAsString() + "</b>", ContentMode.HTML);
             Label lblTeam = null;
 
             if (!isNoRole) {
@@ -276,26 +290,34 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
             VerticalLayout pnlHolidaysLayout = new VerticalLayout();
 
+            grdHolidayPeriods.addStyleName("rti-grid-comments");
             grdHolidayPeriods.setItems(employeeHolidayPeriods);
             StyleGenerator<HolidayPeriod> styleGenerator = new GridHolidayPeriodCellStyleGenerator();
             grdHolidayPeriods.addColumn(HolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска").setStyleGenerator(styleGenerator);
             grdHolidayPeriods.addColumn(HolidayPeriod::getNumDays).setCaption("Количество дней отпуска").setStyleGenerator(styleGenerator);
             grdHolidayPeriods.addColumn(HolidayPeriod::getNegotiationStatusAsString).setCaption("Статус согласования").setStyleGenerator(styleGenerator);
-            grdHolidayPeriods.addColumn(HolidayPeriod::getHolidayPeriodNegotiationHistoryComment).setCaption("Комментарий").setStyleGenerator(styleGenerator);
+            grdHolidayPeriods.addColumn(HolidayPeriod::getHolidayPeriodNegotiationHistoryComment).setCaption("Комментарий").setStyleGenerator(styleGenerator).setRenderer(new StringValueProvider(), new HtmlRenderer());
             //grdHolidayPeriods.addColumn(HolidayPeriod::isCrossingDatesAsString).setCaption("Пересечения").setStyleGenerator(styleGenerator);
             grdHolidayPeriods.setHeightByRows(5);
             grdHolidayPeriods.setWidth("100%");
+            grdHolidayPeriods.setColumnResizeMode(ColumnResizeMode.ANIMATED);
+            /*grdHolidayPeriods.setDescriptionGenerator(holidayPeriod -> {
+                return "My Description" + holidayPeriod.getId() + "; dateStart" + holidayPeriod.getDateStartAsString();
+            });*/
 
             MultiSelectionModel<HolidayPeriod> selectionModel = (MultiSelectionModel<HolidayPeriod>)grdHolidayPeriods.setSelectionMode(Grid.SelectionMode.MULTI);
 
             selectionModel.addMultiSelectionListener(event -> {
                 Set<HolidayPeriod> selectedItems = event.getAllSelectedItems();
 
+                boolean isAtLeastOneItemSelected = selectedItems != null && selectedItems.size() > 0;
+
                 boolean isBtnRemoveSelectedHolidayPeriodsEnabled = false;
                 boolean isBtnSendForNegotiationEnabled = false;
 
-                isBtnRemoveSelectedHolidayPeriodsEnabled = selectedItems != null && selectedItems.size() > 0;
-                isBtnSendForNegotiationEnabled = selectedItems != null && selectedItems.size() > 0;
+
+                isBtnRemoveSelectedHolidayPeriodsEnabled = isAtLeastOneItemSelected;
+                isBtnSendForNegotiationEnabled = isAtLeastOneItemSelected;
 
                 flags_check:
                 for (HolidayPeriod hp : selectedItems) {
@@ -317,12 +339,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         }
                     }
                 }
+                enableCheckCrossingsButton(isAtLeastOneItemSelected);
                 btnRemoveHolidayPeriods.setEnabled(isBtnRemoveSelectedHolidayPeriodsEnabled);
                 btnSendForNegotiation.setEnabled(isBtnSendForNegotiationEnabled);
             });
 
+            pnlHolidaysLayout.addComponent(getTopButtonsPanelLayout());
             pnlHolidaysLayout.addComponent(grdHolidayPeriods);
-            pnlHolidaysLayout.addComponent(addControlsPanel());
+            pnlHolidaysLayout.addComponent(getBottomButtonsControlPanelLayout());
             pnlHolidaysLayout.setSizeFull();
             pnlPanelHolidays.setContent(pnlHolidaysLayout);
 
@@ -336,7 +360,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
             addComponent(lblEmployeeName);
             addComponent(lblProjectRole);
-            addComponent(lblProjectRoleType);
+            //addComponent(lblProjectRoleType);
             addComponent(lblTeam);
             addComponent(pnlPanelHolidays);
 
@@ -353,6 +377,123 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             handleException(e, e.getMessage());
         }
 
+    }
+
+    /**
+     * Adds panel with holiday period start, number of holiday period days & button 'Add'
+     * @return
+     */
+    private GridLayout getTopButtonsPanelLayout() {
+        GridLayout topButtonsPanelLayout = new GridLayout(5, 1);
+        topButtonsPanelLayout.setSizeFull();
+        topButtonsPanelLayout.setSpacing(true);
+        topButtonsPanelLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
+        topButtonsPanelLayout.setColumnExpandRatio(0, 1);
+        topButtonsPanelLayout.setColumnExpandRatio(1,1);
+        topButtonsPanelLayout.setColumnExpandRatio(2,1);
+        topButtonsPanelLayout.setColumnExpandRatio(3,1);
+        topButtonsPanelLayout.setColumnExpandRatio(4,6);
+
+        Label lblDatePeriod = new Label("Введите дату начала отпуска:");
+
+        datePeriod.addValueChangeListener(new EmployeeHolidayPeriodValueChangeListener());
+        Label lblNumDays = new Label("Введите количество дней отпуска:");
+
+        bindDatePeriodControlFields();
+
+        Button btnAddHolidayPeriod = new Button("Добавить период отпуска", VaadinIcons.CHECK);
+        btnAddHolidayPeriod.addClickListener(event -> {
+            try {
+                holidayPeriodBinder.writeBean(newHolidayPeriod);
+                if (newHolidayPeriod == null || newHolidayPeriod.getDateStart() == null || newHolidayPeriod.getNumDays() == null || newHolidayPeriod.getNumDays() <= 0) {
+                    UIHelper.showError("Поля для отпуска должны быть заполнены.");
+                } else if (checkForOwnCrossingDates(newHolidayPeriod)) {
+                    UIHelper.showError("Добавляемый период отпуска пересекается с Вашими ранее добавленными периодами отпуска! Период не будет добавлен.");
+                }
+                else {
+                    if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
+                        newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
+                    }
+
+
+                    LocalDate holidayDateStart = newHolidayPeriod.getDateStart();
+                    LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
+
+                    boolean isNowPlus14Days = false;
+                    HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
+
+                    if (holidayDateStart.isBefore(nowPlus14Days)) {
+                        isNowPlus14Days = true;
+                        ConfirmDialog.show(UI.getCurrent(),
+                                "Внимание",
+                                "Вы действительно хотите добавить период отпуска, дата начала которого отстоит от текущей менее, чем на 14 дней?",
+                                "Да",
+                                "Нет",
+                                new ConfirmDialog.Listener() {
+                                    @Override
+                                    public void onClose(ConfirmDialog confirmDialog) {
+                                        if (confirmDialog.isConfirmed()) {
+                                            //HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
+                                            hpNegHistory.setComment("Дата начала отпуска отстоит от даты добавления отпуска сотрудником менее, чем 14 дней (2 недели).");
+                                            hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
+                                            hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
+
+                                            newHolidayPeriod.setEmployee(employee);
+
+                                            fireSaveButtonClickedEvent(newHolidayPeriod);
+                                            hpNegHistory.setHolidayPeriod(newHolidayPeriod);
+                                            fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
+
+                                            fireCheckCrossingDatesButtonClickedEvent();
+
+                                            clearAllControls();
+
+                                            updateControlsFromBeanState();
+                                            refreshDataGrid();
+                                            UIHelper.showNotification("Период отпуска успешно сохранен.");
+                                        }
+                                    }
+                                });
+                    } else {
+                        hpNegHistory.setComment("Сотрудник добавил период отпуска.");
+                        hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
+                        hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
+                    }
+
+                    if (!isNowPlus14Days) {
+                        newHolidayPeriod.setEmployee(employee);
+
+                        fireSaveButtonClickedEvent(newHolidayPeriod);
+                        hpNegHistory.setHolidayPeriod(newHolidayPeriod);
+                        fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
+
+                        fireCheckCrossingDatesButtonClickedEvent();
+
+                        clearAllControls();
+
+                        updateControlsFromBeanState();
+                        refreshDataGrid();
+                        UIHelper.showNotification("Период отпуска успешно сохранен.");
+                    }
+                }
+            } catch (ValidationException e) {
+                UIHelper.showError("Невозможно сохранить период отпуска. Проверьте заполненность полей ввода, а также наличие сообщений об ошибках для полей.");
+            }
+        });
+
+        btnAddHolidayPeriod.setWidth("300px");
+        btnAddHolidayPeriod.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+
+        topButtonsPanelLayout.addComponent(lblDatePeriod, 0,0);
+        topButtonsPanelLayout.addComponent(datePeriod, 1,0);
+        topButtonsPanelLayout.addComponent(lblNumDays, 2,0);
+        topButtonsPanelLayout.addComponent(txtNumDays, 3,0);
+        topButtonsPanelLayout.addComponent(btnAddHolidayPeriod,4,0);
+
+        topButtonsPanelLayout.setComponentAlignment(btnAddHolidayPeriod, Alignment.MIDDLE_LEFT);
+
+        return topButtonsPanelLayout;
     }
 
     @Override
@@ -419,105 +560,22 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         return false;
     }
 
-    protected GridLayout addControlsPanel() {
-        GridLayout addHolidayPeriodLayout = new GridLayout(5, 3);
-        addHolidayPeriodLayout.setSizeFull();
-        addHolidayPeriodLayout.setSpacing(true);
-        addHolidayPeriodLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        //addHolidayPeriodLayout.addStyleName(GlobalConstants.CSS_DEBUG_BORDER);
+    /**
+     * Bottom layout with buttons 'Remove', 'Send for Negotiation', 'Check for crossings'
+     * @return
+     */
+    protected GridLayout getBottomButtonsControlPanelLayout() {
+        GridLayout bottomButtonsControlPanelLayout = new GridLayout(4, 1);
+        bottomButtonsControlPanelLayout.setSizeFull();
+        bottomButtonsControlPanelLayout.setSpacing(false);
+        bottomButtonsControlPanelLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        Button btnAddHolidayPeriod = new Button("Добавить период отпуска", VaadinIcons.CHECK);
-        btnAddHolidayPeriod.addClickListener(event -> {
-            try {
-                holidayPeriodBinder.writeBean(newHolidayPeriod);
-                if (newHolidayPeriod == null || newHolidayPeriod.getDateStart() == null || newHolidayPeriod.getNumDays() == null || newHolidayPeriod.getNumDays() <= 0) {
-                    UIHelper.showError("Поля для отпуска должны быть заполнены.");
-                } else if (checkForOwnCrossingDates(newHolidayPeriod)) {
-                    UIHelper.showError("Добавляемый период отпуска пересекается с Вашими ранее добавленными периодами отпуска! Период не будет добавлен.");
-                }
-                else {
-                    if (allNegotiationStatuses != null && allNegotiationStatuses.size() > 0) {
-                        newHolidayPeriod.setNegotiationStatus(HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses));
-                    }
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(0,1);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(1, 1);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(2,1);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(3, 10);
 
-
-                    LocalDate holidayDateStart = newHolidayPeriod.getDateStart();
-                    LocalDate nowPlus14Days = LocalDate.now().plusDays(14);
-
-                    boolean isNowPlus14Days = false;
-                    isNowPlus14DaysCancelled = false;
-                    HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
-
-                    if (holidayDateStart.isBefore(nowPlus14Days)) {
-                        isNowPlus14Days = true;
-                        ConfirmDialog.show(UI.getCurrent(),
-                                "Внимание",
-                                "Вы действительно хотите добавить период отпуска, дата начала которого отстоит от текущей менее, чем на 14 дней?",
-                                "Да",
-                                "Нет",
-                                new ConfirmDialog.Listener() {
-                            @Override
-                            public void onClose(ConfirmDialog confirmDialog) {
-                                if (confirmDialog.isConfirmed()) {
-                                    //HolidayPeriodNegotiationHistory hpNegHistory = new HolidayPeriodNegotiationHistory();
-                                    hpNegHistory.setComment("Дата начала отпуска отстоит от даты добавления отпуска сотрудником менее, чем 14 дней (2 недели).");
-                                    hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
-                                    hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
-
-                                    newHolidayPeriod.setEmployee(employee);
-
-                                    fireSaveButtonClickedEvent(newHolidayPeriod);
-                                    hpNegHistory.setHolidayPeriod(newHolidayPeriod);
-                                    fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
-
-                                    fireCheckCrossingDatesButtonClickedEvent();
-
-                                    clearAllControls();
-
-                                    updateControlsFromBeanState();
-                                    refreshDataGrid();
-                                    UIHelper.showNotification("Период отпуска успешно сохранен.");
-                                } else {
-                                    isNowPlus14DaysCancelled = true;
-                                    // do nothing & don't add HP
-                                }
-                            }
-                        });
-                    } else {
-                        hpNegHistory.setComment("Сотрудник добавил период отпуска.");
-                        hpNegHistory.setOldStatus(newHolidayPeriod.getNegotiationStatusAsString());
-                        hpNegHistory.setNewStatus(newHolidayPeriod.getNegotiationStatusAsString());
-                    }
-
-                    if (!isNowPlus14Days) {
-                        newHolidayPeriod.setEmployee(employee);
-
-                        fireSaveButtonClickedEvent(newHolidayPeriod);
-                        hpNegHistory.setHolidayPeriod(newHolidayPeriod);
-                        fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
-
-                        fireCheckCrossingDatesButtonClickedEvent();
-
-                        clearAllControls();
-
-                        updateControlsFromBeanState();
-                        refreshDataGrid();
-                        UIHelper.showNotification("Период отпуска успешно сохранен.");
-                    }
-                }
-            } catch (ValidationException e) {
-                UIHelper.showError("Невозможно сохранить период отпуска. Проверьте заполненность полей ввода, а также наличие сообщений об ошибках для полей.");
-            }
-        });
-
-        addHolidayPeriodLayout.setColumnExpandRatio(0, 3);
-        addHolidayPeriodLayout.setColumnExpandRatio(1, 1);
-        addHolidayPeriodLayout.setColumnExpandRatio(2, 1);
-        addHolidayPeriodLayout.setColumnExpandRatio(3, 1);
-        addHolidayPeriodLayout.setColumnExpandRatio(4, 1);
-
-        btnAddHolidayPeriod.setWidth("300px");
-        btnAddHolidayPeriod.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+        enableCheckCrossingsButton(false);
 
         btnRemoveHolidayPeriods.addStyleName(ValoTheme.BUTTON_DANGER);
         btnRemoveHolidayPeriods.addClickListener(event -> {
@@ -531,13 +589,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         btnRemoveHolidayPeriods.setWidth("300px");
         btnRemoveHolidayPeriods.setEnabled(false);
 
-        Label lblDatePeriod = new Label("Дата начала отпуска:");
-
-        datePeriod.addValueChangeListener(new EmployeeHolidayPeriodValueChangeListener());
-        Label lblNumDays = new Label("Количество дней отпуска:");
-
-        bindDatePeriodControlFields();
-
+        btnSendForNegotiation.addStyleName(ValoTheme.BUTTON_PRIMARY);
         btnSendForNegotiation.addClickListener(event -> {
             if (sendForNegotiationButtonClickListener != null) {
                 sendForNegotiationButtonClickListener.onSubmitSelectedPeriodsForNegotiation(this, grdHolidayPeriods.getSelectedItems(), HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
@@ -547,15 +599,25 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         btnSendForNegotiation.setWidth("300px");
         btnSendForNegotiation.setEnabled(false);
 
+        //Button btnCheckCrossingDates = new Button("Проверить пересечения");
+        //btnCheckCrossingDates.setIcon(VaadinIcons.CALENDAR);
+        btnCheckCrossingDates.addStyleName(GlobalConstants.CSS_RTI_BUTTON_ORANGE);
+        btnCheckCrossingDates.setWidth("300px");
+        btnCheckCrossingDates.addClickListener(clickEvent -> {
+            //TODO: check crossings only for selected items. commented for now
+            //fireCheckCrossingDatesButtonClickedEvent();
+        });
 
-        addHolidayPeriodLayout.addComponent(btnAddHolidayPeriod,0,0);
-        addHolidayPeriodLayout.addComponent(lblDatePeriod, 1,0);
-        addHolidayPeriodLayout.addComponent(datePeriod, 2,0);
-        addHolidayPeriodLayout.addComponent(lblNumDays, 3,0);
-        addHolidayPeriodLayout.addComponent(txtNumDays, 4,0);
-        addHolidayPeriodLayout.addComponent(btnRemoveHolidayPeriods, 0,1);
-        addHolidayPeriodLayout.addComponent(btnSendForNegotiation, 0,2);
-        return addHolidayPeriodLayout;
+        bottomButtonsControlPanelLayout.addComponent(btnCheckCrossingDates, 0,0);
+        bottomButtonsControlPanelLayout.addComponent(btnSendForNegotiation, 1,0);
+        bottomButtonsControlPanelLayout.addComponent(btnRemoveHolidayPeriods, 2,0);
+        bottomButtonsControlPanelLayout.addComponent(new Label(""), 3,0);
+
+        return bottomButtonsControlPanelLayout;
+    }
+
+    public void enableCheckCrossingsButton(boolean enable) {
+        btnCheckCrossingDates.setEnabled(enable);
     }
 
     @Override

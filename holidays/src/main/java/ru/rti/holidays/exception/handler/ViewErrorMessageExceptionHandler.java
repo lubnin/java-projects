@@ -1,8 +1,5 @@
 package ru.rti.holidays.exception.handler;
 
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
-import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.utility.UIHelper;
 
 /**

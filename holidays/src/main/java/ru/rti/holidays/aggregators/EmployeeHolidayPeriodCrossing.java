@@ -4,7 +4,6 @@ import ru.rti.holidays.utility.DateUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EmployeeHolidayPeriodCrossing {
 

@@ -15,7 +15,6 @@ import ru.rti.holidays.utility.GlobalConstants;
 import ru.rti.holidays.view.base.AbstractBaseView;
 
 import java.util.Collection;
-import java.util.Set;
 
 @SpringView(name = EmployeeAllHolidaysView.VIEW_NAME)
 @UIScope

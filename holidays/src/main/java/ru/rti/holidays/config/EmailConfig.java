@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import ru.rti.holidays.service.config.ConfigurationService;
 
 import java.util.Properties;

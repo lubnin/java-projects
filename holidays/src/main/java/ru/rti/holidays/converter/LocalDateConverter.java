@@ -4,7 +4,6 @@ import ru.rti.holidays.utility.DateUtils;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 

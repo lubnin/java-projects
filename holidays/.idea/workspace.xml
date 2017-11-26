@@ -2,12 +2,59 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83b7ab4c-1867-4086-9ea6-ed5a1fb4f39b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_vaadin_addon_confirmdialog_3_2_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringValueProvider.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationHistoryUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/holidays.iml" afterPath="$PROJECT_DIR$/holidays.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/LoginFormLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/LoginFormLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminDepartmentManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminDepartmentManagementLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminHolidayPeriodNegotiationStatusLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminHolidayPeriodNegotiationStatusLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminProjectRoleManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminProjectRoleManagementLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminTeamManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminTeamManagementLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidayPeriodsCrossingDatesLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidayPeriodsCrossingDatesLayout.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/generic/AddNewEntityLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/generic/AddNewEntityLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/team/AddNewTeamLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/team/AddNewTeamLayout.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/EmployeeRepository.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/EmployeeRepository.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodRepository.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodRepository.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/TeamRepository.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/TeamRepository.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/ProjectRoleService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/ProjectRoleService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamService.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/config/ConfigurationServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/config/ConfigurationServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/localization/LocalizationServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/localization/LocalizationServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/GlobalConstants.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/GlobalConstants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminPageView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminPageView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeSettingsView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeSettingsView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/error/AccessDeniedView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/error/AccessDeniedView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss" afterPath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/styles.css" afterPath="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/styles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,91 +66,69 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EmployeeHolidaysLayout.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EmployeeHolidaysLayout.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="478" column="98" lean-forward="false" selection-start-line="478" selection-start-column="98" selection-end-line="478" selection-end-column="98" />
-              <folding />
+            <state relative-caret-position="417">
+              <caret line="301" column="35" lean-forward="false" selection-start-line="301" selection-start-column="35" selection-end-line="301" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="120" column="21" lean-forward="false" selection-start-line="120" selection-start-column="21" selection-end-line="120" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ButtonClickListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ButtonClickListener.java">
+      <file leaf-file-name="StringValueProvider.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringValueProvider.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="112">
-              <caret line="7" column="1" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="7" selection-end-column="1" />
+              <caret line="7" column="55" lean-forward="false" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+              <folding>
+                <element signature="e#199#200#0" expanded="true" />
+                <element signature="e#276#277#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HolidayPeriod.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="343" column="172" lean-forward="false" selection-start-line="343" selection-start-column="172" selection-end-line="343" selection-end-column="172" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#10700#10733#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="452">
+              <caret line="43" column="34" lean-forward="true" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ActionPerformedListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ActionPerformedListener.java">
+      <file leaf-file-name="DateUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/DateUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="6" column="46" lean-forward="false" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+            <state relative-caret-position="32">
+              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ButtonClickResult.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ButtonClickResult.java">
+      <file leaf-file-name="HolidayPeriodUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="30" lean-forward="false" selection-start-line="4" selection-start-column="30" selection-end-line="27" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ActionPerformedResult.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ActionPerformedResult.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="6" column="38" lean-forward="false" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HolidayPeriodService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="13" column="100" lean-forward="false" selection-start-line="13" selection-start-column="100" selection-end-line="13" selection-end-column="100" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HolidayPeriodServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="67" column="25" lean-forward="false" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HolidayPeriodNegotiationHistory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriodNegotiationHistory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            <state relative-caret-position="317">
+              <caret line="46" column="26" lean-forward="false" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -112,8 +137,40 @@
       <file leaf-file-name="EmployeeHolidaysView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="197" column="43" lean-forward="false" selection-start-line="197" selection-start-column="43" selection-end-line="197" selection-end-column="43" />
+            <state relative-caret-position="595">
+              <caret line="164" column="74" lean-forward="false" selection-start-line="164" selection-start-column="74" selection-end-line="164" selection-end-column="74" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HolidayPeriodService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HolidayPeriodNegotiationStatusUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="90" column="30" lean-forward="false" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HolidayPeriodServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="339">
+              <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="102" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -131,10 +188,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;anonymousUser&quot;</find>
-      <find>checkCrossDatesButtonClickListener</find>
-      <find>checkCrossingDatesButtonClickListener</find>
-      <find>employeeHolidayPeriodsCrossingDatesLayout</find>
       <find>isCrossingDates</find>
       <find>checkCrossDates</find>
       <find>setNewBeanValue</find>
@@ -161,6 +214,10 @@
       <find>setItems</find>
       <find>grdHolidayPeriods</find>
       <find>holidayPeriodNegotiationHistories</find>
+      <find>addControlsPanel</find>
+      <find>checkCrossingDatesButtonClickListener</find>
+      <find>btnCheckCrossingDates</find>
+      <find>isNowPlus14DaysCancelled</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -175,57 +232,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/common/ProjectRoleSpecialTypeCaptionGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/projectrole/AddNewProjectRoleLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/LoginUI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Authority.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/DBEntity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/ProjectRole.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriodNegotiationStatus.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Department.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriodNegotiationHistory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminDepartmentManagementLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/DepartmentRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmailServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeSettingsView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/error/AccessDeniedView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/TeamService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/ProjectRoleService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeService.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminMainView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/AddNewEmployeeLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Employee.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/DepartmentService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/localization/LocalizationServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/config/ConfigurationServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/EmployeeRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/TeamRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/LoginFormLayout.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/team/AddNewTeamLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ru/rti/holidays/listener/HolidaysNonSpringTestsListener.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ru/rti/holidays/HolidaysNonSpringTestsRunner.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ru/rti/holidays/HolidaysNonSpringTestMain.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ru/rti/holidays/HolidaysNonSpringTests.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HtmlUtils.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ru/rti/holidays/simple/HtmlUtilsTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/MainUI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseCommonLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseGridLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/generic/AddNewEntityLayout.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHorizontalMenuBarLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeSettingsLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHorizontalButtonMenuBarLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeAllHolidaysLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/DateUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/validator/HolidayPeriodDateValidator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodNegotiationHistoryRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidayPeriodsCrossingDatesLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminDepartmentManagementLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminHolidayPeriodNegotiationStatusLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminProjectRoleManagementLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminTeamManagementLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationHistoryUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseVerticalLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ActionPerformedResult.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ActionPerformedListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/GridCommentColumnConverter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringSimpleResult.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringValueProvider.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
       </list>
     </option>
   </component>
@@ -504,6 +561,119 @@
             </path>
             <path>
               <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="converter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+              <item name="employee" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="utility" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="employee" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
+              <item name="holidays" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="rti" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="holidays" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
             <path>
@@ -579,7 +749,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Remote.Remote Debug">
+  <component name="RunManager" selected="Maven.Maven Debug">
     <configuration name="Compile Theme" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -1208,7 +1378,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511244327442</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="1) Работает добавление комментариев, связанных с периодом отпуска&#10;2) Работает всплывающий диалог подтверждения, что отпуск, который добавляет сотрудник отстоит от текущей даты менее, чем 14 дней (добавлен addon ConfirmDialog)">
+      <created>1511558928781</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1511558928781</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1254,32 +1431,33 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40723982" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21460675" sideWeight="0.49285713" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15837105" sideWeight="0.2671149" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38202247" sideWeight="0.73288506" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26629212" sideWeight="0.73288506" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1717604" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22493887" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38988763" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30337077" sideWeight="0.64792174" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20561798" sideWeight="0.64792174" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07701711" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21524663" sideWeight="0.49285713" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1307,313 +1485,227 @@
     <MESSAGE value="1) Добавлена проверка на пересечения отпуска сотрудника между его же отпусками.&#10;2) Добавлен базовый грид лэйаут&#10;3) переделано меню пользователя (рефакторинг CR)&#10;4) Рефакторинг лэйаута основных страниц&#10;5) Исправлен дефект с добавлением дат (addDays)&#10;6) Подготовлен стиль для оранжевой кнопки. Нужна доработка." />
     <MESSAGE value="Добавлен проект для IDEA" />
     <MESSAGE value="Логика добавления истории периода отпуска (комментарий)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Логика добавления истории периода отпуска (комментарий)" />
+    <MESSAGE value="1) Работает добавление комментариев, связанных с периодом отпуска&#10;2) Работает всплывающий диалог подтверждения, что отпуск, который добавляет сотрудник отстоит от текущей даты менее, чем 14 дней (добавлен addon ConfirmDialog)" />
+    <option name="LAST_COMMIT_MESSAGE" value="1) Работает добавление комментариев, связанных с периодом отпуска&#10;2) Работает всплывающий диалог подтверждения, что отпуск, который добавляет сотрудник отстоит от текущей даты менее, чем 14 дней (добавлен addon ConfirmDialog)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="193" />
+      <option name="time" value="199" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Remote">
         <watch expression="grdHolidayPeriods.getDataProvider()" language="JAVA" />
         <watch expression="grdHolidayPeriods.getDataProvider()" language="JAVA" />
+        <watch expression="hp" language="JAVA" />
+        <watch expression="hp.getNegotiationMask()" language="JAVA" />
+        <watch expression="hpToSave" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HtmlUtils.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/DoNothingExceptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-310">
+        <state relative-caret-position="80">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/team/AddNewTeamLayout.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ExceptionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/RedirectToURLExceptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
-          <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/NavigationUtils.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/exception/handler/ViewErrorMessageExceptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="23" column="23" lean-forward="false" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/MainUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="55" column="35" lean-forward="false" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/VerticalLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="10" column="47" lean-forward="false" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/AbstractOrderedLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="28" column="66" lean-forward="false" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/AbstractLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="13" column="22" lean-forward="false" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/Component.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="19" column="17" lean-forward="false" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/HasComponents.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="14" column="45" lean-forward="false" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/ComponentContainer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="10" column="49" lean-forward="false" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/Layout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/CustomLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="25" column="40" lean-forward="true" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1250">
-          <caret line="11" column="41" lean-forward="false" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseCommonLayout.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseGridLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-576">
-          <caret line="27" column="35" lean-forward="false" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/GridLayout.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="46" column="11" lean-forward="false" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/StandardBaseLayoutDrawer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192">
-          <caret line="9" column="11" lean-forward="false" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeSettingsLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+        <state relative-caret-position="32">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/GlobalConstants.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Authority.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="62" column="67" lean-forward="false" selection-start-line="62" selection-start-column="31" selection-end-line="62" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeAllHolidaysView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="39" column="66" lean-forward="false" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHorizontalButtonMenuBarLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="32" column="10" lean-forward="false" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+        <state relative-caret-position="192">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeAllHolidaysLayout.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/DBEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="13" column="58" lean-forward="false" selection-start-line="13" selection-start-column="58" selection-end-line="13" selection-end-column="58" />
-          <folding />
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/styles.css">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Department.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="2280" column="1" lean-forward="true" selection-start-line="2241" selection-start-column="0" selection-end-line="2280" selection-end-column="1" />
+        <state relative-caret-position="191">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriodNegotiationHistory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+        <state relative-caret-position="173">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriodNegotiationStatus.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1264">
+        <state relative-caret-position="206">
           <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/style/GridHolidayPeriodCellStyleGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/AbstractComponent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5250">
-          <caret line="435" column="18" lean-forward="false" selection-start-line="435" selection-start-column="18" selection-end-line="435" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/Grid.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12576">
-          <caret line="1018" column="17" lean-forward="false" selection-start-line="1018" selection-start-column="17" selection-end-line="1018" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/data/HasDataProvider.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="13" column="17" lean-forward="false" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/EmployeeServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2032">
-          <caret line="155" column="37" lean-forward="false" selection-start-line="155" selection-start-column="37" selection-end-line="155" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/DateUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="56" column="25" lean-forward="false" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
-          <folding>
-            <element signature="e#1798#1799#0" expanded="false" />
-            <element signature="e#1851#1852#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/validator/HolidayPeriodDateValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="22" column="10" lean-forward="false" selection-start-line="22" selection-start-column="10" selection-end-line="25" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3360">
-          <caret line="253" column="48" lean-forward="false" selection-start-line="253" selection-start-column="15" selection-end-line="253" selection-end-column="48" />
-          <folding>
-            <element signature="e#6016#6017#0" expanded="false" />
-            <element signature="e#6046#6047#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodNegotiationStatusRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="11" column="4" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/security/UserAuthorizationServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/NavigationContextHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="32">
+          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodNegotiationHistoryRepository.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/ProjectRole.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" column="11" lean-forward="true" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        <state relative-caret-position="32">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/AutoConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="3" column="7" lean-forward="false" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/LocaleConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/security/SpringSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/component/security/CustomAccessDeniedHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/component/servlet/CustomVaadinServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/component/BoldLabel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/component/PageTitle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriodCrossing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/adapter/EmployeeToEmployeeHolidayPeriodAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -1622,98 +1714,247 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Employee.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="256" column="40" lean-forward="false" selection-start-line="256" selection-start-column="40" selection-end-line="256" selection-end-column="40" />
+        <state relative-caret-position="-4720">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding>
-            <element signature="e#696#723#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseVerticalLayout.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/aggregators/EmployeeHolidayPeriod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="23" column="80" lean-forward="false" selection-start-line="23" selection-start-column="80" selection-end-line="23" selection-end-column="80" />
+        <state relative-caret-position="-263">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/SessionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="42" column="33" lean-forward="false" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+          <folding>
+            <element signature="e#1106#1107#0" expanded="false" />
+            <element signature="e#1161#1162#0" expanded="false" />
+            <element signature="e#1216#1217#0" expanded="false" />
+            <element signature="e#1270#1271#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/event/ListenerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="228" column="0" lean-forward="false" selection-start-line="228" selection-start-column="0" selection-end-line="228" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ButtonClickListener.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="1" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="7" selection-end-column="1" />
+        <state relative-caret-position="128">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ButtonClickResult.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationHistoryUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="7" column="50" lean-forward="false" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/HolidayPeriodNegotiationHistoryRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/style/GridHolidayPeriodCellStyleGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
-          <caret line="4" column="30" lean-forward="false" selection-start-line="4" selection-start-column="30" selection-end-line="27" selection-end-column="1" />
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ActionPerformedResult.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/LocalDateConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/data/Converter.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
-          <caret line="6" column="38" lean-forward="false" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/ActionPerformedListener.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/data/Result.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
-          <caret line="6" column="46" lean-forward="false" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+          <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/data/SimpleResult.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="197" column="43" lean-forward="false" selection-start-line="197" selection-start-column="43" selection-end-line="197" selection-end-column="43" />
+        <state relative-caret-position="163">
+          <caret line="40" column="49" lean-forward="true" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/function/Function.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="48" column="6" lean-forward="false" selection-start-line="48" selection-start-column="6" selection-end-line="48" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriodNegotiationHistory.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/ui/Grid.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="1687" column="57" lean-forward="false" selection-start-line="1687" selection-start-column="57" selection-end-line="1687" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/8.1.0/vaadin-server-8.1.0.jar!/com/vaadin/data/ValueProvider.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <caret line="10" column="17" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringSimpleResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="650">
+          <caret line="51" column="39" lean-forward="false" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/GridCommentColumnConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="10" column="39" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/VAADIN/themes/rti/rti.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="162" column="22" lean-forward="false" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="13" column="100" lean-forward="false" selection-start-line="13" selection-start-column="100" selection-end-line="13" selection-end-column="100" />
+        <state relative-caret-position="176">
+          <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/converter/StringValueProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="67" column="25" lean-forward="false" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="120" column="21" lean-forward="false" selection-start-line="120" selection-start-column="21" selection-end-line="120" selection-end-column="21" />
-          <folding />
+        <state relative-caret-position="112">
+          <caret line="7" column="55" lean-forward="false" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+          <folding>
+            <element signature="e#199#200#0" expanded="true" />
+            <element signature="e#276#277#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="478" column="98" lean-forward="false" selection-start-line="478" selection-start-column="98" selection-end-line="478" selection-end-column="98" />
+        <state relative-caret-position="417">
+          <caret line="301" column="35" lean-forward="false" selection-start-line="301" selection-start-column="35" selection-end-line="301" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/HolidayPeriodServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="102" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodNegotiationStatusUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="90" column="30" lean-forward="false" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="164" column="74" lean-forward="false" selection-start-line="164" selection-start-column="74" selection-end-line="164" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/HolidayPeriodUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="46" column="26" lean-forward="false" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/utility/DateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="343" column="172" lean-forward="false" selection-start-line="343" selection-start-column="172" selection-end-line="343" selection-end-column="172" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10700#10733#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="43" column="34" lean-forward="true" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
           <folding />
         </state>
       </provider>

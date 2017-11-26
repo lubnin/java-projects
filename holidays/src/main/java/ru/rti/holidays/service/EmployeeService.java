@@ -1,9 +1,6 @@
 package ru.rti.holidays.service;
 
 import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
-import ru.rti.holidays.entity.ProjectRole;
 
 import java.util.Date;
 import java.util.List;

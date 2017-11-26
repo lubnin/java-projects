@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.rti.holidays.entity.Department;
-import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.repository.DepartmentRepository;
 
 import java.util.List;

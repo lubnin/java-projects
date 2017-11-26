@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
-import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.ProjectRole;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.projectrole.AddNewProjectRoleLayout;

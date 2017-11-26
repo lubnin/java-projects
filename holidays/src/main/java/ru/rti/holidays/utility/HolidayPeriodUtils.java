@@ -22,6 +22,8 @@ public class HolidayPeriodUtils {
             return holidayPeriod.isVisibleForProjectManager();
         } else if (SessionUtils.isCurrentUserLineManager()) {
             return holidayPeriod.isVisibleForLineManager();
+        } else if (SessionUtils.isCurrentUserSupervisor()) {
+            return holidayPeriod.isVisibleForSupervisor();
         }
         return false;
     }

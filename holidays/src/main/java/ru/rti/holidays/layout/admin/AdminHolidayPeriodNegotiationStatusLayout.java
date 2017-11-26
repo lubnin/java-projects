@@ -1,7 +1,5 @@
 package ru.rti.holidays.layout.admin;
 
-import com.vaadin.data.Binder;
-import com.vaadin.data.ValidationException;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
@@ -9,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.component.BoldLabel;
 import ru.rti.holidays.component.PageTitle;
-import ru.rti.holidays.entity.DBEntity;
-import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.holidayperiod.AddNewHolidayPeriodNegotiationStatusLayout;
