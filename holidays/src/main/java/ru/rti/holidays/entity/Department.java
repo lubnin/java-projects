@@ -32,6 +32,9 @@ public class Department implements DBEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "code")
+    private String code;
+
     /**
      * The date when the record was created in DB the very first time
      */
@@ -44,7 +47,7 @@ public class Department implements DBEntity {
     @Column(name = "updated")
     private Date updated;
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
     private Set<Employee> employees;
 
     @Override
@@ -85,5 +88,13 @@ public class Department implements DBEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

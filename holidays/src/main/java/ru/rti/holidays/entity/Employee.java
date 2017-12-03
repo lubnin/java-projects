@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
@@ -84,23 +85,30 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
     /**
      * The reference to the ProjectRole. Describes the project role of the Employee in the company.
      */
-    @ManyToOne(cascade = { CascadeType.MERGE })
+    @ManyToOne //@ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "project_role_id")
     private ProjectRole projectRole;
 
     /**
      * The reference to a Team for all employees. All employees belong to some Team
      */
-    @ManyToOne(cascade = { CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 
     /**
      * The reference to a Department for all employees. All employees belong to some Department
      */
-    @ManyToOne(cascade = {CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    /**
+     * Special Code For Employee
+     */
+    @Column(name = "specialCode")
+    private String specialCode;
+
 
     /**
      * The reference to a Set of teams, managed by this Employee.
@@ -207,6 +215,14 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
         return department;
     }
 
+    public String getDepartmentAsString() {
+        return department == null || department.getName() == null ? GlobalConstants.EMPTY_STRING : department.getName();
+    }
+
+    public String getDepartmentCodeAsString() {
+        return department == null || department.getCode() == null ? GlobalConstants.EMPTY_STRING : department.getCode();
+    }
+
     public void setDepartment(Department department) {
         this.department = department;
     }
@@ -298,6 +314,27 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
         return false;
     }
 
+    private String getSpecialCodeSafe() {
+        String specCode = getSpecialCode();
+        return CommonUtils.getValueOrEmptyString(specCode);
+    }
+
+    public boolean isB2CManager() {
+        return getSpecialCodeSafe().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_B2C_MANAGER);
+    }
+
+    public boolean isDevManager() {
+        return getSpecialCodeSafe().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_DEV_MANAGER);
+    }
+
+    public boolean isTestManager() {
+        return getSpecialCodeSafe().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_TEST_MANAGER);
+    }
+
+    public boolean isBAManager() {
+        return getSpecialCodeSafe().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_BA_MANAGER);
+    }
+
     public boolean isOfSpecialRoleType(ProjectRole.ProjectRoleSpecialType specialType) {
         if (projectRole == null || projectRole.getProjectRoleSpecialType() == null || specialType == null) {
             return false;
@@ -359,6 +396,14 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
 
     public void setTeamLeadTeam(Team teamLeadTeam) {
         this.teamLeadTeam = teamLeadTeam;
+    }
+
+    public String getSpecialCode() {
+        return specialCode;
+    }
+
+    public void setSpecialCode(String specialCode) {
+        this.specialCode = specialCode;
     }
 
     /**

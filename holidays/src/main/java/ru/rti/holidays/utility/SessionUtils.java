@@ -24,6 +24,28 @@ public class SessionUtils {
         return true;
     }
 
+    private static String getCurrentUserSpecialCode() {
+        Employee emp = getCurrentUser();
+        String specCode = emp.getSpecialCode();
+        return CommonUtils.getValueOrEmptyString(specCode);
+    }
+
+    public static boolean isCurrentUserB2CManager() {
+        return getCurrentUserSpecialCode().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_B2C_MANAGER);
+    }
+
+    public static boolean isCurrentUserDevManager() {
+        return getCurrentUserSpecialCode().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_DEV_MANAGER);
+    }
+
+    public static boolean isCurrentUserTestManager() {
+        return getCurrentUserSpecialCode().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_TEST_MANAGER);
+    }
+
+    public static boolean isCurrentUserBAManager() {
+        return getCurrentUserSpecialCode().equals(GlobalConstants.EMPLOYEE_SPECIAL_CODE_BA_MANAGER);
+    }
+
     public static boolean isCurrentUserTeamLead() {
         return getCurrentUser().isTeamLead();
     }

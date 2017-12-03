@@ -7,7 +7,9 @@ import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.Team;
 import ru.rti.holidays.service.HolidayPeriodService;
+import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.GlobalConstants;
+import ru.rti.holidays.utility.ProjectRoleUtils;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -37,6 +39,11 @@ public class EmployeeToEmployeeHolidayPeriodAdapter<T extends EmployeeHolidayPer
 
         employeeHolidayPeriod.setEmployeeEmail(employee.getEmail());
         employeeHolidayPeriod.setEmployeeFullName(employee.getFullName());
+        employeeHolidayPeriod.setEmployeeDepartmentName(employee.getDepartmentAsString());
+        employeeHolidayPeriod.setEmployeeDepartmentCode(employee.getDepartmentCodeAsString());
+        employeeHolidayPeriod.setEmployeeRegularRole(ProjectRoleUtils.isRegularProjectRole(employee.getProjectRole()));
+        employeeHolidayPeriod.setEmployeeSpecialCode(CommonUtils.getValueOrEmptyString(employee.getSpecialCode()));
+        employeeHolidayPeriod.setHolidayPeriodHistoryComment(holidayPeriod.getHolidayPeriodNegotiationHistoryComment());
         employeeHolidayPeriod.setDateStart(holidayPeriod.getDateStart());
         employeeHolidayPeriod.setNumDays(holidayPeriod.getNumDays());
         employeeHolidayPeriod.setEmployeeRoleName(employee.getProjectRoleAsString());

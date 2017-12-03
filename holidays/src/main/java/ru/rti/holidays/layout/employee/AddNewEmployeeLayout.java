@@ -89,6 +89,9 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         employeeBinder.forField(txtPassword)
                 .bind(Employee::getEmptyPassword, Employee::setPassword);
 
+        TextField txtSpecialCode = new TextField("Спецкод");
+        employeeBinder.forField(txtSpecialCode)
+                .bind(Employee::getSpecialCode, Employee::setSpecialCode);
 
         //employeeBinder.forField(txtPassword)
         //        .asRequired("Необходимо ввести пароль повторно")
@@ -240,7 +243,8 @@ public class AddNewEmployeeLayout extends BaseVerticalLayout {
         addEmployeeGridLayout.addComponent(txtLoginName, 3,0);
         addEmployeeGridLayout.addComponent(txtEmail, 4,0);
         addEmployeeGridLayout.addComponent(txtPassword, 0,1, 1,1);
-        addEmployeeGridLayout.addComponent(txtPasswordCheck, 2,1, 3,1);
+        addEmployeeGridLayout.addComponent(txtPasswordCheck, 2,1, 2,1);
+        addEmployeeGridLayout.addComponent(txtSpecialCode, 3,1, 3,1);
         addEmployeeGridLayout.addComponent(cboDepartment, 0,2,4,2);
         addEmployeeGridLayout.addComponent(cboProjectRole, 0,3, 4,3);
         addEmployeeGridLayout.addComponent(cboTeam, 0,4,4,4);

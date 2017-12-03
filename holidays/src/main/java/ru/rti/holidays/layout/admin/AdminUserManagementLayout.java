@@ -49,6 +49,9 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             grdEmployees.addColumn(Employee::getLoginName).setCaption("Логин");
             grdEmployees.addColumn(Employee::getTeamNameAsString).setCaption("Команда");
             grdEmployees.addColumn(Employee::getAllManagedTeamsAsString).setCaption("Команды под управлением");
+            grdEmployees.addColumn(Employee::getDepartmentAsString).setCaption("Подразделение");
+            grdEmployees.addColumn(Employee::getSpecialCode).setCaption("Спецкод");
+
             grdEmployees.setHeightByRows(5);
             grdEmployees.setWidth("100%");
 
@@ -62,9 +65,9 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
             addEmployeeLayout.setSaveButtonClickListener(saveButtonClickListener);
             addEmployeeLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
                 if (removeSelectedItemsClickListener != null) {
-                    log.info("AdminUserManagementLayout::setRemoveSelectedItemsClickListener() called. removeSelectedItemsClickListener != null - OK");
+                    //log.info("AdminUserManagementLayout::setRemoveSelectedItemsClickListener() called. removeSelectedItemsClickListener != null - OK");
                     removeSelectedItemsClickListener.onRemoveSelectedItems(this, grdEmployees.getSelectedItems());
-                    log.info("Calling refreshDataGrid()");
+                    //log.info("Calling refreshDataGrid()");
                     refreshDataGrid();
                 }
             });

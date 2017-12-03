@@ -116,6 +116,8 @@ public class EmailServiceImpl implements EmailService {
         return finalResult;
     }
 
+
+
     @Override
     public boolean sendMailHolidayPeriodSubmitted(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers) {
         checkConfiguration();
@@ -141,9 +143,13 @@ public class EmailServiceImpl implements EmailService {
         String messageBody = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
 
         boolean finalResult = true;
+        //TODO: fix bug here
         for (Employee manager : managers) {
             if (!EmailUtils.isValidEmailAddress(manager.getEmail())) {
                 log.error("Invalid E-Mail address found: " + manager.getEmail());
+                continue;
+            }
+            if (!EmailUtils.isNeedToSendEmailForManager(employee, manager)) {
                 continue;
             }
             finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD) && finalResult;

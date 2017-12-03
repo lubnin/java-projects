@@ -28,6 +28,7 @@ public class AdminDepartmentManagementLayout extends BaseVerticalLayout {
                     (MultiSelectionModel<Department>)grdDepartments.setSelectionMode(Grid.SelectionMode.MULTI);
 
             grdDepartments.addColumn(Department::getName).setCaption("Подразделение");
+            grdDepartments.addColumn(Department::getCode).setCaption("Код");
             grdDepartments.setHeightByRows(10);
             grdDepartments.setWidth("100%");
 

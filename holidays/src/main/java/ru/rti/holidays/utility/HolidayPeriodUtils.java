@@ -1,29 +1,128 @@
 package ru.rti.holidays.utility;
 
+import org.hibernate.LazyInitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.rti.holidays.entity.Employee;
-import ru.rti.holidays.entity.HolidayPeriod;
-import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
+import ru.rti.holidays.entity.*;
 
 public class HolidayPeriodUtils {
     private static final Logger log = LoggerFactory.getLogger(HolidayPeriodUtils.class);
 
-    public static boolean isVisibleForCurrentUser(HolidayPeriod holidayPeriod) {
-        if (holidayPeriod == null) return false;
+    public static boolean isVisibleForCurrentUser(EmployeeHolidayPeriod empHolidayPeriod, HolidayPeriod holidayPeriod) {
+        if (empHolidayPeriod == null) return false;
+
+        boolean isDepartmentCRM = false;
+        boolean isDivisionB2C = false;
+        boolean isDivisionCRM = false;
+
+        boolean isRegularRole = false;
+        boolean isTester = false;
+
+        log.info("isVisibleForCurrentUser() called.");
+
+        String projectRoleName = empHolidayPeriod.getEmployeeRoleName().toLowerCase();
+        log.info("roleName = " + projectRoleName);
+        //TODO: remove hardcode from here later!!!
+        isTester = projectRoleName.indexOf("тестир") >= 0;
+        log.info("isTester flag: " + String.valueOf(isTester));
+        isRegularRole = empHolidayPeriod.isEmployeeRegularRole();
+        log.info("isRegularRole flag: " + String.valueOf(isRegularRole));
+
+        String deptCode = empHolidayPeriod.getEmployeeDepartmentCode();
+        if (GlobalConstants.DEPT_DEPARTMENT_CRM.equals(deptCode)) {
+            isDepartmentCRM = true;
+        } else if (GlobalConstants.DEPT_DIVISION_B2C.equals(deptCode)) {
+            isDivisionB2C = true;
+        } else if (GlobalConstants.DEPT_DIVISION_CRM.equals(deptCode)) {
+            isDivisionCRM = true;
+        }
+        log.info("deptCode = " + deptCode);
+
+        boolean visibilityMask = true;
+
+        log.info(String.format("Flags: isDepartmentCRM = %s, isDivisionB2C = %s, isDivisionCRM = %s",
+                String.valueOf(isDepartmentCRM),
+                String.valueOf(isDivisionB2C),
+                String.valueOf(isDivisionCRM)));
+
         //byte negotiationMask = holidayPeriod.getNegotiationMask();
         if (SessionUtils.isCurrentUserTeamLead()) {
-            return holidayPeriod.isVisibleForTeamLead();
+            log.info("Current user is TeamLead");
+            if (isDivisionB2C) {
+                visibilityMask = false; // Don't allow TeamLead to negotiate BA's
+            }
+            return holidayPeriod.isVisibleForTeamLead() && visibilityMask;
         } else if (SessionUtils.isCurrentUserProjectManager()) {
+            log.info("Current user is ProjectManager");
             return holidayPeriod.isVisibleForProjectManager();
         } else if (SessionUtils.isCurrentUserLineManager()) {
-            return holidayPeriod.isVisibleForLineManager();
+            log.info("Current user is LineManager");
+            if (isDivisionB2C) {
+                // SA's, BA's
+                if (isRegularRole) {
+                    if (SessionUtils.isCurrentUserB2CManager()) {
+                        visibilityMask = true;
+                    } else if (SessionUtils.isCurrentUserBAManager()) {
+                        visibilityMask = true;
+                    } else {
+                        visibilityMask = false; // Not visible for Ivan Artemyev, for example.
+                    }
+                } else {
+                    // Submitter employee is not of a Regular Role
+                    visibilityMask = true; // Apply generic teams linking
+                }
+                log.info("visibilityMask = " + visibilityMask);
+            } else if (isDivisionCRM) {
+                // Testers, EPC Analysts, BPs, Developers, Migration Specialists
+                // TestManager
+                if (isRegularRole) {
+                    if (SessionUtils.isCurrentUserBAManager()) {
+                        visibilityMask = false;
+                    } else if (SessionUtils.isCurrentUserB2CManager()) {
+                        visibilityMask = false;
+                    } if (SessionUtils.isCurrentUserDevManager()) {
+                        visibilityMask = true;
+                    } else if (SessionUtils.isCurrentUserTestManager()) {
+                        // Only testers visible
+                        visibilityMask = isTester;
+                    } else {
+                        log.warn("Falled in else block. Unexpected.");
+                    }
+                } else {
+                    visibilityMask = true;
+                }
+                log.info("visibilityMask = " + visibilityMask);
+            }
+            return holidayPeriod.isVisibleForLineManager() && visibilityMask;
         } else if (SessionUtils.isCurrentUserSupervisor()) {
-            return holidayPeriod.isVisibleForSupervisor();
+            log.info("Current user is Supervisor");
+            visibilityMask = false;
+            if (isDivisionCRM) {
+                if (SessionUtils.isCurrentUserDevManager()) {
+                    visibilityMask = true;
+                } else if (SessionUtils.isCurrentUserB2CManager()) {
+                    visibilityMask = false;
+                } else {
+                    visibilityMask = true;
+                }
+            } else if (isDivisionB2C) {
+                // Farkhad negotiates all BA's and SA's
+                if (SessionUtils.isCurrentUserB2CManager()) {
+                    visibilityMask = true;
+                } else if (SessionUtils.isCurrentUserDevManager()) {
+                    visibilityMask = false;
+                } else {
+                    visibilityMask = true;
+                }
+            } else if (isDepartmentCRM) {
+                if (!SessionUtils.isCurrentUserB2CManager() && !SessionUtils.isCurrentUserDevManager()) {
+                    visibilityMask = true;
+                }
+            } else {
+                visibilityMask = false;
+            }
+            return holidayPeriod.isVisibleForSupervisor() && visibilityMask;
         }
         return false;
     }

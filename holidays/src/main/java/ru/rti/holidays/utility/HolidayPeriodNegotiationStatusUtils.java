@@ -79,6 +79,13 @@ public class HolidayPeriodNegotiationStatusUtils {
         return getNewStatusFromList(allStatuses);
     }
 
+    /**
+     * Used for calculating the next status of Holiday Period before applying any actions and changes to the period
+     * @param manager
+     * @param holidayPeriod
+     * @param allNegotiationStatuses
+     * @return
+     */
     public static HolidayPeriodNegotiationStatus calculateNextStatus(Employee manager, HolidayPeriod holidayPeriod, Collection<HolidayPeriodNegotiationStatus> allNegotiationStatuses) {
         if (CommonUtils.checkIfAnyIsNull(manager, holidayPeriod, allNegotiationStatuses)) {
             return null;
@@ -136,7 +143,16 @@ public class HolidayPeriodNegotiationStatusUtils {
             return null;
         }
 
-        byte negotiationMask = holidayPeriod.getNegotiationMask();
+        byte negotiationMask = 0;
+        try {
+            Byte negMask = holidayPeriod.getNegotiationMask();
+            negotiationMask = negMask.byteValue();
+        } catch (Exception e) {
+            negotiationMask = holidayPeriod.getSafeNegotiationMask();
+        }
+
+
+
         if (negotiationMask == HolidayPeriod.NEGOTIATION_MASK_TEAM_LEAD_ONLY) {
             // TL only
             return HolidayPeriodNegotiationStatusUtils.getPartlyNegotiatedStatusFromList(allNegotiationStatuses);

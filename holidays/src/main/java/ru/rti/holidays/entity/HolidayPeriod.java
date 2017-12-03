@@ -1,7 +1,9 @@
 package ru.rti.holidays.entity;
 
 import com.vaadin.spring.annotation.SpringComponent;
+import org.hibernate.LazyInitializationException;
 import org.hibernate.annotations.GenericGenerator;
+import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.DateUtils;
 import ru.rti.holidays.utility.GlobalConstants;
@@ -231,13 +233,64 @@ public class HolidayPeriod implements DBEntity {
         this.negotiationMask = negotiationMask;
     }
 
-    private Byte getSafeNegotiationMask() {
+    public Byte getSafeNegotiationMask() {
         return negotiationMask == null ? Byte.valueOf((byte)0) : negotiationMask;
     }
 
-    public void setNegotiationMaskByManager(Employee manager) {
+    private String getDeptCode() {
+        try {
+            Employee emp = this.getEmployee();
+            if (emp == null) {
+                return GlobalConstants.EMPTY_STRING;
+            }
+            Department dept = emp.getDepartment();
+            if (dept == null) {
+                return GlobalConstants.EMPTY_STRING;
+            }
+            String deptCode = dept.getCode();
+            if (deptCode == null) {
+                return GlobalConstants.EMPTY_STRING;
+            }
+            return deptCode;
+        } catch (LazyInitializationException e) {
+            return GlobalConstants.EMPTY_STRING;
+        } catch (Exception e) {
+            return GlobalConstants.EMPTY_STRING;
+        }
+    }
+
+    public void clearNegotiationMaskByManager(Employee manager) {
         if (manager == null  || !manager.isManager()) {
             return;
+        }
+
+        if (getDeptCode().equals(GlobalConstants.DEPT_DIVISION_B2C)) {
+            // fore TeamLead flag to be set for BA's. As there's no really TL which
+            // is negotiating these Employees
+            setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_TEAM_LEAD_ONLY));
+        }
+
+        if (manager.isTeamLead()) {
+            setNegotiationMask((byte)(getSafeNegotiationMask() & ~(1 << NEGOTIATION_MASK_TEAM_LEAD_ONLY)));
+        } else if (manager.isProjectManager()) {
+            setNegotiationMask((byte)(getSafeNegotiationMask() & ~(1 << NEGOTIATION_MASK_PROJECT_MANAGER_ONLY)));
+        } else if (manager.isLineManager()) {
+            setNegotiationMask((byte)(getSafeNegotiationMask() & ~(1 << NEGOTIATION_MASK_LINE_MANAGER_ONLY)));
+        } else if (manager.isSupervisor()) {
+            setNegotiationMask((byte)0);
+        }
+    }
+
+    public void setNegotiationMaskByManager(Employee manager, EmployeeHolidayPeriod ehp) {
+        if (manager == null  || !manager.isManager()) {
+            return;
+        }
+
+
+        if (ehp.getEmployeeDepartmentCode().equals(GlobalConstants.DEPT_DIVISION_B2C)) {
+            // fore TeamLead flag to be set for BA's. As there's no really TL which
+            // is negotiating these Employees
+            setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_TEAM_LEAD_ONLY));
         }
 
         if (manager.isTeamLead()) {

@@ -12,11 +12,16 @@ import java.time.LocalDate;
 public class EmployeeHolidayPeriod {
     private String employeeFullName;
     private String employeeEmail;
+    private String employeeDepartmentName;
+    private String employeeDepartmentCode;
+    private String employeeSpecialCode;
+    private boolean isEmployeeRegularRole;
     private Long teamId;
     private String teamName;
     private LocalDate dateStart;
     private Long numDays;
     private String holidayPeriodNegotiationStatus;
+    private String holidayPeriodHistoryComment;
     private String employeeRoleName;
     private HolidayPeriodNegotiationStatus negotiationStatus;
     private HolidayPeriod holidayPeriod;
@@ -75,9 +80,14 @@ public class EmployeeHolidayPeriod {
                 dateStart == employeeHolidayPeriod.getDateStart() &&
                 numDays == employeeHolidayPeriod.getNumDays() &&
                 holidayPeriodNegotiationStatus == employeeHolidayPeriod.getHolidayPeriodNegotiationStatus() &&
+                holidayPeriodHistoryComment == employeeHolidayPeriod.getHolidayPeriodHistoryComment() &&
                 employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName() &&
                 employeeEmail == employeeHolidayPeriod.getEmployeeEmail() &&
-                teamName == employeeHolidayPeriod.getTeamName();
+                teamName == employeeHolidayPeriod.getTeamName() &&
+                employeeDepartmentName == employeeHolidayPeriod.getEmployeeDepartmentName() &&
+                employeeDepartmentCode == employeeHolidayPeriod.getEmployeeDepartmentCode() &&
+                employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName() &&
+                isEmployeeRegularRole == employeeHolidayPeriod.isEmployeeRegularRole();
     }
 
     @Override
@@ -88,9 +98,14 @@ public class EmployeeHolidayPeriod {
         result = prime * result + ((dateStart == null) ? 0 : dateStart.hashCode());
         result = prime * result + ((numDays == null) ? 0 : numDays.hashCode());
         result = prime * result + ((holidayPeriodNegotiationStatus == null) ? 0 : holidayPeriodNegotiationStatus.hashCode());
+        result = prime * result + ((holidayPeriodHistoryComment == null) ? 0 : holidayPeriodHistoryComment.hashCode());
         result = prime * result + ((employeeRoleName == null) ? 0 : employeeRoleName.hashCode());
         result = prime * result + ((employeeEmail == null) ? 0 : employeeEmail.hashCode());
         result = prime * result + ((teamName == null) ? 0 : teamName.hashCode());
+        result = prime * result + ((employeeDepartmentName == null) ? 0 : employeeDepartmentName.hashCode());
+        result = prime * result + ((employeeDepartmentCode == null) ? 0 : employeeDepartmentCode.hashCode());
+        result = prime * result + ((employeeRoleName == null) ? 0 : employeeRoleName.hashCode());
+        result = prime * result + Boolean.valueOf(isEmployeeRegularRole).hashCode();
         return result;
     }
 
@@ -140,5 +155,45 @@ public class EmployeeHolidayPeriod {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public String getEmployeeDepartmentName() {
+        return employeeDepartmentName;
+    }
+
+    public void setEmployeeDepartmentName(String employeeDepartmentName) {
+        this.employeeDepartmentName = employeeDepartmentName;
+    }
+
+    public String getEmployeeSpecialCode() {
+        return employeeSpecialCode;
+    }
+
+    public void setEmployeeSpecialCode(String employeeSpecialCode) {
+        this.employeeSpecialCode = employeeSpecialCode;
+    }
+
+    public boolean isEmployeeRegularRole() {
+        return isEmployeeRegularRole;
+    }
+
+    public void setEmployeeRegularRole(boolean employeeRegularRole) {
+        isEmployeeRegularRole = employeeRegularRole;
+    }
+
+    public String getEmployeeDepartmentCode() {
+        return employeeDepartmentCode;
+    }
+
+    public void setEmployeeDepartmentCode(String employeeDepartmentCode) {
+        this.employeeDepartmentCode = employeeDepartmentCode;
+    }
+
+    public String getHolidayPeriodHistoryComment() {
+        return holidayPeriodHistoryComment;
+    }
+
+    public void setHolidayPeriodHistoryComment(String holidayPeriodHistoryComment) {
+        this.holidayPeriodHistoryComment = holidayPeriodHistoryComment;
     }
 }

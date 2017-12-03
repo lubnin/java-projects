@@ -2,6 +2,20 @@ package ru.rti.holidays.utility;
 
 public class GlobalConstants {
     /**
+     * Department Codes used for linking logic in code
+     */
+    public static final String DEPT_DEPARTMENT_CRM = "DepartmentCRM";
+    public static final String DEPT_DIVISION_B2C = "DivisionB2C";
+    public static final String DEPT_DIVISION_CRM = "DivisionCRM";
+
+    /**
+     * Employees Special Codes
+     */
+    public static final String EMPLOYEE_SPECIAL_CODE_DEV_MANAGER = "DevManager";
+    public static final String EMPLOYEE_SPECIAL_CODE_B2C_MANAGER = "B2CManager";
+    public static final String EMPLOYEE_SPECIAL_CODE_TEST_MANAGER = "TestManager";
+    public static final String EMPLOYEE_SPECIAL_CODE_BA_MANAGER = "BAManager";
+    /**
      * Empty string constant
      */
     public static final String EMPTY_STRING = "";

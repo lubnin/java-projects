@@ -2,6 +2,7 @@ package ru.rti.holidays.layout.department;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -34,9 +35,19 @@ public class AddNewDepartmentLayout extends BaseVerticalLayout {
         TextField txtDepartmentName = new TextField("Название подразделения:");
         txtDepartmentName.setWidth("100%");
 
+        TextField txtDepartmentCode = new TextField("Код подразделения:");
+        txtDepartmentCode.setWidth("100%");
+
+
         departmentBinder.forField(txtDepartmentName)
                 .asRequired("Необходимо ввести название подразделения")
+                .withValidator(new StringLengthValidator("Длина названия подразделения должна быть от 1 до 255",1,255))
                 .bind(Department::getName, Department::setName);
+
+        departmentBinder.forField(txtDepartmentCode)
+                .asRequired("Необходимо ввести код подразделения")
+                .withValidator(new StringLengthValidator("Длина кода подразделения должна быть от 1 до 255",1,255))
+                .bind(Department::getCode, Department::setCode);
 
         Button btnSaveDepartment = new Button("Сохранить", event -> {
             try {
@@ -71,12 +82,13 @@ public class AddNewDepartmentLayout extends BaseVerticalLayout {
 
         setMargin(false);
 
-        GridLayout addTeamGridLayout = new GridLayout(2, 2);
+        GridLayout addTeamGridLayout = new GridLayout(2, 3);
         addTeamGridLayout.setSpacing(true);
         addTeamGridLayout.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
         addTeamGridLayout.addComponent(txtDepartmentName, 0,0, 1, 0);
-        addTeamGridLayout.addComponent(btnSaveDepartment, 0,1);
-        addTeamGridLayout.addComponent(btnRemoveSelectedDepartments, 1, 1);
+        addTeamGridLayout.addComponent(txtDepartmentCode, 0,1, 1, 1);
+        addTeamGridLayout.addComponent(btnSaveDepartment, 0,2);
+        addTeamGridLayout.addComponent(btnRemoveSelectedDepartments, 1, 2);
 
         addComponents(addTeamGridLayout);
     }

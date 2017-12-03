@@ -89,7 +89,7 @@ public class ProjectRole implements DBEntity {
         //CascadeType.REFRESH,
         //CascadeType.DETACH,
         //CascadeType.PERSIST,
-        CascadeType.MERGE
+        //CascadeType.MERGE
         //CascadeType.REMOVE
     })
     private List<Employee> employees = new ArrayList<>();

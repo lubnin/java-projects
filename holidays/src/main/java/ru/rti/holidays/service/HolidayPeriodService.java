@@ -16,7 +16,10 @@ public interface HolidayPeriodService {
     HolidayPeriodNegotiationStatus saveHolidayPeriodNegotiationStatus(HolidayPeriodNegotiationStatus holidayPeriodNegotiationStatus);
     HolidayPeriodNegotiationHistory saveHolidayPeriodNegotiationHistory(HolidayPeriodNegotiationHistory holidayPeriodNegotiationHistory);
     boolean deleteHolidayPeriodNegotiationStatuses(Iterable<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatuses);
-    boolean setNegotiationStatusForEmployeeHolidayPeriods(Employee currentManager, Iterable<EmployeeHolidayPeriod> holidayPeriods, Collection<HolidayPeriodNegotiationStatus> allStatuses);
+    boolean setNegotiationStatusForEmployeeHolidayPeriods(Employee currentManager,
+                                                          Iterable<EmployeeHolidayPeriod> holidayPeriods,
+                                                          Collection<HolidayPeriodNegotiationStatus> allStatuses,
+                                                          HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode negotiationMode);
     boolean setNegotiationStatusForEmployeeHolidayPeriods(Iterable<EmployeeHolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus);
     boolean setNegotiationStatusForHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods, HolidayPeriodNegotiationStatus negotiationStatus);
     boolean deleteHolidayPeriods(Iterable<HolidayPeriod> holidayPeriods);

@@ -13,6 +13,11 @@ import java.util.*;
 @SuppressWarnings("unused")
 public class HolidayPeriodNegotiationStatus implements DBEntity {
 
+    public enum HolidayPeriodNegotiationMode {
+        NEGOTIATION,
+        REJECTION
+    }
+
     public enum HolidayPeriodNegotiationStatusType {
         NEGOTIATION_STATUS_TYPE_NEW(3L, "Новый"),
         NEGOTIATION_STATUS_TYPE_NEGOTIATING(0L, "На согласовании"),

@@ -163,6 +163,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска");
                 grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getNumDays).setCaption("Количество дней отпуска");
                 grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getHolidayPeriodNegotiationStatus).setCaption("Статус согласования").setStyleGenerator(new GridEmployeeHolidayPeriodCellStyleGenerator());
+                grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getHolidayPeriodHistoryComment).setCaption("Комментарий").setStyleGenerator(new GridEmployeeHolidayPeriodCellStyleGenerator());
 
                 selectionModel.addMultiSelectionListener(event -> {
                     for (Button btnNegotiateSelectedPeriods : negotiateSelectedPeriodsButtonsMap.values()) {
@@ -364,9 +365,9 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             addComponent(lblTeam);
             addComponent(pnlPanelHolidays);
 
-            employeeHolidayPeriodsCrossingDatesLayout.setCheckCrossingDatesButtonClickListener(checkCrossingDatesButtonClickListener);
-            employeeHolidayPeriodsCrossingDatesLayout.setSubmitterEmployeeFullNameColumnVisible(false);
-            new StandardBaseLayoutDrawer(this, employeeHolidayPeriodsCrossingDatesLayout).drawLayout();
+            //employeeHolidayPeriodsCrossingDatesLayout.setCheckCrossingDatesButtonClickListener(checkCrossingDatesButtonClickListener);
+            //employeeHolidayPeriodsCrossingDatesLayout.setSubmitterEmployeeFullNameColumnVisible(false);
+            //new StandardBaseLayoutDrawer(this, employeeHolidayPeriodsCrossingDatesLayout).drawLayout();
 
             if (employee.isManager()) {
                 addTeamMembersHolidaysTables();
@@ -445,7 +446,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                                             hpNegHistory.setHolidayPeriod(newHolidayPeriod);
                                             fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
 
-                                            fireCheckCrossingDatesButtonClickedEvent();
+                                            //TODO: temporary solution
+                                            //fireCheckCrossingDatesButtonClickedEvent();
 
                                             clearAllControls();
 
@@ -468,7 +470,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         hpNegHistory.setHolidayPeriod(newHolidayPeriod);
                         fireSaveHolidayPeriodHistoryActionPerformedEvent(hpNegHistory);
 
-                        fireCheckCrossingDatesButtonClickedEvent();
+                        //TODO: temporary solution
+                        //fireCheckCrossingDatesButtonClickedEvent();
 
                         clearAllControls();
 
@@ -565,15 +568,22 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
      * @return
      */
     protected GridLayout getBottomButtonsControlPanelLayout() {
-        GridLayout bottomButtonsControlPanelLayout = new GridLayout(4, 1);
+        GridLayout bottomButtonsControlPanelLayout = new GridLayout(3, 1);
         bottomButtonsControlPanelLayout.setSizeFull();
         bottomButtonsControlPanelLayout.setSpacing(false);
         bottomButtonsControlPanelLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
+        /*
         bottomButtonsControlPanelLayout.setColumnExpandRatio(0,1);
         bottomButtonsControlPanelLayout.setColumnExpandRatio(1, 1);
         bottomButtonsControlPanelLayout.setColumnExpandRatio(2,1);
         bottomButtonsControlPanelLayout.setColumnExpandRatio(3, 10);
+        */
+
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(0,1);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(1, 1);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(2,10);
+
 
         enableCheckCrossingsButton(false);
 
@@ -583,7 +593,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 deleteButtonClickListener.onDeleteSelectedPeriods(this, grdHolidayPeriods.getSelectedItems());
                 refreshDataGrid();
             }
-            fireCheckCrossingDatesButtonClickedEvent();
+            //TODO: temporary solution
+            //fireCheckCrossingDatesButtonClickedEvent();
             UIHelper.showNotification("Выбранные периоды отпуска успешно удалены.");
         });
         btnRemoveHolidayPeriods.setWidth("300px");
@@ -608,10 +619,16 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
             //fireCheckCrossingDatesButtonClickedEvent();
         });
 
+        /*
         bottomButtonsControlPanelLayout.addComponent(btnCheckCrossingDates, 0,0);
         bottomButtonsControlPanelLayout.addComponent(btnSendForNegotiation, 1,0);
         bottomButtonsControlPanelLayout.addComponent(btnRemoveHolidayPeriods, 2,0);
         bottomButtonsControlPanelLayout.addComponent(new Label(""), 3,0);
+        */
+
+        bottomButtonsControlPanelLayout.addComponent(btnSendForNegotiation, 0,0);
+        bottomButtonsControlPanelLayout.addComponent(btnRemoveHolidayPeriods, 1,0);
+        bottomButtonsControlPanelLayout.addComponent(new Label(""), 2,0);
 
         return bottomButtonsControlPanelLayout;
     }

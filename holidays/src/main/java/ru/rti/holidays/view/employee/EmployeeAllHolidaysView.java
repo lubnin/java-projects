@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.rti.holidays.adapter.EmployeeToEmployeeHolidayPeriodAdapter;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.entity.Employee;
+import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.layout.employee.EmployeeAllHolidaysLayout;
 import ru.rti.holidays.service.EmployeeService;
 import ru.rti.holidays.service.HolidayPeriodService;
 import ru.rti.holidays.utility.GlobalConstants;
+import ru.rti.holidays.utility.HolidayPeriodUtils;
 import ru.rti.holidays.view.base.AbstractBaseView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @SpringView(name = EmployeeAllHolidaysView.VIEW_NAME)
@@ -48,6 +51,20 @@ public class EmployeeAllHolidaysView extends AbstractBaseView {
         EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod> adapter =
                 new EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod>(EmployeeHolidayPeriod::new, holidayPeriodServiceImpl);
         allEmployeeHolidayPeriodsExcludingAdmin = adapter.convert(allEmployeesExcludingAdmin);
+
+        Collection<EmployeeHolidayPeriod> periodsToFilter = new ArrayList<>();
+
+        for (EmployeeHolidayPeriod curEmpHolidayPeriod : allEmployeeHolidayPeriodsExcludingAdmin) {
+            HolidayPeriod curHolidayPeriod = curEmpHolidayPeriod.getHolidayPeriod();
+            if (!HolidayPeriodUtils.isHolidayPeriodInNewStatus(curHolidayPeriod)) {
+                continue;
+            }
+
+            periodsToFilter.add(curEmpHolidayPeriod);
+        }
+
+        // Perform filtering according to project role of current manager
+        allEmployeeHolidayPeriodsExcludingAdmin.removeAll(periodsToFilter);
 
         return true;
     }

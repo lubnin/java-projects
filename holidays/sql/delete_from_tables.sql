@@ -1,0 +1,9 @@
+delete from holiday_period;
+delete from holiday_period_neg_status;
+delete from managed_teams;
+delete from employee;
+delete from team;
+delete from project_role;
+delete from department;
+delete from employee_authorities;
+delete from authority;

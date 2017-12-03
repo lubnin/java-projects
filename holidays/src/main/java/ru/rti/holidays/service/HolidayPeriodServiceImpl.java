@@ -82,7 +82,8 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
     @Override
     public boolean setNegotiationStatusForEmployeeHolidayPeriods(Employee currentManager,
                                                                  Iterable<EmployeeHolidayPeriod> holidayPeriods,
-                                                                 Collection<HolidayPeriodNegotiationStatus> allStatuses) {
+                                                                 Collection<HolidayPeriodNegotiationStatus> allStatuses,
+                                                                 HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode negotiationMode) {
         if (holidayPeriods == null || allStatuses == null || currentManager == null) {
             return false;
         }
@@ -91,11 +92,23 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
             for (EmployeeHolidayPeriod ehp : holidayPeriods) {
                 HolidayPeriod hp = ehp.getHolidayPeriod();
                 HolidayPeriodNegotiationStatus currentStatus = hp.getNegotiationStatus();
-                hp.setNegotiationMaskByManager(currentManager);
-                HolidayPeriodNegotiationStatus nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
+                HolidayPeriodNegotiationStatus nextStatus = null;
+
+                if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION) {
+                    nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
+                    hp.setNegotiationMaskByManager(currentManager, ehp);
+                } else if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION) {
+                    nextStatus = HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allStatuses);
+                    hp.clearNegotiationMaskByManager(currentManager);
+                }
+
 
                 HolidayPeriod hpToSave = holidayPeriodRepository.findById(hp.getId());
-                hpToSave.setNegotiationMaskByManager(currentManager);
+                if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION) {
+                    hpToSave.setNegotiationMaskByManager(currentManager, ehp);
+                } else if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION) {
+                    hpToSave.clearNegotiationMaskByManager(currentManager);
+                }
 
                 if (nextStatus != null && !nextStatus.getId().equals(currentStatus.getId())) {
                     hp.setNegotiationStatus(nextStatus);
