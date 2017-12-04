@@ -2,6 +2,7 @@ package ru.rti.holidays.layout.employee;
 
 import com.vaadin.ui.Grid;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
+import ru.rti.holidays.component.grid.comparator.EmployeeHolidayPeriodDateColumnComparator;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
@@ -29,7 +30,7 @@ public class EmployeeAllHolidaysLayout extends BaseVerticalLayout {
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getEmployeeFullName).setCaption("ФИО сотрудника");
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getTeamName).setCaption("Команда");
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getEmployeeRoleName).setCaption("Роль на проекте");
-        grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска");
+        grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска").setComparator(new EmployeeHolidayPeriodDateColumnComparator());
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getNumDays).setCaption("Количество дней отпуска");
         grdHolidayPeriods.addColumn(EmployeeHolidayPeriod::getHolidayPeriodNegotiationStatus).setCaption("Статус согласования").setStyleGenerator(new GridEmployeeHolidayPeriodCellStyleGenerator());
 

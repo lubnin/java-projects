@@ -45,14 +45,33 @@ select to_date('2017-11-01 00:00:00', 'DD-MM-YYYY HH24:MI:SS');
 select * from authority;
 select * from employee_authorities
 
+select * from employee;
+
 
 /*
  * Показать все отпуска
  */
-select emp.emp_id, emp.last_name, emp.first_name, emp.middle_name, to_char(hp.date_start, 'DD/MM/YYYY') date_start, hp.num_days, hpns.status_name, hpns.negotiation_status_type 
+select 
+	emp.emp_id, 
+	emp.last_name, 
+	emp.first_name, 
+	emp.middle_name, 
+	hp.hol_period_id, 
+	to_char(hp.date_start, 'DD/MM/YYYY') date_start, 
+	hp.num_days, 
+	hp.negotiation_mask, 
+	hpns.status_name, 
+	hpns.negotiation_status_type ,
+	hpnh."comment",
+	hpnh.old_status,
+	hpnh.new_status,
+	hpnh.created
 from holiday_period hp
 left join employee emp on (hp.emp_id = emp.emp_id)
-left join holiday_period_neg_status hpns on (hp.hp_negotiation_status_id = hpns.hol_period_neg_status_id);
+left join holiday_period_neg_status hpns on (hp.hp_negotiation_status_id = hpns.hol_period_neg_status_id)
+left join holiday_period_neg_history hpnh on (hp.hol_period_id = hpnh.hol_period_id);
+
+select * from holiday_period;
 
 select * from employee;
 update employee set password = '$2a$10$U5KvCQNEWbBXK3uPPUUwyutezoQLFf5W1pY1vIj..FnxU7VbmFa2O' where login_name = 'admin';
@@ -63,6 +82,7 @@ select * from department;
 select * from managed_teams;
 select * from project_role;
 select * from holiday_period_neg_history;
+delete from holiday_period_neg_history;
 
 --drop database holidays;
 

@@ -19,15 +19,15 @@ public class HolidayPeriodUtils {
         boolean isRegularRole = false;
         boolean isTester = false;
 
-        log.info("isVisibleForCurrentUser() called.");
+        //log.info("isVisibleForCurrentUser() called.");
 
         String projectRoleName = empHolidayPeriod.getEmployeeRoleName().toLowerCase();
-        log.info("roleName = " + projectRoleName);
+        //log.info("roleName = " + projectRoleName);
         //TODO: remove hardcode from here later!!!
         isTester = projectRoleName.indexOf("тестир") >= 0;
-        log.info("isTester flag: " + String.valueOf(isTester));
+        //log.info("isTester flag: " + String.valueOf(isTester));
         isRegularRole = empHolidayPeriod.isEmployeeRegularRole();
-        log.info("isRegularRole flag: " + String.valueOf(isRegularRole));
+        //log.info("isRegularRole flag: " + String.valueOf(isRegularRole));
 
         String deptCode = empHolidayPeriod.getEmployeeDepartmentCode();
         if (GlobalConstants.DEPT_DEPARTMENT_CRM.equals(deptCode)) {
@@ -37,27 +37,27 @@ public class HolidayPeriodUtils {
         } else if (GlobalConstants.DEPT_DIVISION_CRM.equals(deptCode)) {
             isDivisionCRM = true;
         }
-        log.info("deptCode = " + deptCode);
+        //log.info("deptCode = " + deptCode);
 
         boolean visibilityMask = true;
 
-        log.info(String.format("Flags: isDepartmentCRM = %s, isDivisionB2C = %s, isDivisionCRM = %s",
-                String.valueOf(isDepartmentCRM),
-                String.valueOf(isDivisionB2C),
-                String.valueOf(isDivisionCRM)));
+        //log.info(String.format("Flags: isDepartmentCRM = %s, isDivisionB2C = %s, isDivisionCRM = %s",
+        //        String.valueOf(isDepartmentCRM),
+        //        String.valueOf(isDivisionB2C),
+        //        String.valueOf(isDivisionCRM)));
 
         //byte negotiationMask = holidayPeriod.getNegotiationMask();
         if (SessionUtils.isCurrentUserTeamLead()) {
-            log.info("Current user is TeamLead");
+            //log.info("Current user is TeamLead");
             if (isDivisionB2C) {
                 visibilityMask = false; // Don't allow TeamLead to negotiate BA's
             }
             return holidayPeriod.isVisibleForTeamLead() && visibilityMask;
         } else if (SessionUtils.isCurrentUserProjectManager()) {
-            log.info("Current user is ProjectManager");
+            //log.info("Current user is ProjectManager");
             return holidayPeriod.isVisibleForProjectManager();
         } else if (SessionUtils.isCurrentUserLineManager()) {
-            log.info("Current user is LineManager");
+            //log.info("Current user is LineManager");
             if (isDivisionB2C) {
                 // SA's, BA's
                 if (isRegularRole) {
@@ -72,7 +72,7 @@ public class HolidayPeriodUtils {
                     // Submitter employee is not of a Regular Role
                     visibilityMask = true; // Apply generic teams linking
                 }
-                log.info("visibilityMask = " + visibilityMask);
+                //log.info("visibilityMask = " + visibilityMask);
             } else if (isDivisionCRM) {
                 // Testers, EPC Analysts, BPs, Developers, Migration Specialists
                 // TestManager
@@ -92,11 +92,11 @@ public class HolidayPeriodUtils {
                 } else {
                     visibilityMask = true;
                 }
-                log.info("visibilityMask = " + visibilityMask);
+                //log.info("visibilityMask = " + visibilityMask);
             }
             return holidayPeriod.isVisibleForLineManager() && visibilityMask;
         } else if (SessionUtils.isCurrentUserSupervisor()) {
-            log.info("Current user is Supervisor");
+            //log.info("Current user is Supervisor");
             visibilityMask = false;
             if (isDivisionCRM) {
                 if (SessionUtils.isCurrentUserDevManager()) {

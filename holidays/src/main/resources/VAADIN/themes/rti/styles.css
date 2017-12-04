@@ -14855,6 +14855,7 @@ p.rti-wrap {
 	white-space: normal;
 }
 
-.rti-grid-comments td {
+.rti-grid-comments td:last-child {
 	height: 150px !important;
+	overflow-y: scroll;
 }

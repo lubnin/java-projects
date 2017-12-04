@@ -228,9 +228,6 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         //employeeHolidaysLayout.setNewHolidayPeriod(newHolidayPeriod);
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
         employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
-            //TODO: Hardcode for now. Get it from global config later
-            //boolean isWorkflowMode = true;
-            //if (isWorkflowMode) {
                 boolean isSetNotEmpty = !setEmployeeHolPeriods.isEmpty();
                 Map<Long, String> oldStatusMap = new HashMap<>();
                 Map<Long, String> newStatusMap = new HashMap<>();
@@ -275,10 +272,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
             emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
 
-            //} else {
-            //    holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
-            //    emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
-            //}
+
             //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
             Page.getCurrent().reload();
         });

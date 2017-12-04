@@ -13,6 +13,7 @@ public interface EmployeeService {
     void delete(Long id);
     List<Employee> getByLastName(String lastName);
     Employee getByLoginName(String loginName);
+    Employee getByLoginNameIgnoreCase(String loginName);
     Employee getByLoginNameAndPassword(String loginName, String password);
     Set<Employee> getByTeamId(Long teamId);
     List<Employee> getAllEmployees();

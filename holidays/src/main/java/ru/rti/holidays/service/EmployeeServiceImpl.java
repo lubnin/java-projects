@@ -95,6 +95,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
+     * Gets the Employee by his login name using ignore case
+     * @param loginName the login name of the Employee to search in the database
+     * @return The Employee instance, fetched by login name provided or `null` value if no Employee is found.
+     */
+    @Override
+    public Employee getByLoginNameIgnoreCase(String loginName) {
+        return employeeRepository.findByLoginNameIgnoreCase(loginName);
+    }
+
+
+    /**
      * Gets the Employee from the database using his login name and password provided.
      * @param loginName The login name of the Employee
      * @param password The password of the Employee

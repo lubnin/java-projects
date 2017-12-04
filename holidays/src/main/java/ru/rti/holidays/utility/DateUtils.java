@@ -1,5 +1,6 @@
 package ru.rti.holidays.utility;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -41,17 +42,41 @@ public class DateUtils {
         return calendar.getTime();
     }
 
-    public static String getDateAsString(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(GlobalConstants.DATE_FORMAT);
+    public static String getDateAsString(Date date, String format) {
+        if (format == null) {
+            format = GlobalConstants.DATE_FORMAT;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
 
         if (date == null) return GlobalConstants.EMPTY_STRING;
 
         try {
-            String dateStartAsString = date.format(formatter);
-            return dateStartAsString;
+            String dateAsString = sdf.format(date);
+            return dateAsString;
+        } catch (Exception e) {
+            return GlobalConstants.EMPTY_STRING;
+        }
+    }
+
+    public static String getDateAsString(LocalDate date, String format) {
+        if (format == null) {
+            format = GlobalConstants.DATE_FORMAT;
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+
+        if (date == null) return GlobalConstants.EMPTY_STRING;
+
+        try {
+            String dateAsString = date.format(formatter);
+            return dateAsString;
         } catch (IllegalArgumentException e) {
             return GlobalConstants.EMPTY_STRING;
         }
+    }
+    public static String getDateAsString(LocalDate date) {
+        return getDateAsString(date, GlobalConstants.DATE_FORMAT);
     }
 
     public static Date addDays(Date date, Long days) {

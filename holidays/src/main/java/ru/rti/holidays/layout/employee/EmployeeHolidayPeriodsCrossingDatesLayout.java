@@ -16,7 +16,7 @@ public class EmployeeHolidayPeriodsCrossingDatesLayout extends BaseVerticalLayou
     protected Collection<EmployeeHolidayPeriodCrossing> holidayPeriodCrossings = new ArrayList<>();
     public static double DEFAULT_GRID_HEIGHT_BY_ROWS = 10;
     protected double gridHeightByRows = DEFAULT_GRID_HEIGHT_BY_ROWS;
-    protected String panelName = "Пересечения по отпускам";
+    protected String panelName = "Пересечения моих отпусков с коллегами по команде";
     protected boolean isSubmitterEmployeeFullNameColumnVisible;
     protected Label lblInformationMessage = new Label("", ContentMode.HTML);
     protected ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener;
@@ -34,10 +34,10 @@ public class EmployeeHolidayPeriodsCrossingDatesLayout extends BaseVerticalLayou
         lblInformationMessage.removeStyleName(GlobalConstants.CSS_SUCCESS_MESSAGE);
 
         if (isNoCrossingDatesFound) {
-            setInformationMessage("Проверка завершена. Пересечений не найдено.");
+            setInformationMessage("Проверка завершена. Пересечений Ваших периодов отпуска с коллегами в Вашей команде не найдено.");
             lblInformationMessage.addStyleName(GlobalConstants.CSS_SUCCESS_MESSAGE);
         } else {
-            setInformationMessage("Проверка завершена. Обнаружены пересечения отпусков с другими сотрудниками! Пожалуйста, ознакомьтесь с информацией в таблице.");
+            setInformationMessage("Проверка завершена. Обнаружены пересечения отпусков с коллегами по команде! Пожалуйста, ознакомьтесь с информацией по пересечениям в таблице ниже.");
             lblInformationMessage.addStyleName(GlobalConstants.CSS_ERROR_MESSAGE);
         }
     }
@@ -65,8 +65,9 @@ public class EmployeeHolidayPeriodsCrossingDatesLayout extends BaseVerticalLayou
         grdHolidayCrossings.setWidth("100%");
         grdHolidayCrossings.setHeightByRows(getGridHeightByRows());
 
-        crossingHolidaysLayout.addComponent(grdHolidayCrossings);
         crossingHolidaysLayout.addComponent(getControlPanelLayout());
+        crossingHolidaysLayout.addComponent(grdHolidayCrossings);
+
 
         pnlPanelHolidaysCrossings.setContent(crossingHolidaysLayout);
 

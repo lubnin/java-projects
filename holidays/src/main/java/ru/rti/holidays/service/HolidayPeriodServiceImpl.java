@@ -95,8 +95,8 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
                 HolidayPeriodNegotiationStatus nextStatus = null;
 
                 if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION) {
-                    nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
                     hp.setNegotiationMaskByManager(currentManager, ehp);
+                    nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
                 } else if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION) {
                     nextStatus = HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allStatuses);
                     hp.clearNegotiationMaskByManager(currentManager);

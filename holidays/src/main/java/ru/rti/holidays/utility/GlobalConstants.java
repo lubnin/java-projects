@@ -15,6 +15,14 @@ public class GlobalConstants {
     public static final String EMPLOYEE_SPECIAL_CODE_B2C_MANAGER = "B2CManager";
     public static final String EMPLOYEE_SPECIAL_CODE_TEST_MANAGER = "TestManager";
     public static final String EMPLOYEE_SPECIAL_CODE_BA_MANAGER = "BAManager";
+
+    /**
+     * Configuration properties values
+     */
+
+    public static final String CONF_APPLICATION_RUNNING_MODE_DEVELOPMENT = "dev";
+    public static final String CONF_APPLICATION_RUNNING_MODE_PRODUCTION = "prod";
+
     /**
      * Empty string constant
      */
@@ -24,6 +32,8 @@ public class GlobalConstants {
      * Date format which is used in calendars in UI Views
      */
     public static final String DATE_FORMAT = "dd.MM.yyyy";
+    public static final String DATETIME_FORMAT = "dd.MM.yyyy HH:mm:ss";
+
     public static final String YES_VALUE = "Да";
     public static final String NO_VALUE = "Нет";
     /**

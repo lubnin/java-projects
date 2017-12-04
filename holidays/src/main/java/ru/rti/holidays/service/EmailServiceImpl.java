@@ -110,6 +110,7 @@ public class EmailServiceImpl implements EmailService {
                 log.error("Invalid E-Mail address found: " + manager.getEmail());
                 continue;
             }
+
             finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD) && finalResult;
         }
 
@@ -117,6 +118,17 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
+    public boolean isDevelopmentMode() {
+        if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_DEVELOPMENT.equals(configurationServiceImpl.getApplicationRunningMode())) {
+            log.info("Development Mode Active. No mails will be sent on real addresses");
+            return true;
+        } else if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_PRODUCTION.equals(configurationServiceImpl.getApplicationRunningMode())) {
+            return false;
+        } else {
+            // Possible developer's error while setting property value. Act like app running mode is 'dev' (Development)
+            return true;
+        }
+    }
 
     @Override
     public boolean sendMailHolidayPeriodSubmitted(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers) {
@@ -273,14 +285,20 @@ public class EmailServiceImpl implements EmailService {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper mimeMsgHelper = null;
         try {
-            mimeMsgHelper = new MimeMessageHelper(mimeMessage, false, configurationServiceImpl.getSpringMailDefaultEncoding());
-            mimeMessage.setContent(messageBody, "text/html; charset=" + configurationServiceImpl.getSpringMailDefaultEncoding());
-            mimeMsgHelper.setTo(to);
-            mimeMessage.setSentDate(new Date());
-            mimeMsgHelper.setSubject(MAIL_SUBJECT_PREFIX + subject);
-            //TODO:change email to real address before going to production mode!!!
-            mimeMsgHelper.setFrom(MAIL_FROM + "<" + configurationServiceImpl.getSpringMailUsername() + ">");
-            emailSender.send(mimeMessage);
+
+            if (isDevelopmentMode()) {
+                log.info("!!! Development Mode, emulate sending E-Mail with parameters (No real mail is sent!):");
+                log.info("Recipient Address: " + to);
+                log.info("Message Body: " + messageBody);
+            } else {
+                mimeMsgHelper = new MimeMessageHelper(mimeMessage, false, configurationServiceImpl.getSpringMailDefaultEncoding());
+                mimeMessage.setContent(messageBody, "text/html; charset=" + configurationServiceImpl.getSpringMailDefaultEncoding());
+                mimeMsgHelper.setTo(to);
+                mimeMessage.setSentDate(new Date());
+                mimeMsgHelper.setSubject(MAIL_SUBJECT_PREFIX + subject);
+                mimeMsgHelper.setFrom(MAIL_FROM + "<" + configurationServiceImpl.getSpringMailUsername() + ">");
+                emailSender.send(mimeMessage);
+            }
         } catch (MessagingException msge) {
             log.error("Cannot send E-Mail message (MessagingException caught). Reason: " + msge.getLocalizedMessage());
             return false;

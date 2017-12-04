@@ -160,8 +160,9 @@ $v-component-group-spacing: 6px;
         white-space: normal;
     }
 
-    .rti-grid-comments td {
+    .rti-grid-comments td:last-child {
         height:150px !important;
+        overflow-y: scroll
     }
 
   /* An actual theme rule */

@@ -97,11 +97,12 @@ public class HolidayPeriod implements DBEntity {
      * LM  PM  TL    Final Value    Description
      *  0   0   0     = 0           This holiday period has not been negotiated by any of managers: LM, PM and TL
      *  0   0   1     = 1           This holiday period has been negotiated by TL
+     *  0   1   0     = 2           This holiday period has been negotiated by PM
      *  0   1   1     = 3           This holiday period has been negotiated by TL & PM
      *  1   0   0     = 4           This holiday period has been negotiated by LM
      *  1   0   1     = 5           This holiday period has been negotiated by LM & TL
      *  1   1   0     = 6           This holiday period has been negotiated by LM & PM
-     *  1   1   1     = 7           This holiday period has been negotiated by All managers : TL, PM & LM
+     *  1   1   1     = 7           This holiday period has been negotiated by All managers : TL, PM & LM or Supervisor (Supervisor sets bit mask to 7)
      */
     @Column(name = "negotiationMask")
     private Byte negotiationMask;
@@ -365,7 +366,7 @@ public class HolidayPeriod implements DBEntity {
         this.holidayPeriodNegotiationHistories = holidayPeriodNegotiationHistories;
     }
 
-    public String getHolidayPeriodNegotiationHistoryComment() {
+    public String getHolidayPeriodNegotiationHistoryComment(boolean isHTMLMode) {
         if (!CommonUtils.checkIfEmpty(holidayPeriodNegotiationHistories)) {
             StringBuilder sb = new StringBuilder();
 
@@ -386,15 +387,19 @@ public class HolidayPeriod implements DBEntity {
 
             for (HolidayPeriodNegotiationHistory history : sortedHistories) {
                 if (sb.length() > 0) {
-                    sb.append("<br/>");
+                    if (isHTMLMode) {
+                        sb.append("<br/>");
+                    } else {
+                        sb.append("\r\n");
+                    }
                 }
                 String oldStatus = history.getOldStatus();
                 String newStatus = history.getNewStatus();
                 String fullComment = "";
                 if (CommonUtils.checkIfAnyIsEmpty(oldStatus, newStatus) || oldStatus.equals(newStatus)) {
-                    fullComment = String.format("[%s] - %s", DateUtils.getDateAsString(DateUtils.asLocalDate(history.getCreatedDate())), history.getComment());
+                    fullComment = String.format("[%s] - %s", DateUtils.getDateAsString(history.getCreatedDate(), GlobalConstants.DATETIME_FORMAT), history.getComment());
                 } else {
-                    fullComment = String.format("[%s] - %s, Статус изменён с \"%s\" на \"%s\"", DateUtils.getDateAsString(DateUtils.asLocalDate(history.getCreatedDate())), history.getComment(), oldStatus, newStatus);
+                    fullComment = String.format("[%s] - %s, Статус изменён с \"%s\" на \"%s\"", DateUtils.getDateAsString(history.getCreatedDate(), GlobalConstants.DATETIME_FORMAT), history.getComment(), oldStatus, newStatus);
                 }
 
                 sb.append(fullComment);
@@ -403,6 +408,9 @@ public class HolidayPeriod implements DBEntity {
         } else {
             return GlobalConstants.EMPTY_STRING;
         }
+    }
+    public String getHolidayPeriodNegotiationHistoryComment() {
+        return getHolidayPeriodNegotiationHistoryComment(true);
     }
 
     @Override
