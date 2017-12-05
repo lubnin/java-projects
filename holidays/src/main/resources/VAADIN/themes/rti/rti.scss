@@ -61,6 +61,8 @@ $v-component-group-spacing: 6px;
         color: #ff2d2d;
     }
 
+
+
     .neg_status_new {
         color: yellow;
     }
@@ -85,6 +87,10 @@ $v-component-group-spacing: 6px;
 
     .hp_crossing_check_failed {
         color: #7FFF00;
+    }
+
+    .rti_small_text {
+        font-size:10px !important;
     }
 
     .rti_info, .rti_success, .rti_warning, .rti_error {

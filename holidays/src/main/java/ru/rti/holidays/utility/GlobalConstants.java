@@ -19,7 +19,8 @@ public class GlobalConstants {
     /**
      * Configuration properties values
      */
-
+    public static final String CONF_VALUE_TRUE = "true";
+    public static final String CONF_VALUE_FALSE = "false";
     public static final String CONF_APPLICATION_RUNNING_MODE_DEVELOPMENT = "dev";
     public static final String CONF_APPLICATION_RUNNING_MODE_PRODUCTION = "prod";
 

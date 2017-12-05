@@ -72,4 +72,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     public String getSpringMailUsername() {
         return getPropertyValue("spring.mail.username");
     }
+
+    @Override
+    public String getApplicationEmailMessagesSendingEnabled() {
+        return getPropertyValue("application.email.messages.sending.enabled");
+    }
 }

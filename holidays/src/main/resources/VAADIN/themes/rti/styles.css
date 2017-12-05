@@ -14784,6 +14784,10 @@ button {
 	color: #7FFF00;
 }
 
+.rti_small_text {
+	font-size: 10px !important;
+}
+
 .rti_info, .rti_success, .rti_warning, .rti_error {
 	margin: 10px 0px;
 	padding: 12px;

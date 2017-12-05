@@ -48,10 +48,13 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private Map<Team, Collection<EmployeeHolidayPeriod>> managedTeamMembersHolidays = null;
     private Map<Long, Button> negotiateSelectedPeriodsButtonsMap = new HashMap<>();
     private Map<Long, Button> rejectSelectedPeriodsButtonsMap = new HashMap<>();
-    //private Map<Long, Button> showTeamCrossingPeriodsButtonsMap = new HashMap<>();
+    private Map<Long, Button> showTeamCrossingPeriodsButtonsMap = new HashMap<>();
     private Map<Long, Set<EmployeeHolidayPeriod>> periodsForNegotiationMap = new HashMap<>();
     private Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap = new HashMap<>();
     //private Map<Long, Set<EmployeeHolidayPeriod>> periodsForCrossingsSearchMap = new HashMap<>();
+
+    private ButtonClickListener<EmployeeHolidayPeriodCrossing> periodsForCrossingsSearchClickListener;
+
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Button btnRemoveHolidayPeriods = new Button("Удалить выбранные", VaadinIcons.DEL);
     private Button btnSendForNegotiation = new Button("Отправить на согласование", VaadinIcons.USERS);
@@ -114,12 +117,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 btnRejectSelPeriods.setId("btnRejectSelPeriods_" + team.getId());
                 btnRejectSelPeriods.setWidth("300px");
 
-/*                Button btnShowCrossings = new Button("Показать пересечения");
+                Button btnShowCrossings = new Button("Показать пересечения");
                 btnShowCrossings.addStyleName(GlobalConstants.CSS_RTI_BUTTON_ORANGE);
                 btnShowCrossings.setIcon(VaadinIcons.ARROWS_CROSS);
                 btnShowCrossings.setEnabled(true);
                 btnShowCrossings.setId("btnShowCrossingsPeriods_" + team.getId());
-                btnShowCrossings.setWidth("300px");*/
+                btnShowCrossings.setWidth("300px");
 
                 btnNegotiateSelPeriods.addClickListener(clickEvent -> {
                     String buttonId = clickEvent.getButton().getId();
@@ -153,26 +156,90 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     }
                 });
 
-/*                btnShowCrossings.addClickListener(clickEvent -> {
+                btnShowCrossings.addClickListener(clickEvent -> {
                     String buttonId = clickEvent.getButton().getId();
 
                     try {
                         String teamId = buttonId.substring("btnShowCrossingsPeriods_".length());
                         Long nTeamId = Long.parseLong(teamId);
                         UIHelper.showNotification("Проверка пересечений...");
-                        //Set<EmployeeHolidayPeriod> setEmplHolPeriods = periodsForCrossingsSearchMap.get(nTeamId);
-                        *//*if (rejectSelectedPeriodsClickListener != null) {
-                            rejectSelectedPeriodsClickListener.onRejectSelectedPeriods(
-                                    HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allNegotiationStatuses),
-                                    setEmplHolPeriods);
-                        }*//*
+
+                        Collection<EmployeeHolidayPeriod> allHolidays = managedTeamMembersHolidays.get(team);
+                        Collection<EmployeeHolidayPeriod> allHolidays1 = new ArrayList<>();
+                        allHolidays1.addAll(allHolidays);
+
+                        StringBuilder sbTotal = new StringBuilder();
+                        sbTotal.append("<div class='rti_small_text'><b><u>Пересечения отпусков по этой команде:</u></b><br/>");
+                        for (EmployeeHolidayPeriod ehp : allHolidays) {
+                            String empName = ehp.getEmployeeFullName();
+                            Date dtStart = DateUtils.asDate(ehp.getDateStart());
+                            Long numDays = ehp.getNumDays();
+                            Date dtEnd = DateUtils.addDays(dtStart, numDays);
+
+                            sbTotal.append("<b>" + empName + "</b>, отпуск с " + ehp.getDateStartAsString() + " на " + ehp.getNumDaysAsString() + " дн.: ");
+
+                            boolean isIntersect = false;
+
+                            int c = 0;
+
+                            for (EmployeeHolidayPeriod ehpCross : allHolidays1) {
+                                if (ehpCross.equals(ehp)) {
+                                    continue;
+                                }
+
+                                Date dtStartCross = DateUtils.asDate(ehpCross.getDateStart());
+                                Long numDaysCross = ehpCross.getNumDays();
+                                Date dtEndCross = DateUtils.addDays(dtStartCross, numDaysCross);
+
+                                if (DateUtils.isIntersectionBetweenDates(dtStart, dtEnd, dtStartCross, dtEndCross)) {
+                                    if (ehp.getEmployeeRoleName() != null && ehpCross.getEmployeeRoleName() != null) {
+                                        if (!ehp.getEmployeeRoleName().equals(ehpCross.getEmployeeRoleName())) {
+                                            continue;
+                                        }
+                                    }
+                                    if (c >= 0) {
+                                        sbTotal.append("<br/>");
+                                    }
+                                    sbTotal.append("<span class='neg_status_new'>есть пересечение с ")
+                                            .append(ehpCross.getEmployeeFullName())
+                                            .append(" для отпуска с ")
+                                            .append(ehpCross.getDateStartAsString())
+                                            .append(" на ")
+                                            .append(ehpCross.getNumDays())
+                                            .append(" дн.</span>");
+                                    isIntersect = true;
+                                    c++;
+                                }
+                            }
+
+                            if (!isIntersect) {
+                                sbTotal.append("<span class='neg_status_ok'>нет пересечений по проектной роли \"" + CommonUtils.getValueOrEmptyString(ehp.getEmployeeRoleName()) + "\"</span>");
+                            }
+                            sbTotal.append("<br/>");
+                        }
+
+                        sbTotal.append("</div>");
+
+                        VerticalLayout popupLayout = new VerticalLayout();
+                        popupLayout.addComponent(new Label(sbTotal.toString(), ContentMode.HTML));
+                        PopupView popup = new PopupView(null, popupLayout);
+                        teamMembersHolidaysLayout.addComponent(popup);
+                        popup.setPopupVisible(true);
+
+
+                        /*if (periodsForCrossingsSearchClickListener != null) {
+                            ButtonClickResult<EmployeeHolidayPeriodCrossing> res = periodsForCrossingsSearchClickListener.onClick(this);
+                            if (res.isResult()) {
+                                Collection<EmployeeHolidayPeriodCrossing> resItems = res.getResultItems();
+                            }
+                        }*/
                     } catch (NumberFormatException nfe) {
                     }
-                });*/
+                });
 
                 negotiateSelectedPeriodsButtonsMap.put(team.getId(), btnNegotiateSelPeriods);
                 rejectSelectedPeriodsButtonsMap.put(team.getId(), btnRejectSelPeriods);
-                //showTeamCrossingPeriodsButtonsMap.put(team.getId(), btnShowCrossings);
+                showTeamCrossingPeriodsButtonsMap.put(team.getId(), btnShowCrossings);
 
                 Collection<EmployeeHolidayPeriod> teamMembersHolidayPeriods = null;
                 if(managedTeamMembersHolidays != null && managedTeamMembersHolidays.size() > 0) {
@@ -306,7 +373,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 teamMembersHolidaysLayout.addComponent(grdTeamMembersHolidayPeriods);
                 teamMembersHolidaysLayout.addComponent(negotiateSelectedPeriodsButtonsMap.get(team.getId()));
                 teamMembersHolidaysLayout.addComponent(rejectSelectedPeriodsButtonsMap.get(team.getId()));
-                //teamMembersHolidaysLayout.addComponent(showTeamCrossingPeriodsButtonsMap.get(team.getId()));
+                teamMembersHolidaysLayout.addComponent(showTeamCrossingPeriodsButtonsMap.get(team.getId()));
             });
         }
 
@@ -798,6 +865,14 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void setAddNegotiationHistoryActionListener(ActionPerformedListener<HolidayPeriodNegotiationHistory> addNegotiationHistoryActionListener) {
         this.addNegotiationHistoryActionListener = addNegotiationHistoryActionListener;
+    }
+
+    public ButtonClickListener<EmployeeHolidayPeriodCrossing> getPeriodsForCrossingsSearchClickListener() {
+        return periodsForCrossingsSearchClickListener;
+    }
+
+    public void setPeriodsForCrossingsSearchClickListener(ButtonClickListener<EmployeeHolidayPeriodCrossing> periodsForCrossingsSearchClickListener) {
+        this.periodsForCrossingsSearchClickListener = periodsForCrossingsSearchClickListener;
     }
 
     class EmployeeHolidayPeriodValueChangeListener implements HasValue.ValueChangeListener<LocalDate> {

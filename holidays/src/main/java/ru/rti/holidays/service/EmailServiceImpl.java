@@ -119,13 +119,18 @@ public class EmailServiceImpl implements EmailService {
 
 
     public boolean isDevelopmentMode() {
-        if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_DEVELOPMENT.equals(configurationServiceImpl.getApplicationRunningMode())) {
-            log.info("Development Mode Active. No mails will be sent on real addresses");
-            return true;
-        } else if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_PRODUCTION.equals(configurationServiceImpl.getApplicationRunningMode())) {
-            return false;
-        } else {
-            // Possible developer's error while setting property value. Act like app running mode is 'dev' (Development)
+        try {
+            if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_DEVELOPMENT.equals(configurationServiceImpl.getApplicationRunningMode()) ||
+                GlobalConstants.CONF_VALUE_FALSE.equals(configurationServiceImpl.getApplicationEmailMessagesSendingEnabled())) {
+                log.info("Development Mode Active. No mails will be sent on real addresses");
+                return true;
+            } else if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_PRODUCTION.equals(configurationServiceImpl.getApplicationRunningMode())) {
+                return false;
+            } else {
+                // Possible developer's error while setting property value. Act like app running mode is 'dev' (Development)
+                return true;
+            }
+        } catch (Exception e) {
             return true;
         }
     }

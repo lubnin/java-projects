@@ -5,6 +5,7 @@ public interface ConfigurationService {
     String getServerPort();
     String getServerAddress();
     String getApplicationRunningMode();
+    String getApplicationEmailMessagesSendingEnabled();
     String getStringMessagesEncoding();
     String getSpringMailDefaultEncoding();
     String getSpringMailHost();
