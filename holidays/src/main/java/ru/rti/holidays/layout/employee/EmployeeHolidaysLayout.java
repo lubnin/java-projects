@@ -162,7 +162,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                     try {
                         String teamId = buttonId.substring("btnShowCrossingsPeriods_".length());
                         Long nTeamId = Long.parseLong(teamId);
-                        UIHelper.showNotification("Проверка пересечений...");
 
                         Collection<EmployeeHolidayPeriod> allHolidays = managedTeamMembersHolidays.get(team);
                         Collection<EmployeeHolidayPeriod> allHolidays1 = new ArrayList<>();
@@ -171,6 +170,12 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         StringBuilder sbTotal = new StringBuilder();
                         sbTotal.append("<div class='rti_small_text'><b><u>Пересечения отпусков по этой команде:</u></b><br/>");
                         for (EmployeeHolidayPeriod ehp : allHolidays) {
+                            HolidayPeriod holPeriod = ehp.getHolidayPeriod();
+                            if (HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(holPeriod)) {
+                                continue;
+                            }
+
+
                             String empName = ehp.getEmployeeFullName();
                             Date dtStart = DateUtils.asDate(ehp.getDateStart());
                             Long numDays = ehp.getNumDays();
@@ -186,6 +191,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                                 if (ehpCross.equals(ehp)) {
                                     continue;
                                 }
+                                HolidayPeriod holPeriod1 = ehp.getHolidayPeriod();
+                                if (HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(holPeriod1)) {
+                                    continue;
+                                }
+
 
                                 Date dtStartCross = DateUtils.asDate(ehpCross.getDateStart());
                                 Long numDaysCross = ehpCross.getNumDays();
@@ -234,6 +244,9 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                             }
                         }*/
                     } catch (NumberFormatException nfe) {
+                        nfe.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
 

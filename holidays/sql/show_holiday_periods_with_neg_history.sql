@@ -45,11 +45,35 @@ inner join holiday_period_neg_status hpns on (hpns.hol_period_neg_status_id = hp
 order by last_name, first_name, middle_name;
 
 
+select emp.emp_id, emp.last_name, hp.* from 
+employee emp
+left join holiday_period hp on (emp.emp_id = hp.emp_id)
+where emp.last_name = 'Тохтамов';
+
+/*
+delete from holiday_period hp 
+where hp.emp_id = 4;
+
+delete from holiday_period_neg_history h 
+where hol_period_id in (
+489,
+490,
+269,
+273,
+274);
+
+*/
+
+
+
+
 select 
 	e.emp_id, 
-	e.last_name, 
-	e.first_name, e.middle_name, e.login_name, 
-	to_char(hp.date_start, 'DD.MM.YYYY') dt_start, 
+	e.last_name,
+	concat(e.last_name, ' ', e.first_name, ' ', e.middle_name) full_name,
+	--e.first_name, e.middle_name, e.login_name, 
+	to_char(hp.date_start, 'DD.MM.YYYY') dt_start,
+	to_char(hp.date_start, 'DD.MM.YYYY') dt_start,
 	hp.num_days, 
 	case hp.negotiation_mask
 		when 0 then 'None'
@@ -60,20 +84,22 @@ select
 		when 5 then 'LM+TL'
 		when 6 then 'LM+PM'
 		when 7 then 'ALL'
-	end,
-	hpns.status_name,
-	hpnh.old_status, 
-	hpnh.new_status, 
-	hpnh."comment", 
-	hpnh.created 
+	end ng_mask,
+	hpns.status_name
+	--hpnh.old_status, 
+	--hpnh.new_status, 
+	--hpnh."comment", 
+	--hpnh.created 
 from 
 employee e
 left join holiday_period hp on (e.emp_id = hp.emp_id)
 left join holiday_period_neg_status hpns on (hpns.hol_period_neg_status_id = hp.hp_negotiation_status_id)
-left join holiday_period_neg_history hpnh on (hpnh.hol_period_id = hp.hol_period_id)
-where e.emp_id not in (101, 1, 116,135,102,104,103,107,105,106,126,134,136,108,109,115,141,96,93,100,97,122,130,123,131,128,129,117,121,137,138,118,91,95,124,132,94,125,133,127,113,139,140,120,119)
-and e.last_name like 'Андропова'
-order by e.last_name, hp.date_start, hpnh.created;
+--left join holiday_period_neg_history hpnh on (hpnh.hol_period_id = hp.hol_period_id)
+where e.emp_id not in (101, 1, 88,90,116,135,102,104,103,107,105,106,126,134,136,108,109,115,141,96,93,100,97,122,130,123,131,128,129,117,121,137,138,118,91,95,124,132,94,125,133,127,113,139,140,120,119)
+--and e.last_name like 'Фомичев'
+and hpns.status_name not in ('Отклонён')
+order by e.last_name, hp.date_start;
+--, hpnh.created;
 
 
 
