@@ -260,12 +260,12 @@ public class HolidayPeriod implements DBEntity {
         }
     }
 
-    public void clearNegotiationMaskByManager(Employee manager) {
-        if (manager == null  || !manager.isManager()) {
+    public void clearNegotiationMaskByManager(Employee manager, String deptCode) {
+        if (manager == null  || !manager.isManager() || deptCode == null) {
             return;
         }
 
-        if (getDeptCode().equals(GlobalConstants.DEPT_DIVISION_B2C)) {
+        if (deptCode.equals(GlobalConstants.DEPT_DIVISION_B2C)) {
             // fore TeamLead flag to be set for BA's. As there's no really TL which
             // is negotiating these Employees
             setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_TEAM_LEAD_ONLY));
@@ -374,9 +374,9 @@ public class HolidayPeriod implements DBEntity {
                 @Override
                 public int compare(HolidayPeriodNegotiationHistory o1, HolidayPeriodNegotiationHistory o2) {
                     if (o1.getCreatedDate().before(o2.getCreatedDate())) {
-                        return -1;
-                    } else if (o2.getCreatedDate().before(o1.getCreatedDate())) {
                         return 1;
+                    } else if (o2.getCreatedDate().before(o1.getCreatedDate())) {
+                        return -1;
                     } else {
                         return 0;
                     }

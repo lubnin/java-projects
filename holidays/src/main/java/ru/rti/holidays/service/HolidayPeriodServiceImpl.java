@@ -91,27 +91,32 @@ public class HolidayPeriodServiceImpl implements HolidayPeriodService {
         try {
             for (EmployeeHolidayPeriod ehp : holidayPeriods) {
                 HolidayPeriod hp = ehp.getHolidayPeriod();
-                HolidayPeriodNegotiationStatus currentStatus = hp.getNegotiationStatus();
+                String departmentCode = ehp.getEmployeeDepartmentCode();
+
                 HolidayPeriodNegotiationStatus nextStatus = null;
 
-                if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION) {
+/*                if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION) {
                     hp.setNegotiationMaskByManager(currentManager, ehp);
                     nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hp, allStatuses);
                 } else if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION) {
                     nextStatus = HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allStatuses);
                     hp.clearNegotiationMaskByManager(currentManager);
-                }
+                }*/
 
 
                 HolidayPeriod hpToSave = holidayPeriodRepository.findById(hp.getId());
+                HolidayPeriodNegotiationStatus currentStatus = hpToSave.getNegotiationStatus();
+
                 if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION) {
                     hpToSave.setNegotiationMaskByManager(currentManager, ehp);
+                    nextStatus = HolidayPeriodNegotiationStatusUtils.getNextStatusByNegotiationMask(hpToSave, allStatuses);
                 } else if (negotiationMode == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION) {
-                    hpToSave.clearNegotiationMaskByManager(currentManager);
+                    hpToSave.clearNegotiationMaskByManager(currentManager, departmentCode);
+                    nextStatus = HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allStatuses);
                 }
 
                 if (nextStatus != null && !nextStatus.getId().equals(currentStatus.getId())) {
-                    hp.setNegotiationStatus(nextStatus);
+                    //hp.setNegotiationStatus(nextStatus);
                     hpToSave.setNegotiationStatus(nextStatus);
                 }
 

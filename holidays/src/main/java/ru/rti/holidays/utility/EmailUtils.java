@@ -13,7 +13,6 @@ public class EmailUtils {
     private static final Logger log = LoggerFactory.getLogger(HolidayPeriodUtils.class);
 
     public static boolean isValidEmailAddress(String email) {
-
         boolean result = true;
         try {
             InternetAddress emailAddr = new InternetAddress(email);
@@ -118,6 +117,8 @@ public class EmailUtils {
                         isNeedToSendEmailToManagerFlag = true;
                     }
                     log.info("visibilityMask = " + isNeedToSendEmailToManagerFlag);
+                } else {
+                    isNeedToSendEmailToManagerFlag = false;
                 }
                 return isNeedToSendEmailToManagerFlag;
             } else if (currentManager.isSupervisor()) {

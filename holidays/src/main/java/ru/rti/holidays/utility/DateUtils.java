@@ -97,6 +97,9 @@ public class DateUtils {
      */
     public static boolean isIntersectionBetweenDates(Date dateStart1, Date dateEnd1, Date dateStart2, Date dateEnd2) {
         boolean isIntersectionBetweenDates = false;
+        if (CommonUtils.checkIfAnyIsNull(dateStart1, dateEnd1, dateStart2, dateEnd2)) {
+            return false;
+        }
         if (dateStart2.after(dateStart1) && dateEnd2.before(dateEnd1)) {
             isIntersectionBetweenDates = true; // full containment of (dateStart2; dateEnd2) in period (dateStart1; dateEnd1)
         } else if ((dateStart2.after(dateStart1) || dateStart2.equals(dateStart1)) && (dateStart2.before(dateEnd1) || dateStart2.equals(dateEnd1))) {

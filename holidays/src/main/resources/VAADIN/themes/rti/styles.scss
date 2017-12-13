@@ -3,19 +3,3 @@
 
 @include addons;
 @include rti;
-
-/*@import "addons.scss";
-@import "rti.scss";
-
-.rti {
-  @include addons;
-  @include rti;
-}*/
-
-/*
-@import "../valo/valo.scss";
-
-@mixin rti {
-  @include valo;
-}
-*/

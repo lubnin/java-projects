@@ -191,7 +191,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                                 if (ehpCross.equals(ehp)) {
                                     continue;
                                 }
-                                HolidayPeriod holPeriod1 = ehp.getHolidayPeriod();
+                                HolidayPeriod holPeriod1 = ehpCross.getHolidayPeriod();
                                 if (HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(holPeriod1)) {
                                     continue;
                                 }

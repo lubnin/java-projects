@@ -15,19 +15,15 @@ public class HolidayPeriodUtils {
         boolean isDepartmentCRM = false;
         boolean isDivisionB2C = false;
         boolean isDivisionCRM = false;
-
         boolean isRegularRole = false;
         boolean isTester = false;
 
-        //log.info("isVisibleForCurrentUser() called.");
-
         String projectRoleName = empHolidayPeriod.getEmployeeRoleName().toLowerCase();
-        //log.info("roleName = " + projectRoleName);
+
         //TODO: remove hardcode from here later!!!
         isTester = projectRoleName.indexOf("тестир") >= 0;
-        //log.info("isTester flag: " + String.valueOf(isTester));
         isRegularRole = empHolidayPeriod.isEmployeeRegularRole();
-        //log.info("isRegularRole flag: " + String.valueOf(isRegularRole));
+
 
         String deptCode = empHolidayPeriod.getEmployeeDepartmentCode();
         if (GlobalConstants.DEPT_DEPARTMENT_CRM.equals(deptCode)) {
@@ -37,16 +33,10 @@ public class HolidayPeriodUtils {
         } else if (GlobalConstants.DEPT_DIVISION_CRM.equals(deptCode)) {
             isDivisionCRM = true;
         }
-        //log.info("deptCode = " + deptCode);
 
         boolean visibilityMask = true;
 
-        //log.info(String.format("Flags: isDepartmentCRM = %s, isDivisionB2C = %s, isDivisionCRM = %s",
-        //        String.valueOf(isDepartmentCRM),
-        //        String.valueOf(isDivisionB2C),
-        //        String.valueOf(isDivisionCRM)));
 
-        //byte negotiationMask = holidayPeriod.getNegotiationMask();
         if (SessionUtils.isCurrentUserTeamLead()) {
             //log.info("Current user is TeamLead");
             if (isDivisionB2C) {
@@ -81,7 +71,7 @@ public class HolidayPeriodUtils {
                         visibilityMask = false;
                     } else if (SessionUtils.isCurrentUserB2CManager()) {
                         visibilityMask = false;
-                    } if (SessionUtils.isCurrentUserDevManager()) {
+                    } else if (SessionUtils.isCurrentUserDevManager()) {
                         visibilityMask = true;
                     } else if (SessionUtils.isCurrentUserTestManager()) {
                         // Only testers visible
@@ -92,7 +82,8 @@ public class HolidayPeriodUtils {
                 } else {
                     visibilityMask = true;
                 }
-                //log.info("visibilityMask = " + visibilityMask);
+            } else {
+                visibilityMask = false;
             }
             return holidayPeriod.isVisibleForLineManager() && visibilityMask;
         } else if (SessionUtils.isCurrentUserSupervisor()) {

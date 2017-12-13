@@ -4,7 +4,7 @@ import ru.rti.holidays.entity.Team;
 
 public class TeamUtils {
     public static String getDelimitedTeamsString(Iterable<Team> teams, String separator) {
-        if (teams == null) {
+        if (teams == null || separator == null) {
             return GlobalConstants.EMPTY_STRING;
         }
 

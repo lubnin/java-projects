@@ -1,14 +1,12 @@
-$v-app-loading-text: "Loading RTI Holidays, please wait...";
+$v-app-loading-text: "";
 $v-background-color: #444d50;
 $v-focus-color: #07a9ca;
 $v-focus-style: 0 0 3px 2px $v-focus-color;
 $v-bevel-depth: 40%;
 $v-gradient: v-linear 12%;
-/*$v-border-radius: 10px;*/
 $v-border-radius: 3px;
 $v-font-size: 14px;
-/*$v-font-family: Roboto, sans-serif;*/
-$v-font-family: "Verdana", sans-serif;
+$v-font-family: "Arial", sans-serif;
 $v-font-weight: 400;
 $v-font-weight--header: 400;
 $v-bevel: inset 0 1px 2px v-tint, inset 0 0 1px (v-tint 0.1);
@@ -19,31 +17,12 @@ $v-unit-size: 40px;
 $v-overlay-shadow: 0 0 0 3px (v-shade 8), 0 5px 10px (v-shade 4);
 $v-component-group-spacing: 6px;
 
-
-/*$mat-background-color: #fafafa;*/ /* #fafafa for a light and #303030 for a dark theme */
-/*$v-focus-color: #00BCD4;*/
-/* (You can find colors at materialpalette.com) $v-focus-color is supposed to be your accent color */
-/*@import "../material/material.scss";*/
-
+@charset "UTF-8";
 @import "../valo/valo.scss";
-/*@import "../../addons/hybrid-menu/hybrid-menu.scss";*/
-
-/*@import "addons.scss";*/
-/*@import "rti.scss";*/
-
-/*
-.rti {
-@include addons;
-  // Include rti theme styles in theme
-  @include rti;
-}
-*/
 
 
 @mixin rti {
     @include valo;
-    /*@include hybrid-menu;*/
-    /*@include material;*/
 
     .debug_border {
         border: 1px dotted green;
@@ -60,8 +39,6 @@ $v-component-group-spacing: 6px;
     .neg_status_rejected {
         color: #ff2d2d;
     }
-
-
 
     .neg_status_new {
         color: yellow;
@@ -120,7 +97,6 @@ $v-component-group-spacing: 6px;
         padding: 0 18px;
         color: #f9f0ef;
         font-weight: 500;
-
         border-radius: 3px;
         border: 1px solid #303739;
         border-top-color: #363d40;
@@ -170,10 +146,4 @@ $v-component-group-spacing: 6px;
         height:150px !important;
         overflow-y: scroll
     }
-
-  /* An actual theme rule */
-  /*
-  .v-button {
-    color: #fff;
-  }*/
 }
