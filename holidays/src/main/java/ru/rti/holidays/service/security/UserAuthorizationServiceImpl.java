@@ -1,5 +1,7 @@
 package ru.rti.holidays.service.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,6 +12,8 @@ import ru.rti.holidays.repository.EmployeeRepository;
 
 @Service("authService")
 public class UserAuthorizationServiceImpl implements UserDetailsService {
+    private static final Logger log = LoggerFactory.getLogger(UserAuthorizationServiceImpl.class);
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -22,7 +26,11 @@ public class UserAuthorizationServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return employeeRepository.findByLoginNameIgnoreCase(username);
+        Employee loggedInEmployee = employeeRepository.findByLoginNameIgnoreCase(username);
+        if (loggedInEmployee != null) {
+            log.info(String.format("User successfully logged-in: %s", loggedInEmployee));
+        }
+        return loggedInEmployee;
         /*Employee loggedInEmployee = employeeRepository.findByLoginNameIgnoreCase(username);
         if (loggedInEmployee != null) {
             return loggedInEmployee;

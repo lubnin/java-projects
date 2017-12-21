@@ -10,10 +10,7 @@ import ru.rti.holidays.utility.CommonUtils;
 import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Entity which describes the Employee, working in the company.
@@ -155,6 +152,37 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
         this.middleName = middleName;
         this.loginName = loginName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Employee employee = (Employee)obj;
+
+        return Objects.equals(firstName, employee.getFirstName()) &&
+                Objects.equals(lastName, employee.getLastName()) &&
+                Objects.equals(middleName, employee.getMiddleName()) &&
+                Objects.equals(password, employee.getPassword()) &&
+                Objects.equals(email, employee.getEmail()) &&
+                Objects.equals(created, employee.getCreatedDate()) &&
+                Objects.equals(updated, employee.getUpdatedDate()) &&
+                Objects.equals(id, employee.getId()) &&
+                Objects.equals(specialCode, employee.getSpecialCode()) &&
+                Objects.equals(department, employee.getDepartment()) &&
+                Objects.equals(team, employee.getTeam()) &&
+                Objects.equals(projectRole, employee.getProjectRole()) &&
+                Objects.equals(holidayPeriods, employee.getHolidayPeriods());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, middleName, password, email, created, updated, id, specialCode, department, team, projectRole, holidayPeriods);
+    }
+
     @PrePersist
     public void onCreate() {
         created = new Date();
@@ -169,6 +197,13 @@ public class Employee implements DBEntity, UserDetails, NavigationContextHolder 
         StringBuilder sb = new StringBuilder();
         if (lastName != null) sb.append(getLastName());
         if (firstName != null) sb.append(" ").append(getFirstName());
+        if (middleName != null) sb.append(" ").append(getMiddleName());
+        return sb.toString();
+    }
+
+    public String getPreferredName() {
+        StringBuilder sb = new StringBuilder();
+        if (firstName != null) sb.append(getFirstName());
         if (middleName != null) sb.append(" ").append(getMiddleName());
         return sb.toString();
     }

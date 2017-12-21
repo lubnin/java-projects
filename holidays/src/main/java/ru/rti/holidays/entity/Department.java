@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @SpringComponent
@@ -97,4 +98,28 @@ public class Department implements DBEntity {
     public void setCode(String code) {
         this.code = code;
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Department department = (Department)obj;
+
+        return Objects.equals(id, department.getId()) &&
+                Objects.equals(name, department.getName()) &&
+                Objects.equals(code, department.getCode()) &&
+                Objects.equals(created, department.getCreatedDate()) &&
+                Objects.equals(updated, department.getUpdatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, code, created, updated);
+    }
+    */
 }

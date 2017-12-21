@@ -34,7 +34,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     @Override
-    public String getStringMessagesEncoding() {
+    public String getSpringMessagesEncoding() {
         return getPropertyValue("spring.messages.encoding");
     }
 

@@ -7,7 +7,6 @@ import ru.rti.holidays.entity.HolidayPeriod;
 import java.util.Set;
 
 public interface EmailService {
-    boolean sendMailHolidayPeriodSubmitted(HolidayPeriod holidayPeriod, Employee employee, Set<Employee> managers);
     boolean sendMailHolidayPeriodSubmitted(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers);
     boolean sendMailHolidayPeriodsNegotiated(Iterable<EmployeeHolidayPeriod> holidayPeriods, Employee manager);
     boolean sendMailHolidayPeriodsRejected(Iterable<EmployeeHolidayPeriod> holidayPeriods, Employee manager);

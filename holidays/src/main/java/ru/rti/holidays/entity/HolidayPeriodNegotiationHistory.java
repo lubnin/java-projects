@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @SpringComponent
 @Entity
@@ -129,4 +130,30 @@ public class HolidayPeriodNegotiationHistory implements DBEntity {
                 created,
                 updated);
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        HolidayPeriodNegotiationHistory history = (HolidayPeriodNegotiationHistory)obj;
+
+        return Objects.equals(id, history.getId()) &&
+                Objects.equals(created, history.getCreatedDate()) &&
+                Objects.equals(updated, history.getUpdatedDate()) &&
+                Objects.equals(comment, history.getComment()) &&
+                Objects.equals(oldStatus, history.getOldStatus()) &&
+                Objects.equals(newStatus, history.getNewStatus());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, created, updated, comment, oldStatus, newStatus);
+    }
+    */
 }

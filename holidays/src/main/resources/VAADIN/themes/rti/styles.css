@@ -1610,7 +1610,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .v-app, .v-app-loading {
-	font: 400 14px/1.55 "Arial", sans-serif;
+	font: 400 15px/1.55 "pt_sansregular";
 	color: #cacecf;
 	background-color: #444d50;
 	cursor: default;
@@ -1699,7 +1699,7 @@ img.v-icon {
 }
 
 .v-caption {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -1785,7 +1785,7 @@ select:focus {
 	border-radius: 2px;
 	max-width: 35em;
 	overflow: hidden !important;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-tooltip div[style*="width"] {
@@ -1911,7 +1911,7 @@ select:focus {
 	padding: 13px 16px;
 	background-color: #444;
 	background-color: rgba(68, 68, 68, 0.9);
-	line-height: 20px;
+	line-height: 21px;
 	text-align: center;
 }
 
@@ -2375,7 +2375,7 @@ select:focus {
 	padding: 0 13px;
 	
 	
-	font-size: 11px;
+	font-size: 12px;
 	
 	border-radius: 3px;
 }
@@ -2393,7 +2393,7 @@ select:focus {
 	padding: 0 15px;
 	
 	
-	font-size: 12px;
+	font-size: 13px;
 	
 	border-radius: 3px;
 }
@@ -2411,7 +2411,7 @@ select:focus {
 	padding: 0 21px;
 	
 	
-	font-size: 17px;
+	font-size: 18px;
 	
 	border-radius: 3px;
 }
@@ -2429,7 +2429,7 @@ select:focus {
 	padding: 0 28px;
 	
 	
-	font-size: 23px;
+	font-size: 24px;
 	
 	border-radius: 3px;
 }
@@ -2549,7 +2549,7 @@ select:focus {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 11px;
+	font-size: 12px;
 	text-align: center;
 }
 
@@ -2632,7 +2632,7 @@ select:focus {
 	position: relative;
 	line-height: 17px;
 	white-space: nowrap;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-checkbox-small.v-has-width label {
@@ -2760,7 +2760,7 @@ select:focus {
 	position: relative;
 	line-height: 24px;
 	white-space: nowrap;
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-checkbox-large.v-has-width label {
@@ -2805,7 +2805,7 @@ select:focus {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 13px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -3335,7 +3335,7 @@ select:focus {
 .v-filterselect-tiny {
 	height: 30px;
 	
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .v-filterselect-tiny [class*="input"] {
@@ -3574,13 +3574,13 @@ select:focus {
 }
 
 .v-filterselect-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-filterselect-large {
 	height: 48px;
 	
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-filterselect-large [class*="input"] {
@@ -3701,7 +3701,7 @@ select:focus {
 .v-filterselect-huge {
 	height: 64px;
 	
-	font-size: 23px;
+	font-size: 24px;
 }
 
 .v-filterselect-huge [class*="input"] {
@@ -4240,7 +4240,7 @@ select:focus {
 	white-space: nowrap;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .v-grid-cell.frozen {
@@ -4345,7 +4345,7 @@ select:focus {
 	content: "\f0c9";
 	display: block;
 	font-family: ThemeIcons, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-grid-sidebar.v-contextmenu.closed {
@@ -4358,7 +4358,7 @@ select:focus {
 
 .v-grid-sidebar.v-contextmenu.open .v-grid-sidebar-button:after {
 	content: "\f0c9";
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 1;
 }
 
@@ -4437,7 +4437,7 @@ select:focus {
 .v-grid-header th {
 	position: relative;
 	background-color: #444d50;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-bottom: 1px solid #303739;
@@ -4450,7 +4450,7 @@ select:focus {
 }
 
 .v-grid-header .sort-asc, .v-grid-header .sort-desc {
-	padding-right: 33.5px;
+	padding-right: 35.5px;
 }
 
 .v-grid-header .sort-asc:after, .v-grid-header .sort-desc:after {
@@ -4458,7 +4458,7 @@ select:focus {
 	content: "\f0de" " " attr(sort-order);
 	position: absolute;
 	right: 19.5px;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .v-grid-header .sort-desc:after {
@@ -4497,7 +4497,7 @@ select:focus {
 
 .v-grid-footer td {
 	background-color: #444d50;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-top: 1px solid #303739;
@@ -4807,7 +4807,7 @@ select:focus {
 }
 
 .v-grid-editor-footer {
-	font-size: 12px;
+	font-size: 13px;
 	padding: 0 7px;
 	background: #444d50;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -5130,7 +5130,7 @@ select:focus {
 	-webkit-transition: box-shadow 180ms, border 180ms;
 	-moz-transition: box-shadow 180ms, border 180ms;
 	transition: box-shadow 180ms, border 180ms;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .v-textfield-compact, .v-textfield-small {
@@ -5159,7 +5159,7 @@ select:focus {
 }
 
 .v-textfield-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-textfield-large {
@@ -5185,7 +5185,7 @@ select:focus {
 	-webkit-transition: box-shadow 180ms, border 180ms;
 	-moz-transition: box-shadow 180ms, border 180ms;
 	transition: box-shadow 180ms, border 180ms;
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-textfield-huge {
@@ -5211,7 +5211,7 @@ select:focus {
 	-webkit-transition: box-shadow 180ms, border 180ms;
 	-moz-transition: box-shadow 180ms, border 180ms;
 	transition: box-shadow 180ms, border 180ms;
-	font-size: 23px;
+	font-size: 24px;
 }
 
 .v-slot-inline-icon {
@@ -5223,7 +5223,7 @@ select:focus {
 }
 
 .v-caption-inline-icon .v-captiontext {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -5241,7 +5241,7 @@ select:focus {
 	width: 40px;
 	line-height: 38px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .v-caption-inline-icon img.v-icon {
@@ -5262,7 +5262,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-tiny .v-captiontext {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -5280,7 +5280,7 @@ select:focus {
 	width: 30px;
 	line-height: 28px;
 	text-align: center;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .v-caption-inline-icon.v-caption-tiny img.v-icon {
@@ -5301,7 +5301,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-compact .v-captiontext {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -5319,7 +5319,7 @@ select:focus {
 	width: 34px;
 	line-height: 32px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .v-caption-inline-icon.v-caption-compact img.v-icon {
@@ -5340,7 +5340,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-small .v-captiontext {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -5358,7 +5358,7 @@ select:focus {
 	width: 34px;
 	line-height: 32px;
 	text-align: center;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-caption-inline-icon.v-caption-small img.v-icon {
@@ -5379,7 +5379,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-large .v-captiontext {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -5397,7 +5397,7 @@ select:focus {
 	width: 48px;
 	line-height: 46px;
 	text-align: center;
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-caption-inline-icon.v-caption-large img.v-icon {
@@ -5418,7 +5418,7 @@ select:focus {
 }
 
 .v-caption-inline-icon.v-caption-huge .v-captiontext {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -5436,7 +5436,7 @@ select:focus {
 	width: 64px;
 	line-height: 62px;
 	text-align: center;
-	font-size: 23px;
+	font-size: 24px;
 }
 
 .v-caption-inline-icon.v-caption-huge img.v-icon {
@@ -5573,7 +5573,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .v-textarea-small {
@@ -5603,7 +5603,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-textarea-large {
@@ -5633,7 +5633,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-textarea-huge {
@@ -5663,7 +5663,7 @@ select:focus {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 23px;
+	font-size: 24px;
 }
 
 .v-textarea-align-right {
@@ -5832,7 +5832,7 @@ select:focus {
 }
 
 .v-datefield-full {
-	width: 210px;
+	width: 225px;
 }
 
 .v-datefield-day {
@@ -5840,11 +5840,11 @@ select:focus {
 }
 
 .v-datefield-month {
-	width: 105px;
+	width: 113px;
 }
 
 .v-datefield-year {
-	width: 91px;
+	width: 98px;
 }
 
 .v-datefield-popup {
@@ -5888,7 +5888,7 @@ select:focus {
 }
 
 .v-datefield-popup .v-datefield-calendarpanel {
-	font-size: 14px;
+	font-size: 15px;
 	text-align: center;
 }
 
@@ -5985,8 +5985,8 @@ select:focus {
 
 .v-datefield-popup td[class*="year"] button:before, .v-datefield-popup td[class*="month"] button:before {
 	color: #878d8f;
-	font-size: 18px;
-	line-height: 21px;
+	font-size: 20px;
+	line-height: 23px;
 	-webkit-transition: color 200ms;
 	-moz-transition: color 200ms;
 	transition: color 200ms;
@@ -6073,7 +6073,7 @@ select:focus {
 }
 
 .v-datefield-calendarpanel {
-	font-size: 14px;
+	font-size: 15px;
 	text-align: center;
 }
 
@@ -6170,8 +6170,8 @@ td[class*="year"] button, td[class*="month"] button {
 
 td[class*="year"] button:before, td[class*="month"] button:before {
 	color: #878d8f;
-	font-size: 18px;
-	line-height: 21px;
+	font-size: 20px;
+	line-height: 23px;
 	-webkit-transition: color 200ms;
 	-moz-transition: color 200ms;
 	transition: color 200ms;
@@ -6295,7 +6295,7 @@ td.v-datefield-calendarpanel-time .v-label {
 .v-datefield-tiny {
 	height: 30px;
 	border-radius: 3px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .v-datefield-tiny [class*="textfield"] {
@@ -6508,13 +6508,13 @@ td.v-datefield-calendarpanel-time .v-label {
 }
 
 .v-datefield-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-datefield-large {
 	height: 48px;
 	border-radius: 3px;
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-datefield-large [class*="textfield"] {
@@ -6622,7 +6622,7 @@ td.v-datefield-calendarpanel-time .v-label {
 .v-datefield-huge {
 	height: 64px;
 	border-radius: 3px;
-	font-size: 23px;
+	font-size: 24px;
 }
 
 .v-datefield-huge [class*="textfield"] {
@@ -6728,7 +6728,7 @@ td.v-datefield-calendarpanel-time .v-label {
 }
 
 .v-inline-datefield-calendarpanel {
-	font-size: 14px;
+	font-size: 15px;
 	text-align: center;
 }
 
@@ -6825,8 +6825,8 @@ td[class*="year"] button, td[class*="month"] button {
 
 td[class*="year"] button:before, td[class*="month"] button:before {
 	color: #878d8f;
-	font-size: 18px;
-	line-height: 21px;
+	font-size: 20px;
+	line-height: 23px;
 	-webkit-transition: color 200ms;
 	-moz-transition: color 200ms;
 	transition: color 200ms;
@@ -7287,7 +7287,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	padding: 0;
 	text-align: left;
 	line-height: 32px;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-menubar-small:after {
@@ -7421,7 +7421,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 11px;
+	font-size: 12px;
 	text-align: center;
 }
 
@@ -7515,7 +7515,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-select-optiongroup .v-radiobutton, .v-select-optiongroup .v-checkbox {
 	display: block;
-	margin: 10px 14px 0 0;
+	margin: 10px 15px 0 0;
 }
 
 .v-select-optiongroup .v-radiobutton:first-child, .v-select-optiongroup .v-checkbox:first-child {
@@ -7531,7 +7531,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-select-optiongroup-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-select-optiongroup-small .v-checkbox {
@@ -7803,7 +7803,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-select-optiongroup-small .v-radiobutton, .v-select-optiongroup-small .v-checkbox {
 	display: block;
-	margin: 9px 14px 0 0;
+	margin: 9px 15px 0 0;
 }
 
 .v-select-optiongroup-small .v-radiobutton:first-child, .v-select-optiongroup-small .v-checkbox:first-child {
@@ -7819,7 +7819,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-select-optiongroup-large {
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-select-optiongroup-large .v-checkbox {
@@ -7870,7 +7870,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 13px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -7997,7 +7997,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	top: 0;
 	left: 0;
 	border-radius: 3px;
-	font-size: 13px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -8091,7 +8091,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-select-optiongroup-large .v-radiobutton, .v-select-optiongroup-large .v-checkbox {
 	display: block;
-	margin: 12px 14px 0 0;
+	margin: 12px 15px 0 0;
 }
 
 .v-select-optiongroup-large .v-radiobutton:first-child, .v-select-optiongroup-large .v-checkbox:first-child {
@@ -8171,11 +8171,11 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-link-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-link-large {
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-window {
@@ -8306,7 +8306,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	line-height: 37px;
 	text-align: center;
 	cursor: pointer;
-	font-size: 18px;
+	font-size: 20px;
 	color: #949da0;
 	-webkit-transition: color 140ms;
 	-moz-transition: color 140ms;
@@ -8645,7 +8645,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	height: 2px;
 	width: 100%;
 	background: #07a9ca;
-	font-size: 28px;
+	font-size: 30px;
 	line-height: 2px;
 	color: #07a9ca;
 	text-indent: -4px;
@@ -8770,7 +8770,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	white-space: nowrap;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .v-tree8-cell.frozen {
@@ -8875,7 +8875,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0c9";
 	display: block;
 	font-family: ThemeIcons, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-tree8-sidebar.v-contextmenu.closed {
@@ -8888,7 +8888,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-tree8-sidebar.v-contextmenu.open .v-tree8-sidebar-button:after {
 	content: "\f0c9";
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 1;
 }
 
@@ -8967,7 +8967,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 .v-tree8-header th {
 	position: relative;
 	background-color: #444d50;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-bottom: 1px solid #303739;
@@ -8980,7 +8980,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-tree8-header .sort-asc, .v-tree8-header .sort-desc {
-	padding-right: 33.5px;
+	padding-right: 35.5px;
 }
 
 .v-tree8-header .sort-asc:after, .v-tree8-header .sort-desc:after {
@@ -8988,7 +8988,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0de" " " attr(sort-order);
 	position: absolute;
 	right: 19.5px;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .v-tree8-header .sort-desc:after {
@@ -9027,7 +9027,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-tree8-footer td {
 	background-color: #444d50;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-top: 1px solid #303739;
@@ -9337,7 +9337,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-tree8-editor-footer {
-	font-size: 12px;
+	font-size: 13px;
 	padding: 0 7px;
 	background: #444d50;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -9833,7 +9833,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	white-space: nowrap;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .v-treegrid-cell.frozen {
@@ -9938,7 +9938,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0c9";
 	display: block;
 	font-family: ThemeIcons, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-treegrid-sidebar.v-contextmenu.closed {
@@ -9951,7 +9951,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-treegrid-sidebar.v-contextmenu.open .v-treegrid-sidebar-button:after {
 	content: "\f0c9";
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 1;
 }
 
@@ -10030,7 +10030,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 .v-treegrid-header th {
 	position: relative;
 	background-color: #444d50;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-bottom: 1px solid #303739;
@@ -10043,7 +10043,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-treegrid-header .sort-asc, .v-treegrid-header .sort-desc {
-	padding-right: 33.5px;
+	padding-right: 35.5px;
 }
 
 .v-treegrid-header .sort-asc:after, .v-treegrid-header .sort-desc:after {
@@ -10051,7 +10051,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	content: "\f0de" " " attr(sort-order);
 	position: absolute;
 	right: 19.5px;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .v-treegrid-header .sort-desc:after {
@@ -10090,7 +10090,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 
 .v-treegrid-footer td {
 	background-color: #444d50;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: inherit;
 	border-left: 1px solid #303739;
 	border-top: 1px solid #303739;
@@ -10400,7 +10400,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-treegrid-editor-footer {
-	font-size: 12px;
+	font-size: 13px;
 	padding: 0 7px;
 	background: #444d50;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -10760,7 +10760,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	background-image: -webkit-linear-gradient(top, #4c5659 2%, #373e41 98%);
 	background-image: linear-gradient(to bottom,#4c5659 2%, #373e41 98%);
 	white-space: nowrap;
-	font-size: 12px;
+	font-size: 13px;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -11190,7 +11190,7 @@ tbody.v-drag-element tr {
 }
 
 .v-table-compact .v-table-header-wrap, .v-table-compact .v-table-footer-wrap, .v-table-compact .v-table-header-drag, .v-table-small .v-table-header-wrap, .v-table-small .v-table-footer-wrap, .v-table-small .v-table-header-drag {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-table-compact .v-table-footer-container, .v-table-small .v-table-footer-container {
@@ -11246,7 +11246,7 @@ tbody.v-drag-element tr {
 .v-table-compact.v-treetable .v-table-cell-wrapper, .v-table-small.v-treetable .v-table-cell-wrapper {
 	padding-left: 0;
 	padding-right: 0;
-	min-height: 14px;
+	min-height: 15px;
 }
 
 .v-table-compact.v-treetable .v-table-cell-content, .v-table-small.v-treetable .v-table-cell-content {
@@ -11268,11 +11268,11 @@ tbody.v-drag-element tr {
 }
 
 .v-table-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-table-small.v-treetable .v-table-cell-wrapper {
-	min-height: 12px;
+	min-height: 13px;
 }
 
 .v-treetable [class*="caption-container"], .v-treetable [class*="footer-container"], .v-treetable [class*="cell-wrapper"] {
@@ -11286,7 +11286,7 @@ tbody.v-drag-element tr {
 }
 
 .v-treetable [class*="cell-wrapper"] {
-	min-height: 14px;
+	min-height: 15px;
 }
 
 .v-treetable [class*="caption-container"] {
@@ -11800,7 +11800,7 @@ tbody.v-drag-element tr {
 	border-radius: 2px;
 	max-width: 35em;
 	overflow: hidden !important;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-slider-vertical {
@@ -11898,7 +11898,7 @@ tbody.v-drag-element tr {
 	cursor: pointer;
 	text-align: center;
 	line-height: 40px;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	color: #afb5b7;
 	width: auto !important;
@@ -11948,7 +11948,7 @@ tbody.v-drag-element tr {
 }
 
 .v-tabsheet-tabitemcell .v-caption-closable {
-	padding-right: 19px;
+	padding-right: 21px;
 }
 
 .v-tabsheet-tabitemcell.icons-on-top .v-caption-closable {
@@ -11959,10 +11959,10 @@ tbody.v-drag-element tr {
 	position: absolute;
 	right: 0;
 	top: 50%;
-	margin: -7px 0 0;
-	font-size: 15px;
-	line-height: 15px;
-	width: 15px;
+	margin: -8px 0 0;
+	font-size: 17px;
+	line-height: 17px;
+	width: 17px;
 	text-align: center;
 	border-radius: 2px;
 	color: #8b9699;
@@ -12137,7 +12137,7 @@ tbody.v-drag-element tr {
 }
 
 .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption-closable {
-	padding-right: 28px;
+	padding-right: 30px;
 }
 
 .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-tabsheet-caption-close {
@@ -12247,22 +12247,22 @@ tbody.v-drag-element tr {
 
 .v-colorpicker-popup [class$="sliders"] .v-has-caption {
 	white-space: nowrap;
-	padding-left: 42px;
+	padding-left: 45px;
 }
 
 .v-colorpicker-popup [class$="sliders"] .v-caption {
 	display: inline-block;
-	margin-left: -42px;
-	width: 42px;
+	margin-left: -45px;
+	width: 45px;
 }
 
 .v-colorpicker-popup [class$="sliders"] .v-slot-hue-slider + .v-slot .v-has-caption {
-	padding-left: 70px;
+	padding-left: 75px;
 }
 
 .v-colorpicker-popup [class$="sliders"] .v-slot-hue-slider + .v-slot .v-caption {
-	margin-left: -70px;
-	width: 70px;
+	margin-left: -75px;
+	width: 75px;
 }
 
 .v-colorpicker-popup .v-slider-red .v-slider-base:after {
@@ -12372,7 +12372,7 @@ tbody.v-drag-element tr {
 	background-image: linear-gradient(to bottom,#464f52 2%, #40484b 98%);
 	color: #cacecf;
 	font-weight: 400;
-	font-size: 13px;
+	font-size: 14px;
 	-webkit-box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
@@ -12533,7 +12533,7 @@ tbody.v-drag-element tr {
 	background-image: linear-gradient(to bottom,#464f52 2%, #40484b 98%);
 	color: #cacecf;
 	font-weight: 400;
-	font-size: 13px;
+	font-size: 14px;
 	-webkit-box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	box-shadow: inset 0 1px 2px #666666, inset 0 0 1px #4f5154;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
@@ -12626,7 +12626,7 @@ tbody.v-drag-element tr {
 }
 
 .v-select-twincol-caption-left, .v-select-twincol-caption-right {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
 	padding-bottom: 0.3em;
 	padding-left: 1px;
@@ -12801,7 +12801,7 @@ tbody.v-drag-element tr {
 }
 
 .v-calendar-bottom-spacer, .v-calendar-spacer, .v-calendar-bottom-spacer-empty {
-	height: 17px;
+	height: 18px;
 	margin-bottom: 3px;
 }
 
@@ -12817,7 +12817,7 @@ tbody.v-drag-element tr {
 
 .v-calendar-day-number {
 	line-height: 27px;
-	font-size: 14px;
+	font-size: 15px;
 	text-align: right;
 	margin: 0 5px;
 	white-space: nowrap;
@@ -12860,7 +12860,7 @@ tbody.v-drag-element tr {
 }
 
 .v-calendar-weekly-longevents .v-calendar-event-all-day {
-	height: 19px;
+	height: 20px;
 	line-height: 1.6;
 	margin-bottom: 3px;
 }
@@ -12970,14 +12970,14 @@ tbody.v-drag-element tr {
 	margin-bottom: 3px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	height: 17px;
-	line-height: 17px;
+	height: 18px;
+	line-height: 18px;
 }
 
 .v-calendar-event-month .v-calendar-event-time {
 	float: right;
 	font-size: 0.9em;
-	line-height: 17px;
+	line-height: 18px;
 	opacity: 0.5;
 	filter: alpha(opacity=50) ;
 }
@@ -12990,8 +12990,8 @@ tbody.v-drag-element tr {
 .v-calendar-event-all-day {
 	padding: 0 5px;
 	box-sizing: border-box;
-	height: 17px;
-	line-height: 17px;
+	height: 18px;
+	line-height: 18px;
 	border-radius: 0;
 	margin-left: -1px;
 	white-space: nowrap;
@@ -13200,7 +13200,7 @@ h3, .v-label-h3 {
 h4, .v-label-h4 {
 	line-height: 1.1;
 	font-weight: 600;
-	font-size: 12px;
+	font-size: 13px;
 	color: #ced1d2;
 	text-transform: uppercase;
 	letter-spacing: 0;
@@ -13209,11 +13209,11 @@ h4, .v-label-h4 {
 }
 
 .v-csslayout  > h1:first-child, .v-csslayout  > h2:first-child, .v-csslayout  > h3:first-child, .v-csslayout  > h4 > .v-label-h1:first-child, .v-csslayout  > .v-label-h2:first-child, .v-csslayout  > .v-label-h3:first-child, .v-csslayout  > .v-label-h4:first-child {
-	margin-top: 14px;
+	margin-top: 15px;
 }
 
 .v-verticallayout > .v-slot:first-child h1, .v-verticallayout > .v-slot:first-child .v-label-h1, .v-verticallayout > .v-slot:first-child h2, .v-verticallayout > .v-slot:first-child .v-label-h2, .v-verticallayout > .v-slot:first-child h3, .v-verticallayout > .v-slot:first-child .v-label-h3, .v-verticallayout > .v-slot:first-child h4, .v-verticallayout > .v-slot:first-child .v-label-h4, .v-verticallayout > div > .v-slot:first-child h1, .v-verticallayout > div > .v-slot:first-child .v-label-h1, .v-verticallayout > div > .v-slot:first-child h2, .v-verticallayout > div > .v-slot:first-child .v-label-h2, .v-verticallayout > div > .v-slot:first-child h3, .v-verticallayout > div > .v-slot:first-child .v-label-h3, .v-verticallayout > div > .v-slot:first-child h4, .v-verticallayout > div > .v-slot:first-child .v-label-h4 {
-	margin-top: 14px;
+	margin-top: 15px;
 }
 
 .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h1, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h1, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h2, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h2, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h3, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h3, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell h4, .v-verticallayout > .v-slot:first-child .v-formlayout-contentcell .v-label-h4, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h1, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h1, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h2, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h2, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h3, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h3, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell h4, .v-verticallayout > div > .v-slot:first-child .v-formlayout-contentcell .v-label-h4 {
@@ -13229,19 +13229,19 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 }
 
 .v-label-large {
-	font-size: 17px;
+	font-size: 18px;
 }
 
 .v-label-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-label-tiny {
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .v-label-huge {
-	font-size: 23px;
+	font-size: 24px;
 }
 
 .v-label-bold {
@@ -13281,7 +13281,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	border-radius: 3px;
 	padding: 8px 20px 8px 40px;
 	font-weight: 500;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 .v-label-success:before, .v-label-failure:before {
@@ -13660,7 +13660,7 @@ button {
 }
 
 .v-richtextarea .gwt-RichTextToolbar-bottom {
-	font-size: 11px;
+	font-size: 12px;
 	padding: 0 10px 10px 0;
 }
 
@@ -13770,7 +13770,7 @@ button {
 
 .v-Notification .v-Notification-caption {
 	color: #07a9ca;
-	font-size: 17px;
+	font-size: 18px;
 	line-height: 1;
 }
 
@@ -13799,11 +13799,11 @@ button {
 }
 
 .v-Notification-caption ~ .v-Notification-description, .v-Notification-caption ~ .v-Notification-details {
-	margin-left: 21px;
+	margin-left: 23px;
 }
 
 .v-icon + .v-Notification-caption {
-	margin-left: 14px;
+	margin-left: 15px;
 }
 
 .v-Notification-system {
@@ -13818,7 +13818,7 @@ button {
 	background-color: #444;
 	background-color: rgba(68, 68, 68, 0.9);
 	font-weight: 500;
-	line-height: 20px;
+	line-height: 21px;
 }
 
 .v-Notification-system .v-Notification-description, .v-Notification-system .v-Notification-details {
@@ -13962,7 +13962,7 @@ button {
 	background-color: #444;
 	background-color: rgba(68, 68, 68, 0.9);
 	font-weight: 500;
-	line-height: 20px;
+	line-height: 21px;
 }
 
 .v-Notification.dark .v-Notification-caption {
@@ -14026,11 +14026,11 @@ button {
 }
 
 .v-Notification.small .v-Notification-caption {
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .v-Notification.small .v-Notification-description {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-Notification.critical-error {
@@ -14147,7 +14147,7 @@ button {
 	background-image: -webkit-linear-gradient(right, #060707 0%, #141718 10px);
 	background-image: linear-gradient(to left,#060707 0%, #141718 10px);
 	color: #848e92;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 32px;
 	border-right: 1px solid #0e1011;
 	white-space: nowrap;
@@ -14193,7 +14193,7 @@ button {
 	color: white;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
 	padding: 13px 20px;
-	font-size: 13px;
+	font-size: 14px;
 	border-bottom: 1px solid #057991;
 	-webkit-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
 	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
@@ -14214,7 +14214,7 @@ button {
 	-webkit-box-shadow: inset 0 1px 2px #2bcced, inset 0 0 1px #1db5d3;
 	box-shadow: inset 0 1px 2px #2bcced, inset 0 0 1px #1db5d3;
 	text-shadow: inherit;
-	font-size: 14px;
+	font-size: 15px;
 	border-color: inherit;
 }
 
@@ -14404,9 +14404,9 @@ button {
 	transition: background-color 300ms;
 	line-height: 1;
 	padding: 4px 7px;
-	min-width: 9px;
+	min-width: 10px;
 	text-align: center;
-	top: 5.5px;
+	top: 5px;
 	border-radius: 3px;
 }
 
@@ -14427,7 +14427,7 @@ button {
 .valo-menu-part.large-icons .v-menubar-user-menu {
 	margin-left: 0;
 	margin-right: 0;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .valo-menu-part.large-icons .v-menubar-user-menu img.v-icon {
@@ -14443,7 +14443,7 @@ button {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	background: #060707;
-	font-size: 11px;
+	font-size: 12px;
 	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
 }
 
@@ -14457,7 +14457,7 @@ button {
 
 .valo-menu-part.large-icons .valo-menu-item {
 	display: block;
-	font-size: 22px;
+	font-size: 24px;
 	line-height: 1;
 	padding: 13px;
 	text-align: center;
@@ -14473,7 +14473,7 @@ button {
 	width: auto;
 	margin: 0.3em 0 0;
 	padding: 0;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 1.3;
 }
 
@@ -14544,7 +14544,7 @@ button {
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .v-menubar-user-menu {
 	margin-left: 0;
 	margin-right: 0;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .v-menubar-user-menu img.v-icon {
@@ -14560,7 +14560,7 @@ button {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	background: #060707;
-	font-size: 11px;
+	font-size: 12px;
 	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32), 0 1px 0 3px rgba(255, 255, 255, 0.14);
 }
 
@@ -14574,7 +14574,7 @@ button {
 
 .valo-menu-responsive[width-range~="801px-1100px"] .valo-menu-part .valo-menu-item {
 	display: block;
-	font-size: 22px;
+	font-size: 24px;
 	line-height: 1;
 	padding: 13px;
 	text-align: center;
@@ -14590,7 +14590,7 @@ button {
 	width: auto;
 	margin: 0.3em 0 0;
 	padding: 0;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 1.3;
 }
 
@@ -14693,7 +14693,7 @@ button {
 	background-image: -webkit-linear-gradient(right, #060707 0%, #141718 10px);
 	background-image: linear-gradient(to left,#060707 0%, #141718 10px);
 	color: #848e92;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 32px;
 	border-right: 1px solid #0e1011;
 	white-space: nowrap;
@@ -14731,6 +14731,34 @@ button {
 	display: inline-block;
 	width: 20px;
 	overflow: hidden;
+}
+
+@font-face {
+	font-family: "pt_sansbold";
+	src: url('./font/pt_sans-web-bold-webfont.woff2') format("woff2"), url('./font/pt_sans-web-bold-webfont.woff') format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "pt_sansbold_italic";
+	src: url('./font/pt_sans-web-bolditalic-webfont.woff2') format("woff2"), url('./font/pt_sans-web-bolditalic-webfont.woff') format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "pt_sansitalic";
+	src: url('./font/pt_sans-web-italic-webfont.woff2') format("woff2"), url('./font/pt_sans-web-italic-webfont.woff') format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "pt_sansregular";
+	src: url('./font/pt_sans-web-regular-webfont.woff2') format("woff2"), url('./font/pt_sans-web-regular-webfont.woff') format("woff");
+	font-weight: normal;
+	font-style: normal;
 }
 
 .debug_border {
@@ -14776,7 +14804,7 @@ button {
 }
 
 .rti_small_text {
-	font-size: 10px !important;
+	font-size: 12px !important;
 }
 
 .rti_info, .rti_success, .rti_warning, .rti_error {

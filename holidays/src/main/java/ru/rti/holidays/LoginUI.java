@@ -28,7 +28,7 @@ import java.util.Locale;
  * This is the default UI for logging in to the Application
  */
 @SpringUI(path = GlobalConstants.URL_PATH_LOGIN)
-@Title("LoginPage")
+@Title("Вход в cистему отпусков РТИ")
 @Theme(GlobalConstants.THEME_NAME)
 public class LoginUI extends UI {
     private static final Logger log = LoggerFactory.getLogger(LoginUI.class);

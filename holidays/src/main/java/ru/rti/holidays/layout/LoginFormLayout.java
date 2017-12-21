@@ -57,6 +57,7 @@ public class LoginFormLayout extends VerticalLayout {
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setSpacing(true);
 
+        addStyleName(GlobalConstants.CSS_RTK_LOGO);
         addFormCaption();
         addForm();
         addButtons();

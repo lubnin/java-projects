@@ -153,4 +153,29 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
     public Date getUpdatedDate() {
         return updated;
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        HolidayPeriodNegotiationStatus status = (HolidayPeriodNegotiationStatus)obj;
+
+        return Objects.equals(id, status.getId()) &&
+                Objects.equals(created, status.getCreatedDate()) &&
+                Objects.equals(updated, status.getUpdatedDate()) &&
+                Objects.equals(statusName, status.getStatusName()) &&
+                Objects.equals(statusDescription, status.getStatusDescription());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, created, updated, statusName, statusDescription);
+    }
+    */
 }

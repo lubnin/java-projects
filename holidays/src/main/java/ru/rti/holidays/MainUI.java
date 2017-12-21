@@ -34,7 +34,7 @@ import javax.servlet.annotation.WebServlet;
 import java.util.Locale;
 
 @SpringUI(path = GlobalConstants.URL_PATH_MAIN_PAGE)
-@Title("MainPage")
+@Title("Система отпусков РТИ - Главная")
 @SpringViewDisplay
 @Theme(GlobalConstants.THEME_NAME)
 public class MainUI extends UI {

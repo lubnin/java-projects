@@ -18,8 +18,7 @@ import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @SpringComponent
@@ -41,7 +40,8 @@ public class EmailServiceImpl implements EmailService {
     public static final String DOUBLE_BREAK_LINE = "<br/><br/>";
     public String MAIL_BODY_FOOTER = "";
     public String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION = "";
-    public static final String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS = "<h3>%s направил на согласование периоды отпуска, требуется Ваше согласование.</h3><br/>";
+    public static final String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
+            "<b>%s</b> направил на согласование периоды отпуска, требуется Ваше согласование:" + DOUBLE_BREAK_LINE;
     public static final String MAIL_BODY_MANAGER_NEGOTIATED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
             "<b>%s</b> согласовал Ваши периоды отпуска, направленные Вами на согласование:<br/><br/>";
     public static final String MAIL_BODY_MANAGER_REJECTED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
@@ -82,42 +82,6 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    /**
-     * Sends the Email to all the managers of the Employee, when the Employee submits new holiday period for negotiation
-     * @param holidayPeriod a new holiday period, added by Employee and submitted for negotiation
-     * @param employee an Employee instance, who submitted the holiday period for negotiation
-     * @param managers a Set of managers, who negotiate the holiday period
-     * @return
-     */
-    public boolean sendMailHolidayPeriodSubmitted(HolidayPeriod holidayPeriod, Employee employee, Set<Employee> managers) {
-        checkConfiguration();
-
-        if (holidayPeriod == null || employee == null || managers == null) {
-            log.error("Error: 'null' value detected when not expected! " +
-                    "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodSubmitted, params: holidayPeriod = " + holidayPeriod + ", employee = " + employee + ", managers = " + managers);
-            return false;
-        }
-
-        String messageBody = String.format(MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION,
-                employee.getFullName(),
-                holidayPeriod.getDateStartAsString(),
-                holidayPeriod.getNumDaysAsString()
-        );
-
-        boolean finalResult = true;
-        for (Employee manager : managers) {
-            if (!EmailUtils.isValidEmailAddress(manager.getEmail())) {
-                log.error("Invalid E-Mail address found: " + manager.getEmail());
-                continue;
-            }
-
-            finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD) && finalResult;
-        }
-
-        return finalResult;
-    }
-
-
     public boolean isDevelopmentMode() {
         try {
             if (GlobalConstants.CONF_APPLICATION_RUNNING_MODE_DEVELOPMENT.equals(configurationServiceImpl.getApplicationRunningMode()) ||
@@ -145,10 +109,6 @@ public class EmailServiceImpl implements EmailService {
             return false;
         }
 
-        String messageBodyStart = String.format(MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS,
-                employee.getFullName()
-        );
-
         StringBuilder sbHolidayPeriods = new StringBuilder();
         for (HolidayPeriod hp : holidayPeriods) {
             if (sbHolidayPeriods.length() > 0) {
@@ -157,18 +117,24 @@ public class EmailServiceImpl implements EmailService {
             sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, hp.getDateStartAsString(), hp.getNumDaysAsString()));
         }
 
-        String messageBody = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
-
         boolean finalResult = true;
-        //TODO: fix bug here
+
         for (Employee manager : managers) {
             if (!EmailUtils.isValidEmailAddress(manager.getEmail())) {
                 log.error("Invalid E-Mail address found: " + manager.getEmail());
                 continue;
             }
+
+            String messageBodyStart = String.format(MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS,
+                    manager.getPreferredName(),
+                    employee.getFullName()
+            );
+            String messageBody = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
+
             if (!EmailUtils.isNeedToSendEmailForManager(employee, manager)) {
                 continue;
             }
+
             finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD) && finalResult;
         }
 
@@ -191,37 +157,51 @@ public class EmailServiceImpl implements EmailService {
             return false;
         }
 
-        EmployeeHolidayPeriod first = holidayPeriods.iterator().next();
-        String employeeFullName = first.getEmployeeFullName();
-        String employeeEmail = first.getEmployeeEmail();
+        Map<Employee, Set<EmployeeHolidayPeriod>> employeeHolidaysMap = new HashMap<>();
 
-        if (CommonUtils.checkIfAnyIsNull(employeeFullName, employeeEmail)) {
-            log.error("Error: 'null' value detected when not expected! " +
-                    "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodsNegotiated, params: employeeFullName = " + employeeFullName + ", employeeEmail = " + employeeEmail);
-            return false;
-        }
-
-        String messageBodyStart = String.format(MAIL_BODY_MANAGER_NEGOTIATED_HOLIDAY_PERIODS,
-                employeeFullName,
-                manager.getFullName()
-        );
-
-        StringBuilder sbHolidayPeriods = new StringBuilder();
         for (EmployeeHolidayPeriod hp : holidayPeriods) {
-            if (sbHolidayPeriods.length() > 0) {
-                sbHolidayPeriods.append(DOUBLE_BREAK_LINE);
+            Employee mapKey = hp.getEmployee();
+            if (employeeHolidaysMap.containsKey(mapKey)) {
+                Set<EmployeeHolidayPeriod> employeeHolidayPeriodsSet = employeeHolidaysMap.get(mapKey);
+                employeeHolidayPeriodsSet.add(hp);
+            } else {
+                Set<EmployeeHolidayPeriod> employeeHolidayPeriodsSet= new HashSet<>();
+                employeeHolidayPeriodsSet.add(hp);
+                employeeHolidaysMap.put(mapKey, employeeHolidayPeriodsSet);
             }
-            sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, hp.getDateStartAsString(), hp.getNumDaysAsString()));
         }
 
-        String messageBodyFull = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
+        boolean result = true;
 
-        boolean result = false;
-        if (EmailUtils.isValidEmailAddress(employeeEmail)) {
-            result = sendMail(employeeEmail, messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_NEGOTIATED);
-        } else {
-            log.error("Invalid E-Mail address found: " + employeeEmail);
+        for (Employee emp : employeeHolidaysMap.keySet()) {
+            Set<EmployeeHolidayPeriod> empHolPeriods = employeeHolidaysMap.get(emp);
+
+            StringBuilder sbHolidayPeriods = new StringBuilder();
+            for (EmployeeHolidayPeriod ehp : empHolPeriods) {
+                if (sbHolidayPeriods.length() > 0) {
+                    sbHolidayPeriods.append(DOUBLE_BREAK_LINE);
+                }
+                sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, ehp.getDateStartAsString(), ehp.getNumDaysAsString()));
+            }
+
+            String messageBodyStart = String.format(MAIL_BODY_MANAGER_NEGOTIATED_HOLIDAY_PERIODS,
+                    emp.getPreferredName(),
+                    manager.getFullName()
+            );
+
+            String messageBodyFull = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
+
+
+            if (EmailUtils.isValidEmailAddress(emp.getEmail())) {
+                result = result && sendMail(emp.getEmail(), messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_NEGOTIATED);
+            } else {
+                log.error("Invalid E-Mail address found: " + emp.getEmail());
+            }
+
+
         }
+
+        employeeHolidaysMap.clear();
 
         return result;
     }
@@ -242,37 +222,51 @@ public class EmailServiceImpl implements EmailService {
             return false;
         }
 
-        EmployeeHolidayPeriod first = holidayPeriods.iterator().next();
-        String employeeFullName = first.getEmployeeFullName();
-        String employeeEmail = first.getEmployeeEmail();
+        Map<Employee, Set<EmployeeHolidayPeriod>> employeeHolidaysMap = new HashMap<>();
 
-        if (CommonUtils.checkIfAnyIsNull(employeeFullName, employeeEmail)) {
-            log.error("Error: 'null' value detected when not expected! " +
-                    "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodsRejected, params: employeeFullName = " + employeeFullName + ", employeeEmail = " + employeeEmail);
-            return false;
-        }
-
-        String messageBodyStart = String.format(MAIL_BODY_MANAGER_REJECTED_HOLIDAY_PERIODS,
-                employeeFullName,
-                manager.getFullName()
-        );
-
-        StringBuilder sbHolidayPeriods = new StringBuilder();
         for (EmployeeHolidayPeriod hp : holidayPeriods) {
-            if (sbHolidayPeriods.length() > 0) {
-                sbHolidayPeriods.append(DOUBLE_BREAK_LINE);
+            Employee mapKey = hp.getEmployee();
+            if (employeeHolidaysMap.containsKey(mapKey)) {
+                Set<EmployeeHolidayPeriod> employeeHolidayPeriodsSet = employeeHolidaysMap.get(mapKey);
+                employeeHolidayPeriodsSet.add(hp);
+            } else {
+                Set<EmployeeHolidayPeriod> employeeHolidayPeriodsSet= new HashSet<>();
+                employeeHolidayPeriodsSet.add(hp);
+                employeeHolidaysMap.put(mapKey, employeeHolidayPeriodsSet);
             }
-            sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, hp.getDateStartAsString(), hp.getNumDaysAsString()));
         }
 
-        String messageBodyFull = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
+        boolean result = true;
 
-        boolean result = false;
-        if (EmailUtils.isValidEmailAddress(employeeEmail)) {
-            result = sendMail(employeeEmail, messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_REJECTED);
-        } else {
-            log.error("Invalid E-Mail address found: " + employeeEmail);
+        for (Employee emp : employeeHolidaysMap.keySet()) {
+            Set<EmployeeHolidayPeriod> empHolPeriods = employeeHolidaysMap.get(emp);
+
+            StringBuilder sbHolidayPeriods = new StringBuilder();
+            for (EmployeeHolidayPeriod ehp : empHolPeriods) {
+                if (sbHolidayPeriods.length() > 0) {
+                    sbHolidayPeriods.append(DOUBLE_BREAK_LINE);
+                }
+                sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, ehp.getDateStartAsString(), ehp.getNumDaysAsString()));
+            }
+
+            String messageBodyStart = String.format(MAIL_BODY_MANAGER_REJECTED_HOLIDAY_PERIODS,
+                    emp.getPreferredName(),
+                    manager.getFullName()
+            );
+
+            String messageBodyFull = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
+
+
+            if (EmailUtils.isValidEmailAddress(emp.getEmail())) {
+                result = result && sendMail(emp.getEmail(), messageBodyFull, MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_REJECTED);
+            } else {
+                log.error("Invalid E-Mail address found: " + emp.getEmail());
+            }
+
+
         }
+
+        employeeHolidaysMap.clear();
 
         return result;
     }
@@ -292,7 +286,7 @@ public class EmailServiceImpl implements EmailService {
         try {
 
             if (isDevelopmentMode()) {
-                log.info("!!! Development Mode, emulate sending E-Mail with parameters (No real mail is sent!):");
+                log.info("!!! Development Mode !!! Emulating sending E-Mail with parameters (No real mail is sent!):");
                 log.info("Recipient Address: " + to);
                 log.info("Message Body: " + messageBody);
             } else {

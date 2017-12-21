@@ -1,20 +1,24 @@
 package ru.rti.holidays.aggregators;
 
+import ru.rti.holidays.entity.Employee;
 import ru.rti.holidays.entity.HolidayPeriod;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.utility.DateUtils;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Class aggregator for displaying Employee's holiday periods in grids.
  */
 public class EmployeeHolidayPeriod {
+    private Long employeeId;
     private String employeeFullName;
     private String employeeEmail;
     private String employeeDepartmentName;
     private String employeeDepartmentCode;
     private String employeeSpecialCode;
+    private Employee employee;
     private boolean isEmployeeRegularRole;
     private Long teamId;
     private String teamName;
@@ -76,37 +80,27 @@ public class EmployeeHolidayPeriod {
         }
         EmployeeHolidayPeriod employeeHolidayPeriod = (EmployeeHolidayPeriod)obj;
 
-        return employeeFullName == employeeHolidayPeriod.getEmployeeFullName() &&
-                dateStart == employeeHolidayPeriod.getDateStart() &&
-                numDays == employeeHolidayPeriod.getNumDays() &&
-                holidayPeriodNegotiationStatus == employeeHolidayPeriod.getHolidayPeriodNegotiationStatus() &&
-                holidayPeriodHistoryComment == employeeHolidayPeriod.getHolidayPeriodHistoryComment() &&
-                employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName() &&
-                employeeEmail == employeeHolidayPeriod.getEmployeeEmail() &&
-                teamName == employeeHolidayPeriod.getTeamName() &&
-                employeeDepartmentName == employeeHolidayPeriod.getEmployeeDepartmentName() &&
-                employeeDepartmentCode == employeeHolidayPeriod.getEmployeeDepartmentCode() &&
-                employeeRoleName == employeeHolidayPeriod.getEmployeeRoleName() &&
-                isEmployeeRegularRole == employeeHolidayPeriod.isEmployeeRegularRole();
+        return Objects.equals(employeeFullName, employeeHolidayPeriod.getEmployeeFullName()) &&
+                Objects.equals(dateStart, employeeHolidayPeriod.getDateStart()) &&
+                Objects.equals(numDays, employeeHolidayPeriod.getNumDays()) &&
+                Objects.equals(holidayPeriodNegotiationStatus, employeeHolidayPeriod.getHolidayPeriodNegotiationStatus()) &&
+                Objects.equals(holidayPeriodHistoryComment, employeeHolidayPeriod.getHolidayPeriodHistoryComment()) &&
+                Objects.equals(employeeRoleName, employeeHolidayPeriod.getEmployeeRoleName()) &&
+                Objects.equals(employeeEmail, employeeHolidayPeriod.getEmployeeEmail()) &&
+                Objects.equals(teamName, employeeHolidayPeriod.getTeamName()) &&
+                Objects.equals(employeeDepartmentName, employeeHolidayPeriod.getEmployeeDepartmentName()) &&
+                Objects.equals(employeeDepartmentCode, employeeHolidayPeriod.getEmployeeDepartmentCode()) &&
+                Objects.equals(employeeRoleName, employeeHolidayPeriod.getEmployeeRoleName()) &&
+                isEmployeeRegularRole == employeeHolidayPeriod.isEmployeeRegularRole() &&
+                Objects.equals(employeeId, employeeHolidayPeriod.getEmployeeId()) &&
+                Objects.equals(employee, employeeHolidayPeriod.getEmployee());
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((employeeFullName == null) ? 0 : employeeFullName.hashCode());
-        result = prime * result + ((dateStart == null) ? 0 : dateStart.hashCode());
-        result = prime * result + ((numDays == null) ? 0 : numDays.hashCode());
-        result = prime * result + ((holidayPeriodNegotiationStatus == null) ? 0 : holidayPeriodNegotiationStatus.hashCode());
-        result = prime * result + ((holidayPeriodHistoryComment == null) ? 0 : holidayPeriodHistoryComment.hashCode());
-        result = prime * result + ((employeeRoleName == null) ? 0 : employeeRoleName.hashCode());
-        result = prime * result + ((employeeEmail == null) ? 0 : employeeEmail.hashCode());
-        result = prime * result + ((teamName == null) ? 0 : teamName.hashCode());
-        result = prime * result + ((employeeDepartmentName == null) ? 0 : employeeDepartmentName.hashCode());
-        result = prime * result + ((employeeDepartmentCode == null) ? 0 : employeeDepartmentCode.hashCode());
-        result = prime * result + ((employeeRoleName == null) ? 0 : employeeRoleName.hashCode());
-        result = prime * result + Boolean.valueOf(isEmployeeRegularRole).hashCode();
-        return result;
+        return Objects.hash(employeeFullName, dateStart, numDays, holidayPeriodNegotiationStatus, holidayPeriodHistoryComment,
+                employeeRoleName, employeeEmail, teamName, employeeDepartmentCode,
+                employeeDepartmentName, employeeRoleName, isEmployeeRegularRole, employeeId, employee);
     }
 
     public String getEmployeeRoleName() {
@@ -195,5 +189,21 @@ public class EmployeeHolidayPeriod {
 
     public void setHolidayPeriodHistoryComment(String holidayPeriodHistoryComment) {
         this.holidayPeriodHistoryComment = holidayPeriodHistoryComment;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

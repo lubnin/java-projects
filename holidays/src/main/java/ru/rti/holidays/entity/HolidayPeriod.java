@@ -432,4 +432,30 @@ public class HolidayPeriod implements DBEntity {
     public Date getUpdatedDate() {
         return updated;
     }
+/*
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        HolidayPeriod holidayPeriod = (HolidayPeriod)obj;
+
+        return Objects.equals(id, holidayPeriod.getId()) &&
+                Objects.equals(created, holidayPeriod.getCreatedDate()) &&
+                Objects.equals(updated, holidayPeriod.getUpdatedDate()) &&
+                Objects.equals(dateStart, holidayPeriod.getDateStart()) &&
+                Objects.equals(numDays, holidayPeriod.getNumDays()) &&
+                Objects.equals(employee, holidayPeriod.getEmployee()) &&
+                Objects.equals(negotiationMask, holidayPeriod.getNegotiationMask()) &&
+                Objects.equals(negotiationStatus, holidayPeriod.getNegotiationStatus());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, created, updated, dateStart, numDays, employee, negotiationMask, negotiationStatus);
+    }
+*/
 }

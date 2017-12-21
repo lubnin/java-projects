@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -135,22 +136,15 @@ public class Team implements DBEntity {
         }
         Team team = (Team)obj;
 
-        return id == team.getId() &&
-                teamName == team.getTeamName() &&
-                created == team.getCreatedDate() &&
-                updated == team.getUpdatedDate();
-
+        return Objects.equals(id, team.getId()) &&
+                Objects.equals(teamName, team.getTeamName()) &&
+                Objects.equals(created, team.getCreatedDate()) &&
+                Objects.equals(updated, team.getUpdatedDate());
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((teamName == null) ? 0 : teamName.hashCode());
-        result = prime * result + ((created == null) ? 0 : created.hashCode());
-        result = prime * result + ((updated == null) ? 0 : updated.hashCode());
-        return result;
+        return Objects.hash(id, teamName, created, updated);
     }
 
 }

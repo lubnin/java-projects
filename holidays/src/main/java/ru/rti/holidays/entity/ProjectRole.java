@@ -6,10 +6,7 @@ import ru.rti.holidays.utility.GlobalConstants;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Entity which describes the project role of a particular Employee in the company.
@@ -197,4 +194,28 @@ public class ProjectRole implements DBEntity {
     public Date getUpdatedDate() {
         return updated;
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        ProjectRole projectRole = (ProjectRole)obj;
+
+        return Objects.equals(id, projectRole.getId()) &&
+                Objects.equals(roleName, projectRole.getRoleName()) &&
+                Objects.equals(roleDescription, projectRole.getRoleDescription()) &&
+                Objects.equals(created, projectRole.getCreatedDate()) &&
+                Objects.equals(updated, projectRole.getUpdatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roleName, roleDescription, created, updated);
+    }
+    */
 }

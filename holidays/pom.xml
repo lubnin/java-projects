@@ -166,7 +166,7 @@
 
 								<scp localFile="${project.basedir}/target/${project.artifactId}-${project.version}.jar"
 									 remoteToFile="mabramkin@10.42.80.74:/home/mabramkin/holidays/" verbose="true"
-									 password="mabramkin21" trust="true">
+									 password="B09108b198613" trust="true">
 								</scp>
 
 								<!-- SSH -->

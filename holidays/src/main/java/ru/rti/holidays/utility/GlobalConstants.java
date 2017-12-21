@@ -62,6 +62,8 @@ public class GlobalConstants {
 
     public static final String CSS_DEBUG_BORDER = "debug_border";
 
+    public static final String CSS_RTK_LOGO = "rti_rtk_logo";
+
     /**
      * Style for Grid cells that contain 'New' status for HolidayPeriod
      */

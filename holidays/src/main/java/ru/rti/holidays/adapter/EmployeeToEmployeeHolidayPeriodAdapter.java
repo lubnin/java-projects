@@ -38,6 +38,8 @@ public class EmployeeToEmployeeHolidayPeriodAdapter<T extends EmployeeHolidayPer
         T employeeHolidayPeriod = createInstance();
 
         employeeHolidayPeriod.setEmployeeEmail(employee.getEmail());
+        employeeHolidayPeriod.setEmployeeId(employee.getId());
+        employeeHolidayPeriod.setEmployee(employee);
         employeeHolidayPeriod.setEmployeeFullName(employee.getFullName());
         employeeHolidayPeriod.setEmployeeDepartmentName(employee.getDepartmentAsString());
         employeeHolidayPeriod.setEmployeeDepartmentCode(employee.getDepartmentCodeAsString());
