@@ -82,7 +82,7 @@ public class HolidayPeriod implements DBEntity {
     @JoinColumn(name = "emp_id")
     private Employee employee;
 
-    @ManyToOne(cascade = { CascadeType.MERGE })
+    @ManyToOne()
     @JoinColumn(name = "hp_negotiation_status_id")
     private HolidayPeriodNegotiationStatus negotiationStatus;
 
@@ -237,28 +237,7 @@ public class HolidayPeriod implements DBEntity {
     public Byte getSafeNegotiationMask() {
         return negotiationMask == null ? Byte.valueOf((byte)0) : negotiationMask;
     }
-
-    private String getDeptCode() {
-        try {
-            Employee emp = this.getEmployee();
-            if (emp == null) {
-                return GlobalConstants.EMPTY_STRING;
-            }
-            Department dept = emp.getDepartment();
-            if (dept == null) {
-                return GlobalConstants.EMPTY_STRING;
-            }
-            String deptCode = dept.getCode();
-            if (deptCode == null) {
-                return GlobalConstants.EMPTY_STRING;
-            }
-            return deptCode;
-        } catch (LazyInitializationException e) {
-            return GlobalConstants.EMPTY_STRING;
-        } catch (Exception e) {
-            return GlobalConstants.EMPTY_STRING;
-        }
-    }
+    public byte getSafeNegotiationMaskValue() { return getSafeNegotiationMask().byteValue(); }
 
     public void clearNegotiationMaskByManager(Employee manager, String deptCode) {
         if (manager == null  || !manager.isManager() || deptCode == null) {
@@ -272,13 +251,37 @@ public class HolidayPeriod implements DBEntity {
         }
 
         if (manager.isTeamLead()) {
-            setNegotiationMask((byte)(getSafeNegotiationMask() & ~(1 << NEGOTIATION_MASK_TEAM_LEAD_ONLY)));
+            setNegotiationMask((byte)(getSafeNegotiationMask() & NEGOTIATION_MASK_LINE_MANAGER_AND_PROJECT_MANAGER));
         } else if (manager.isProjectManager()) {
-            setNegotiationMask((byte)(getSafeNegotiationMask() & ~(1 << NEGOTIATION_MASK_PROJECT_MANAGER_ONLY)));
+            setNegotiationMask((byte)(getSafeNegotiationMask() & NEGOTIATION_MASK_LINE_MANAGER_AND_TEAM_LEAD));
         } else if (manager.isLineManager()) {
-            setNegotiationMask((byte)(getSafeNegotiationMask() & ~(1 << NEGOTIATION_MASK_LINE_MANAGER_ONLY)));
+            setNegotiationMask((byte)(getSafeNegotiationMask() & NEGOTIATION_MASK_TEAM_LEAD_AND_PROJECT_MANAGER));
         } else if (manager.isSupervisor()) {
             setNegotiationMask((byte)0);
+        }
+    }
+
+    public String getReadableNegotiationMaskValue() {
+        byte currentMask = getSafeNegotiationMask().byteValue();
+        switch (currentMask) {
+            case NEGOTIATION_MASK_TEAM_LEAD_ONLY:
+                return "? / ? / ТЛ";
+            case NEGOTIATION_MASK_LINE_MANAGER_ONLY:
+                return "ЛР / ? / ?";
+            case NEGOTIATION_MASK_PROJECT_MANAGER_ONLY:
+                return "? / РП / ?";
+            case NEGOTIATION_MASK_LINE_MANAGER_AND_PROJECT_MANAGER:
+                return "ЛР / РП / ?";
+            case NEGOTIATION_MASK_LINE_MANAGER_AND_TEAM_LEAD:
+                return "ЛР / ? / ТЛ";
+            case NEGOTIATION_MASK_TEAM_LEAD_AND_PROJECT_MANAGER:
+                return "? / РП / ТЛ";
+            case NEGOTIATION_MASK_NONE:
+                return "? / ? / ?";
+            case NEGOTIATION_MASK_ALL:
+                return "ЛР / РП / ТЛ";
+            default:
+                return "? / ? / ?";
         }
     }
 
@@ -301,12 +304,12 @@ public class HolidayPeriod implements DBEntity {
         } else if (manager.isLineManager()) {
             setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_LINE_MANAGER_ONLY));
         } else if (manager.isSupervisor()) {
-            setNegotiationMask((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_ALL));
+            setNegotiationMask(NEGOTIATION_MASK_ALL);
         }
     }
 
     public byte getNegotiationMaskByManager(Employee manager) {
-        if (manager == null  || !manager.isManager()) {
+        if (manager == null || !manager.isManager()) {
             return 0;
         }
         if (manager.isTeamLead()) {
@@ -316,7 +319,7 @@ public class HolidayPeriod implements DBEntity {
         } else if (manager.isLineManager()) {
             return ((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_LINE_MANAGER_ONLY));
         } else if (manager.isSupervisor()) {
-            return ((byte)(getSafeNegotiationMask() | NEGOTIATION_MASK_ALL));
+            return NEGOTIATION_MASK_ALL;
         }
         return 0;
     }

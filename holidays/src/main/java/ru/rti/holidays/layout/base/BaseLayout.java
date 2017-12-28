@@ -2,6 +2,7 @@ package ru.rti.holidays.layout.base;
 
 import com.vaadin.ui.Layout;
 import ru.rti.holidays.entity.DBEntity;
+import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.exception.handler.DoNothingExceptionHandler;
 import ru.rti.holidays.exception.handler.ViewErrorMessageExceptionHandler;
@@ -54,7 +55,7 @@ public interface BaseLayout extends Layout {
     /**
      * Constructs the layout. You should place the logic and 'filling' for layout in this method.
      */
-    void constructLayout();
+    void constructLayout() throws LayoutConstructionException;
 
     /**
      * Method is called when the construction of the layout is finished. Place the logic

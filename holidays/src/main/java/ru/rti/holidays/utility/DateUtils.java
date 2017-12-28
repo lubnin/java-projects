@@ -1,10 +1,7 @@
 package ru.rti.holidays.utility;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -83,6 +80,24 @@ public class DateUtils {
         return addDays(date, days.intValue());
     }
 
+    public static int getIntersectionDaysNumber(Date dateStart1, Date dateEnd1, Date dateStart2, Date dateEnd2) {
+        int days = 0;
+        if (isIntersectionBetweenDates(dateStart1, dateEnd1, dateStart2, dateEnd2)) {
+            if (dateStart2.after(dateStart1) && dateEnd2.before(dateEnd1)) {
+                Period p = Period.between(DateUtils.asLocalDate(dateStart2), DateUtils.asLocalDate(dateEnd2));
+                days = p.getDays();
+                if (days == 0) days++;
+            } else if ((dateStart2.after(dateStart1) || dateStart2.equals(dateStart1)) && (dateStart2.before(dateEnd1) || dateStart2.equals(dateEnd1))) {
+                Period p = Period.between(DateUtils.asLocalDate(dateStart2), DateUtils.asLocalDate(dateEnd1));
+                days = p.getDays();
+            } else if ((dateStart2.before(dateStart1) || dateStart2.equals(dateStart1)) && (dateEnd2.after(dateStart1) || dateEnd2.equals(dateStart1))) {
+                Period p = Period.between(DateUtils.asLocalDate(dateStart1), DateUtils.asLocalDate(dateEnd2));
+                days = p.getDays();
+            }
+        }
+        days++;
+        return days;
+    }
     /**
      * Checks the intersection between two date intervals - (dateStart1; dateEnd1) and (dateStart2; dateEnd2).
      * Returns true in the following cases:

@@ -8,13 +8,15 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import org.junit.*;
 import org.junit.runner.*;
+import ru.rti.holidays.simple.BitmapMaskTest;
+import ru.rti.holidays.simple.DateUtilsTest;
 import ru.rti.holidays.simple.HtmlUtilsTest;
 import ru.rti.holidays.utility.HtmlUtils;
 
 @RunWith(Suite.class)
 //@RunWith(HolidaysNonSpringTestsRunner.class)
 @Suite.SuiteClasses({
-    HtmlUtilsTest.class
+    HtmlUtilsTest.class, DateUtilsTest.class, BitmapMaskTest.class
 })
 
 public class HolidaysNonSpringTests {

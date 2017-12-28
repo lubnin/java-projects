@@ -227,12 +227,67 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         employeeHolidaysLayout.setAllNegotiationStatuses(allNegotiationStatuses);
         //employeeHolidaysLayout.setNewHolidayPeriod(newHolidayPeriod);
         employeeHolidaysLayout.setManagedTeamMembersHolidays(teamMembersHolidayPeriods);
-        employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
-                boolean isSetNotEmpty = !setEmployeeHolPeriods.isEmpty();
+//        employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
+//                boolean isSetNotEmpty = !setEmployeeHolPeriods.isEmpty();
+//                Map<Long, String> oldStatusMap = new HashMap<>();
+//                Map<Long, String> newStatusMap = new HashMap<>();
+//                if (isSetNotEmpty) {
+//                    for (EmployeeHolidayPeriod ehp1 : setEmployeeHolPeriods) {
+//                        HolidayPeriod hp = ehp1.getHolidayPeriod();
+//                        oldStatusMap.put(hp.getId(), hp.getNegotiationStatusAsString());
+//                        HolidayPeriodNegotiationStatus futureStatus = HolidayPeriodNegotiationStatusUtils.calculateNextStatus(SessionUtils.getCurrentUser(), hp, allNegotiationStatuses);
+//                        if (futureStatus == null) {
+//                            newStatusMap.put(hp.getId(), "");
+//                        } else {
+//                            newStatusMap.put(hp.getId(), futureStatus.getStatusName());
+//                        }
+//                    }
+//                }
+//
+//                holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(
+//                        SessionUtils.getCurrentUser(),
+//                        setEmployeeHolPeriods,
+//                        allNegotiationStatuses,
+//                        HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION);
+//
+//                //emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+//
+//                if (isSetNotEmpty) {
+//                    for (EmployeeHolidayPeriod ehp : setEmployeeHolPeriods) {
+//                        HolidayPeriod hp = ehp.getHolidayPeriod();
+//                        Employee currentUser = SessionUtils.getCurrentUser();
+//                        String comment = currentUser.getFullName() + " согласовал Ваш период отпуска";
+//                        String oldStatus = oldStatusMap.get(hp.getId());
+//                        String newStatus = newStatusMap.get(hp.getId());
+//                        HolidayPeriodNegotiationHistory history = HolidayPeriodNegotiationHistoryUtils
+//                                .createHolidayPeriodNegotiationHistory(hp, comment, oldStatus, newStatus);
+//                        holidayPeriodServiceImpl.saveHolidayPeriodNegotiationHistory(history);
+//                    }
+//                }
+//
+//            //addHolidayPeriodHistory(setEmployeeHolPeriods,
+//                    //HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION,
+//                    //" согласовал Ваш период отпуска"
+//                    //);
+//
+//            emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+//
+//
+//            //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
+//            Page.getCurrent().reload();
+//        });
+
+        employeeHolidaysLayout.setNegotiateSelectedPeriodsClickListener((layout, params) -> {
+            if (params != null && params.length > 0) {
+
+                Set<EmployeeHolidayPeriod> selectedHolidayPeriods = (Set<EmployeeHolidayPeriod>)params[0];
+                Team team = (Team)params[1];
+
+                boolean isSetNotEmpty = !selectedHolidayPeriods.isEmpty();
                 Map<Long, String> oldStatusMap = new HashMap<>();
                 Map<Long, String> newStatusMap = new HashMap<>();
                 if (isSetNotEmpty) {
-                    for (EmployeeHolidayPeriod ehp1 : setEmployeeHolPeriods) {
+                    for (EmployeeHolidayPeriod ehp1 : selectedHolidayPeriods) {
                         HolidayPeriod hp = ehp1.getHolidayPeriod();
                         oldStatusMap.put(hp.getId(), hp.getNegotiationStatusAsString());
                         HolidayPeriodNegotiationStatus futureStatus = HolidayPeriodNegotiationStatusUtils.calculateNextStatus(SessionUtils.getCurrentUser(), hp, allNegotiationStatuses);
@@ -246,14 +301,14 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
                 holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(
                         SessionUtils.getCurrentUser(),
-                        setEmployeeHolPeriods,
+                        selectedHolidayPeriods,
                         allNegotiationStatuses,
                         HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION);
 
                 //emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
 
                 if (isSetNotEmpty) {
-                    for (EmployeeHolidayPeriod ehp : setEmployeeHolPeriods) {
+                    for (EmployeeHolidayPeriod ehp : selectedHolidayPeriods) {
                         HolidayPeriod hp = ehp.getHolidayPeriod();
                         Employee currentUser = SessionUtils.getCurrentUser();
                         String comment = currentUser.getFullName() + " согласовал Ваш период отпуска";
@@ -265,31 +320,56 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                     }
                 }
 
-            //addHolidayPeriodHistory(setEmployeeHolPeriods,
-                    //HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION,
-                    //" согласовал Ваш период отпуска"
-                    //);
+                //addHolidayPeriodHistory(setEmployeeHolPeriods,
+                //HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.NEGOTIATION,
+                //" согласовал Ваш период отпуска"
+                //);
 
-            emailServiceImpl.sendMailHolidayPeriodsNegotiated(setEmployeeHolPeriods, employee);
+                emailServiceImpl.sendMailHolidayPeriodsNegotiated(selectedHolidayPeriods, employee);
 
+                ButtonClickResult<EmployeeHolidayPeriod> result = new ButtonClickResult<>(true);
+                result.setResultItems(getHolidayPeriodsForTeam(team));
+                return result;
+            }
 
-            //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
-            Page.getCurrent().reload();
+            ButtonClickResult<EmployeeHolidayPeriod> result = new ButtonClickResult<>(false);
+            return result;
         });
 
-        employeeHolidaysLayout.setRejectSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
-            //holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+        employeeHolidaysLayout.setRejectSelectedPeriodsClickListener((layout, params) -> {
+            if (params != null && params.length > 0) {
 
+                Set<EmployeeHolidayPeriod> selectedHolidayPeriods = (Set<EmployeeHolidayPeriod>)params[0];
+                Team team = (Team)params[1];
 
-            addHolidayPeriodHistory(setEmployeeHolPeriods,
+                addHolidayPeriodHistory(selectedHolidayPeriods,
                     HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION,
                     " отклонил Ваш период отпуска");
 
-            emailServiceImpl.sendMailHolidayPeriodsRejected(setEmployeeHolPeriods, employee);
+                emailServiceImpl.sendMailHolidayPeriodsRejected(selectedHolidayPeriods, employee);
 
-            //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
-            Page.getCurrent().reload();
+                ButtonClickResult<EmployeeHolidayPeriod> result = new ButtonClickResult<>(true);
+                result.setResultItems(getHolidayPeriodsForTeam(team));
+                return result;
+            }
+
+            ButtonClickResult<EmployeeHolidayPeriod> result = new ButtonClickResult<>(false);
+            return result;
         });
+
+//        employeeHolidaysLayout.setRejectSelectedPeriodsClickListener((hpNegotiationStatus, setEmployeeHolPeriods) -> {
+//            //holidayPeriodServiceImpl.setNegotiationStatusForEmployeeHolidayPeriods(setEmployeeHolPeriods, hpNegotiationStatus);
+//
+//
+//            addHolidayPeriodHistory(setEmployeeHolPeriods,
+//                    HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationMode.REJECTION,
+//                    " отклонил Ваш период отпуска");
+//
+//            emailServiceImpl.sendMailHolidayPeriodsRejected(setEmployeeHolPeriods, employee);
+//
+//            //TODO: for now the whole page is reloaded. It is not an optimal way to refresh data in the grids with holiday periods. Need refactoring later.
+//            Page.getCurrent().reload();
+//        });
 
         employeeHolidaysLayout.setSaveButtonClickListener((layout, objectForSave) -> {
             holidayPeriodServiceImpl.saveHolidayPeriod((HolidayPeriod)objectForSave);
@@ -352,6 +432,35 @@ public class EmployeeHolidaysView extends AbstractBaseView {
         //addComponent(employeeHolidaysLayout);
     }
 
+    Collection<EmployeeHolidayPeriod> getHolidayPeriodsForTeam(Team team) {
+        if (team == null) {
+            return null;
+        }
+
+        Set<Employee> teamEmployees = employeeServiceImpl.getByTeamId(team.getId());
+
+        EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod> adapter =
+                new EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod>(EmployeeHolidayPeriod::new, holidayPeriodServiceImpl);
+
+        Collection<EmployeeHolidayPeriod> empHolidayPeriods = adapter.convert(teamEmployees);
+        Collection<EmployeeHolidayPeriod> periodsToRemoveByNegotiationMaskAndStatus = new ArrayList<>();
+
+        for (EmployeeHolidayPeriod curEmpHolidayPeriod : empHolidayPeriods) {
+            HolidayPeriod curHolidayPeriod = curEmpHolidayPeriod.getHolidayPeriod();
+            if (!HolidayPeriodUtils.isHolidayPeriodInNewStatus(curHolidayPeriod) &&
+                    HolidayPeriodUtils.isVisibleForCurrentUser(curEmpHolidayPeriod, curHolidayPeriod)) {
+                continue;
+            }
+
+            periodsToRemoveByNegotiationMaskAndStatus.add(curEmpHolidayPeriod);
+        }
+
+        // Perform filtering according to project role of current manager
+        empHolidayPeriods.removeAll(periodsToRemoveByNegotiationMaskAndStatus);
+
+        return empHolidayPeriods;
+    }
+
     @Override
     protected boolean prepareViewData() {
         employee = SessionUtils.getCurrentUser();
@@ -362,28 +471,7 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             Set<Team> managedTeams = employee.getManagedTeams();
             if (managedTeams != null && managedTeams.size() > 0) {
                 managedTeams.forEach(team -> {
-                    Set<Employee> teamEmployees = employeeServiceImpl.getByTeamId(team.getId());
-
-                    EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod> adapter =
-                            new EmployeeToEmployeeHolidayPeriodAdapter<EmployeeHolidayPeriod>(EmployeeHolidayPeriod::new, holidayPeriodServiceImpl);
-
-                    Collection<EmployeeHolidayPeriod> empHolidayPeriods = adapter.convert(teamEmployees);
-                    Collection<EmployeeHolidayPeriod> periodsToRemoveByNegotiationMaskAndStatus = new ArrayList<>();
-
-                    for (EmployeeHolidayPeriod curEmpHolidayPeriod : empHolidayPeriods) {
-                        HolidayPeriod curHolidayPeriod = curEmpHolidayPeriod.getHolidayPeriod();
-                        if (!HolidayPeriodUtils.isHolidayPeriodInNewStatus(curHolidayPeriod) &&
-                                HolidayPeriodUtils.isVisibleForCurrentUser(curEmpHolidayPeriod, curHolidayPeriod)) {
-                            continue;
-                        }
-
-                        periodsToRemoveByNegotiationMaskAndStatus.add(curEmpHolidayPeriod);
-                    }
-
-                    // Perform filtering according to project role of current manager
-                    empHolidayPeriods.removeAll(periodsToRemoveByNegotiationMaskAndStatus);
-
-                    teamMembersHolidayPeriods.put(team, empHolidayPeriods);
+                    teamMembersHolidayPeriods.put(team, getHolidayPeriodsForTeam(team));
                 });
             }
         }

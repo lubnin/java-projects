@@ -75,7 +75,7 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
     @Column(name = "statusDescription")
     private String statusDescription;
 
-    @OneToMany(mappedBy = "negotiationStatus", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+    @OneToMany(mappedBy = "negotiationStatus", fetch = FetchType.EAGER)
     private Set<HolidayPeriod> holidayPeriods;
 
     @Column(name = "negotiationStatusType", nullable = false)

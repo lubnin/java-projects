@@ -1,5 +1,8 @@
 package ru.rti.holidays.layout.base;
 
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
+import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.view.base.AbstractBaseView;
 
 public class StandardBaseLayoutDrawer implements BaseLayoutDrawer {
@@ -17,15 +20,6 @@ public class StandardBaseLayoutDrawer implements BaseLayoutDrawer {
         this.layout = layout;
     }
 
-    //public StandardBaseLayoutDrawer(BaseLayout layout) {
-    //    this.layout = layout;
-    //}
-
-    //public StandardBaseLayoutDrawer() {
-
-    //}
-
-
     /**
      * Draws the layout defined in a constructor of StandardBaseLayoutDrawer class with automatically adding it to a containing view.
      * Also, performs all exception handling for a layout while constructing and post-constructing the layout
@@ -38,6 +32,8 @@ public class StandardBaseLayoutDrawer implements BaseLayoutDrawer {
 
         try {
             layout.constructLayout();
+        } catch (LayoutConstructionException lce) {
+            layout.handleException(lce, lce.getMessage());
         } catch (Exception e) {
             layout.handleException(e, e.getMessage());
         }
@@ -53,7 +49,6 @@ public class StandardBaseLayoutDrawer implements BaseLayoutDrawer {
         } else if (parentLayout != null) {
             parentLayout.addComponent(layout);
         }
-
     }
 
     public AbstractBaseView getViewContainer() {

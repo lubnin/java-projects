@@ -4,6 +4,7 @@ import com.vaadin.ui.GridLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.entity.DBEntity;
+import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
 import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
@@ -67,7 +68,7 @@ public class BaseGridLayout extends GridLayout implements BaseLayout {
     }
 
     @Override
-    public void constructLayout() {
+    public void constructLayout() throws LayoutConstructionException {
 
     }
 

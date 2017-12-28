@@ -4,6 +4,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.entity.DBEntity;
+import ru.rti.holidays.exception.LayoutConstructionException;
 import ru.rti.holidays.exception.handler.ExceptionHandler;
 import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
 import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
@@ -57,7 +58,7 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     }
 
     @Override
-    public void constructLayout() {
+    public void constructLayout() throws LayoutConstructionException {
 
     }
 

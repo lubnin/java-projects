@@ -51,6 +51,7 @@ public class EmployeeToEmployeeHolidayPeriodAdapter<T extends EmployeeHolidayPer
         employeeHolidayPeriod.setEmployeeRoleName(employee.getProjectRoleAsString());
         employeeHolidayPeriod.setHolidayPeriodNegotiationStatus(holidayPeriod.getNegotiationStatusAsString());
         employeeHolidayPeriod.setNegotiationStatus(holidayPeriod.getNegotiationStatus());
+        employeeHolidayPeriod.setReadableNegotiationMask(holidayPeriod.getReadableNegotiationMaskValue());
         employeeHolidayPeriod.setTeamId(team != null ? team.getId() : null);
         employeeHolidayPeriod.setTeamName(team != null ? team.getTeamName() : GlobalConstants.EMPTY_STRING);
         employeeHolidayPeriod.setHolidayPeriod(holidayPeriod);

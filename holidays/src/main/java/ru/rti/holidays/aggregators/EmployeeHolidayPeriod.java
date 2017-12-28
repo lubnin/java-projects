@@ -27,6 +27,7 @@ public class EmployeeHolidayPeriod {
     private String holidayPeriodNegotiationStatus;
     private String holidayPeriodHistoryComment;
     private String employeeRoleName;
+    private String readableNegotiationMask;
     private HolidayPeriodNegotiationStatus negotiationStatus;
     private HolidayPeriod holidayPeriod;
 
@@ -205,5 +206,13 @@ public class EmployeeHolidayPeriod {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public String getReadableNegotiationMask() {
+        return readableNegotiationMask;
+    }
+
+    public void setReadableNegotiationMask(String readableNegotiationMask) {
+        this.readableNegotiationMask = readableNegotiationMask;
     }
 }

@@ -22,6 +22,7 @@ import ru.rti.holidays.component.grid.comparator.EmployeeHolidayPeriodDateColumn
 import ru.rti.holidays.component.grid.comparator.HolidayPeriodDateColumnComparator;
 import ru.rti.holidays.converter.StringValueProvider;
 import ru.rti.holidays.entity.*;
+import ru.rti.holidays.layout.base.BaseLayout;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.layout.base.behaviour.ActionPerformedListener;
@@ -65,8 +66,13 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private TextField txtNumDays = new TextField();
     //private EmployeeHolidaysLayoutMainButtonClickListener mainButtonClickListener;
     private EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener;
-    private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
-    private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
+
+
+
+    //private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
+    //private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
+    private ButtonClickListener<EmployeeHolidayPeriod> negotiateSelectedPeriodsClickListener;
+    private ButtonClickListener<EmployeeHolidayPeriod> rejectSelectedPeriodsClickListener;
     private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
 
     private ActionPerformedListener<HolidayPeriodNegotiationHistory> addNegotiationHistoryActionListener;
@@ -92,307 +98,44 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
      * If the current Employee has a teamlead/line manager/project manager role, display the holiday periods of his/her managed Employees.
      */
     private void addTeamMembersHolidaysTables() {
-        Panel pnlPanelTeamMembersHolidays = new Panel("Отпуска Ваших сотрудников:");
-        pnlPanelTeamMembersHolidays.setSizeFull();
+        Panel pnlTeamMembersHolidays = new Panel("Отпуска Ваших сотрудников:");
+        pnlTeamMembersHolidays.setSizeFull();
 
-        VerticalLayout teamMembersHolidaysLayout = new VerticalLayout();
+        VerticalLayout pnlTeamMembersHolidaysContent = new VerticalLayout();
 
-        Set<Team> managedTeams = employee.getManagedTeams();
-        if (managedTeams != null && managedTeams.size() > 0) {
-            managedTeams.forEach(team -> {
-                Label lblCurrentTeamName = new Label(team.getTeamName());
-                Grid<EmployeeHolidayPeriod> grdTeamMembersHolidayPeriods = new Grid<>();
+        BaseVerticalLayout allTeamsHolidaysLayout = new BaseVerticalLayout();
+        allTeamsHolidaysLayout.setSizeFull();
+        allTeamsHolidaysLayout.setSpacing(false);
+        allTeamsHolidaysLayout.setMargin(false);
 
-                Button btnNegotiateSelPeriods = new Button("Согласовать выбранные");
-                btnNegotiateSelPeriods.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-                btnNegotiateSelPeriods.setIcon(VaadinIcons.CHECK);
-                btnNegotiateSelPeriods.setEnabled(false);
-                btnNegotiateSelPeriods.setId("btnNegotiateSelPeriods_" + team.getId());
-                btnNegotiateSelPeriods.setWidth("300px");
+        ComboBox<Team> cboSelectedManagedTeam = new ComboBox<>("Выберите команду под управлением:");
+        cboSelectedManagedTeam.setItems(managedTeamMembersHolidays.keySet());
+        cboSelectedManagedTeam.setItemCaptionGenerator(Team::getTeamName);
+        cboSelectedManagedTeam.setTextInputAllowed(false);
+        cboSelectedManagedTeam.setEmptySelectionCaption("Команда не выбрана");
+        cboSelectedManagedTeam.addValueChangeListener(valueChangeEvent -> {
+            allTeamsHolidaysLayout.removeAllComponents();
+            Team selectedTeam = valueChangeEvent.getValue();
+            if (selectedTeam != null) {
+                TeamHolidaysLayout teamHolidaysLayout = new TeamHolidaysLayout(false, true);
 
-                Button btnRejectSelPeriods = new Button("Отклонить выбранные");
-                btnRejectSelPeriods.addStyleName(ValoTheme.BUTTON_DANGER);
-                btnRejectSelPeriods.setIcon(VaadinIcons.STOP);
-                btnRejectSelPeriods.setEnabled(false);
-                btnRejectSelPeriods.setId("btnRejectSelPeriods_" + team.getId());
-                btnRejectSelPeriods.setWidth("300px");
+                teamHolidaysLayout.setNegotiateSelectedPeriodsButtonClickListener(negotiateSelectedPeriodsClickListener);
+                teamHolidaysLayout.setRejectSelectedPeriodsButtonClickListener(rejectSelectedPeriodsClickListener);
 
-                Button btnShowCrossings = new Button("Показать пересечения");
-                btnShowCrossings.addStyleName(GlobalConstants.CSS_RTI_BUTTON_ORANGE);
-                btnShowCrossings.setIcon(VaadinIcons.ARROWS_CROSS);
-                btnShowCrossings.setEnabled(true);
-                btnShowCrossings.setId("btnShowCrossingsPeriods_" + team.getId());
-                btnShowCrossings.setWidth("300px");
+                Collection<EmployeeHolidayPeriod> teamHolidayPeriods = managedTeamMembersHolidays.get(selectedTeam);
+                teamHolidaysLayout.setTeam(selectedTeam);
+                teamHolidaysLayout.setTeamMembersHolidayPeriods(teamHolidayPeriods);
+                new StandardBaseLayoutDrawer(allTeamsHolidaysLayout, teamHolidaysLayout).drawLayout();
+            }
+        });
 
-                btnNegotiateSelPeriods.addClickListener(clickEvent -> {
-                    String buttonId = clickEvent.getButton().getId();
+        cboSelectedManagedTeam.setSelectedItem(managedTeamMembersHolidays.keySet().iterator().next());
 
-                    try {
-                        String teamId = buttonId.substring("btnNegotiateSelPeriods_".length());
-                        Long nTeamId = Long.parseLong(teamId);
-                        Set<EmployeeHolidayPeriod> setEmplHolPeriods = periodsForNegotiationMap.get(nTeamId);
-                        if (negotiateSelectedPeriodsClickListener != null) {
-                            negotiateSelectedPeriodsClickListener.onNegotiateSelectedPeriods(
-                                    HolidayPeriodNegotiationStatusUtils.getOkStatusFromList(allNegotiationStatuses),
-                                    setEmplHolPeriods);
-                        }
-                    } catch (NumberFormatException nfe) {
-                    }
-                });
+        pnlTeamMembersHolidaysContent.addComponent(cboSelectedManagedTeam);
+        pnlTeamMembersHolidaysContent.addComponent(allTeamsHolidaysLayout);
+        pnlTeamMembersHolidays.setContent(pnlTeamMembersHolidaysContent);
 
-                btnRejectSelPeriods.addClickListener(clickEvent -> {
-                    String buttonId = clickEvent.getButton().getId();
-
-                    try {
-                        String teamId = buttonId.substring("btnRejectSelPeriods_".length());
-                        Long nTeamId = Long.parseLong(teamId);
-                        Set<EmployeeHolidayPeriod> setEmplHolPeriods = periodsForRejectionMap.get(nTeamId);
-                        if (rejectSelectedPeriodsClickListener != null) {
-                            rejectSelectedPeriodsClickListener.onRejectSelectedPeriods(
-                                    HolidayPeriodNegotiationStatusUtils.getRejectedStatusFromList(allNegotiationStatuses),
-                                    setEmplHolPeriods);
-                        }
-                    } catch (NumberFormatException nfe) {
-                    }
-                });
-
-                btnShowCrossings.addClickListener(clickEvent -> {
-                    String buttonId = clickEvent.getButton().getId();
-
-                    try {
-                        String teamId = buttonId.substring("btnShowCrossingsPeriods_".length());
-                        Long nTeamId = Long.parseLong(teamId);
-
-                        Collection<EmployeeHolidayPeriod> allHolidays = managedTeamMembersHolidays.get(team);
-                        Collection<EmployeeHolidayPeriod> allHolidays1 = new ArrayList<>();
-                        allHolidays1.addAll(allHolidays);
-
-                        StringBuilder sbTotal = new StringBuilder();
-                        sbTotal.append("<div class='rti_small_text'><b><u>Пересечения отпусков по этой команде:</u></b><br/>");
-                        for (EmployeeHolidayPeriod ehp : allHolidays) {
-                            HolidayPeriod holPeriod = ehp.getHolidayPeriod();
-                            if (HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(holPeriod)) {
-                                continue;
-                            }
-
-
-                            String empName = ehp.getEmployeeFullName();
-                            Date dtStart = DateUtils.asDate(ehp.getDateStart());
-                            Long numDays = ehp.getNumDays();
-                            Date dtEnd = DateUtils.addDays(dtStart, numDays);
-
-                            sbTotal.append("<b>" + empName + "</b>, отпуск с " + ehp.getDateStartAsString() + " на " + ehp.getNumDaysAsString() + " дн.: ");
-
-                            boolean isIntersect = false;
-
-                            int c = 0;
-
-                            for (EmployeeHolidayPeriod ehpCross : allHolidays1) {
-                                if (ehpCross.equals(ehp)) {
-                                    continue;
-                                }
-                                HolidayPeriod holPeriod1 = ehpCross.getHolidayPeriod();
-                                if (HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(holPeriod1)) {
-                                    continue;
-                                }
-
-
-                                Date dtStartCross = DateUtils.asDate(ehpCross.getDateStart());
-                                Long numDaysCross = ehpCross.getNumDays();
-                                Date dtEndCross = DateUtils.addDays(dtStartCross, numDaysCross);
-
-                                if (DateUtils.isIntersectionBetweenDates(dtStart, dtEnd, dtStartCross, dtEndCross)) {
-                                    if (ehp.getEmployeeRoleName() != null && ehpCross.getEmployeeRoleName() != null) {
-                                        if (!ehp.getEmployeeRoleName().equals(ehpCross.getEmployeeRoleName())) {
-                                            continue;
-                                        }
-                                    }
-                                    if (c >= 0) {
-                                        sbTotal.append("<br/>");
-                                    }
-                                    sbTotal.append("<span class='neg_status_new'>есть пересечение с ")
-                                            .append(ehpCross.getEmployeeFullName())
-                                            .append(" для отпуска с ")
-                                            .append(ehpCross.getDateStartAsString())
-                                            .append(" на ")
-                                            .append(ehpCross.getNumDays())
-                                            .append(" дн.</span>");
-                                    isIntersect = true;
-                                    c++;
-                                }
-                            }
-
-                            if (!isIntersect) {
-                                sbTotal.append("<span class='neg_status_ok'>нет пересечений по проектной роли \"" + CommonUtils.getValueOrEmptyString(ehp.getEmployeeRoleName()) + "\"</span>");
-                            }
-                            sbTotal.append("<br/>");
-                        }
-
-                        sbTotal.append("</div>");
-
-                        VerticalLayout popupLayout = new VerticalLayout();
-                        popupLayout.addComponent(new Label(sbTotal.toString(), ContentMode.HTML));
-                        PopupView popup = new PopupView(null, popupLayout);
-                        teamMembersHolidaysLayout.addComponent(popup);
-                        popup.setPopupVisible(true);
-
-
-                        /*if (periodsForCrossingsSearchClickListener != null) {
-                            ButtonClickResult<EmployeeHolidayPeriodCrossing> res = periodsForCrossingsSearchClickListener.onClick(this);
-                            if (res.isResult()) {
-                                Collection<EmployeeHolidayPeriodCrossing> resItems = res.getResultItems();
-                            }
-                        }*/
-                    } catch (NumberFormatException nfe) {
-                        nfe.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
-                negotiateSelectedPeriodsButtonsMap.put(team.getId(), btnNegotiateSelPeriods);
-                rejectSelectedPeriodsButtonsMap.put(team.getId(), btnRejectSelPeriods);
-                showTeamCrossingPeriodsButtonsMap.put(team.getId(), btnShowCrossings);
-
-                Collection<EmployeeHolidayPeriod> teamMembersHolidayPeriods = null;
-                if(managedTeamMembersHolidays != null && managedTeamMembersHolidays.size() > 0) {
-                    teamMembersHolidayPeriods = managedTeamMembersHolidays.get(team);
-                } else {
-                    //TODO: throw exception here
-                    teamMembersHolidayPeriods = new HashSet<>();
-                }
-
-                MultiSelectionModel<EmployeeHolidayPeriod> selectionModel =
-                        (MultiSelectionModel<EmployeeHolidayPeriod>)grdTeamMembersHolidayPeriods.setSelectionMode(Grid.SelectionMode.MULTI);
-
-                grdTeamMembersHolidayPeriods.setItems(teamMembersHolidayPeriods);
-                grdTeamMembersHolidayPeriods.setHeightByRows(15);
-                grdTeamMembersHolidayPeriods.setWidth("100%");
-                grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getEmployeeFullName).setCaption("ФИО сотрудника");
-                grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getEmployeeRoleName).setCaption("Роль на проекте");
-                grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getDateStartAsString).setCaption("Дата начала отпуска").setComparator(new EmployeeHolidayPeriodDateColumnComparator());
-                grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getNumDays).setCaption("Количество дней отпуска");
-                grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getHolidayPeriodNegotiationStatus).setCaption("Статус согласования").setStyleGenerator(new GridEmployeeHolidayPeriodCellStyleGenerator());
-
-                //grdTeamMembersHolidayPeriods.addColumn(EmployeeHolidayPeriod::getHolidayPeriodHistoryComment).setCaption("Комментарий").setStyleGenerator(new GridEmployeeHolidayPeriodCellStyleGenerator()).setRenderer(new ButtonRenderer<>());
-                grdTeamMembersHolidayPeriods.addColumn(employeeHolidayPeriod -> "История согласования", new ButtonRenderer<>(rendererClickEvent -> {
-                    VerticalLayout popupLayout = new VerticalLayout();
-                    EmployeeHolidayPeriod ehp = rendererClickEvent.getItem();
-                    popupLayout.addComponent(new Label("<b>"+ehp.getEmployeeFullName()+"</b><br/>Отпуск с " + ehp.getDateStartAsString() + " на " + ehp.getNumDays() + " дн.<br/>" + ehp.getHolidayPeriodHistoryComment(),ContentMode.HTML));
-                    PopupView popup = new PopupView(null, popupLayout);
-                    //popup.addPopupVisibilityListener(popupVisibilityEvent -> {
-
-                    //});
-                    teamMembersHolidaysLayout.addComponent(popup);
-                    popup.setPopupVisible(true);
-                })).setCaption("Детали");
-
-                grdTeamMembersHolidayPeriods.setDescriptionGenerator(employeeHolidayPeriod -> {
-                    String description = GlobalConstants.EMPTY_STRING;
-                    try {
-                        HolidayPeriod hp = employeeHolidayPeriod.getHolidayPeriod();
-                        return "ID: " + hp.getId() + "\r\nДата начала: " + hp.getDateStartAsString() + "\r\n"+ hp.getHolidayPeriodNegotiationHistoryComment(false);
-                    } catch (Exception e) {
-                        return description;
-                    }
-                });
-
-                selectionModel.addMultiSelectionListener(event -> {
-                    for (Button btnNegotiateSelectedPeriods : negotiateSelectedPeriodsButtonsMap.values()) {
-                        btnNegotiateSelectedPeriods.setEnabled(false);
-                    }
-                    for (Button btnRejectSelectedPeriods : rejectSelectedPeriodsButtonsMap.values()) {
-                        btnRejectSelectedPeriods.setEnabled(false);
-                    }
-
-                    Set<EmployeeHolidayPeriod> selectedItems = event.getAllSelectedItems();
-
-
-                    if (selectedItems != null && selectedItems.size() > 0) {
-                        Long selTeamId = -1L;
-
-                        boolean hasSelectedPeriodsForRejection = false;
-                        boolean hasSelectedPeriodsForNegotiation = false;
-                        boolean isAtLeastOneInRejectedStatus = false;
-                        boolean isAtLeastOneInOkStatus = false;
-
-                        for (EmployeeHolidayPeriod empHolPeriod : selectedItems) {
-                            if (empHolPeriod.getNegotiationStatus() != null && empHolPeriod.getNegotiationStatus().getNegotiationStatusType() != null) {
-                                //HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType selPeriodNegStatusType = empHolPeriod.getNegotiationStatus().getNegotiationStatusType();
-                                HolidayPeriod curHP = empHolPeriod.getHolidayPeriod();
-                                if (HolidayPeriodUtils.isHolidayPeriodInPartlyNegotiatedStatus(curHP) ||
-                                        HolidayPeriodUtils.isHolidayPeriodInOkStatus(curHP) ||
-                                        HolidayPeriodUtils.isHolidayPeriodInNegotiatingStatus(curHP)) {
-                                    hasSelectedPeriodsForRejection = true;
-                                }
-                                if (HolidayPeriodUtils.isHolidayPeriodInPartlyNegotiatedStatus(curHP) ||
-                                        HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(curHP) ||
-                                        HolidayPeriodUtils.isHolidayPeriodInNegotiatingStatus(curHP)) {
-                                    hasSelectedPeriodsForNegotiation = true;
-                                }
-                                if (HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(curHP)) {
-                                    isAtLeastOneInRejectedStatus = true;
-                                }
-                                if (HolidayPeriodUtils.isHolidayPeriodInOkStatus(curHP)) {
-                                    isAtLeastOneInOkStatus = true;
-                                }
-/*                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_OK ||
-                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING ||
-                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus) {
-                                    hasSelectedPeriodsForRejection = true;
-                                }
-                                if (selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_REJECTED ||
-                                        selPeriodNegStatusType == HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEGOTIATING) {
-                                    hasSelectedPeriodsForNegotiation = true;
-                                }*/
-                            }
-
-                            if (selTeamId < 0) {
-                                selTeamId = empHolPeriod.getTeamId();
-                            }
-                        }
-
-                        if (hasSelectedPeriodsForNegotiation || hasSelectedPeriodsForRejection) {
-/*                            if (isAtLeastOneInOkOrNegotiatingOrPartlyNegotiatedStatus && isAtLeastOneInRejectedStatus && selectedItems.size() > 1) {
-                                // Don't enable any buttons at all, because we cannot negotiate and reject holidays periods simultaneously
-                                hasSelectedPeriodsForNegotiation = false;
-                                hasSelectedPeriodsForRejection = false;
-                            }*/
-                            if (isAtLeastOneInOkStatus) {
-                                hasSelectedPeriodsForNegotiation = false;
-                            }
-
-                            if (isAtLeastOneInRejectedStatus) {
-                                hasSelectedPeriodsForRejection = false;
-                            }
-
-                            if (hasSelectedPeriodsForNegotiation) {
-                                Button btnNegotiateSelectedPeriods = negotiateSelectedPeriodsButtonsMap.get(selTeamId);
-                                btnNegotiateSelectedPeriods.setEnabled(true);
-                                periodsForNegotiationMap.remove(selTeamId);
-                                periodsForNegotiationMap.put(selTeamId, selectedItems);
-                            }
-                            if (hasSelectedPeriodsForRejection) {
-                                Button btnRejectSelectedPeriods = rejectSelectedPeriodsButtonsMap.get(selTeamId);
-                                btnRejectSelectedPeriods.setEnabled(true);
-                                periodsForRejectionMap.remove(selTeamId);
-                                periodsForRejectionMap.put(selTeamId, selectedItems);
-                            }
-                        }
-                    }
-                });
-
-                teamMembersHolidaysLayout.addComponent(lblCurrentTeamName);
-                teamMembersHolidaysLayout.addComponent(grdTeamMembersHolidayPeriods);
-                teamMembersHolidaysLayout.addComponent(negotiateSelectedPeriodsButtonsMap.get(team.getId()));
-                teamMembersHolidaysLayout.addComponent(rejectSelectedPeriodsButtonsMap.get(team.getId()));
-                teamMembersHolidaysLayout.addComponent(showTeamCrossingPeriodsButtonsMap.get(team.getId()));
-            });
-        }
-
-        teamMembersHolidaysLayout.setSizeFull();
-        pnlPanelTeamMembersHolidays.setContent(teamMembersHolidaysLayout);
-        addComponent(pnlPanelTeamMembersHolidays);
+        addComponent(pnlTeamMembersHolidays);
     }
 
     public void constructLayout() {
@@ -725,8 +468,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         GridLayout bottomButtonsControlPanelLayout = new GridLayout(3, 1);
         //GridLayout bottomButtonsControlPanelLayout = new GridLayout(4, 1);
-        bottomButtonsControlPanelLayout.setSizeFull();
-        bottomButtonsControlPanelLayout.setSpacing(false);
+        //bottomButtonsControlPanelLayout.setSizeFull();
+        bottomButtonsControlPanelLayout.setSpacing(true);
         bottomButtonsControlPanelLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 /*        bottomButtonsControlPanelLayout.setColumnExpandRatio(0,1);
@@ -736,7 +479,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         bottomButtonsControlPanelLayout.setColumnExpandRatio(0,1);
         bottomButtonsControlPanelLayout.setColumnExpandRatio(1, 1);
-        bottomButtonsControlPanelLayout.setColumnExpandRatio(2,10);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(2,2);
 
 
         //enableCheckCrossingsButton(false);
@@ -781,7 +524,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         bottomButtonsControlPanelLayout.addComponent(btnSendForNegotiation, 0,0);
         bottomButtonsControlPanelLayout.addComponent(btnRemoveHolidayPeriods, 1,0);
-        bottomButtonsControlPanelLayout.addComponent(new Label(""), 2,0);
+        //bottomButtonsControlPanelLayout.addComponent(new Label(""), 2,0);
 
         return bottomButtonsControlPanelLayout;
     }
@@ -832,13 +575,13 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.allNegotiationStatuses = allNegotiationStatuses;
     }
 
-    public EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener getNegotiateSelectedPeriodsClickListener() {
-        return negotiateSelectedPeriodsClickListener;
-    }
-
-    public void setNegotiateSelectedPeriodsClickListener(EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener) {
-        this.negotiateSelectedPeriodsClickListener = negotiateSelectedPeriodsClickListener;
-    }
+//    public EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener getNegotiateSelectedPeriodsClickListener() {
+//        return negotiateSelectedPeriodsClickListener;
+//    }
+//
+//    public void setNegotiateSelectedPeriodsClickListener(EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener) {
+//        this.negotiateSelectedPeriodsClickListener = negotiateSelectedPeriodsClickListener;
+//    }
 
     public Map<Long, Button> getRejectSelectedPeriodsButtonsMap() {
         return rejectSelectedPeriodsButtonsMap;
@@ -848,13 +591,13 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.rejectSelectedPeriodsButtonsMap = rejectSelectedPeriodsButtonsMap;
     }
 
-    public EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener getRejectSelectedPeriodsClickListener() {
-        return rejectSelectedPeriodsClickListener;
-    }
-
-    public void setRejectSelectedPeriodsClickListener(EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener) {
-        this.rejectSelectedPeriodsClickListener = rejectSelectedPeriodsClickListener;
-    }
+//    public EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener getRejectSelectedPeriodsClickListener() {
+//        return rejectSelectedPeriodsClickListener;
+//    }
+//
+//    public void setRejectSelectedPeriodsClickListener(EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener) {
+//        this.rejectSelectedPeriodsClickListener = rejectSelectedPeriodsClickListener;
+//    }
 
     public Map<Long, Set<EmployeeHolidayPeriod>> getPeriodsForRejectionMap() {
         return periodsForRejectionMap;
@@ -948,5 +691,21 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void setManagedTeamMembersHolidays(Map<Team, Collection<EmployeeHolidayPeriod>> managedTeamMembersHolidays) {
         this.managedTeamMembersHolidays = managedTeamMembersHolidays;
+    }
+
+    public ButtonClickListener<EmployeeHolidayPeriod> getNegotiateSelectedPeriodsClickListener() {
+        return negotiateSelectedPeriodsClickListener;
+    }
+
+    public void setNegotiateSelectedPeriodsClickListener(ButtonClickListener<EmployeeHolidayPeriod> negotiateSelectedPeriodsClickListener) {
+        this.negotiateSelectedPeriodsClickListener = negotiateSelectedPeriodsClickListener;
+    }
+
+    public ButtonClickListener<EmployeeHolidayPeriod> getRejectSelectedPeriodsClickListener() {
+        return rejectSelectedPeriodsClickListener;
+    }
+
+    public void setRejectSelectedPeriodsClickListener(ButtonClickListener<EmployeeHolidayPeriod> rejectSelectedPeriodsClickListener) {
+        this.rejectSelectedPeriodsClickListener = rejectSelectedPeriodsClickListener;
     }
 }
