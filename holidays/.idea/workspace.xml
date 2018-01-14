@@ -2,45 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83b7ab4c-1867-4086-9ea6-ed5a1fb4f39b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/SystemParameter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminSystemParameterManagementLayout.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/common/NegotiationStatusTypeCaptionGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/common/SystemParameterInnerTypeCaptionGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidayGraphicLayout.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/systemparameter/AddNewSystemParameterLayout.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/repository/SystemParameterRepository.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/SystemParameterService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/service/SystemParameterServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidayGraphicView.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/behaviour/LoginButtonClickListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/behaviour/EmployeeHolidaysLayoutDeleteButtonClickListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/behaviour/EmployeeHolidaysLayoutMainButtonClickListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/behaviour/EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/behaviour/EmployeeHolidaysLayoutRefreshGridDataListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/behaviour/EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/behaviour/EmployeeHolidaysLayoutSendForNegotiationButtonClickListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/generic/AddNewEntityLayout.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/HolidaysApplication.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/HolidaysApplication.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/MainUI.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/MainUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/component/vaadin/RtiGUIFactory.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/component/vaadin/RtiGUIFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/config/EmailConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/HolidayPeriod.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/entity/Team.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/admin/AdminUserManagementLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseGridLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseGridLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseVerticalLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/base/BaseVerticalLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/department/AddNewDepartmentLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHolidaysLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHorizontalButtonMenuBarLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeHorizontalButtonMenuBarLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/employee/EmployeeMenuBarLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/layout/holidayperiod/AddNewHolidayPeriodNegotiationStatusLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/LoginPageView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/LoginPageView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminMainView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/admin/AdminMainView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/base/AbstractBaseView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" afterPath="$PROJECT_DIR$/src/main/java/ru/rti/holidays/view/employee/EmployeeHolidaysView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1354,7 +1316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1514420510704</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="1) Добавлен функционал системных параметров&#10;2) Рефакторинг личного кабинета для согласующих (ЛР, РП, ТЛ)&#10;3) Рефакторинг (лишние комментарии и т.д.)">
+      <created>1515923559288</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1515923559289</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1437,7 +1406,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавлены базовые возможности для локализации" />
     <MESSAGE value="Merge branch 'master' of https://github.com/mabramkin/java-projects&#10;&#10;# Conflicts:&#10;#&#9;holidays/src/main/java/ru/rti/holidays/view/admin/AdminMainView.java" />
     <MESSAGE value="Доработана полностью логика в админке (сохранение, редактирование, удаление)" />
     <MESSAGE value="Добавлена логика в административной части, добавлена возможность входа в приложеие (логин+пароль). Страница пользователя открывается в зависимости от введенных логина и пароля." />
@@ -1462,7 +1430,8 @@
     <MESSAGE value="Исправление дефектов (долгий логин в систему + 3 бага из GoogleDoc)" />
     <MESSAGE value="Новые ресурсы для темы (шрифт и лого)" />
     <MESSAGE value="Рефакторинг лк согласующих, тесты новые, багфикс." />
-    <option name="LAST_COMMIT_MESSAGE" value="Рефакторинг лк согласующих, тесты новые, багфикс." />
+    <MESSAGE value="1) Добавлен функционал системных параметров&#10;2) Рефакторинг личного кабинета для согласующих (ЛР, РП, ТЛ)&#10;3) Рефакторинг (лишние комментарии и т.д.)" />
+    <option name="LAST_COMMIT_MESSAGE" value="1) Добавлен функционал системных параметров&#10;2) Рефакторинг личного кабинета для согласующих (ЛР, РП, ТЛ)&#10;3) Рефакторинг (лишние комментарии и т.д.)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
