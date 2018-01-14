@@ -42,10 +42,11 @@ public class AdminMainView extends AbstractBaseView {
     @Autowired
     DepartmentService departmentServiceImpl;
 
-    //@Autowired
-    //ConfigurationService configurationServiceImpl;
     @Autowired
     LocalizationService localizationServiceImpl;
+
+    @Autowired
+    SystemParameterService systemParameterServiceImpl;
 
 
     public AdminMainView() {
@@ -67,24 +68,46 @@ public class AdminMainView extends AbstractBaseView {
         sideMenu.setMargin(marginInfo);
 
         addUserMenu(sideMenu);
-        //sideMenu.addNavigation("Представление по умолчанию", "");
-        //sideMenu.addNavigation("Отпуска сотрудников", VaadinIcons.CALENDAR_CLOCK, EmployeeHolidaysView.VIEW_NAME);
 
         addHolidayPeriodNegotiationStatusManagementMenuItem(sideMenu);
         addUserManagementMenuItem(sideMenu);
         addTeamManagementMenuItem(sideMenu);
         addProjectRoleManagementMenuItem(sideMenu);
         addDepartmentManagementMenuItem(sideMenu);
-
-/*        sideMenu.addMenuItem("Встроенное меню", () -> {
-            VerticalLayout content = new VerticalLayout();
-            content.addComponent(new Label("Тестовый текст"));
-            sideMenu.setContent(content);
-        });*/
-
+        addSystemParameterManagementMenuItem(sideMenu);
         addComponent(sideMenu);
     }
 
+
+    private void addSystemParameterManagementMenuItem(SideMenu sideMenu) {
+        sideMenu.addMenuItem("Управление системными параметрами", VaadinIcons.WRENCH, () -> {
+            AdminSystemParameterManagementLayout adminSystemParameterManagementLayout = new AdminSystemParameterManagementLayout();
+
+            MarginInfo marginInfoLayout = new MarginInfo(false, true, true, true);
+            adminSystemParameterManagementLayout.setMargin(marginInfoLayout);
+            adminSystemParameterManagementLayout.setExceptionHandler(new ViewErrorMessageExceptionHandler());
+
+            adminSystemParameterManagementLayout.setSaveButtonClickListener((layout, objectForSave) -> {
+                systemParameterServiceImpl.saveSystemParameter((SystemParameter)objectForSave);
+                Notification.show("Системный параметр успешно сохранен!");
+            });
+
+            adminSystemParameterManagementLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+                systemParameterServiceImpl.deleteSystemParameters((Set<SystemParameter>)entities);
+                Notification.show("Выбранные системные параметры успешно удалены!");
+            });
+
+            adminSystemParameterManagementLayout.setRefreshGridDataListener(layout -> {
+                List<SystemParameter> allSystemParameters = systemParameterServiceImpl.getAllSystemParametersSortedByInnerNameAsc();
+                ((AdminSystemParameterManagementLayout)layout).setSystemParameters(allSystemParameters);
+            });
+
+            adminSystemParameterManagementLayout.constructLayout();
+            adminSystemParameterManagementLayout.postConstructLayout();
+
+            sideMenu.setContent(adminSystemParameterManagementLayout);
+        });
+    }
 
     private void addDepartmentManagementMenuItem(SideMenu sideMenu) {
         sideMenu.addMenuItem("Управление подразделениями", VaadinIcons.BUILDING, () -> {
@@ -289,19 +312,4 @@ public class AdminMainView extends AbstractBaseView {
     protected boolean prepareViewData() {
         return false;
     }
-
-    /**
-     * Override the logic of checking user session and additionally check that the user accessing this view is Global Admin
-     * @return
-     */
-/*    @Override
-    protected boolean checkUserSession() {
-        boolean isValidUserSession = super.checkUserSession();
-        if (isValidUserSession) {
-            if (GlobalConstants.ADMIN_USER_LOGIN_NAME.equals(getCurrentUser().getEmployeeLoginName())) {
-                return true;
-            }
-        }
-        return false;
-    }*/
 }

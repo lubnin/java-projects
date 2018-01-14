@@ -65,11 +65,6 @@ public class MainUI extends UI {
         viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
         errorViewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
 
-/*        Navigator navigator = new Navigator(this,
-                new CustomNavigationStateManager(this.getPage()),
-                (ViewDisplay)(new Navigator.SingleComponentContainerViewDisplay(panelViewContainer))
-        );*/
-
         Navigator navigator = new Navigator(this, panelViewContainer);
         navigator.addProvider(viewProvider);
         navigator.setErrorView(new ErrorDefaultView());

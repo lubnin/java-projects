@@ -50,9 +50,6 @@ public class LoginPageView extends AbstractBaseView {
             String loginName = loginFormLayout.getLoginNameValue();
             String password = loginFormLayout.getPasswordValue();
 
-            //TODO: add password encrypt/decrypt logic here, not plain password!
-            //Employee loggedInEmployee = employeeServiceImpl.getByLoginNameAndPassword(loginName, password);
-
             try {
                 Authentication auth = new UsernamePasswordAuthenticationToken(loginName, password);
                 Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
@@ -63,39 +60,7 @@ public class LoginPageView extends AbstractBaseView {
             } catch (Exception e) {
                 handleException(e, "Введённые имя пользователя и пароль неверны. Попробуйте еще раз.");
             }
-
-
-            //redirect to main application
-
-
-
-            /*if (loggedInEmployee == null) {
-                Notification ntfy = new Notification(
-                        "Ошибка",
-                        "Имя пользователя или пароль неверны. Попробуйте еще раз",
-                        Notification.Type.ERROR_MESSAGE);
-                ntfy.show(Page.getCurrent());
-            } else {
-                //currentUser.setLoggedInEmployee(loggedInEmployee);
-                getCurrentUser().setEmployeeLoginName(loggedInEmployee.getLoginName());
-                getCurrentUser().setEmployeePassword(loggedInEmployee.getPassword());
-
-                //getUI().getNavigator().navigateTo(EmployeeHolidaysView.VIEW_NAME + "/loginName=" + loginName + "&password=" + password);
-                if (GlobalConstants.ADMIN_USER_LOGIN_NAME.equals(getCurrentUser().getEmployeeLoginName())) {
-                    getUI().getNavigator().navigateTo(AdminMainView.VIEW_NAME);
-                    getCurrentUser().setCurrentView(AdminMainView.VIEW_NAME);
-                } else {
-                    getCurrentUser().setCurrentView(EmployeeHolidaysView.VIEW_NAME);
-                    getUI().getNavigator().navigateTo(EmployeeHolidaysView.VIEW_NAME);
-                }
-            }*/
         });
-
-        //loginFormLayout.addRegisterButtonClickListener(event -> {
-//            getUI().getNavigator().navigateTo(AdminMainView.VIEW_NAME);
-            //Notification.show("На текущий момент функция недоступна...");
-  //      });
-
 
         addComponent(loginFormLayout);
     }

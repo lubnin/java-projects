@@ -52,75 +52,6 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
      */
     protected ExceptionHandler exceptionHandler;
 
-/*    protected class ViewError {
-        private String errorMessage;
-        private String errorDescription;
-
-        public ViewError(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
-        public ViewError(String errorMessage, String errorDescription) {
-            this(errorMessage);
-            this.errorDescription = errorDescription;
-        }
-
-        public String getErrorMessage() {
-            return CommonUtils.getValueOrEmptyString(errorMessage);
-        }
-
-        public void setErrorMessage(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
-
-        public String getErrorDescription() {
-            return CommonUtils.getValueOrEmptyString(errorDescription);
-        }
-
-        public void setErrorDescription(String errorDescription) {
-            this.errorDescription = errorDescription;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null || obj.getClass() != this.getClass()) {
-                return false;
-            }
-
-            ViewError viewError = (ViewError)obj;
-
-            return errorDescription == viewError.getErrorDescription() &&
-                    errorMessage == viewError.getErrorMessage();
-        }
-
-        @Override
-        public int hashCode() {
-            final int prime = 31; int result = 1;
-            result = prime * result + ((errorDescription == null) ? 0 : errorDescription.hashCode());
-            result = prime * result + ((errorMessage == null) ? 0 : errorMessage.hashCode());
-            return result;
-        }
-    }*/
-
-/*    protected List<ViewError> viewErrors = new ArrayList<ViewError>();
-
-    protected void addViewError(String errorMessage, String errorDescription) {
-        viewErrors.add(new ViewError(errorMessage, errorDescription));
-    }
-
-    protected void addViewError(ViewError viewError) {
-        viewErrors.add(viewError);
-    }*/
-
-/*    protected void clearViewErrors() {
-        viewErrors.clear();
-    }*/
-
-    //@Autowired
-    //protected User currentUser;
-
     public AbstractBaseView() {
         exceptionHandler = new ViewErrorMessageExceptionHandler();
     }
@@ -164,15 +95,6 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
         }
     }
 
-
-    /**
-     * Gets the currently logged in user
-     * @return
-     */
-    //public User getCurrentUser() {
-    //    return currentUser;
-    //}
-
     /**
      * This method must be overridden in child subclasses of AbstractBaseView.
      * Returns the Label control that will be used in base view to draw a page title for a particular view;
@@ -202,7 +124,6 @@ abstract public class AbstractBaseView extends VerticalLayout implements View {
     void init() {
         setMargin(true);
         setSpacing(true);
-        //addComponent(addSpecialStyling(getPageTitleLabel()));
     }
 
     private Label addSpecialStyling(Label lblTitle) {

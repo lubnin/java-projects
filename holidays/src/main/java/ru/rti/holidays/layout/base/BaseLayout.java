@@ -10,6 +10,8 @@ import ru.rti.holidays.layout.base.behaviour.RefreshGridDataListener;
 import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 
+import java.util.Set;
+
 public interface BaseLayout extends Layout {
 
     // Exception Handling
@@ -66,6 +68,7 @@ public interface BaseLayout extends Layout {
     void refreshDataGrid();
 
     void fireSaveButtonClickedEvent(Object objectForSave);
+    void fireRemoveSelectedItemsClickedEvent(Set<? extends DBEntity> itemsToRemove);
 
     // Refresh Grid Listener
     RefreshGridDataListener getRefreshGridDataListener();

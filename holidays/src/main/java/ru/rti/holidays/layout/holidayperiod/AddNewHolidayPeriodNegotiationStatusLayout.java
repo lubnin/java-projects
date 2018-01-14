@@ -5,9 +5,13 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import ru.rti.holidays.component.vaadin.RtiGUIFactory;
+import ru.rti.holidays.component.vaadin.button.DangerButton;
+import ru.rti.holidays.component.vaadin.button.FriendlyButton;
 import ru.rti.holidays.entity.DBEntity;
 import ru.rti.holidays.entity.HolidayPeriodNegotiationStatus;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
+import ru.rti.holidays.layout.common.NegotiationStatusTypeCaptionGenerator;
 
 public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayout {
     private Binder<HolidayPeriodNegotiationStatus> holidayPeriodNegotiationStatusBinder = new Binder<HolidayPeriodNegotiationStatus>();
@@ -23,26 +27,6 @@ public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayo
 
     public Binder<HolidayPeriodNegotiationStatus> getBinder() {
         return holidayPeriodNegotiationStatusBinder;
-    }
-
-    private class NegotiationStatusTypeCaptionGenerator implements ItemCaptionGenerator<HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType> {
-        @Override
-        public String apply(HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType negotiationStatusType) {
-            switch (negotiationStatusType) {
-                case NEGOTIATION_STATUS_TYPE_NEGOTIATING:
-                    return "На согласовании";
-                case NEGOTIATION_STATUS_TYPE_OK:
-                    return "Согласован";
-                case NEGOTIATION_STATUS_TYPE_REJECTED:
-                    return "Отклонён";
-                case NEGOTIATION_STATUS_TYPE_NEW:
-                    return "Новый";
-                case NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED:
-                    return "Частично согласован";
-                default:
-                    return "Неизвестный статус";
-            }
-        }
     }
 
     @Override
@@ -74,7 +58,7 @@ public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayo
         });
 
         RadioButtonGroup<HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType> radioNegotiationStatusType = new RadioButtonGroup<>("Тип статуса согласования:");
-        radioNegotiationStatusType.setItemCaptionGenerator(new AddNewHolidayPeriodNegotiationStatusLayout.NegotiationStatusTypeCaptionGenerator());
+        radioNegotiationStatusType.setItemCaptionGenerator(new NegotiationStatusTypeCaptionGenerator());
         radioNegotiationStatusType.setItems(HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.values());
         radioNegotiationStatusType.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
         radioNegotiationStatusType.setSelectedItem(HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEW);
@@ -85,6 +69,12 @@ public class AddNewHolidayPeriodNegotiationStatusLayout extends BaseVerticalLayo
 
         btnRemoveSelectedStatuses.addStyleName(ValoTheme.BUTTON_DANGER);
         btnRemoveSelectedStatuses.setIcon(VaadinIcons.DEL);
+
+//        btnRemoveSelectedStatuses = RtiGUIFactory.createButton(DangerButton.class,
+//                "Удалить выбранные статусы",
+//                false,
+//                "300px");
+
         btnRemoveSelectedStatuses.setEnabled(false);
         btnRemoveSelectedStatuses.addClickListener(event -> {
             if (removeSelectedItemsClickListener != null) {

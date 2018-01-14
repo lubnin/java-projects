@@ -119,7 +119,7 @@ public class HolidayPeriod implements DBEntity {
     @Column(name = "updated")
     private Date updated;
 
-    @OneToMany(mappedBy = "holidayPeriod", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+    @OneToMany(mappedBy = "holidayPeriod", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.REMOVE })
     private Set<HolidayPeriodNegotiationHistory> holidayPeriodNegotiationHistories;
 
 

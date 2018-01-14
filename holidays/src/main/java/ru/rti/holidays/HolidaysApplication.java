@@ -17,41 +17,4 @@ public class HolidaysApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HolidaysApplication.class, args);
 	}
-/*
-	@Bean
-	public CommandLineRunner loadData(EmployeeRepository repository) {
-		return (args) -> {
-			// save a couple of customers
-			repository.save(new Employee("Jack", "Bauer"));
-			repository.save(new Employee("Chloe", "O'Brian"));
-			repository.save(new Employee("Kim", "Bauer"));
-			repository.save(new Employee("David", "Palmer"));
-			repository.save(new Employee("Michelle", "Dessler"));
-
-			// fetch all customers
-			log.info("Employees found with findAll():");
-			log.info("-------------------------------");
-			for (Employee empl : repository.findAll()) {
-				log.info(empl.toString());
-			}
-			log.info("");
-
-			// fetch an individual employee by ID
-			Employee customer = repository.findOne(1L);
-			log.info("Employee found with findOne(1L):");
-			log.info("--------------------------------");
-			log.info(customer.toString());
-			log.info("");
-
-			// fetch customers by last name
-			log.info("Customer found with findByLastNameStartsWithIgnoreCase('Bauer'):");
-			log.info("--------------------------------------------");
-			for (Employee bauer : repository
-					.findByLastNameStartsWithIgnoreCase("Bauer")) {
-				log.info(bauer.toString());
-			}
-			log.info("");
-		};
-	}
-	*/
 }

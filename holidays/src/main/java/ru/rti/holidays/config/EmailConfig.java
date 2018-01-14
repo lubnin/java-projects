@@ -21,7 +21,6 @@ public class EmailConfig {
 
         JavaMailSenderImpl mailSenderImpl = (JavaMailSenderImpl)mailSender;
 
-        //TODO: change email settings before going to production!!!
         mailSenderImpl.setHost(configurationServiceImpl.getSpringMailHost());
         mailSenderImpl.setPort(Integer.parseInt(configurationServiceImpl.getSpringMailPort()));
         mailSenderImpl.setUsername(configurationServiceImpl.getSpringMailUsername());

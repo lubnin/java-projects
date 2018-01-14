@@ -11,6 +11,8 @@ import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 import ru.rti.holidays.service.localization.LocalizationService;
 
+import java.util.Set;
+
 public class BaseGridLayout extends GridLayout implements BaseLayout {
     private static final Logger log = LoggerFactory.getLogger(BaseGridLayout.class);
 
@@ -88,6 +90,13 @@ public class BaseGridLayout extends GridLayout implements BaseLayout {
     public void fireSaveButtonClickedEvent(Object objectForSave) {
         if (this.saveButtonClickListener != null) {
             this.saveButtonClickListener.onSaveData(this, objectForSave);
+        }
+    }
+
+    @Override
+    public void fireRemoveSelectedItemsClickedEvent(Set<? extends DBEntity> itemsToRemove) {
+        if (this.removeSelectedItemsClickListener != null) {
+            this.removeSelectedItemsClickListener.onRemoveSelectedItems(this, itemsToRemove);
         }
     }
 

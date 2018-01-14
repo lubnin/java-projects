@@ -113,7 +113,10 @@ public class Team implements DBEntity {
         this.managers = managers;
     }
 
+    @Override
     public Date getCreatedDate() { return created; }
+
+    @Override
     public Date getUpdatedDate() { return updated; }
 
     @Override

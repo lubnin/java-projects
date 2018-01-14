@@ -11,6 +11,8 @@ import ru.rti.holidays.layout.base.behaviour.RemoveSelectedItemsClickListener;
 import ru.rti.holidays.layout.base.behaviour.SaveButtonClickListener;
 import ru.rti.holidays.service.localization.LocalizationService;
 
+import java.util.Set;
+
 /**
  * BaseVerticalLayout is a base layout which extends one of the standard Vaadin layouts (VerticalLayout).
  * This layout is implementing BaseLayout interface and contains the base logic of 'holidays' Application
@@ -96,6 +98,13 @@ public class BaseVerticalLayout extends VerticalLayout implements BaseLayout {
     public void fireSaveButtonClickedEvent(Object objectForSave) {
         if (this.saveButtonClickListener != null) {
             this.saveButtonClickListener.onSaveData(this, objectForSave);
+        }
+    }
+
+    @Override
+    public void fireRemoveSelectedItemsClickedEvent(Set<? extends DBEntity> itemsToRemove) {
+        if (this.removeSelectedItemsClickListener != null) {
+            this.removeSelectedItemsClickListener.onRemoveSelectedItems(this, itemsToRemove);
         }
     }
 

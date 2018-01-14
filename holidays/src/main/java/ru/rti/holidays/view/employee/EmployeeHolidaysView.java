@@ -377,6 +377,16 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             //return addedToDBHolidayPeriod != null;
         });
 
+        employeeHolidaysLayout.setRemoveSelectedItemsClickListener((layout, entities) -> {
+            if (entities != null && entities.size() > 0) {
+                if (employee.getHolidayPeriods() != null) {
+                    employee.getHolidayPeriods().removeAll(entities);
+                }
+                holidayPeriodServiceImpl.deleteHolidayPeriods((Iterable<HolidayPeriod>)entities);
+                employeeHolidaysLayout.refreshDataGrid();
+            }
+        });
+
         employeeHolidaysLayout.setAddNegotiationHistoryActionListener((layout, params) -> {
             ActionPerformedResult<HolidayPeriodNegotiationHistory> actionPerformedResult = new ActionPerformedResult<>(true);
             EmployeeHolidaysLayout layoutInstance = (EmployeeHolidaysLayout)layout;
@@ -403,33 +413,41 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             ((EmployeeHolidaysLayout)layoutInstance).setEmployeeHolidayPeriods(employeeHolidayPeriods);
         });
 
-        employeeHolidaysLayout.setSendForNegotiationButtonClickListener((layoutInstance, selectedPeriods, negotiationStatus) -> {
+        employeeHolidaysLayout.setSendForNegotiationButtonClickListener((layout, params) -> {
             Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
-            if (emailServiceImpl.sendMailHolidayPeriodSubmitted(selectedPeriods, employee, managers)) {
-                // if successful mail, change periods statuses in db
-                UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование.");
-            } else {
-                UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование, но не удалось отправить письмо одному или нескольким руководителям.");
-            }
-            holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiationStatus);
+            if (params != null && params.length > 1) {
+                Set<HolidayPeriod> selectedPeriods = (Set<HolidayPeriod>)params[0];
+                HolidayPeriodNegotiationStatus negotiatingStatus = (HolidayPeriodNegotiationStatus)params[1];
 
-            addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск отправлен на согласование");
-
-        });
-
-        employeeHolidaysLayout.addDeleteButtonClickListener((layoutInstance, selectedPeriods) -> {
-            if (selectedPeriods != null && selectedPeriods.size() > 0) {
-                if (employee.getHolidayPeriods() != null) {
-                    employee.getHolidayPeriods().removeAll(selectedPeriods);
+                if (emailServiceImpl.sendMailHolidayPeriodSubmitted(selectedPeriods, employee, managers)) {
+                    // if successful mail, change periods statuses in db
+                    UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование.");
+                } else {
+                    UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование, но не удалось отправить письмо одному или нескольким руководителям.");
                 }
-                holidayPeriodServiceImpl.deleteHolidayPeriods(selectedPeriods);
+
+                holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiatingStatus);
+
+                addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск отправлен на согласование");
             }
+
+            return new ButtonClickResult<>(true);
         });
 
+//        employeeHolidaysLayout.setSendForNegotiationButtonClickListener((layoutInstance, selectedPeriods, negotiationStatus) -> {
+//            Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
+//            if (emailServiceImpl.sendMailHolidayPeriodSubmitted(selectedPeriods, employee, managers)) {
+//                // if successful mail, change periods statuses in db
+//                UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование.");
+//            } else {
+//                UIHelper.showNotification("Выбранные периоды отпуска успешно отправлены на согласование, но не удалось отправить письмо одному или нескольким руководителям.");
+//            }
+//            holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiationStatus);
+//
+//            addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск отправлен на согласование");
+//        });
 
         new StandardBaseLayoutDrawer(this, employeeHolidaysLayout).drawLayout();
-        //employeeHolidaysLayout.constructLayout();
-        //addComponent(employeeHolidaysLayout);
     }
 
     Collection<EmployeeHolidayPeriod> getHolidayPeriodsForTeam(Team team) {

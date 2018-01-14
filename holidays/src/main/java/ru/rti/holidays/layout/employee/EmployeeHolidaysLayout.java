@@ -10,7 +10,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.ColumnResizeMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
-import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
@@ -18,18 +17,14 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriodCrossing;
-import ru.rti.holidays.component.grid.comparator.EmployeeHolidayPeriodDateColumnComparator;
 import ru.rti.holidays.component.grid.comparator.HolidayPeriodDateColumnComparator;
 import ru.rti.holidays.converter.StringValueProvider;
 import ru.rti.holidays.entity.*;
-import ru.rti.holidays.layout.base.BaseLayout;
 import ru.rti.holidays.layout.base.BaseVerticalLayout;
 import ru.rti.holidays.layout.base.StandardBaseLayoutDrawer;
 import ru.rti.holidays.layout.base.behaviour.ActionPerformedListener;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickListener;
 import ru.rti.holidays.layout.base.behaviour.ButtonClickResult;
-import ru.rti.holidays.layout.behaviour.*;
-import ru.rti.holidays.style.GridEmployeeHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.style.GridHolidayPeriodCellStyleGenerator;
 import ru.rti.holidays.utility.*;
 import ru.rti.holidays.validator.HolidayPeriodDateValidator;
@@ -47,15 +42,10 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private String panelName;
     private Grid<HolidayPeriod> grdHolidayPeriods = new Grid<>();
     private Map<Team, Collection<EmployeeHolidayPeriod>> managedTeamMembersHolidays = null;
-    private Map<Long, Button> negotiateSelectedPeriodsButtonsMap = new HashMap<>();
-    private Map<Long, Button> rejectSelectedPeriodsButtonsMap = new HashMap<>();
     private Map<Long, Button> showTeamCrossingPeriodsButtonsMap = new HashMap<>();
-    private Map<Long, Set<EmployeeHolidayPeriod>> periodsForNegotiationMap = new HashMap<>();
-    private Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap = new HashMap<>();
     //private Map<Long, Set<EmployeeHolidayPeriod>> periodsForCrossingsSearchMap = new HashMap<>();
 
     private ButtonClickListener<EmployeeHolidayPeriodCrossing> periodsForCrossingsSearchClickListener;
-
     private List<HolidayPeriodNegotiationStatus> allNegotiationStatuses;
     private Button btnRemoveHolidayPeriods = new Button("Удалить выбранные", VaadinIcons.DEL);
     private Button btnSendForNegotiation = new Button("Отправить на согласование", VaadinIcons.USERS);
@@ -64,21 +54,17 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private List<HolidayPeriod> employeeHolidayPeriods;
     private DateField datePeriod = new DateField();
     private TextField txtNumDays = new TextField();
-    //private EmployeeHolidaysLayoutMainButtonClickListener mainButtonClickListener;
-    private EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener;
 
-
-
-    //private EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener;
-    //private EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener;
     private ButtonClickListener<EmployeeHolidayPeriod> negotiateSelectedPeriodsClickListener;
     private ButtonClickListener<EmployeeHolidayPeriod> rejectSelectedPeriodsClickListener;
-    private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
+    private ButtonClickListener<HolidayPeriod> sendForNegotiationButtonClickListener;
+    //private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
 
     private ActionPerformedListener<HolidayPeriodNegotiationHistory> addNegotiationHistoryActionListener;
     private ButtonClickListener<EmployeeHolidayPeriodCrossing> checkCrossingDatesButtonClickListener;
     private HolidayPeriod newHolidayPeriod = new HolidayPeriod();
     private Binder<HolidayPeriod> holidayPeriodBinder = new Binder<>();
+
     private EmployeeHolidayPeriodsCrossingDatesLayout employeeHolidayPeriodsCrossingDatesLayout =
             new EmployeeHolidayPeriodsCrossingDatesLayout(false, false);
 
@@ -427,12 +413,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         }
     }
 
-/*    private void fireMainButtonClickedEvent() {
-        if (mainButtonClickListener != null) {
-            mainButtonClickListener.onAddSelectedPeriods(this);
-        }
-    }*/
-
     private boolean checkForOwnCrossingDates(HolidayPeriod addedHolidayPeriod) {
         Date addedHPDateStart = DateUtils.asDate(addedHolidayPeriod.getDateStart());
         Long addedHPNumDays = addedHolidayPeriod.getNumDays();
@@ -486,11 +466,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         btnRemoveHolidayPeriods.addStyleName(ValoTheme.BUTTON_DANGER);
         btnRemoveHolidayPeriods.addClickListener(event -> {
-            if (deleteButtonClickListener != null) {
-                deleteButtonClickListener.onDeleteSelectedPeriods(this, grdHolidayPeriods.getSelectedItems());
-                refreshDataGrid();
-            }
-            //TODO: temporary solution
+            fireRemoveSelectedItemsClickedEvent(grdHolidayPeriods.getSelectedItems());
+            //if (removeSelectedItemsClickListener != null) {
+            //    refreshDataGrid();
+            //}
+
             //fireCheckCrossingDatesButtonClickedEvent();
             UIHelper.showNotification("Выбранные периоды отпуска успешно удалены.");
         });
@@ -500,7 +480,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         btnSendForNegotiation.addStyleName(ValoTheme.BUTTON_PRIMARY);
         btnSendForNegotiation.addClickListener(event -> {
             if (sendForNegotiationButtonClickListener != null) {
-                sendForNegotiationButtonClickListener.onSubmitSelectedPeriodsForNegotiation(this, grdHolidayPeriods.getSelectedItems(), HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
+                sendForNegotiationButtonClickListener.onClick(this, grdHolidayPeriods.getSelectedItems(), HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
                 refreshDataGrid();
             }
         });
@@ -551,14 +531,6 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     }
 
-    public void addDeleteButtonClickListener(EmployeeHolidaysLayoutDeleteButtonClickListener deleteButtonClickListener) {
-        this.deleteButtonClickListener = deleteButtonClickListener;
-    }
-
-    public EmployeeHolidaysLayoutDeleteButtonClickListener getDeleteButtonClickListener() {
-        return this.deleteButtonClickListener;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
@@ -575,43 +547,19 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         this.allNegotiationStatuses = allNegotiationStatuses;
     }
 
-//    public EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener getNegotiateSelectedPeriodsClickListener() {
-//        return negotiateSelectedPeriodsClickListener;
+//    public EmployeeHolidaysLayoutSendForNegotiationButtonClickListener getSendForNegotiationButtonClickListener() {
+//        return sendForNegotiationButtonClickListener;
 //    }
 //
-//    public void setNegotiateSelectedPeriodsClickListener(EmployeeHolidaysLayoutNegotiateSelectedPeriodsClickListener negotiateSelectedPeriodsClickListener) {
-//        this.negotiateSelectedPeriodsClickListener = negotiateSelectedPeriodsClickListener;
+//    public void setSendForNegotiationButtonClickListener(EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener) {
+//        this.sendForNegotiationButtonClickListener = sendForNegotiationButtonClickListener;
 //    }
 
-    public Map<Long, Button> getRejectSelectedPeriodsButtonsMap() {
-        return rejectSelectedPeriodsButtonsMap;
-    }
-
-    public void setRejectSelectedPeriodsButtonsMap(Map<Long, Button> rejectSelectedPeriodsButtonsMap) {
-        this.rejectSelectedPeriodsButtonsMap = rejectSelectedPeriodsButtonsMap;
-    }
-
-//    public EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener getRejectSelectedPeriodsClickListener() {
-//        return rejectSelectedPeriodsClickListener;
-//    }
-//
-//    public void setRejectSelectedPeriodsClickListener(EmployeeHolidaysLayoutRejectSelectedPeriodsClickListener rejectSelectedPeriodsClickListener) {
-//        this.rejectSelectedPeriodsClickListener = rejectSelectedPeriodsClickListener;
-//    }
-
-    public Map<Long, Set<EmployeeHolidayPeriod>> getPeriodsForRejectionMap() {
-        return periodsForRejectionMap;
-    }
-
-    public void setPeriodsForRejectionMap(Map<Long, Set<EmployeeHolidayPeriod>> periodsForRejectionMap) {
-        this.periodsForRejectionMap = periodsForRejectionMap;
-    }
-
-    public EmployeeHolidaysLayoutSendForNegotiationButtonClickListener getSendForNegotiationButtonClickListener() {
+    public ButtonClickListener<HolidayPeriod> getSendForNegotiationButtonClickListener() {
         return sendForNegotiationButtonClickListener;
     }
 
-    public void setSendForNegotiationButtonClickListener(EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener) {
+    public void setSendForNegotiationButtonClickListener(ButtonClickListener<HolidayPeriod> sendForNegotiationButtonClickListener) {
         this.sendForNegotiationButtonClickListener = sendForNegotiationButtonClickListener;
     }
 

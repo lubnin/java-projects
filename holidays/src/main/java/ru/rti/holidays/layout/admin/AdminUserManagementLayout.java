@@ -109,8 +109,6 @@ public class AdminUserManagementLayout extends BaseVerticalLayout {
     public void refreshDataGrid() {
         super.refreshDataGrid();
 
-        log.info("AdminUserManagementLayout::refreshDataGrid() called.");
-        log.info("Employees size: " + employees.size() + " items in array.");
         //TODO: customize your logic here
         grdEmployees.setItems(employees);
     }

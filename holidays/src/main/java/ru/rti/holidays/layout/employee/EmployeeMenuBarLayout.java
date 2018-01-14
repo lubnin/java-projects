@@ -49,7 +49,7 @@ public class EmployeeMenuBarLayout extends BaseVerticalLayout {
         isExitMenuItemVisible = exitMenuItemVisible;
     }
 
-    public boolean isSettingsMenutItemVisible() {
+    public boolean isSettingsMenuItemVisible() {
         return isSettingsMenutItemVisible;
     }
 
@@ -129,7 +129,7 @@ public class EmployeeMenuBarLayout extends BaseVerticalLayout {
             if (isMainMenuItemVisible()) {
                 MenuBar.MenuItem menuItemSystemMain = menuItemSystem.addItem(MENU_ITEM_SYSTEM_MAIN_CAPTION, null, cmdSystemMain);
             }
-            if (isSettingsMenutItemVisible()) {
+            if (isSettingsMenuItemVisible()) {
                 MenuBar.MenuItem menuItemSystemSettings = menuItemSystem.addItem(MENU_ITEM_SYSTEM_SETTINGS_CAPTION, null, cmdSystemSettings);
             }
             if (isExitMenuItemVisible()) {

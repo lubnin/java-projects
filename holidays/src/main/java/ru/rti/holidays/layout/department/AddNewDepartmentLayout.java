@@ -82,15 +82,15 @@ public class AddNewDepartmentLayout extends BaseVerticalLayout {
 
         setMargin(false);
 
-        GridLayout addTeamGridLayout = new GridLayout(2, 3);
-        addTeamGridLayout.setSpacing(true);
-        addTeamGridLayout.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-        addTeamGridLayout.addComponent(txtDepartmentName, 0,0, 1, 0);
-        addTeamGridLayout.addComponent(txtDepartmentCode, 0,1, 1, 1);
-        addTeamGridLayout.addComponent(btnSaveDepartment, 0,2);
-        addTeamGridLayout.addComponent(btnRemoveSelectedDepartments, 1, 2);
+        GridLayout addDepartmentGridLayout = new GridLayout(2, 3);
+        addDepartmentGridLayout.setSpacing(true);
+        addDepartmentGridLayout.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
+        addDepartmentGridLayout.addComponent(txtDepartmentName, 0,0, 1, 0);
+        addDepartmentGridLayout.addComponent(txtDepartmentCode, 0,1, 1, 1);
+        addDepartmentGridLayout.addComponent(btnSaveDepartment, 0,2);
+        addDepartmentGridLayout.addComponent(btnRemoveSelectedDepartments, 1, 2);
 
-        addComponents(addTeamGridLayout);
+        addComponents(addDepartmentGridLayout);
     }
 
     @Override
