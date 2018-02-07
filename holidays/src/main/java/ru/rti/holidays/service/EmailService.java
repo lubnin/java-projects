@@ -8,6 +8,7 @@ import java.util.Set;
 
 public interface EmailService {
     boolean sendMailHolidayPeriodSubmitted(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers);
+    boolean sendMailHolidayPeriodsRecalled(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers);
     boolean sendMailHolidayPeriodsNegotiated(Iterable<EmployeeHolidayPeriod> holidayPeriods, Employee manager);
     boolean sendMailHolidayPeriodsRejected(Iterable<EmployeeHolidayPeriod> holidayPeriods, Employee manager);
     boolean sendMail(String to, String messageBody, String subject);

@@ -14777,6 +14777,10 @@ button {
 	color: #ff2d2d;
 }
 
+.neg_status_recalled {
+	color: #cc99ff;
+}
+
 .neg_status_new {
 	color: yellow;
 }

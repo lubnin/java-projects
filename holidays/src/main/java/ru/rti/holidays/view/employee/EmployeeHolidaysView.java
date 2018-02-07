@@ -413,6 +413,27 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             ((EmployeeHolidaysLayout)layoutInstance).setEmployeeHolidayPeriods(employeeHolidayPeriods);
         });
 
+        employeeHolidaysLayout.setRecallSelectedPeriodsButtonClickListener((layout, params) -> {
+            Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
+            if (params != null && params.length > 1) {
+                Set<HolidayPeriod> selectedPeriods = (Set<HolidayPeriod>)params[0];
+                HolidayPeriodNegotiationStatus recalledStatus = (HolidayPeriodNegotiationStatus)params[1];
+
+                if (emailServiceImpl.sendMailHolidayPeriodsRecalled(selectedPeriods, employee, managers)) {
+                    // if successful mail, change periods statuses in db
+                    UIHelper.showNotification("Выбранные периоды отпуска успешно отозваны с согласования.");
+                } else {
+                    UIHelper.showNotification("Выбранные периоды отпуска успешно отозваны с согласования, но не удалось отправить письмо одному или нескольким руководителям.");
+                }
+
+                holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, recalledStatus);
+
+                addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск был отозван сотрудником.");
+            }
+
+            return new ButtonClickResult<>(true);
+        });
+
         employeeHolidaysLayout.setSendForNegotiationButtonClickListener((layout, params) -> {
             Set<Employee> managers = employeeServiceImpl.getAllManagersForEmployee(employee);
             if (params != null && params.length > 1) {

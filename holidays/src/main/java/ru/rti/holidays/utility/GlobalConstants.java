@@ -90,6 +90,11 @@ public class GlobalConstants {
     public static final String CSS_NEGOTIATION_STATUS_TYPE_REJECTED = "neg_status_rejected";
 
     /**
+     * Style for Grid cells that contain 'Recalled' status for HolidayPeriod
+     */
+    public static final String CSS_NEGOTIATION_STATUS_TYPE_RECALLED= "neg_status_recalled";
+
+    /**
      * Style for Grid cells that have holiday periods having crossings by dates with other employees
      */
     public static final String CSS_HOLIDAY_PERIOD_CROSSING_DATES = "hp_crossing_dates";

@@ -18,6 +18,15 @@ public class HolidayPeriodNegotiationStatusUtils {
     }
 
     /**
+     * Gets the 'NEGOTIATION_STATUS_TYPE_RECALLED' value from the list of all available statuses
+     * @param allStatuses the list of all available statuses
+     * @return
+     */
+    public static HolidayPeriodNegotiationStatus getRecalledStatusFromList(Iterable<HolidayPeriodNegotiationStatus> allStatuses) {
+        return getStatusFromList(allStatuses, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_RECALLED);
+    }
+
+    /**
      * Gets the 'NEGOTIATION_STATUS_TYPE_NEW' value from the list of all available statuses
      * @param allStatuses the list of all available statuses
      * @return

@@ -30,6 +30,8 @@ public class GridHolidayPeriodCellStyleGenerator implements StyleGenerator<Holid
                     return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_NEW;
                 case NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED:
                     return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED;
+                case NEGOTIATION_STATUS_TYPE_RECALLED:
+                    return GlobalConstants.CSS_NEGOTIATION_STATUS_TYPE_RECALLED;
             }
         }
         return GlobalConstants.EMPTY_STRING;

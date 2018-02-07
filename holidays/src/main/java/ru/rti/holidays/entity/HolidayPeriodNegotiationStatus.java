@@ -23,7 +23,8 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
         NEGOTIATION_STATUS_TYPE_NEGOTIATING(0L, "На согласовании"),
         NEGOTIATION_STATUS_TYPE_OK(1L, "Согласован"),
         NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED(4L, "Частично согласован"),
-        NEGOTIATION_STATUS_TYPE_REJECTED(2L, "Отклонён");
+        NEGOTIATION_STATUS_TYPE_REJECTED(2L, "Отклонён"),
+        NEGOTIATION_STATUS_TYPE_RECALLED(5L, "Отозван");
 
         private final Long typeId;
         private final String description;
@@ -39,7 +40,9 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
                     NEGOTIATION_STATUS_TYPE_OK,
                     NEGOTIATION_STATUS_TYPE_REJECTED,
                     NEGOTIATION_STATUS_TYPE_NEW,
-                    NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED);
+                    NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED,
+                    NEGOTIATION_STATUS_TYPE_RECALLED
+                    );
         }
         public Long getTypeId() { return this.typeId; }
         public String getDescription() { return this.description; }

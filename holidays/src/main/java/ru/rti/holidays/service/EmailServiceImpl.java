@@ -34,7 +34,8 @@ public class EmailServiceImpl implements EmailService {
 
     public static final String MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_NEGOTIATED = "Ваши периоды отпуска были согласованы";
     public static final String MAIL_SUBJECT_YOUR_HOLIDAY_PERIODS_HAVE_BEEN_REJECTED = "Ваши периоды отпуска были отклонены";
-    public static final String MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD = "Сотрудник направил период отпуска на согласование";
+    public static final String MAIL_SUBJECT_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD = "Сотрудник направил периоды отпуска на согласование";
+    public static final String MAIL_SUBJECT_EMPLOYEE_RECALLED_HOLIDAY_PERIOD = "Сотрудник отозвал свои согласованные ранее отпуска";
     public static final String MAIL_SUBJECT_PREFIX = "[Система отпусков РТИ]: ";
     public static final String MAIL_FROM = "Система отпусков РТИ";
     public static final String DOUBLE_BREAK_LINE = "<br/><br/>";
@@ -42,6 +43,8 @@ public class EmailServiceImpl implements EmailService {
     public String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIOD_NEED_NEGOTIATION = "";
     public static final String MAIL_BODY_EMPLOYEE_SUBMITTED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
             "<b>%s</b> направил на согласование периоды отпуска, требуется Ваше согласование:" + DOUBLE_BREAK_LINE;
+    public static final String MAIL_BODY_EMPLOYEE_RECALLED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
+            "Пожалуйста, обратите внимание на то, что <b>%s</b> отозвал согласованные ранее периоды отпуска:" + DOUBLE_BREAK_LINE;
     public static final String MAIL_BODY_MANAGER_NEGOTIATED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
             "<b>%s</b> согласовал Ваши периоды отпуска, направленные Вами на согласование:<br/><br/>";
     public static final String MAIL_BODY_MANAGER_REJECTED_HOLIDAY_PERIODS = "%s, добрый день!" + DOUBLE_BREAK_LINE +
@@ -97,6 +100,48 @@ public class EmailServiceImpl implements EmailService {
         } catch (Exception e) {
             return true;
         }
+    }
+
+    @Override
+    public boolean sendMailHolidayPeriodsRecalled(Iterable<HolidayPeriod> holidayPeriods, Employee employee, Set<Employee> managers) {
+        checkConfiguration();
+
+        if (holidayPeriods == null || employee == null || managers == null) {
+            log.error("Error: 'null' value detected when not expected! " +
+                    "Details: EmailServiceImpl.java, method: sendMailHolidayPeriodsRecalled, params: holidayPeriods = " + holidayPeriods + ", employee = " + employee + ", managers = " + managers);
+            return false;
+        }
+
+        StringBuilder sbHolidayPeriods = new StringBuilder();
+        for (HolidayPeriod hp : holidayPeriods) {
+            if (sbHolidayPeriods.length() > 0) {
+                sbHolidayPeriods.append(DOUBLE_BREAK_LINE);
+            }
+            sbHolidayPeriods.append(String.format(MAIL_BODY_PART_HOLIDAY_PERIOD, hp.getDateStartAsString(), hp.getNumDaysAsString()));
+        }
+
+        boolean finalResult = true;
+
+        for (Employee manager : managers) {
+            if (!EmailUtils.isValidEmailAddress(manager.getEmail())) {
+                log.error("Invalid E-Mail address found: " + manager.getEmail());
+                continue;
+            }
+
+            String messageBodyStart = String.format(MAIL_BODY_EMPLOYEE_RECALLED_HOLIDAY_PERIODS,
+                    manager.getPreferredName(),
+                    employee.getFullName()
+            );
+            String messageBody = messageBodyStart + sbHolidayPeriods.toString() + MAIL_BODY_FOOTER;
+
+            if (!EmailUtils.isNeedToSendEmailForManager(employee, manager)) {
+                continue;
+            }
+
+            finalResult = sendMail(manager.getEmail(), messageBody, MAIL_SUBJECT_EMPLOYEE_RECALLED_HOLIDAY_PERIOD) && finalResult;
+        }
+
+        return finalResult;
     }
 
     @Override

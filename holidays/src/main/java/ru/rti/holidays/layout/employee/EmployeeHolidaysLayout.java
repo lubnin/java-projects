@@ -50,6 +50,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private Button btnRemoveHolidayPeriods = new Button("Удалить выбранные", VaadinIcons.DEL);
     private Button btnSendForNegotiation = new Button("Отправить на согласование", VaadinIcons.USERS);
     private Button btnCheckCrossingDates = new Button("Проверить пересечения", VaadinIcons.ARROWS_CROSS);
+    private Button btnRecallHolidayPeriods = new Button("Отозвать выбранные", VaadinIcons.ARROW_BACKWARD);
 
     private List<HolidayPeriod> employeeHolidayPeriods;
     private DateField datePeriod = new DateField();
@@ -58,6 +59,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
     private ButtonClickListener<EmployeeHolidayPeriod> negotiateSelectedPeriodsClickListener;
     private ButtonClickListener<EmployeeHolidayPeriod> rejectSelectedPeriodsClickListener;
     private ButtonClickListener<HolidayPeriod> sendForNegotiationButtonClickListener;
+    private ButtonClickListener<HolidayPeriod> recallSelectedPeriodsButtonClickListener;
     //private EmployeeHolidaysLayoutSendForNegotiationButtonClickListener sendForNegotiationButtonClickListener;
 
     private ActionPerformedListener<HolidayPeriodNegotiationHistory> addNegotiationHistoryActionListener;
@@ -197,10 +199,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
                 boolean isBtnRemoveSelectedHolidayPeriodsEnabled = false;
                 boolean isBtnSendForNegotiationEnabled = false;
-
+                boolean isBtnRecallSelectedHolidayPeriodsEnabled = false;
 
                 isBtnRemoveSelectedHolidayPeriodsEnabled = isAtLeastOneItemSelected;
                 isBtnSendForNegotiationEnabled = isAtLeastOneItemSelected;
+                isBtnRecallSelectedHolidayPeriodsEnabled = isAtLeastOneItemSelected;
 
                 flags_check:
                 for (HolidayPeriod hp : selectedItems) {
@@ -209,6 +212,11 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                         HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType hpNegStatusType = hpNegStatus.getNegotiationStatusType();
                         if (hpNegStatusType != null) {
                             switch (hpNegStatusType) {
+                                case NEGOTIATION_STATUS_TYPE_RECALLED:
+                                    isBtnRemoveSelectedHolidayPeriodsEnabled = false;
+                                    isBtnSendForNegotiationEnabled = false;
+                                    isBtnRecallSelectedHolidayPeriodsEnabled = false;
+                                    break flags_check;
                                 case NEGOTIATION_STATUS_TYPE_OK:
                                     isBtnRemoveSelectedHolidayPeriodsEnabled = false;
                                     isBtnSendForNegotiationEnabled = false;
@@ -225,6 +233,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
                 //enableCheckCrossingsButton(isAtLeastOneItemSelected);
                 btnRemoveHolidayPeriods.setEnabled(isBtnRemoveSelectedHolidayPeriodsEnabled);
                 btnSendForNegotiation.setEnabled(isBtnSendForNegotiationEnabled);
+                btnRecallHolidayPeriods.setEnabled(isBtnRecallSelectedHolidayPeriodsEnabled);
             });
 
             pnlHolidaysLayout.addComponent(getTopButtonsPanelLayout());
@@ -446,7 +455,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
      */
     protected GridLayout getBottomButtonsControlPanelLayout() {
 
-        GridLayout bottomButtonsControlPanelLayout = new GridLayout(3, 1);
+        GridLayout bottomButtonsControlPanelLayout = new GridLayout(4, 1);
         //GridLayout bottomButtonsControlPanelLayout = new GridLayout(4, 1);
         //bottomButtonsControlPanelLayout.setSizeFull();
         bottomButtonsControlPanelLayout.setSpacing(true);
@@ -459,8 +468,8 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         bottomButtonsControlPanelLayout.setColumnExpandRatio(0,1);
         bottomButtonsControlPanelLayout.setColumnExpandRatio(1, 1);
-        bottomButtonsControlPanelLayout.setColumnExpandRatio(2,2);
-
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(2,1);
+        bottomButtonsControlPanelLayout.setColumnExpandRatio(3,2);
 
         //enableCheckCrossingsButton(false);
 
@@ -487,6 +496,19 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
         btnSendForNegotiation.setWidth("300px");
         btnSendForNegotiation.setEnabled(false);
 
+        btnRecallHolidayPeriods.addStyleName(GlobalConstants.CSS_RTI_BUTTON_ORANGE);
+        btnRecallHolidayPeriods.addClickListener(clickEvent -> {
+            if (recallSelectedPeriodsButtonClickListener != null) {
+                recallSelectedPeriodsButtonClickListener.onClick(
+                        this,
+                        grdHolidayPeriods.getSelectedItems(),
+                        HolidayPeriodNegotiationStatusUtils.getRecalledStatusFromList(allNegotiationStatuses));
+                refreshDataGrid();
+            }
+        });
+        btnRecallHolidayPeriods.setWidth("300px");
+        btnRecallHolidayPeriods.setEnabled(false);
+
         //TODO: check crossings only for selected items. commented for now
 /*      btnCheckCrossingDates = new Button("Проверить пересечения");
         btnCheckCrossingDates.setIcon(VaadinIcons.CALENDAR);
@@ -504,6 +526,7 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
         bottomButtonsControlPanelLayout.addComponent(btnSendForNegotiation, 0,0);
         bottomButtonsControlPanelLayout.addComponent(btnRemoveHolidayPeriods, 1,0);
+        bottomButtonsControlPanelLayout.addComponent(btnRecallHolidayPeriods, 2,0);
         //bottomButtonsControlPanelLayout.addComponent(new Label(""), 2,0);
 
         return bottomButtonsControlPanelLayout;
@@ -577,6 +600,10 @@ public class EmployeeHolidaysLayout extends BaseVerticalLayout {
 
     public void setPeriodsForCrossingsSearchClickListener(ButtonClickListener<EmployeeHolidayPeriodCrossing> periodsForCrossingsSearchClickListener) {
         this.periodsForCrossingsSearchClickListener = periodsForCrossingsSearchClickListener;
+    }
+
+    public void setRecallSelectedPeriodsButtonClickListener(ButtonClickListener<HolidayPeriod> recallSelectedPeriodsButtonClickListener) {
+        this.recallSelectedPeriodsButtonClickListener = recallSelectedPeriodsButtonClickListener;
     }
 
     class EmployeeHolidayPeriodValueChangeListener implements HasValue.ValueChangeListener<LocalDate> {
