@@ -1,6 +1,5 @@
 package ru.rti.holidays.utility;
 
-import org.hibernate.LazyInitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
@@ -138,17 +137,35 @@ public class HolidayPeriodUtils {
         return isHolidayPeriodInSpecifiedStatus(holidayPeriod, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_NEW);
     }
 
+    public static boolean isHolidayPeriodInRecalledStatus(HolidayPeriod holidayPeriod) {
+        return isHolidayPeriodInSpecifiedStatus(holidayPeriod, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType.NEGOTIATION_STATUS_TYPE_RECALLED);
+    }
+
+    public static boolean isHolidayPeriodParticipantInCrossing(HolidayPeriod holidayPeriod) {
+        if (!isSafeHolidayPeriod(holidayPeriod)) {
+            return false;
+        }
+        return holidayPeriod.getNegotiationStatus().getNegotiationStatusType().isParticipatingInCrossing();
+    }
+
+    public static boolean isHolidayPeriodParticipantInOwnCrossing(HolidayPeriod holidayPeriod) {
+        if (!isSafeHolidayPeriod(holidayPeriod)) {
+            return false;
+        }
+        return holidayPeriod.getNegotiationStatus().getNegotiationStatusType().isParticipantInOwnCrossing();
+    }
+
+    public static boolean isSafeHolidayPeriod(HolidayPeriod holidayPeriod) {
+        if (holidayPeriod == null || holidayPeriod.getNegotiationStatus() == null || holidayPeriod.getNegotiationStatus().getNegotiationStatusType() == null) return false;
+        return true;
+    }
+
     public static boolean isHolidayPeriodInSpecifiedStatus(HolidayPeriod holidayPeriod, HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType statusType) {
-        if (holidayPeriod == null ||
-                holidayPeriod.getNegotiationStatus() == null ||
-                holidayPeriod.getNegotiationStatus().getNegotiationStatusType() == null ||
-                statusType == null) {
+        if (!isSafeHolidayPeriod(holidayPeriod) || statusType == null) {
             return false;
         }
 
-        return (statusType.equals(holidayPeriod
-                .getNegotiationStatus()
-                .getNegotiationStatusType()));
+        return (statusType.equals(holidayPeriod.getNegotiationStatus().getNegotiationStatusType()));
     }
 
     /**

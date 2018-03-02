@@ -64,9 +64,14 @@ public class EmployeeHolidaysView extends AbstractBaseView {
             }
 
             for (HolidayPeriod hp : allPeriods) {
-                if (HolidayPeriodUtils.isHolidayPeriodInOkStatus(hp) || HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(hp)) {
+                if (!HolidayPeriodUtils.isHolidayPeriodParticipantInCrossing(hp)) {
                     continue;
                 }
+//                if (HolidayPeriodUtils.isHolidayPeriodInOkStatus(hp) ||
+//                        HolidayPeriodUtils.isHolidayPeriodInRejectedStatus(hp) ||
+//                        HolidayPeriodUtils.isHolidayPeriodInRecalledStatus(hp)) {
+//                    continue;
+//                }
 
                 Set<Employee> employeesWithCrossingDates = employeeServiceImpl.getEmployeesWithCrossingHolidayPeriods(employee.getId(), teamId, DateUtils.asDate(hp.getDateStart()), hp.getNumDays());
 
@@ -196,18 +201,46 @@ public class EmployeeHolidaysView extends AbstractBaseView {
      * @param setHolPeriods
      * @param comment
      */
-    private void addHolidayPeriodHistorySimple(Set<HolidayPeriod> setHolPeriods, String comment) {
+    private void addHolidayPeriodHistorySimple(Set<HolidayPeriod> setHolPeriods, String comment, HolidayPeriodNegotiationStatus currentStatus, HolidayPeriodNegotiationStatus newStatus) {
         try {
-            if (setHolPeriods == null || setHolPeriods.isEmpty()) {
+            if (setHolPeriods == null || setHolPeriods.isEmpty() || currentStatus == null || newStatus == null) {
                 return;
             }
 
             for (HolidayPeriod hp : setHolPeriods) {
-                HolidayPeriodNegotiationStatus newStatus = HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses);
-                HolidayPeriodNegotiationStatus negotiatingStatus = HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses);
+                //HolidayPeriodNegotiationStatus newStatus = HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses);
+                //HolidayPeriodNegotiationStatus negotiatingStatus = HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses);
 
                 HolidayPeriodNegotiationHistory history = HolidayPeriodNegotiationHistoryUtils
-                        .createHolidayPeriodNegotiationHistory(hp, comment, newStatus.getStatusName(), negotiatingStatus.getStatusName());
+                        .createHolidayPeriodNegotiationHistory(hp, comment, currentStatus.getStatusName(), newStatus.getStatusName());
+
+                holidayPeriodServiceImpl.saveHolidayPeriodNegotiationHistory(history);
+            }
+
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * Adds Holiday Period History with no status change
+     * TODO: move to utilities later
+     * @param setHolPeriods
+     * @param comment
+     */
+    private void addHolidayPeriodHistorySimple(Set<HolidayPeriod> setHolPeriods, String comment, HolidayPeriodNegotiationStatus newStatus) {
+        try {
+            if (setHolPeriods == null || setHolPeriods.isEmpty() || newStatus == null) {
+                return;
+            }
+
+            for (HolidayPeriod hp : setHolPeriods) {
+                //HolidayPeriodNegotiationStatus newStatus = HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses);
+                //HolidayPeriodNegotiationStatus negotiatingStatus = HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses);
+                HolidayPeriodNegotiationStatus currentStatus = hp.getNegotiationStatus();
+                if (currentStatus == null) continue;
+
+                HolidayPeriodNegotiationHistory history = HolidayPeriodNegotiationHistoryUtils
+                        .createHolidayPeriodNegotiationHistory(hp, comment, currentStatus.getStatusName(), newStatus.getStatusName());
 
                 holidayPeriodServiceImpl.saveHolidayPeriodNegotiationHistory(history);
             }
@@ -426,9 +459,11 @@ public class EmployeeHolidaysView extends AbstractBaseView {
                     UIHelper.showNotification("Выбранные периоды отпуска успешно отозваны с согласования, но не удалось отправить письмо одному или нескольким руководителям.");
                 }
 
-                holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, recalledStatus);
+                addHolidayPeriodHistorySimple(selectedPeriods,
+                        "Отпуск был отозван сотрудником.",
+                        HolidayPeriodNegotiationStatusUtils.getRecalledStatusFromList(allNegotiationStatuses));
 
-                addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск был отозван сотрудником.");
+                holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, recalledStatus);
             }
 
             return new ButtonClickResult<>(true);
@@ -449,7 +484,9 @@ public class EmployeeHolidaysView extends AbstractBaseView {
 
                 holidayPeriodServiceImpl.setNegotiationStatusForHolidayPeriods(selectedPeriods, negotiatingStatus);
 
-                addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск отправлен на согласование");
+                addHolidayPeriodHistorySimple(selectedPeriods, "Отпуск отправлен на согласование",
+                        HolidayPeriodNegotiationStatusUtils.getNewStatusFromList(allNegotiationStatuses),
+                        HolidayPeriodNegotiationStatusUtils.getNegotiatingStatusFromList(allNegotiationStatuses));
             }
 
             return new ButtonClickResult<>(true);

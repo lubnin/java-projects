@@ -19,19 +19,27 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
     }
 
     public enum HolidayPeriodNegotiationStatusType {
-        NEGOTIATION_STATUS_TYPE_NEW(3L, "Новый"),
-        NEGOTIATION_STATUS_TYPE_NEGOTIATING(0L, "На согласовании"),
-        NEGOTIATION_STATUS_TYPE_OK(1L, "Согласован"),
-        NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED(4L, "Частично согласован"),
-        NEGOTIATION_STATUS_TYPE_REJECTED(2L, "Отклонён"),
-        NEGOTIATION_STATUS_TYPE_RECALLED(5L, "Отозван");
+        NEGOTIATION_STATUS_TYPE_NEW(3L, "Новый", false, true),
+        NEGOTIATION_STATUS_TYPE_NEGOTIATING(0L, "На согласовании", true, true),
+        NEGOTIATION_STATUS_TYPE_OK(1L, "Согласован", true, true),
+        NEGOTIATION_STATUS_TYPE_PARTLY_NEGOTIATED(4L, "Частично согласован", true, true),
+        NEGOTIATION_STATUS_TYPE_REJECTED(2L, "Отклонён", false, true),
+        NEGOTIATION_STATUS_TYPE_RECALLED(5L, "Отозван", false, false);
 
         private final Long typeId;
         private final String description;
 
-        HolidayPeriodNegotiationStatusType(Long typeId, String description) {
+        /** Flag indicating that this holiday period negotiation status type is participating in crossing algorightm between other Employees **/
+        private final boolean isParticipatingInCrossing;
+
+        /** Flag, indicating the status is participating in crossing algorithm of own, Employee's periods **/
+        private final boolean isParticipantInOwnCrossing;
+
+        HolidayPeriodNegotiationStatusType(Long typeId, String description, boolean isParticipatingInCrossing, boolean isParticipantInOwnCrossing) {
             this.typeId = typeId;
             this.description = description;
+            this.isParticipatingInCrossing = isParticipatingInCrossing;
+            this.isParticipantInOwnCrossing = isParticipantInOwnCrossing;
         }
 
         public static List<HolidayPeriodNegotiationStatus.HolidayPeriodNegotiationStatusType> getAllNegotiationStatusTypes() {
@@ -46,6 +54,8 @@ public class HolidayPeriodNegotiationStatus implements DBEntity {
         }
         public Long getTypeId() { return this.typeId; }
         public String getDescription() { return this.description; }
+        public boolean isParticipatingInCrossing() { return this.isParticipatingInCrossing; }
+        public boolean isParticipantInOwnCrossing() { return this.isParticipantInOwnCrossing; }
     }
 
     public HolidayPeriodNegotiationStatus() {

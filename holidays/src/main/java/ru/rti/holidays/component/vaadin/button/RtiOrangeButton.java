@@ -3,18 +3,19 @@ package ru.rti.holidays.component.vaadin.button;
 import com.vaadin.icons.VaadinIcons;
 import ru.rti.holidays.utility.GlobalConstants;
 
-public class RtiDatesCrossingButton extends BaseRtiButton implements RtiButton {
-    public RtiDatesCrossingButton() {
+public class RtiOrangeButton extends BaseRtiButton implements RtiButton {
+    public RtiOrangeButton() {
         super();
     }
 
-    public RtiDatesCrossingButton(String caption) {
+    public RtiOrangeButton(String caption) {
         super(caption);
     }
 
     @Override
-    public void init() {
+    public RtiOrangeButton build() {
+        super.build();
         addStyleName(GlobalConstants.CSS_RTI_BUTTON_ORANGE);
-        setIcon(VaadinIcons.ARROWS_CROSS);
+        return this;
     }
 }

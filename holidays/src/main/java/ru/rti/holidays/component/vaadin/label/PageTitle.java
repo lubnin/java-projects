@@ -26,8 +26,9 @@ public class PageTitle extends Label implements RtiUIComponent {
     }
 
     @Override
-    public void init() {
+    public PageTitle build() {
         //TODO: customization goes here
         addStyleName(ValoTheme.LABEL_H1);
+        return this;
     }
 }

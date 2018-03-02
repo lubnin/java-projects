@@ -13,13 +13,9 @@ public class FriendlyButton extends BaseRtiButton implements RtiButton {
     }
 
     @Override
-    public void init() {
+    public FriendlyButton build() {
+        super.build();
         addStyleName(ValoTheme.BUTTON_FRIENDLY);
-        setIcon(VaadinIcons.CHECK);
-    }
-
-    @Override
-    public void setButtonCaption(String caption) {
-        setCaption(caption);
+        return this;
     }
 }

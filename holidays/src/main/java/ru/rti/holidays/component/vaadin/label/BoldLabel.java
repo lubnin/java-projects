@@ -27,8 +27,9 @@ public class BoldLabel extends Label implements RtiUIComponent {
     }
 
     @Override
-    public void init() {
+    public BoldLabel build() {
         //TODO: customization of the component goes here
         addStyleName(ValoTheme.LABEL_BOLD);
+        return this;
     }
 }

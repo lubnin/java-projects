@@ -80,6 +80,14 @@ public class DateUtils {
         return addDays(date, days.intValue());
     }
 
+    /**
+     * Gets the number of intersecting days between two date intervals - (dateStart1; dateEnd1) and (dateStart2, dateEnd2).
+     * @param dateStart1 - Start date for the first date period
+     * @param dateEnd1 - End date for the first date period
+     * @param dateStart2 - Start date for the second date period
+     * @param dateEnd2 - End date for the second date period
+     * @return Returns integer value of days with intersection.
+     */
     public static int getIntersectionDaysNumber(Date dateStart1, Date dateEnd1, Date dateStart2, Date dateEnd2) {
         int days = 0;
         if (isIntersectionBetweenDates(dateStart1, dateEnd1, dateStart2, dateEnd2)) {

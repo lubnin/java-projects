@@ -5,12 +5,10 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.renderers.ButtonRenderer;
-import com.vaadin.ui.themes.ValoTheme;
 import ru.rti.holidays.aggregators.EmployeeHolidayPeriod;
+import ru.rti.holidays.component.grid.filter.EmployeeHolidayPeriodFilteredGrid;
 import ru.rti.holidays.component.vaadin.RtiGUIFactory;
-import ru.rti.holidays.component.vaadin.button.DangerButton;
-import ru.rti.holidays.component.vaadin.button.FriendlyButton;
-import ru.rti.holidays.component.vaadin.button.RtiDatesCrossingButton;
+import ru.rti.holidays.component.vaadin.button.*;
 import ru.rti.holidays.component.vaadin.label.BoldLabel;
 import ru.rti.holidays.component.grid.comparator.EmployeeHolidayPeriodDateColumnComparator;
 import ru.rti.holidays.entity.HolidayPeriod;
@@ -28,10 +26,11 @@ import java.util.Date;
 import java.util.Set;
 
 public class TeamHolidaysLayout extends BaseVerticalLayout {
+    //private EmployeeHolidayPeriodFilteredGrid<EmployeeHolidayPeriod> filteredGrid = new EmployeeHolidayPeriodFilteredGrid<>();
     private Grid<EmployeeHolidayPeriod> grdTeamMembersHolidayPeriods = new Grid<>();
     private Collection<EmployeeHolidayPeriod> teamMembersHolidayPeriods;
-    private FriendlyButton btnNegotiateSelPeriods;
-    private DangerButton btnRejectSelPeriods;
+    private BaseRtiButton btnNegotiateSelPeriods; //FriendlyButton
+    private BaseRtiButton btnRejectSelPeriods; //DangerButton
     private Button btnShowCrossings;
     private Team team;
     private ButtonClickListener<EmployeeHolidayPeriod> negotiateSelectedPeriodsButtonClickListener;
@@ -50,13 +49,14 @@ public class TeamHolidaysLayout extends BaseVerticalLayout {
             throw new LayoutConstructionException("Невозможно построить TeamHolidaysLayout. Экземпляр `team` не может быть `null`.");
         }
 
+        //grdTeamMembersHolidayPeriods = filteredGrid.getGridControl();
+
         Label lblTeamName = new BoldLabel(team.getTeamName());
 
-        btnNegotiateSelPeriods = RtiGUIFactory.createButton(FriendlyButton.class,
-                "Согласовать выбранные",
-                false,
-                "btnNegotiateSelPeriods_" + team.getId(),
-                "300px");
+        btnNegotiateSelPeriods = RtiGUIFactory.createButton(FriendlyButton.class)
+                .caption("Согласовать выбранные")
+                .id("btnNegotiateSelPeriods_" + team.getId())
+                .icon(VaadinIcons.CHECK);
 
         btnNegotiateSelPeriods.addClickListener(clickEvent -> {
             Set<EmployeeHolidayPeriod> setEmplHolPeriods = grdTeamMembersHolidayPeriods.getSelectedItems();
@@ -71,11 +71,12 @@ public class TeamHolidaysLayout extends BaseVerticalLayout {
             }
         });
 
-        btnRejectSelPeriods = RtiGUIFactory.createButton(DangerButton.class,
-                "Отклонить выбранные",
-                false,
-                "btnRejectSelPeriods_" + team.getId(),
-                "300px");
+
+        btnRejectSelPeriods = RtiGUIFactory.createButton(DangerButton.class)
+                .caption("Отклонить выбранные")
+                .id("btnRejectSelPeriods_" + team.getId())
+                .icon(VaadinIcons.STOP);
+
 
         btnRejectSelPeriods.addClickListener(clickEvent -> {
             Set<EmployeeHolidayPeriod> setEmplHolPeriods = grdTeamMembersHolidayPeriods.getSelectedItems();
@@ -89,11 +90,17 @@ public class TeamHolidaysLayout extends BaseVerticalLayout {
             }
         });
 
-        btnShowCrossings = RtiGUIFactory.createButton(RtiDatesCrossingButton.class,
-                "Показать пересечения",
-                true,
-                "btnShowCrossingsPeriods_" + team.getId(),
-                "300px");
+//        btnShowCrossings = RtiGUIFactory.createButton(RtiOrangeButton.class,
+//                "Показать пересечения",
+//                true,
+//                "btnShowCrossingsPeriods_" + team.getId(),
+//                "300px");
+
+        btnShowCrossings = RtiGUIFactory.createButton(RtiOrangeButton.class)
+                .caption("Показать пересечения")
+                .id("btnShowCrossingsPeriods_" + team.getId())
+                .icon(VaadinIcons.ARROWS_CROSS)
+                .enabled(true);
 
         VerticalLayout popupLayout = new VerticalLayout();
 
@@ -272,6 +279,7 @@ public class TeamHolidaysLayout extends BaseVerticalLayout {
 
         addComponent(lblTeamName);
         addComponent(grdTeamMembersHolidayPeriods);
+        //addComponent(filteredGrid);
 
         GridLayout buttonsPanelLayout = new GridLayout(4,1);
 

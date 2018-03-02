@@ -13,8 +13,9 @@ public class DangerButton extends BaseRtiButton implements RtiButton {
     }
 
     @Override
-    public void init() {
+    public DangerButton build() {
+        super.build();
         addStyleName(ValoTheme.BUTTON_DANGER);
-        setIcon(VaadinIcons.STOP);
+        return this;
     }
 }
